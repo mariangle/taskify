@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  email       String @unique
+  password    String
+  firstName   String
+  lastName    String
+  phoneNumber String
+  role        Role   @default(STUDENT)
+}
+
+enum Role {
+  TEACHER
+  STUDENT
+}
+
+model Student {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+
+  @@index([userId])
+}
+
+// RUM OG PLANER
+
+model Room {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+
+  posts  Post[]
+  topics Topic[]
+  Plan   Plan[]
+}
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  roomId    String   @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+
+  room Room @relation(fields: [roomId], references: [id])
+
+  @@index([roomId])
+}
+
+model Topic {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  roomId      String @db.ObjectId
+  name        String
+  description String
+
+  room Room @relation(fields: [roomId], references: [id])
+
+  plans Plan[]
+
+  @@index([roomId])
+}
+
+model Plan {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  roomId      String   @db.ObjectId
+  topicId     String   @db.ObjectId
+  date        String
+  content     DateTime
+  preparation String
+  resources   String?
+
+  room  Room  @relation(fields: [roomId], references: [id])
+  topic Topic @relation(fields: [topicId], references: [id])
+
+  @@index([roomId])
+}
+
+// KALENDER
+
+// KARAKTER
