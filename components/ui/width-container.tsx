@@ -5,7 +5,7 @@ const Container = ({
     className
 }: {
     children: React.ReactNode,
-    className: string
+    className?: string
 }) => {
   return (
     <div 
