@@ -21,8 +21,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <NextUIProvider>
-            <MainNavbar />
-            {children}
+          <main className="dark text-foreground bg-background">
+              <MainNavbar />
+              {children}
+            </main>
           </NextUIProvider>
         </body>
       </html>

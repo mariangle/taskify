@@ -23,6 +23,11 @@ const MainNavbar = () => {
     "Log Out",
   ];
 
+  const navLinks = [
+    { label: 'Features', href: '#' },
+    { label: 'Integrations', href: '#' },
+  ]
+
   return (
     <Navbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen} isBordered>
         <NavbarMenuToggle
@@ -33,19 +38,16 @@ const MainNavbar = () => {
       <p className="font-bold text-inherit">SpeechScheduler</p>
     </NavbarBrand>
     <NavbarContent className="hidden sm:flex gap-4" justify="center">
-      <NavbarItem>
-        <Link color="foreground" href="#">
-          Features
+      {navLinks.map((link) => (
+      <NavbarItem key={link.label}>
+        <Link color="foreground" href={link.href}>
+          {link.label}
         </Link>
       </NavbarItem>
+      ))}
       <NavbarItem isActive>
         <Link href="#" aria-current="page">
           Customers
-        </Link>
-      </NavbarItem>
-      <NavbarItem>
-        <Link color="foreground" href="#">
-          Integrations
         </Link>
       </NavbarItem>
     </NavbarContent>

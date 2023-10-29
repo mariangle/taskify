@@ -3,7 +3,7 @@
 import 'regenerator-runtime/runtime';
 import * as React from "react";
 import { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode, modes } from '@/lib/constants';
+import { Mode, modes, languageOptions, Language } from '@/lib/constants';
 
 import {
   Card, 
@@ -16,11 +16,13 @@ import {
 } from "@nextui-org/react";
 
 import SelectMode from '@/components/select-mode';
-import Buttons from '@/components/dictaphone-buttons';
+import SelectLanguage from '@/components/select-language';
+import DictaphoneButtons from '@/components/dictaphone-buttons';
 import Microphone from '@/components/microphone';
 
 const Dictaphone = () => {
-  const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[1])
+  const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[0])
+  const [selectedLanguage, setSelectedLanguage] = React.useState<Language>(languageOptions[0]);
 
   const {
     transcript,
@@ -44,13 +46,14 @@ const Dictaphone = () => {
     <Card className="max-w-[400px] w-full">
       <CardHeader>
         <SelectMode setSelectedMode={setSelectedMode}/>
+        { /* <SelectLanguage setSelectedLanguage={setSelectedLanguage}/> */}
       </CardHeader>
       <Divider />
       <CardBody>
         <Microphone />
         <div className='flex gap-2 w-full mt-4'>
           <div className='flex-1' />
-          <Buttons selectedMode={selectedMode}/>
+          <DictaphoneButtons selectedMode={selectedMode} selectedLanguage={selectedLanguage}/>
           <div className='flex-1'>
             <Button
               color='primary' radius='full' variant='light' size='sm'
@@ -63,7 +66,9 @@ const Dictaphone = () => {
       </CardBody>
       <Divider/>
       <CardFooter>
-          <Code color='primary' className='flex flex-wrap w-full'>{transcript ? transcript : 'Recording not started...'}</Code>
+          <Code color='primary' className='whitespace-pre-wrap w-full'>
+            {transcript ? transcript : 'Recording not started...'}
+          </Code>
       </CardFooter>
     </Card>
   );

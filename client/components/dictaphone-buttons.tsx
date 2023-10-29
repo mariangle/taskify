@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { Button } from '@nextui-org/react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode } from '@/lib/constants';
+import { Mode, Language } from '@/lib/constants';
 
-const startListening = () => SpeechRecognition.startListening({ continuous: true });
+interface DictaphoneButtonsProps {
+  selectedMode: Mode,
+  selectedLanguage?: Language
+}
 
-const DictaphoneButtons: React.FC<{ selectedMode: Mode }> = ({ selectedMode }) => {
+const DictaphoneButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode, selectedLanguage }) => {
   const { listening } = useSpeechRecognition();
 
+  const startListening = () => {
+    SpeechRecognition.startListening({ continuous: true });
+  };
   const handleHoldStart = () => {
     startListening();
   };
@@ -18,7 +24,7 @@ const DictaphoneButtons: React.FC<{ selectedMode: Mode }> = ({ selectedMode }) =
 
   const handleAutoClick = () => {
     if (!listening) {
-      startListening();
+      SpeechRecognition.startListening();
     } else {
       SpeechRecognition.stopListening();
     }
@@ -27,10 +33,12 @@ const DictaphoneButtons: React.FC<{ selectedMode: Mode }> = ({ selectedMode }) =
   const handleManualClick = () => {
     if (!listening) {
       startListening();
+      console.log(selectedLanguage)
     } else {
       SpeechRecognition.stopListening();
     }
   };
+  
 
   return (
     <div className='flex-1'>

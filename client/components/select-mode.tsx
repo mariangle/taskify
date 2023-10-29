@@ -12,8 +12,9 @@ const SelectMode: React.FC<props> = ({
     <Select
         items={modes}
         label="Select Mode"
-        className="max-w-xs text-xs"
-    >
+        className="text-xs"
+        defaultSelectedKeys={["auto"]}
+        >
         {(mode) => <SelectItem key={mode.value} onClick={() => setSelectedMode(mode)}>{mode.label}</SelectItem>}
     </Select>
   )
