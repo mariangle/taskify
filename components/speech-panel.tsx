@@ -3,9 +3,9 @@ import UseHydration from "@/components/use-hydration"
 
 const SpeechPanel = () => {
   return (
-    <UseHydration>
-        <Dictaphone />
-    </UseHydration>
+      <UseHydration>
+          <Dictaphone />
+      </UseHydration>
   )
 }
 

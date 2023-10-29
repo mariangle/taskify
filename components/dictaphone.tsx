@@ -2,8 +2,8 @@
 
 import 'regenerator-runtime/runtime';
 import * as React from "react";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode } from '@/lib/constants';
+import { useSpeechRecognition } from 'react-speech-recognition';
+import { Mode, modes } from '@/lib/constants';
 
 import {
   Card, 
@@ -14,19 +14,16 @@ import {
   Code, 
   Button,
 } from "@nextui-org/react";
+
 import SelectMode from '@/components/select-mode';
+import Buttons from '@/components/dictaphone-buttons';
 import Microphone from '@/components/microphone';
 
 const Dictaphone = () => {
-  const [selectedMode, setSelectedMode] = React.useState<Mode>({
-    label: 'Hold-to-talk',
-    value: 'hold',
-  })
-  const startListening = () => SpeechRecognition.startListening({ continuous: true });
+  const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[1])
 
   const {
     transcript,
-    listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
@@ -43,73 +40,30 @@ const Dictaphone = () => {
     // ...
   }
 
-  const handleHoldStart = () => {
-    startListening();
-  };
-
-  const handleHoldEnd = () => {
-    SpeechRecognition.stopListening();
-  };
-
-  const handleAutoClick = () => {
-    if (!listening) {
-      SpeechRecognition.startListening();
-    } else {
-      SpeechRecognition.stopListening();
-    }
-  }
-
-  const handleManualClick = () => {
-    if (!listening) {
-      startListening();
-    } else {
-      SpeechRecognition.stopListening();
-    }
-  }
-
   return (
     <Card className="max-w-[400px] w-full">
       <CardHeader>
         <SelectMode setSelectedMode={setSelectedMode}/>
       </CardHeader>
+      <Divider />
       <CardBody>
         <Microphone />
-      </CardBody>
-      <Divider/>
-      <CardFooter>
-      <div className='flex gap-2'>
-          {selectedMode.value === "hold" && (
-      <button
-        onTouchStart={handleHoldStart}
-        onMouseDown={handleHoldStart}
-        onTouchEnd={handleHoldEnd}
-        onMouseUp={handleHoldEnd}
-      >Hold to talk</button>
-          )}
-          {selectedMode.value === "auto" && (
+        <div className='flex gap-2 w-full mt-4'>
+          <div className='flex-1' />
+          <Buttons selectedMode={selectedMode}/>
+          <div className='flex-1'>
             <Button
-              color='primary' size='sm' radius='full'
-              onClick={handleAutoClick}
-            >
-              {listening ? 'Listening...' : 'Start Recording'}
-            </Button>
-          )}
-          {selectedMode.value === "manual" && (
-            <Button
-              color='primary' size='sm' radius='full'
-              onClick={handleManualClick}
-            >
-              {listening ? 'Stop' : 'Start Recording'}
-            </Button>
-          )}
-            <Button
-              color='primary' variant='light' size='sm' radius='full'
-              onClick={() => resetTranscript()}
+              color='primary' radius='full' variant='light' size='sm'
+              onClick={resetTranscript}
             >
               Clear
             </Button>
+          </div>
         </div>
-        { transcript && (<Code color='primary' className='flex flex-wrap'>{transcript}</Code>)}
+      </CardBody>
+      <Divider/>
+      <CardFooter>
+          <Code color='primary' className='flex flex-wrap w-full'>{transcript ? transcript : 'Recording not started...'}</Code>
       </CardFooter>
     </Card>
   );
