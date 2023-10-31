@@ -18,7 +18,8 @@
     "react-dom": "^18",
     "react-icons": "^4.11.0",
     "react-speech-recognition": "^3.10.0",
-    "regenerator-runtime": "^0.14.0"
+    "regenerator-runtime": "^0.14.0",
+    "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
     "@types/node": "^20",

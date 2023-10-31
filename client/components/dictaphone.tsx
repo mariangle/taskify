@@ -16,7 +16,7 @@ import {
 } from "@nextui-org/react";
 
 import SelectMode from '@/components/select-mode';
-import SelectLanguage from '@/components/select-language';
+// import SelectLanguage from '@/components/select-language';
 import DictaphoneButtons from '@/components/dictaphone-buttons';
 import Microphone from '@/components/microphone';
 
@@ -29,11 +29,12 @@ const Dictaphone = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
+    finalTranscript
   } = useSpeechRecognition();
 
   React.useEffect(() => {
-    // ...
-  }, [transcript]);
+    console.log("finale transcript", finalTranscript)
+  }, [finalTranscript]);
 
   if (!browserSupportsSpeechRecognition) {
     // ...

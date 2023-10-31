@@ -1,3 +1,5 @@
+import { HiOutlineMicrophone } from "react-icons/hi"
+
 export type Mode = {
     label: string,
     value: string

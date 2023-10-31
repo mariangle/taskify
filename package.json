@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "gapi-script": "^1.2.0",
+    "react-google-calendar-api": "^2.3.0",
+    "typewriter-effect": "^2.21.0"
+  }
+}

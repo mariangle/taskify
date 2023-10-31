@@ -25,3 +25,31 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.heading{
+  @apply tracking-tight inline font-semibold text-4xl lg:text-6xl;
+}
+
+.description{
+  @apply w-full my-2 text-lg font-normal text-default-500 block max-w-full;
+}
+
+.text{
+  @apply font-normal text-base text-default-500;
+}
+
+.purple-gradient{
+  @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF1CF7] to-[#b249f8];
+}
+
+.blue-gradient{
+  @apply bg-clip-text text-transparent bg-gradient-to-b from-[#5EA2EF] to-[#0072F5];
+}
+
+.green-gradient{
+  @apply bg-clip-text text-transparent bg-gradient-to-b from-[#6FEE8D] to-[#17c964];
+}
+
+.orange-gradient{
+  @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF705B] to-[#FFB457];
+}
