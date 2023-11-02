@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using server.Context;
 using server.Models;
+using server.Utility;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -14,13 +15,13 @@ namespace server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly AuthUtils _auth;
         private readonly ApplicationContext _context;
-        private readonly IConfiguration _configuration;
 
         public AuthController(ApplicationContext context, IConfiguration configuration)
         {
             _context = context;
-            _configuration = configuration;
+            _auth = new AuthUtils(configuration);
         }
 
         [HttpPost("login")]
@@ -43,15 +44,15 @@ namespace server.Controllers
 
             if (user == null)
             {
-                return BadRequest("Username does not exist.");
+                return BadRequest("Invalid username or password.");
             }
 
-            if (!VerifyPasswordHash(req.Password, user.PasswordHash, user.PasswordSalt))
+            if (!_auth.VerifyPasswordHash(req.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return BadRequest("Wrong password.");
+                return BadRequest("Invalid username or password.");
             }
 
-            string token = CreateToken(user);
+            string token = _auth.CreateToken(user);
 
             return Ok(token);
         }
@@ -61,7 +62,7 @@ namespace server.Controllers
         {
             if (req.Username == null || req.Name == null || req.Password == null)
             {
-                return BadRequest("Username, name, and password are required.");
+                return BadRequest("Missing fields.");
             }
 
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == req.Username);
@@ -77,7 +78,7 @@ namespace server.Controllers
                 Name = req.Name
             };
 
-            CreatePasswordHash(req.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            _auth.CreatePasswordHash(req.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.PasswordSalt = passwordSalt;
             user.PasswordHash = passwordHash;
@@ -86,47 +87,6 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
 
             return user;
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
-
-        private string CreateToken(User user)
-        {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
-
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds);
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
         }
     }
 }

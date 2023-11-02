@@ -16,16 +16,6 @@ namespace server.Models
                 {
                     return;   // DB has been seeded
                 }
-
-                //context.Users.AddRange(
-                //    new User
-                //    {
-                //        Id = Guid.NewGuid(), 
-                //        Username = "example_username",
-                //        Name = "John Doe",
-                //    }
-                //);
-                //context.SaveChanges();
             }
         }
     }

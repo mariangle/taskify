@@ -25,10 +25,10 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-          if (_context.Events == null)
-          {
-              return NotFound();
-          }
+            if (_context.Events == null)
+            {
+                return NotFound();
+            }
             return await _context.Events.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(Guid id)
         {
-          if (_context.Events == null)
-          {
-              return NotFound();
-          }
+            if (_context.Events == null)
+            {
+                return NotFound();
+            }
             var @event = await _context.Events.FindAsync(id);
 
             if (@event == null)
@@ -86,10 +86,25 @@ namespace server.Controllers
         [HttpPost]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-          if (_context.Events == null)
-          {
-              return Problem("Entity set 'ApplicationContext.Events'  is null.");
-          }
+            if (_context.Events == null)
+            {
+                return Problem("Entity set 'ApplicationContext.Events'  is null.");
+            }
+
+            if (@event.Title == null || @event.StartTime == DateTime.MinValue || @event.UserId == Guid.Empty)
+            {
+                return BadRequest("Title, StartTime, and UserId are required.");
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == @event.UserId);
+
+            if (user == null)
+            {
+                return BadRequest("Invalid UserId");
+            }
+
+            @event.Id = Guid.NewGuid(); 
+
             _context.Events.Add(@event);
             await _context.SaveChangesAsync();
 
