@@ -3,8 +3,8 @@
 import 'regenerator-runtime/runtime';
 import * as React from "react";
 import { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode, modes, languageOptions, Language } from '@/lib/constants';
-import { HandleCommand } from '@/lib/actions/handle-command';
+import { Mode, modes, languageOptions, Language } from '@/helpers/constants';
+import { HandleCommand } from '@/helpers/actions/handle-command';
 
 import {
   Card, 

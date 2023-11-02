@@ -1,5 +1,3 @@
-import { HiOutlineMicrophone } from "react-icons/hi"
-
 export type Mode = {
     label: string,
     value: string
@@ -38,10 +36,4 @@ export const languageOptions: Language[] = [
     label: 'German',
     value: 'de-DE',
   },
-  /* NOT SUPPORTED
-    {
-    label: 'Danish',
-    value: 'da-DK',
-  },
-  */
 ];  

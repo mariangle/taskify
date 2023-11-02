@@ -1,4 +1,4 @@
-import { languageOptions, Language } from "@/lib/constants"
+import { languageOptions, Language } from "@/helpers/constants"
 import { Select, SelectItem } from "@nextui-org/react"
 
 interface props {

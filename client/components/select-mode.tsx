@@ -1,4 +1,4 @@
-import { modes, Mode } from "@/lib/constants"
+import { modes, Mode } from "@/helpers/constants"
 import { Select, SelectItem } from "@nextui-org/react"
 
 interface props {

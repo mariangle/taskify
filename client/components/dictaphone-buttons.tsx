@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from '@nextui-org/react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode, Language } from '@/lib/constants';
+import { Mode, Language } from '@/helpers/constants';
 
 interface DictaphoneButtonsProps {
   selectedMode: Mode,

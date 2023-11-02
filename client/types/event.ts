@@ -1,10 +1,12 @@
+import { IUser } from ".";
+
 export type IEvent = {
-    EventID: number;
-    Title: string;
-    Description: string;
-    Location: string;
-    StartTime: Date;
-    EndTime: Date;
-    Organizer: string;
-    Participants: string[];
+    id: string;
+    title: string;
+    location?: string;
+    time?: string;
+    startTime: Date;
+    endTime?: Date;
+    userId: string;
+    user?: IUser;
 };

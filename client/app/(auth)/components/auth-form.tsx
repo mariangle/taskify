@@ -1,13 +1,15 @@
   "use client"
 
-  import { Input } from "@nextui-org/react";
-  import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi"
+  import { Spinner, HiOutlineEye, HiOutlineEyeOff, Button } from "@/components/ui";
+import { Input } from "@nextui-org/react";
+
   import * as z from 'zod';
+  import * as React from "react";
+
   import { SubmitHandler, useForm } from "react-hook-form";
   import { zodResolver } from "@hookform/resolvers/zod";
 
-  import * as React from "react";
-  import axios from "axios";
+  import AuthService from "@/helpers/services/auth-service";
 
   interface Props {
     variant: "register" | "login"
@@ -15,7 +17,7 @@
 
   const AuthSchema = z.object({
     username: z.string().min(4),
-    name: z.string().min(2).optional(),
+    name: z.string().min(2),
     password: z
       .string()
       .min(6)
@@ -29,12 +31,13 @@
   });
 
   type AuthSchemaType = z.infer<typeof AuthSchema>;
+  const authService = new AuthService();
 
   const AuthForm = ({
     variant
   } : Props) => {
-      const [isVisible, setIsVisible] = React.useState(false);
-      const [value, setValue] = React.useState("");
+      const [isVisible, setIsVisible] = React.useState<boolean>(false);
+      const [isLoading, setIsLoading] = React.useState<boolean>(false);
       const {
         register,
         handleSubmit,
@@ -43,13 +46,17 @@
 
       const toggleVisibility = () => setIsVisible(!isVisible);
 
-      const onSubmit: SubmitHandler<AuthSchemaType> = (data: AuthSchemaType) => {
-        if (variant === "login"){
-          axios.post("https://localhost:7232/api/auth/login", data)
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err.response.data));
-          } else if (variant === "register"){
-
+      const onSubmit: SubmitHandler<AuthSchemaType> = async (data: AuthSchemaType) => {
+        try {
+          setIsLoading(true);
+          const response = await (variant === "login"
+            ? authService.login(data.username, data.password)
+            : authService.register(data.username, data.name, data.password));
+          console.log(response);
+        } catch (error: any) {
+          console.log(error.response.data);
+        } finally {
+          setIsLoading(false);
         }
       };
 
@@ -60,8 +67,6 @@
           label="Username" 
           size="sm" 
           variant="bordered"         
-          value={value}
-          onValueChange={setValue}
           isInvalid={errors.username ? true : false}
           errorMessage={errors.username?.message}
           {...register("username")}
@@ -95,7 +100,14 @@
           errorMessage={errors.password?.message}
           className="max-w-xs"
         />    
-        <button type="submit" >submit!</button>
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          color="primary"
+          spinner={< Spinner />}
+        >
+          { variant === "login" ? "Login" : "Register"}
+        </Button>
       </form>
     )
   }

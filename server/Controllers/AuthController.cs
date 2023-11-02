@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 
 namespace server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class AuthController : ControllerBase
     {
