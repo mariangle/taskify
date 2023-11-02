@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using server.Context;
+using server.Models;
+
 namespace server
 {
     public class Program
@@ -5,6 +10,9 @@ namespace server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaltConnection");
+            builder.Services.AddDbContext<ApplicationContext>(x => x.UseSqlServer(connectionString));
 
             // Add services to the container.
 
@@ -14,6 +22,13 @@ namespace server
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                SeedData.Initialize(services);
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
