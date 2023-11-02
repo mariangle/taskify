@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime';
 import * as React from "react";
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode, modes, languageOptions, Language } from '@/lib/constants';
+import { HandleCommand } from '@/lib/actions/handle-command';
 
 import {
   Card, 
@@ -16,7 +17,7 @@ import {
 } from "@nextui-org/react";
 
 import SelectMode from '@/components/select-mode';
-// import SelectLanguage from '@/components/select-language';
+import SelectLanguage from '@/components/select-language';
 import DictaphoneButtons from '@/components/dictaphone-buttons';
 import Microphone from '@/components/microphone';
 
@@ -33,8 +34,13 @@ const Dictaphone = () => {
   } = useSpeechRecognition();
 
   React.useEffect(() => {
-    console.log("finale transcript", finalTranscript)
-  }, [finalTranscript]);
+    if (!finalTranscript) return;
+    try {
+        HandleCommand(finalTranscript);
+    } catch (error: any) {
+        alert(error.message); 
+    }
+}, [finalTranscript]);
 
   if (!browserSupportsSpeechRecognition) {
     // ...
@@ -62,6 +68,7 @@ const Dictaphone = () => {
             >
               Clear
             </Button>
+            <button onClick={() => HandleCommand("")}>hey</button>
           </div>
         </div>
       </CardBody>

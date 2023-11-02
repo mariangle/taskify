@@ -9,17 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
     "@nextui-org/react": "^2.1.13",
     "axios": "^1.6.0",
+    "compromise": "^14.10.0",
+    "compromise-dates": "^3.4.2",
     "framer-motion": "^10.16.4",
+    "jwt-decode": "^4.0.0",
     "next": "14.0.0",
     "openai": "^4.14.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
     "react-speech-recognition": "^3.10.0",
     "regenerator-runtime": "^0.14.0",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.21.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

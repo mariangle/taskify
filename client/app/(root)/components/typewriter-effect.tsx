@@ -4,7 +4,7 @@ import Typewriter from 'typewriter-effect';
 
 const TypewriterEffect = () => {
     const commands = [
-        'Plan doctor appointment at 10 on Tuesday.',
+        'Add doctor appointment at 10 on Tuesday to my schedule.',
         'Do I have any plans on Monday?',
         'Check for upcoming events this week.',
       ];

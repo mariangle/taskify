@@ -1,22 +1,22 @@
-import { Button, NavbarContent, Link, NavbarItem } from "@nextui-org/react"
+import { Button, NavbarContent, NavbarItem } from "@nextui-org/react"
+import Link from "next/link"
 
 const AuthNav = () => {
-
-    const onLogin = () => {
-    }
-
-    const onSignOut = () => {
-    }
-
   return (
     <NavbarContent justify="end">
     <NavbarItem className="hidden lg:flex">
-      <Button onClick={onSignOut}>Sign Out</Button>
+      <Link href="/login" >
+        <Button variant="flat">
+          Login
+        </Button>
+      </Link>
     </NavbarItem>
     <NavbarItem>
-      <Button as={Link} color="primary" variant="flat" onClick={onLogin}>
-        Login
-      </Button>
+      <Link href="/register" >
+        <Button color="primary" variant="flat">
+          Sign Up
+        </Button>
+      </Link>
     </NavbarItem>
   </NavbarContent>
   )

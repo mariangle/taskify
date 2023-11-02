@@ -1,5 +1,4 @@
 "use client"
-
 import {
   Navbar, 
   NavbarBrand, 
@@ -16,22 +15,15 @@ import AuthNav from "@/components/auth-nav";
 import Link from "next/link";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
-  const pathname = usePathname();
 
   const menuItems = [
     "Profile",
     "Dashboard",
     "My Settings",
     "Log Out",
-  ];
-
-  const navLinks = [
-    { label: 'Planner', href: '/planner', active: pathname.includes('planner') },
-    { label: 'Commands', href: '/commands', active: pathname.includes('commands') },
   ]
 
   return (
@@ -46,13 +38,7 @@ const MainNavbar = () => {
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {navLinks.map((link) => (
-        <NavbarItem key={link.label}>
-          <Link className={link.active ? "text-primary" : "text-foreground"} href={link.href}>
-            {link.label}
-          </Link>
-        </NavbarItem>
-        ))}
+
       </NavbarContent>
       <AuthNav />
       <NavbarMenu>
