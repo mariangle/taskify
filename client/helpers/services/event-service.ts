@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import https from "https"
 
-import { IEvent } from '@/types';
+import { IEventApiResponse as IEvent } from '@/types';
 
 class EventService {
   private api: AxiosInstance;
@@ -11,11 +12,24 @@ class EventService {
     });
   }
 
+  async getEvents(): Promise<IEvent[]> {
+    try {
+      const response: AxiosResponse = await this.api.get('/events', {
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false
+      }) // bad in production
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async createEvent(event: IEvent): Promise<IEvent> {
     try {
       const response: AxiosResponse = await this.api.post('/events', event);
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
       throw error;
     }
   }
@@ -24,16 +38,16 @@ class EventService {
     try {
       const response: AxiosResponse = await this.api.get(`/events/${eventId}`);
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
       throw error;
     }
   }
 
-  async updateEvent(eventId: string, updatedEvent: any): Promise<IEvent> {
+  async updateEvent(eventId: string, updatedEvent: IEvent): Promise<IEvent> {
     try {
       const response: AxiosResponse = await this.api.put(`/events/${eventId}`, updatedEvent);
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
       throw error;
     }
   }

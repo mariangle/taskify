@@ -10,8 +10,8 @@ namespace server.Models
         public string Title { get; set; }
         public string? Location { get; set; }
         public string? Time { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public Guid UserId { get; set; }
 
         [ForeignKey("UserId")]

@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import { IUser } from '@/types';
 
@@ -15,7 +16,7 @@ class AuthService {
     try {
       const response: AxiosResponse = await this.api.post('/login', { username, password });
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
       throw error;
     }
   }
@@ -24,8 +25,8 @@ class AuthService {
     try {
       const response: AxiosResponse = await this.api.post('/register', { username, name, password });
       return response.data;
-    } catch (error: any) {
-      return error.response.data;
+    } catch (error) {
+      throw error;
     }
   }
 }

@@ -1,12 +1,23 @@
 import { IUser } from ".";
 
 export type IEvent = {
-    id: string;
+    id?: string;
     title: string;
     location?: string;
     time?: string;
-    startTime: Date;
-    endTime?: Date;
+    startDate: Date;
+    endDate?: Date;
     userId: string;
     user?: IUser;
 };
+
+export type IEventApiResponse = {
+    id?: string;
+    title: string;
+    location?: string;
+    time?: string;
+    startDate: string;
+    endDate?: string;
+    userId: string;
+    user?: IUser;
+}

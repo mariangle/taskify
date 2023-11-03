@@ -91,7 +91,7 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.Events'  is null.");
             }
 
-            if (@event.Title == null || @event.StartTime == DateTime.MinValue || @event.UserId == Guid.Empty)
+            if (@event.Title == null || @event.StartDate == DateTime.MinValue || @event.UserId == Guid.Empty)
             {
                 return BadRequest("Title, StartTime, and UserId are required.");
             }

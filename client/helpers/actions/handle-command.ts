@@ -1,44 +1,115 @@
+import EventService from "@/helpers/services/event-service"
+import { IEvent } from "@/types"
+
 const nlp = require('compromise')
 const plg = require('compromise-dates')
 
 const nlpEx = nlp.plugin(plg)
+const eventService = new EventService();
 
-export const HandleCommand = (command : string) => {
+const crudOperations: { [key: string]: string[] } = {
+    create: ['create', 'add', 'insert'],
+    read: ['read', 'get', 'fetch', 'retrieve', 'show'],
+    update: ['update', 'edit', 'modify', 'change'],
+    delete: ['delete', 'remove', 'erase', 'clear'],
+};
 
-    // Creating a compromise document
-    const doc = nlpEx('see you on june 8 2026 at 14 thank you.');
+export const HandleCommand = (command : string): string => {
 
-    // Extracting dates from the document
-    const dates = doc.dates().get()[0]
-    const duration = doc.durations().get()[0];
-    const times = doc.times().get()[0];
-    const text = doc.text();
+    let doc = nlpEx(command);
+    let commandType: string;
 
-    // Logging the results
-    console.log("Dates:", dates);
-    console.log("Detected duration:", duration);
-    console.log("Detected times:", times);
-    console.log("Original text:", text);
+    try {
+       ValidateCommand(doc);
+       commandType = GetCommandType(doc);
 
-    // validate the command
-    /*
-    if (!command) throw new Error("Your command cannot be empty.")
+    } catch (err) {
+        throw err;
+    }
 
-    // check what type command it is and return the type
+    switch (commandType) {
+        case 'create':
+            console.log('Performing create operation');
+            try {
+                const event = CreateEventObject(doc)
+                const createdEvent = eventService.createEvent(event);
+                return "SUCESSFULY CREATED!!";
+             } catch (err) {
+                throw err;
+             }            
+            break;
+        case 'read':
+            console.log('Performing read operation');
+            break;
+        case 'update':
+            console.log('Performing update operation');
+            break;
+        case 'delete':
+            console.log('Performing delete operation');
+            break;
+        default:
+            console.log('Unknown command type');
+    }
+    return "YEP"; 
 
-    if (command === "Hallo") {
-        throw new Error("hehe")
+}
+
+const CreateEventObject = (doc: any) => {
+    const values = doc.dates().out('array');
+
+    if (!values || values.length === 0) {
+        throw new Error("You need at least one date to create an event.");
     }
     
-    throw new Error("Your command is not valid. Please try again."); 
+    let hasDateRange: boolean = false;
+
+    if (values.length === 1 && values[0].includes("to")) {
+        hasDateRange = true;
+    }
+
+    const { dates } = doc.dates().json()[0]
+
+    if (dates.length === 0 || dates.length > 2) {
+        throw new Error("You can only use one or two dats.");
+    }
+
+    const verbsArray = doc.verbs().out('array');
+    const datesArray = doc.dates().out('array');
+    const title = doc.text().replace(verbsArray.join(' '), '').replace(datesArray.join(' '), '').trim();
+    
+    let newEvent: IEvent = {
+        title: title,
+        startDate: dates.start,
+        endDate: hasDateRange ? dates.end : undefined,
+        userId: "9ab57868-47eb-4f76-b823-47ba2538f4fc",
+    };
+    
+    return newEvent;
+};
 
 
+const ValidateCommand = (doc : any) => {
+    const verbs: string[] = doc.verbs().out('array');
+    if (verbs.length === 0) {
+        throw new Error("Invalid command. Your command must contain one verb.");
+    }
+
+} 
+
+const GetCommandType = (doc: any) => {
+
+    const verbs: string[] = doc.verbs().out('array');
+
+    for (let verb of verbs) {
+        verb = verb.toLowerCase();  
+        for (let operation in crudOperations) {
+            if (crudOperations[operation as keyof typeof crudOperations].includes(verb)) {
+                return operation;
+            }
+        }
+    }
+
+    throw new Error("Invalid command. Could not determine CRUD operation.");
+};
 
 
-    // use the type delegate to corresponding validation
-
-    // if command is a query
-
-    // if command is an action validate the event
-    */
-}
