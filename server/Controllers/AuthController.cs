@@ -1,9 +1,11 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using server.Context;
 using server.Models;
+using server.Services;
 using server.Utility;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,10 +19,12 @@ namespace server.Controllers
     {
         private readonly AuthUtils _auth;
         private readonly ApplicationContext _context;
+        private readonly IUserService _userService;
 
-        public AuthController(ApplicationContext context, IConfiguration configuration)
+        public AuthController(ApplicationContext context, IConfiguration configuration, IUserService userService)
         {
             _context = context;
+            _userService = userService;
             _auth = new AuthUtils(configuration);
         }
 
@@ -87,6 +91,13 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        [HttpGet, Authorize]
+        public ActionResult<User> GetCurrentUser()
+        {
+            var currentUser = _userService.GetCurrentUser();
+            return Ok(currentUser);
         }
     }
 }
