@@ -54,9 +54,8 @@ class AuthService {
 
     console.log(token)
 
-    isLogged = !!token; // Simplify the logic
-  
-    console.log(isLogged);
+    isLogged = !!token; 
+    
     return isLogged;
   }
 }

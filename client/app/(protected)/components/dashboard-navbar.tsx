@@ -1,68 +1,52 @@
 "use client"
 
-import {
-  Navbar, 
-  NavbarBrand, 
-  NavbarContent, 
-  NavbarMenuToggle,
-  NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
-  
-} from "@nextui-org/react";
-
-import LogoutButton from "./logout-button";
-
-import Link from "next/link";
-
+import ThemeSwitcher from "@/components/theme-switcher";
 import * as React from "react";
 
-const DashboardNavbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+import { usePathname } from "next/navigation";
 
-  const menuItems = [
-    "Schedule",
-    "Settings",
+import {
+  Navbar, 
+  NavbarMenu,
+  NavbarMenuToggle,
+  Link,
+  NavbarMenuItem
+} from "@nextui-org/react";
+
+const DashboardNavbar = () => {
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const navLinks = [
+    {label: 'Dashboard', href: '/dashboard', active: pathname === "/dashboard"},
+    {label: 'Events', href: '/dashboard/events', active: pathname === "/dashboard/events"},
+    {label: 'Settings', href: '/dashboard/settings', active: pathname === "/dashboard/settings"},
   ]
 
   return (
-    <Navbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen} isBordered>
-      <NavbarMenuToggle
-        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        className="sm:hidden"
-      />
-      <NavbarBrand>
-        <Link href="/" aria-current="page" className="font-bold text-inherit">
-          SleepScheduler
-        </Link>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          {menuItems.map((item, index) => (
-          <NavbarItem key={index}>
-            <Link color="foreground" href="#">
-              {item}
-            </Link>
-          </NavbarItem>
-          ))}
-      </NavbarContent>
-      <LogoutButton />
-
+    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full">
+         <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden"
+        />
+        <ThemeSwitcher />
         <NavbarMenu>
-          {menuItems.map((item, index) => (
+          {navLinks.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
-                  index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+                  item.active ? "primary" : "foreground"
                 }
                 className="w-full"
                 href="#"
+                size="lg"
               >
-                {item}
+                {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
-      </NavbarMenu>
-  </Navbar>
+        </NavbarMenu>
+    </Navbar>
   )
 }
 

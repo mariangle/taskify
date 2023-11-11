@@ -17,13 +17,16 @@ import {
   Button,
 } from "@nextui-org/react";
 
-import SelectMode from '@/components/select-mode';
-import DictaphoneButtons from '@/components/dictaphone-buttons';
-import Microphone from '@/components/microphone';
+import SelectMode from './select-mode';
+import DictaphoneButtons from './dictaphone-buttons';
+import Microphone from './microphone';
+
 import { useRouter } from 'next/navigation';
 import { handleError } from '@/helpers/util/error-handler';
+import toast from 'react-hot-toast';
 
 const Dictaphone = () => {
+  const [mounted, setMounted] = React.useState<boolean>(false)
   const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[0])
   const [command, setCommand] = React.useState<string>("");
   const router = useRouter();
@@ -35,7 +38,6 @@ const Dictaphone = () => {
   } = useSpeechRecognition();
 
   const sendCommand = async () => {
-    if (!command) return;
     try {
       await handleCommand(command);
       clearCommand();
@@ -58,8 +60,14 @@ const Dictaphone = () => {
     // ...
   }
 
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if(!mounted) return null
+
   return (
-    <Card className="max-w-[400px] w-full">
+    <Card className="max-w-[400px] w-full flex-1">
       <CardHeader>
         <SelectMode setSelectedMode={setSelectedMode}/>
       </CardHeader>
@@ -76,21 +84,25 @@ const Dictaphone = () => {
             >
               Clear
             </Button>
-            <button onClick={sendCommand}>hey</button>
           </div>
         </div>
       </CardBody>
       <Divider/>
-      <CardFooter className='block'>
+      <CardFooter className='block space-y-4'>
           <Textarea 
             variant='faded' 
             label="Command"
             className='whitespace-pre-wrap w-full' 
-            description='You have the option to speak into the microphone, type your command, and make edits directly.'
             minRows={1}
             value={command}
             onValueChange={setCommand}
             />
+            <Button
+              color='primary' size='sm' fullWidth
+              onClick={sendCommand}
+            >
+              Schedule
+            </Button>
       </CardFooter>
     </Card>
   );

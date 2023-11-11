@@ -9,7 +9,7 @@ const AuthNav = () => {
     <NavbarContent justify="end">
       {isLogged ? (
         <NavbarItem>
-          <Link href="/schedule">
+          <Link href="/dashboard">
             <Button color="primary" variant="flat">
               Dashboard
             </Button>

@@ -46,7 +46,7 @@ const AuthForm = ({
       if (variant === 'login') {
         await authService.login(data.username, data.password);
         toast.success('Successfully logged in!');
-        router.push('/schedule')
+        router.push('/dashboard')
       } else if (variant === 'register'){
         await authService.register(data.username, data.name, data.password);
         toast.success('Successfully registered. You can now log in.');

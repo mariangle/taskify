@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 import ToasterContext from '@/contexts/toaster-context'
+import ThemeContext from '@/contexts/theme-context'
 import NextUIContext from '@/contexts/next-ui-context'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,10 +22,12 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <NextUIContext>
-          <main className="dark text-foreground bg-background">
-              {children}
-              <ToasterContext />
-          </main>
+            <ThemeContext>
+              <main className="text-foreground bg-background">
+                  {children}
+                  <ToasterContext />
+              </main>
+            </ThemeContext>
           </NextUIContext>
         </body>
       </html>

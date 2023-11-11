@@ -13,7 +13,7 @@ export const handleCommand = async (command : string) => {
     let commandType: string;
 
     try {
-       commandType = validateAndGetCmdType (doc);
+       commandType = validateAndGetCmdType(doc);
     } catch (err) {
         throw err;
     }
@@ -83,10 +83,14 @@ const createEventObject = (doc: any) => {
 
 
 const validateAndGetCmdType = (doc: any) => {
+    if (doc.length === 0) {
+        throw new Error("Your command cannot be empty.");
+    }
+
     const verbs: string[] = doc.verbs().out('array');
 
     if (verbs.length === 0) {
-        throw new Error("Invalid command. Your command must contain one verb.");
+        throw new Error("Your command must contain one verb.");
     }
 
     for (let verb of verbs) {

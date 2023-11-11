@@ -18,7 +18,7 @@ const MainNavbar = () => {
         </Link>
       </NavbarBrand>
       <AuthNav />
-  </Navbar>
+    </Navbar>
   )
 }
 
