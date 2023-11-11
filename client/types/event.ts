@@ -7,12 +7,12 @@ export type IEvent = {
     time?: string;
     startDate: Date;
     endDate?: Date;
-    userId: string;
+    userId?: string;
     user?: IUser;
 };
 
 export type IEventApiResponse = {
-    id?: string;
+    id: string;
     title: string;
     location?: string;
     time?: string;

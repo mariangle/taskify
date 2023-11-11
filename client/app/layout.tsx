@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
+import ToasterContext from '@/contexts/toaster-context'
 import NextUIContext from '@/contexts/next-ui-context'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,6 +23,7 @@ export default function RootLayout({
           <NextUIContext>
           <main className="dark text-foreground bg-background">
               {children}
+              <ToasterContext />
           </main>
           </NextUIContext>
         </body>

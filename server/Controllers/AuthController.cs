@@ -44,16 +44,16 @@ namespace server.Controllers
 
             string lowerCaseUsername = req.Username.ToLower();
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == lowerCaseUsername);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == lowerCaseUsername);
 
             if (user == null)
             {
-                return BadRequest("Invalid username or password.");
+                return BadRequest("User not found.");
             }
 
             if (!_auth.VerifyPasswordHash(req.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return BadRequest("Invalid username or password.");
+                return BadRequest("Wrong password.");
             }
 
             string token = _auth.CreateToken(user);
@@ -78,7 +78,7 @@ namespace server.Controllers
             User user = new User
             {
                 Id = Guid.NewGuid(),
-                Username = req.Username.ToLower(),
+                Username = req.Username,
                 Name = req.Name
             };
 
@@ -93,7 +93,13 @@ namespace server.Controllers
             return user;
         }
 
-        [HttpGet, Authorize]
+        [HttpPost("logout"), Authorize]
+        public async Task<ActionResult> Logout()
+        {
+            return Ok("Logout successful");
+        }
+
+        [HttpGet("current-user"), Authorize]
         public ActionResult<User> GetCurrentUser()
         {
             var currentUser = _userService.GetCurrentUser();

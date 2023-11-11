@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import jwtDecode from 'jwt-decode';
+import { setCookie, destroyCookie, parseCookies } from 'nookies'
+import Cookies from "js-cookie"
 
 import { IUser } from '@/types';
 
@@ -12,10 +13,22 @@ class AuthService {
     });
   }
 
-  async login(username: string, password: string): Promise<string> {
+  async login(username: string, password: string): Promise<void> {
     try {
       const response: AxiosResponse = await this.api.post('/login', { username, password });
-      return response.data;
+      // const { accessToken, refreshToken } = response.data;
+      setCookie(null, 'access_token', response.data, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'strict',
+      });
+      setCookie(null, 'refresh_token', response.data, {
+        maxAge: 30 * 24 * 60 * 60, 
+        path: '/',
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'strict',
+      });;
     } catch (error) {
       throw error;
     }
@@ -28,6 +41,23 @@ class AuthService {
     } catch (error) {
       throw error;
     }
+  }
+
+  logout(): void {
+    destroyCookie(null, 'access_token');
+    destroyCookie(null, 'refresh_token');
+  }
+
+  isLogged(): boolean {
+    let isLogged = true;
+    const token =  Cookies.get('access_token') 
+
+    console.log(token)
+
+    isLogged = !!token; // Simplify the logic
+  
+    console.log(isLogged);
+    return isLogged;
   }
 }
 

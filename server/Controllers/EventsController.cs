@@ -115,19 +115,14 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.Events'  is null.");
             }
 
-            if (string.IsNullOrEmpty(@event.Title) || @event.StartDate == DateTime.MinValue || @event.UserId == Guid.Empty)
+            if (string.IsNullOrEmpty(@event.Title) || @event.StartDate == DateTime.MinValue)
             {
-                return BadRequest("Title, StartTime, and UserId are required.");
+                return BadRequest("You must provide both a date and a title.");
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == @event.UserId);
+            Guid userId = _userService.GetUserId();
 
-            if (user == null)
-            {
-                return BadRequest("Invalid UserId");
-            }
-
-            @event.Id = Guid.NewGuid(); 
+            @event.UserId = userId;
 
             _context.Events.Add(@event);
             await _context.SaveChangesAsync();

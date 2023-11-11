@@ -1,65 +1,52 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import https from "https"
+import axios, { AxiosResponse } from 'axios';
+import { IEvent, IEventApiResponse } from '@/types';
+import { requestOptions } from '../util';
 
-import { IEventApiResponse as IEvent } from '@/types';
+const api = axios.create({
+  baseURL: 'https://localhost:7232/api',
+});
 
-class EventService {
-  private api: AxiosInstance;
-
-  constructor() {
-    this.api = axios.create({
-      baseURL: 'https://localhost:7232/api',
-    });
+const createEvent = async (event: IEvent): Promise<IEventApiResponse> => {
+  try {
+    const response: AxiosResponse = await api.post('/events', event, requestOptions);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
+};
 
-  async getEvents(): Promise<IEvent[]> {
-    try {
-      const response: AxiosResponse = await this.api.get('/events', {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false
-      }) // bad in production
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+const getEvent = async (eventId: string): Promise<IEventApiResponse> => {
+  try {
+    const response: AxiosResponse = await api.get(`/events/${eventId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
+};
 
-  async createEvent(event: IEvent): Promise<IEvent> {
-    try {
-      const response: AxiosResponse = await this.api.post('/events', event);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+const updateEvent = async (eventId: string, updatedEvent: IEvent): Promise<IEventApiResponse> => {
+  try {
+    const response: AxiosResponse = await api.put(`/events/${eventId}`, updatedEvent, requestOptions);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
+};
 
-  async getEvent(eventId: string): Promise<IEvent> {
-    try {
-      const response: AxiosResponse = await this.api.get(`/events/${eventId}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+const deleteEvent = async (eventId: string): Promise<IEventApiResponse> => {
+  try {
+    const response: AxiosResponse = await api.delete(`/events/${eventId}`, requestOptions);
+    return response.data;
+  } catch (error: any) {
+    throw error;
   }
+};
 
-  async updateEvent(eventId: string, updatedEvent: IEvent): Promise<IEvent> {
-    try {
-      const response: AxiosResponse = await this.api.put(`/events/${eventId}`, updatedEvent);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
+const eventService = {
+  createEvent,
+  getEvent,
+  updateEvent,
+  deleteEvent
+};
 
-  async deleteEvent(eventId: string): Promise<IEvent> {
-    try {
-      const response: AxiosResponse = await this.api.delete(`/events/${eventId}`);
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
-  }
-}
-
-export default EventService;
+export default eventService;

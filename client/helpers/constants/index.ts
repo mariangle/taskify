@@ -37,3 +37,10 @@ export const languageOptions: Language[] = [
     value: 'de-DE',
   },
 ];  
+
+export const crudOperations: { [key: string]: string[] } = {
+  create: ['create', 'add', 'insert'],
+  read: ['read', 'get', 'fetch', 'retrieve', 'show'],
+  update: ['update', 'edit', 'modify', 'change'],
+  delete: ['delete', 'remove', 'erase', 'clear'],
+};

@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode, modes } from '@/helpers/constants';
-import { HandleCommand } from '@/helpers/actions/handle-command';
+import { handleCommand } from '@/helpers/util/cmd-handler';
 import { Textarea } from "@nextui-org/react";
 
 import {
@@ -21,11 +21,11 @@ import SelectMode from '@/components/select-mode';
 import DictaphoneButtons from '@/components/dictaphone-buttons';
 import Microphone from '@/components/microphone';
 import { useRouter } from 'next/navigation';
+import { handleError } from '@/helpers/util/error-handler';
 
 const Dictaphone = () => {
   const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[0])
   const [command, setCommand] = React.useState<string>("");
-  const [erorrMessage, setErrorMessage] = React.useState<string>("");
   const router = useRouter();
   const {
     transcript,
@@ -34,25 +34,27 @@ const Dictaphone = () => {
     isMicrophoneAvailable,
   } = useSpeechRecognition();
 
-  const SendCommand = () => {
+  const sendCommand = async () => {
     if (!command) return;
     try {
-      const response = HandleCommand(command);
-      alert(response)
+      await handleCommand(command);
+      clearCommand();
       router.refresh();
-    } catch (error: any) {
-      alert(error.message);
+    } catch (err) {
+      handleError(err)
     }
+  };
+
+  const clearCommand = () => {
+    setCommand("");
+    resetTranscript();
   }
 
   React.useEffect(() => {
     setCommand(prevCommand => prevCommand + " " + transcript);
   }, [transcript]);
 
-  if (!browserSupportsSpeechRecognition) {
-    // ...
-  }
-  if (!isMicrophoneAvailable) {
+  if (!browserSupportsSpeechRecognition || !isMicrophoneAvailable) {
     // ...
   }
 
@@ -60,7 +62,6 @@ const Dictaphone = () => {
     <Card className="max-w-[400px] w-full">
       <CardHeader>
         <SelectMode setSelectedMode={setSelectedMode}/>
-        { /* <SelectLanguage setSelectedLanguage={setSelectedLanguage}/> */}
       </CardHeader>
       <Divider />
       <CardBody>
@@ -71,11 +72,11 @@ const Dictaphone = () => {
           <div className='flex-1'>
             <Button
               color='primary' radius='full' variant='light' size='sm'
-              onClick={resetTranscript}
+              onClick={clearCommand}
             >
               Clear
             </Button>
-            <button onClick={SendCommand}>hey</button>
+            <button onClick={sendCommand}>hey</button>
           </div>
         </div>
       </CardBody>
@@ -87,12 +88,9 @@ const Dictaphone = () => {
             className='whitespace-pre-wrap w-full' 
             description='You have the option to speak into the microphone, type your command, and make edits directly.'
             minRows={1}
-            isInvalid={false}
-            errorMessage={erorrMessage.length ? false : false}
             value={command}
             onValueChange={setCommand}
             />
-            <p>{command}</p>
       </CardFooter>
     </Card>
   );
