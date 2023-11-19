@@ -1,5 +1,6 @@
 import { Input as NextUIInput, InputProps as NextUIInputProps } from '@nextui-org/react';
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
+import { capitalizeFirstLetter } from '@/helpers/util/formatter';
 
 interface Props extends NextUIInputProps {
   id: string,
@@ -7,20 +8,15 @@ interface Props extends NextUIInputProps {
   required?: boolean;
   register?: UseFormRegister<FieldValues | any>,
   errors: FieldErrors,
-  type?: 'text' | 'number' | 'date',
 }
 
-const Input: React.FC<Props> = ({ id, register, label, errors, required = true, type = 'text', ...props }) => {
-
-  const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1)
-
+const Input: React.FC<Props> = ({ id, register, label, errors, required = true, ...props }) => {
   return (
     <NextUIInput
       size='sm'
       variant='bordered'
       placeholder=' '
       label={label ?? capitalizeFirstLetter(id)}
-      type={type}
       {...(register && register(id, { required }))}
       isInvalid={errors[id] ? true : false}
       errorMessage={errors[id] ? String(errors[id]?.message) : ''}

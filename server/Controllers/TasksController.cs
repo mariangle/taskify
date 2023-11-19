@@ -33,7 +33,6 @@ namespace server.Controllers
             }
 
             var tasks = await _context.Tasks
-                .Include(task => task.User) 
                 .ToListAsync();
 
             return tasks;
@@ -62,7 +61,7 @@ namespace server.Controllers
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> PutTask(Guid id, TaskModel task)
-        {
+            {
             if (id != task.Id)
             {
                 return BadRequest("No permission");

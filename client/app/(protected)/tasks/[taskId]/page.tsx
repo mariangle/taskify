@@ -1,5 +1,5 @@
 import TaskForm from "@/components/forms/task-form"
-import TaskService from "@/helpers/api/task-service"
+import TaskService from "@/helpers/services/task-service"
 
 async function TaskPage({
   params

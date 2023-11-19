@@ -1,6 +1,6 @@
 import { Button, NavbarContent, NavbarItem } from "@nextui-org/react"
 import Link from "next/link"
-import { isTokenValid } from "@/helpers/actions/get-token";
+import { isTokenValid } from "@/helpers/services/token-service";
 
 const AuthNav = () => {
   const isLogged = isTokenValid();

@@ -1,7 +1,7 @@
 "use client"
 
-import { Spinner, HiOutlineEye, HiOutlineEyeOff, Button } from "@/components/ui";
-import { Input } from "@nextui-org/react";
+import { HiOutlineEye, HiOutlineEyeOff } from "@/components/ui";
+import { Input, Button } from "@/components/common";
 
 import * as z from 'zod';
 import * as React from "react";
@@ -62,30 +62,9 @@ const AuthForm = ({
 
   return (
     <form className="max-w-xs space-y-4 mx-auto">
-      <Input 
-        type="text" 
-        label="Username" 
-        size="sm" 
-        variant="bordered"         
-        isInvalid={errors.username ? true : false}
-        errorMessage={errors.username?.message}
-        {...register("username")}
-        />
-      { variant === "register" && 
-      <Input 
-        type="text" 
-        label="Name" 
-        size="sm" 
-        variant="bordered"
-        isInvalid={errors.name ? true : false}
-        errorMessage={errors.name?.message}
-        {...register("name")}
-      />
-      }
-      <Input
-        label="Password"
-        variant="bordered"
-        {...register("password")}
+      <Input id='username' errors={errors} register={register}/>
+      { variant === "register" &&  <Input id='name' errors={errors} register={register}/> }
+      <Input id='password' register={register} errors={errors} type={isVisible ? "text" : "password"}
         endContent={
           <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
             {isVisible ? (
@@ -95,16 +74,23 @@ const AuthForm = ({
             )}
           </button>
         }
-        type={isVisible ? "text" : "password"}
-        isInvalid={errors.password ? true : false}
-        errorMessage={errors.password?.message}
-        className="max-w-xs"
-      />    
+      />   
+      { variant === "register" &&  
+          <Input id='confirmPassword' register={register} errors={errors} type={isVisible ? "text" : "password"}
+            endContent={
+              <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                {isVisible ? (
+                  <HiOutlineEyeOff className="text-2xl text-default-400 pointer-events-none" />
+                ) : (
+                  <HiOutlineEye className="text-2xl text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
+          />   
+      }
       <Button
         isLoading={isLoading}
         type="submit"
-        color="primary"
-        spinner={< Spinner />}
         onClick={handleSubmit(onSubmit)}
       >
         {action}

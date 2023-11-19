@@ -1,12 +1,23 @@
-export const formatter = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-    };
+import { format, parseISO } from 'date-fns';
 
-    const date = new Date(dateString);
-    return date.toLocaleString(undefined, options);
+export const formatToEEEDDMMM = (dateString: string): string => {
+    try {
+        return format(new Date(dateString), 'EEE, dd MMM');
+    } catch (error) {
+        return '';
+    }
 };
+
+export const formatToEEEDDMMMYYYYY = (dateString: string): string => {
+    try {
+        return format(new Date(dateString), 'EEE, dd MMM yyyy');
+    } catch (error) {
+        return '';
+    }
+};
+
+export const formatStringToYYYYMMDD = (dateString?: string): string | undefined => {
+    return dateString ? format(new Date(dateString), 'yyyy-MM-dd') : ''; 
+}
+
+export const capitalizeFirstLetter = (dateString: string) => dateString.charAt(0).toUpperCase() + dateString.slice(1)

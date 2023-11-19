@@ -1,10 +1,5 @@
 "use client"
 
-import ThemeSwitcher from "@/components/theme-switcher";
-import * as React from "react";
-
-import { usePathname } from "next/navigation";
-
 import {
   Navbar, 
   NavbarMenu,
@@ -13,15 +8,15 @@ import {
   NavbarMenuItem
 } from "@nextui-org/react";
 
+import ThemeSwitcher from "@/components/theme-switcher";
+import * as React from "react";
+
+import { usePathname } from "next/navigation";
+import { dashboardLinks } from "@/helpers/constants";
+
 const DashboardNavbar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  const navLinks = [
-    {label: 'Dashboard', href: '/dashboard', active: pathname === "/dashboard"},
-    {label: 'Tasks', href: '/tasks', active: pathname === "/tasks"},
-    {label: 'Calendar', href: '/calendar', active: pathname === "/calendar"},
-  ]
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full">
@@ -31,17 +26,15 @@ const DashboardNavbar = () => {
         />
         <ThemeSwitcher />
         <NavbarMenu>
-          {navLinks.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
+          {dashboardLinks.map((link) => (
+            <NavbarMenuItem key={link.label}>
               <Link
-                color={
-                  item.active ? "primary" : "foreground"
-                }
+                color={pathname.includes(link.href) ? "primary" : "foreground"}
                 className="w-full"
-                href="#"
+                href={link.href}
                 size="lg"
               >
-                {item.label}
+                {link.label}
               </Link>
             </NavbarMenuItem>
           ))}

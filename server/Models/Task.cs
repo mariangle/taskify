@@ -10,14 +10,12 @@ namespace server.Models
         Work,
         Personal,
         Education,
-        HealthAndFitness,
-        Errands,
+        Wellness,
+        Chore,
         Social,
-        Hobbies,
         Travel,
         Finance,
         Urgent,
-        DailyRoutine,
         Shopping
     }
 
@@ -51,7 +49,8 @@ namespace server.Models
         public TaskStatus Status { get; set; }
         public User? User { get; set; }
         public List<Subtask>? Subtasks { get; set; }
-        public List<Tag>? Tags { get; set; }
+        public string[]? Tags { get; set; }
+        public string[]? Attachments { get; set; }
         public List<Note>? Notes { get; set; }
         public RecurringTask? Recurring { get; set; }
     }

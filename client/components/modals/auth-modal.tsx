@@ -1,9 +1,11 @@
 "use client"
+
 import React from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link} from "@nextui-org/react";
+import {Modal, ModalContent, Button, useDisclosure } from "@nextui-org/react";
+
 import AuthForm from "@/app/(auth)/components/auth-form";
 export default function AuthModal() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>

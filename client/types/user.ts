@@ -1,10 +1,16 @@
-import { IEvent } from ".";
+import { TaskResponse } from "."
 
-export type IUser = {
-    id: string;
-    username: string;
-    name: string;
-    // passwordHash: Uint8Array;
-    // passwordSalt: Uint8Array;
-    events?: IEvent[];
+export type UserEntry = {
+    username: string,
+    password: string,
+    name: string,
+}
+
+export type UserResponse = {
+    id: string,
+    image: string,
+    username: string,
+    password: string
+    name: string,
+    tasks: TaskResponse[],
 }

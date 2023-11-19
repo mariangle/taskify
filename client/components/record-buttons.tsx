@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { Button } from '@nextui-org/react';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode, Language } from '@/helpers/constants';
+import { Button } from './common';
+  import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Mode } from '@/helpers/constants';
 
 interface DictaphoneButtonsProps {
   selectedMode: Mode,
-  selectedLanguage?: Language
 }
 
-const DictaphoneButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode, selectedLanguage }) => {
+const RecordButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode }) => {
   const { listening } = useSpeechRecognition();
 
   const startListening = () => {
@@ -33,7 +32,6 @@ const DictaphoneButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode, sel
   const handleManualClick = () => {
     if (!listening) {
       startListening();
-      console.log(selectedLanguage)
     } else {
       SpeechRecognition.stopListening();
     }
@@ -41,7 +39,7 @@ const DictaphoneButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode, sel
   
 
   return (
-    <div className='flex-1'>
+    <>
       {selectedMode.value === 'hold' && (
         <button
           onTouchStart={handleHoldStart}
@@ -49,12 +47,13 @@ const DictaphoneButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode, sel
           onTouchEnd={handleHoldEnd}
           onMouseUp={handleHoldEnd}
         >
-          Hold to talk
+           {listening ? 'Listening...' : 'Hold-to-talk'}
         </button>
       )}
       {selectedMode.value === 'auto' && (
         <Button
-          color='primary' size='sm' radius='full'
+          color='danger'
+          variant='flat'
           onClick={handleAutoClick}
         >
           {listening ? 'Listening...' : 'Start Recording'}
@@ -62,14 +61,15 @@ const DictaphoneButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode, sel
       )}
       {selectedMode.value === 'manual' && (
         <Button
-          color='primary' radius='full' size='sm'
+          color='danger'
+          variant='flat'
           onClick={handleManualClick}
         >
           {listening ? 'Stop Recording' : 'Start Recording'}
         </Button>
       )}
-    </div>
+    </>
   );
 };
 
-export default DictaphoneButtons;
+export default RecordButtons;

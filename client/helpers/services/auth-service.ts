@@ -1,8 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { setCookie, destroyCookie, parseCookies } from 'nookies'
+import { setCookie, destroyCookie } from 'nookies'
 import Cookies from "js-cookie"
-
-import { IUser } from '@/types';
+import { UserResponse } from '@/types';
 
 class AuthService {
   private api: AxiosInstance;
@@ -34,7 +33,7 @@ class AuthService {
     }
   }
 
-  async register(username: string, name: string, password: string): Promise<IUser> {
+  async register(username: string, name: string, password: string): Promise<UserResponse> {
     try {
       const response: AxiosResponse = await this.api.post('/register', { username, name, password });
       return response.data;
@@ -51,8 +50,6 @@ class AuthService {
   isLogged(): boolean {
     let isLogged = true;
     const token =  Cookies.get('access_token') 
-
-    console.log(token)
 
     isLogged = !!token; 
     

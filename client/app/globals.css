@@ -53,3 +53,15 @@ body {
 .orange-gradient{
   @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF705B] to-[#FFB457];
 }
+
+.flex-between{
+  @apply flex justify-between items-center;
+}
+
+.flex-gap{
+  @apply flex gap-2 items-center;
+}
+
+.flex-gap-sm{
+  @apply flex gap-1 items-center flex-wrap;
+}

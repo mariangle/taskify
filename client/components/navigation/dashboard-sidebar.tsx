@@ -6,7 +6,7 @@ import {
 
 import LogoutButton from "../../app/(protected)/components/logout-button";
 import { usePathname } from "next/navigation";
-
+import { dashboardLinks } from "@/helpers/constants";
 import Link from "next/link";
 
 import * as React from "react";
@@ -14,24 +14,18 @@ import * as React from "react";
 const DashboardSidebar = () => {
   const pathname = usePathname();
 
-  const navLinks = [
-    {label: 'Dashboard', href: '/dashboard', active: pathname === "/dashboard"},
-    {label: 'Tasks', href: '/tasks', active: pathname === "/tasks"},
-    {label: 'Calendar', href: '/calendar', active: pathname === "/calendar"},
-  ]
-
   return (
     <div className="border-r dark:border-zinc-800 h-full p-4">
       <ul>
-        {navLinks.map(({label, href, active}) => (
-          <li key={label} className="mb-1">
-            <Link href={href}>
+        {dashboardLinks.map((link) => (
+          <li key={link.label} className="mb-1">
+            <Link href={link.href}>
                 <Button 
-                  variant={active ? 'flat' : 'light'}
+                  variant={pathname.includes(link.href) ? 'flat' : 'light'}
                   fullWidth
                   className="flex justify-start"
                 >
-                  {label}
+                  {link.label}
                 </Button>
               </Link>
           </li>
