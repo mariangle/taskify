@@ -19,8 +19,8 @@ const DashboardNavbar = () => {
 
   const navLinks = [
     {label: 'Dashboard', href: '/dashboard', active: pathname === "/dashboard"},
-    {label: 'Events', href: '/dashboard/events', active: pathname === "/dashboard/events"},
-    {label: 'Settings', href: '/dashboard/settings', active: pathname === "/dashboard/settings"},
+    {label: 'Tasks', href: '/tasks', active: pathname === "/tasks"},
+    {label: 'Calendar', href: '/calendar', active: pathname === "/calendar"},
   ]
 
   return (

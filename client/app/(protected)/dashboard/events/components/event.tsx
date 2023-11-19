@@ -2,7 +2,7 @@
 
 import { IEventApiResponse as IEvent } from "@/types"
 import { formatter } from "@/helpers/util"
-import EventService from "@/helpers/services/event-service"
+import EventService from "@/helpers/api/task-service"
 import { useRouter } from "next/navigation"
 import {
   Card, 

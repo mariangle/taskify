@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Context;
 
@@ -11,9 +12,11 @@ using server.Context;
 namespace server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231118171835_TaskifySetup")]
+    partial class TaskifySetup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +24,6 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("server.Models.Note", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("TaskId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("Note");
-                });
 
             modelBuilder.Entity("server.Models.RecurringTask", b =>
                 {
@@ -66,7 +46,7 @@ namespace server.Migrations
                     b.HasIndex("TaskId")
                         .IsUnique();
 
-                    b.ToTable("RecurringTasks");
+                    b.ToTable("RecurringTask");
                 });
 
             modelBuilder.Entity("server.Models.Subtask", b =>
@@ -92,36 +72,7 @@ namespace server.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("Subtasks");
-                });
-
-            modelBuilder.Entity("server.Models.Tag", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("TaskId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Tag");
+                    b.ToTable("Subtask");
                 });
 
             modelBuilder.Entity("server.Models.Task", b =>
@@ -138,9 +89,6 @@ namespace server.Migrations
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Priority")
                         .HasColumnType("int");
@@ -159,7 +107,7 @@ namespace server.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Task");
                 });
 
             modelBuilder.Entity("server.Models.User", b =>
@@ -169,6 +117,7 @@ namespace server.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -192,15 +141,6 @@ namespace server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("server.Models.Note", b =>
-                {
-                    b.HasOne("server.Models.Task", null)
-                        .WithMany("Notes")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("server.Models.RecurringTask", b =>
                 {
                     b.HasOne("server.Models.Task", null)
@@ -219,21 +159,6 @@ namespace server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("server.Models.Tag", b =>
-                {
-                    b.HasOne("server.Models.Task", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("TaskId");
-
-                    b.HasOne("server.Models.User", "User")
-                        .WithMany("Tags")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("server.Models.Task", b =>
                 {
                     b.HasOne("server.Models.User", "User")
@@ -247,19 +172,13 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Task", b =>
                 {
-                    b.Navigation("Notes");
-
                     b.Navigation("Recurring");
 
                     b.Navigation("Subtasks");
-
-                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("server.Models.User", b =>
                 {
-                    b.Navigation("Tags");
-
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

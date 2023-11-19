@@ -1,4 +1,4 @@
-import EventService from "@/helpers/services/event-service"
+import EventService from "@/helpers/api/task-service"
 import { IEvent } from "@/types"
 import { crudOperations } from "@/helpers/constants"
 

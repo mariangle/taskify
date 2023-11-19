@@ -1,5 +1,5 @@
 {
-  "name": "speech-scheduler",
+  "name": "taskify",
   "version": "0.1.0",
   "private": true,
   "scripts": {

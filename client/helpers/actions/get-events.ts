@@ -3,7 +3,6 @@ import https from "https"
 import { IEventApiResponse } from '@/types';
 import { token } from './get-token';
 export const getEvents = async (): Promise<IEventApiResponse[]> => {
-
     try {
       const response: AxiosResponse = await axios.get('https://localhost:7232/api/events', {
         headers: {

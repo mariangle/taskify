@@ -1,10 +1,12 @@
-import DashboardSidebar from "./components/dashboard-sidebar";
-import DashboardNavbar from "./components/dashboard-navbar";
-import Breadcrumbs from "./components/breadcrumbs";
+import DashboardSidebar from "@/components/navigation/dashboard-sidebar";
+import DashboardNavbar from "@/components/navigation/dashboard-navbar";
+import Breadcrumbs from "@/components/navigation/breadcrumbs-nav";
 
 interface PageProps {
     children: React.ReactNode;
 }
+
+// TODO: check if user is logged
 
 export default function Layout({ children }: PageProps) {
     return (

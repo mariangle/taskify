@@ -7,9 +7,11 @@ namespace server.Models
         [Key]
         public Guid Id { get; set; } 
         public string Username { get; set; }
+        public string? Image { get; set; }
         public string Name { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public List<Event>? Events { get; set; }
+        public List<Tag>? Tags { get; set; }
+        public List<Task>? Tasks { get; set; }
     }
 }

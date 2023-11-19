@@ -44,3 +44,17 @@ export const crudOperations: { [key: string]: string[] } = {
   update: ['update', 'edit', 'modify', 'change'],
   delete: ['delete', 'remove', 'erase', 'clear'],
 };
+
+// TODO: figure out how to lower case letter enums from api directly
+
+export const statuses = [
+  {
+    value: 'Todo', label: 'todo'
+  }, 
+  {
+    value: 'InProgress', label: 'in-progress'
+  }, 
+  {
+    value: 'Completed', label: 'completed'
+  }
+]

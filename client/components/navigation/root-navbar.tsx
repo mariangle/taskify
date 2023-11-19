@@ -3,13 +3,13 @@ import {
   NavbarBrand,   
 } from "@nextui-org/react";
 
-import AuthNav from "@/app/(root)/components/auth-nav";
+import AuthNav from "@/components/navigation/root-auth-nav";
 
 import Link from "next/link";
 
 import * as React from "react";
 
-const MainNavbar = () => {
+const RootNavbar = () => {
   return (
     <Navbar shouldHideOnScroll isBordered>
       <NavbarBrand>
@@ -22,4 +22,4 @@ const MainNavbar = () => {
   )
 }
 
-export default MainNavbar;
+export default RootNavbar;

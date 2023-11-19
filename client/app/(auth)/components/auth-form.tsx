@@ -30,13 +30,14 @@ const AuthForm = ({
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const router = useRouter();
 
-    const AuthSchema = variant === "login" ? LoginSchema : RegisterSchema;
-    
+    const authSchema = variant === 'login' ? LoginSchema : RegisterSchema;
+    const action = variant === 'login' ? 'Login' : 'Register';
+    const successMessage = variant === "login" ? 'Successfully logged in!' : 'Successfully registered. You can now log in.';
     const {
       register,
       handleSubmit,
       formState: { errors }
-  } = useForm<AuthSchemaType>({ resolver: zodResolver(AuthSchema)})
+  } = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema)})
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -45,11 +46,11 @@ const AuthForm = ({
       setIsLoading(true);
       if (variant === 'login') {
         await authService.login(data.username, data.password);
-        toast.success('Successfully logged in!');
+        toast.success(successMessage);
         router.push('/dashboard')
       } else if (variant === 'register'){
         await authService.register(data.username, data.name, data.password);
-        toast.success('Successfully registered. You can now log in.');
+        toast.success(successMessage);
         router.push('/login')
       }
     } catch (err) {
@@ -106,7 +107,7 @@ const AuthForm = ({
         spinner={< Spinner />}
         onClick={handleSubmit(onSubmit)}
       >
-        { variant === "login" ? "Login" : "Register"}
+        {action}
       </Button>
     </form>
   )

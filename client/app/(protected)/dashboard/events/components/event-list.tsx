@@ -6,7 +6,7 @@ const EventList = async () => {
 const { events, err } = await GetEvents();
 
 if (err){
-  return "err occured";
+  return "An unexpected error occured. Try logging in again.";
 }
   
   return (
@@ -36,6 +36,7 @@ const GetEvents = async () => {
       events: events,
     };
   } catch (err){
+    console.log(err)
     return {
       err: err,
       events: null,

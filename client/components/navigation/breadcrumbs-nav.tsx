@@ -7,7 +7,7 @@ import {
 
 import { useSelectedLayoutSegments } from 'next/navigation'
 
-const BreadcrumbsLinks = () => {
+const BreadcrumbsNav = () => {
     const segments = useSelectedLayoutSegments()
 
   return (
@@ -19,4 +19,4 @@ const BreadcrumbsLinks = () => {
   )
 }
 
-export default BreadcrumbsLinks
+export default BreadcrumbsNav

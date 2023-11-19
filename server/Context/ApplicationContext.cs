@@ -9,8 +9,6 @@ namespace server.Context
             : base(options)
         {
         }
-
-        public DbSet<Event> Events { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,5 +21,11 @@ namespace server.Context
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
         }
+
+        public DbSet<server.Models.Task>? Tasks { get; set; }
+
+        public DbSet<server.Models.Subtask>? Subtasks { get; set; }
+
+        public DbSet<server.Models.RecurringTask>? RecurringTasks { get; set; }
     }
 }
