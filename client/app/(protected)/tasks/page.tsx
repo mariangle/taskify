@@ -5,7 +5,7 @@ import CommandModal from '@/components/modals/command-modal';
 async function TasksPage() {
   const tasks = await TaskService.getTasks();
   
-  const todoTasks = tasks.filter((task) => task.status === 'Todo');
+  const openTasks = tasks.filter((task) => task.status === 'Incomplete');
   const inProgressTasks = tasks.filter((task) => task.status === 'InProgress');
   const completedTasks = tasks.filter((task) => task.status === 'Completed');
 
@@ -13,7 +13,7 @@ async function TasksPage() {
     <div>
       <CommandModal />
       <div className="grid lg:grid-cols-3 gap-4">
-        <StatusColumn items={todoTasks} status="Todo" />
+        <StatusColumn items={openTasks} status="Incomplete" />
         <StatusColumn items={inProgressTasks} status="InProgress" />
         <StatusColumn items={completedTasks} status="Completed" />
       </div>

@@ -28,7 +28,7 @@ function Task({
           <div className="flex justify-between">
             <div className="flex gap-2 items-center">
               <Link href={`/tasks/${data.id}`}>
-                <p className="text-md">{data.title}</p>
+                <p className="text-md">{data.name}</p>
               </Link>
               <Badge status={data.status} />
             </div>
@@ -47,7 +47,6 @@ function Task({
         </CardHeader>
         <Divider />
         <CardBody>
-          <p className="text-small text-default-500">{data.description}</p>
         </CardBody>
     </Card>
   );

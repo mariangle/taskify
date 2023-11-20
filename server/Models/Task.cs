@@ -1,56 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace server.Models
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum Category
-    {
-        Work,
-        Personal,
-        Education,
-        Wellness,
-        Chore,
-        Social,
-        Travel,
-        Finance,
-        Urgent,
-        Shopping
-    }
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum TaskStatus
-    {
-        Todo,
-        InProgress,
-        Completed
-    }
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum TaskPriority
-    {
-        Low,
-        Medium,
-        High
-    }
 
     public class Task
     {
         [Key]
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string? Description { get; set; }
+        public Guid? ListId { get; set; }
+        public string Name { get; set; } = string.Empty;
         public string? Location { get; set; }
         public DateTime DueDate { get; set; }
-        public Category? Category { get; set; }
-        public TaskPriority? Priority { get; set; }
-        public TaskStatus Status { get; set; }
+        public TimeSpan Duration { get; set; }
+        public Priority? Priority { get; set; }
+        public Status Status { get; set; }
+        public List? List { get; set; }
         public User? User { get; set; }
         public List<Subtask>? Subtasks { get; set; }
-        public string[]? Tags { get; set; }
-        public string[]? Attachments { get; set; }
         public List<Note>? Notes { get; set; }
         public RecurringTask? Recurring { get; set; }
     }

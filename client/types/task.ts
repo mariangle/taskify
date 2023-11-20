@@ -3,37 +3,29 @@ import {
     RecurringTask, 
     NoteResponse,
     SubtaskResponse, 
-    TaskCategory, 
     TaskPriority, 
     TaskStatus 
 } from "."
 
 export type TaskEntry = {
-    title: string,
-    description?: string,
+    name: string,
     location?: string,
     dueDate: string,
-    category?: string,
-    attachments?: string[],
+    duration?: string,
     priority?: string,
     status?: string,
-    recurring?: RecurringTask,
-    tags?: string[], 
+    // recurring?: RecurringTask,
 }
 
 export type TaskResponse = {
     id: string,
-    title: string,
-    description?: string,
-    tags?: string[],
-    attachments?: string[],
+    name: string,
     location?: string,
     dueDate: string,
-    category?: TaskCategory,
     priority?: TaskPriority,
     status: TaskStatus,
     user: UserResponse,
     subtasks?: SubtaskResponse[],
-    recurring?: RecurringTask,
-    notes?: NoteResponse[]
+    // recurring?: RecurringTask,
+    // notes?: NoteResponse[]
 }

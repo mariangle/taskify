@@ -17,18 +17,11 @@ const TaskPreview = ({
 }: TaskPreviewProps) => {
   return (
     <div className="flex-gap-sm">
-        {task?.title ? <Tag label={task.title}  icon={<MdOutlineTitle />}/> : <Tag label={'title'} />}
+        {task?.name ? <Tag label={task.name}  icon={<MdOutlineTitle />}/> : <Tag label={'name'} />}
         {task?.dueDate ? <Tag label={formatToEEEDDMMMYYYYY(task.dueDate)} icon={<HiOutlineClock />} /> : <Tag label={'due date'} />}
         {task?.priority && <IconLabel label={task.priority}/>}
         {task?.location && <Tag label={task.location} icon={<HiLocationMarker />} /> }
-        {task?.category && <IconLabel label={task.category}/> }
         {task?.status && <StatusBadge status={task.status} />}
-        <div className="flex-gap-sm">
-            {task?.attachments?.map((attachment) => <AttachmentLabel key={attachment} attachment={attachment}/>)}
-        </div>
-        <div className="flex-gap-sm">
-            {task?.tags?.map((tag) => <IconLabel label={tag} key={tag} isHashtag={true}/>)}
-        </div>
     </div>
   )
 }

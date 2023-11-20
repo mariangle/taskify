@@ -4,10 +4,11 @@ import {
   Navbar, 
   NavbarMenu,
   NavbarMenuToggle,
-  Link,
-  NavbarMenuItem
+  NavbarMenuItem,
+  Button
 } from "@nextui-org/react";
 
+import Link from "next/link";
 import ThemeSwitcher from "@/components/theme-switcher";
 import * as React from "react";
 
@@ -28,13 +29,12 @@ const DashboardNavbar = () => {
         <NavbarMenu>
           {dashboardLinks.map((link) => (
             <NavbarMenuItem key={link.label}>
-              <Link
-                color={pathname.includes(link.href) ? "primary" : "foreground"}
-                className="w-full"
-                href={link.href}
-                size="lg"
-              >
-                {link.label}
+              <Link href={link.href}>
+                <Button
+                  className={pathname.includes(link.href) ? "bg-primary" : "bg-foreground"} 
+                  > {  /* fix styling */} 
+                  {link.label}
+                </Button>
               </Link>
             </NavbarMenuItem>
           ))}

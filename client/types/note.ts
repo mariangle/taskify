@@ -6,6 +6,7 @@ export type NoteEntry = {
 export type NoteResponse = {
     id: string,
     taskId: string,
+    userId: string,
     content: string,
     createdAt: string,
 }

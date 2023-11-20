@@ -1,11 +1,10 @@
 import * as z from 'zod';
 
-const isStatusValid = (value: string) => ['Todo', 'InProgress', 'Completed'].includes(value);
+const isStatusValid = (value: string) => ['Incomplete', 'InProgress', 'Completed'].includes(value);
 const isDateString = (value: string) => !isNaN(Date.parse(value));
 
 export const taskSchema = z.object({
-  title: z.string().min(3),
-  description: z.string().optional(),
+  name: z.string().min(3),
   // tags
   location: z.string().optional(),
   dueDate: z.string().refine(isDateString, { message: 'Due date must be a valid date string' }),

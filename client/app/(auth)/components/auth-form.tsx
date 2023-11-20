@@ -27,6 +27,7 @@ const AuthForm = ({
   variant
 } : Props) => {
     const [isVisible, setIsVisible] = React.useState<boolean>(false);
+    const [isVisibleConfirm, setIsVisibleConfirm] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const router = useRouter();
 
@@ -40,6 +41,7 @@ const AuthForm = ({
   } = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema)})
 
     const toggleVisibility = () => setIsVisible(!isVisible);
+    const toggleVisibilityConfirm = () => setIsVisibleConfirm(!isVisibleConfirm)
 
   const onSubmit: SubmitHandler<AuthSchemaType> = async (data: AuthSchemaType) => {
     try {
@@ -76,10 +78,10 @@ const AuthForm = ({
         }
       />   
       { variant === "register" &&  
-          <Input id='confirmPassword' register={register} errors={errors} type={isVisible ? "text" : "password"}
+          <Input id='confirmPassword' register={register} errors={errors} type={isVisibleConfirm ? "text" : "password"}
             endContent={
-              <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                {isVisible ? (
+              <button className="focus:outline-none" type="button" onClick={toggleVisibilityConfirm}>
+                {isVisibleConfirm ? (
                   <HiOutlineEyeOff className="text-2xl text-default-400 pointer-events-none" />
                 ) : (
                   <HiOutlineEye className="text-2xl text-default-400 pointer-events-none" />
