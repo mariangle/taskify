@@ -27,8 +27,8 @@ function Task({
         <CardHeader className="block space-y-2">
           <div className="flex justify-between">
             <div className="flex gap-2 items-center">
-              <Link href={`/tasks/${data.id}`}>
-                <p className="text-md">{data.name}</p>
+              <Link href={`/tasks/${data.id}`} className="text-md">
+                {data.name}
               </Link>
               <Badge status={data.status} />
             </div>

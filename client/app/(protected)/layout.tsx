@@ -1,6 +1,7 @@
 import DashboardSidebar from "@/components/navigation/dashboard-sidebar";
 import DashboardNavbar from "@/components/navigation/dashboard-navbar";
 import Breadcrumbs from "@/components/navigation/breadcrumbs-nav";
+import ListService from "@/helpers/services/list-service";
 
 interface PageProps {
     children: React.ReactNode;
@@ -8,11 +9,12 @@ interface PageProps {
 
 // TODO: check if user is logged
 
-export default function Layout({ children }: PageProps) {
+export default async function Layout({ children }: PageProps) {
+    const lists = await ListService.getLists()
     return (
         <div className="flex h-screen">
             <div className="hidden md:flex flex-col w-1/6 min-w-[250px]">
-                <DashboardSidebar />
+                <DashboardSidebar lists={lists}/>
             </div>
             <div className="flex flex-col flex-1">
                 <DashboardNavbar />

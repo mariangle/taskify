@@ -1,5 +1,6 @@
 import { TaskEntry } from "@/types"
 import { danishPhoneNumberRegex, priorities, statuses } from "@/helpers/constants"
+import ListService from "@/helpers/services/list-service"
 
 const nlp = require('compromise')
 const plg = require('compromise-dates')
@@ -39,7 +40,8 @@ export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
         hashtags.push(hashtag.toLowerCase().replace('#', ''));
     });
 
-
+    ListService
+    
     // Loop over each mention and check for match with an existing priority, status or category
     mentionsArray.forEach((mention: string) => {
         const lowerCaseMention = mention.toLowerCase().replace('@', '');

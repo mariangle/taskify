@@ -59,3 +59,5 @@ export const priorities: PriorityEnum[] = [
 ]
 
 export const danishPhoneNumberRegex = /\+45\s\d{8}/g;
+export const defaultEmoji =  "📋";
+

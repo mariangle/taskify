@@ -2,9 +2,10 @@
 
 import * as React from "react"
 import { Input, Select, Button } from "@/components/common";
-import { TaskResponse } from "@/types";
+import { TaskEntry, TaskResponse } from "@/types";
 import { taskSchema, TaskSchemaType } from "@/types/schemas";
 import TaskService from "@/helpers/services/task-service";
+import AlertModal from "@/components/modals/alert-modal";
 import { handleError } from "@/helpers/util/error-handler";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,10 +19,12 @@ interface FormProps { task: TaskResponse | null }
 const TaskForm: React.FC<FormProps> = ({
     task,
 }) => {
-    const action = task ? 'Save Changes' : 'Create'
+    const action = task ? 'Save Changes' : 'Create Task'
     const message = task ? 'Changes saved!' : 'Task created!'
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
+    const [isOpen, setIsOpen] = React.useState<boolean>(false); 
+
     const router = useRouter();
     const searchParams = useSearchParams();
     const status = searchParams.get('status')
@@ -43,7 +46,7 @@ const TaskForm: React.FC<FormProps> = ({
         try {
           setIsLoading(true);
     
-          const newTask = task
+          const newTask: TaskEntry = task
             ? { id: task.id, ...data }
             : data;
 
@@ -75,9 +78,15 @@ const TaskForm: React.FC<FormProps> = ({
       };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <AlertModal 
+          isOpen={isOpen} 
+          onClose={() => setIsOpen(false)}
+          onConfirm={onDelete}
+          loading={isLoading}
+        />
         {task && (
-            <Button type="button" variant="flat" color="danger" onClick={onDelete}>Delete</Button>
+            <Button type="button" variant="flat" color="danger" onClick={() => setIsOpen(true)}>Delete</Button>
         )}
         <Input id="name" register={register} errors={errors} isRequired />
         <Input id="location" register={register} errors={errors} />
@@ -91,7 +100,7 @@ const TaskForm: React.FC<FormProps> = ({
         >
             {action}
         </Button>
-    </form>
+      </form>
   );
 }
 

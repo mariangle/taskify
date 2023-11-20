@@ -1,11 +1,13 @@
 import TaskForm from "@/components/forms/task-form"
 import TaskService from "@/helpers/services/task-service"
 
+interface PageProps {
+  params: { taskId: string }
+}
+
 async function TaskPage({
   params
-}: {
-  params: { taskId: string }
-}){
+}: PageProps){
   const task = await TaskService.getTask(params.taskId);
 
   return (

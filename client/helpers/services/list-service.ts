@@ -10,6 +10,7 @@ const api = axios.create({
 const ListService = {
   createList: async (list: ListEntry): Promise<ListResponse> => {
     try {
+      console.log(requestOptions.headers.Authorization)
       const response: AxiosResponse = await api.post('/lists', list, requestOptions);
       return response.data;
     } catch (error) {

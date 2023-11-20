@@ -7,7 +7,7 @@ interface Props extends NextUIInputProps {
   label?: string,
   required?: boolean;
   register?: UseFormRegister<FieldValues | any>,
-  errors: FieldErrors,
+  errors?: FieldErrors,
 }
 
 const Input: React.FC<Props> = ({ id, register, label, errors, required = true, ...props }) => {
@@ -18,8 +18,8 @@ const Input: React.FC<Props> = ({ id, register, label, errors, required = true, 
       placeholder=' '
       label={label ?? capitalizeFirstLetter(id)}
       {...(register && register(id, { required }))}
-      isInvalid={errors[id] ? true : false}
-      errorMessage={errors[id] ? String(errors[id]?.message) : ''}
+      isInvalid={errors?.[id] ? true : false}
+      errorMessage={errors?.[id] ? String(errors[id]?.message) : ''}
       {...props}
     />
   );

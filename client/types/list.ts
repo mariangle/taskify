@@ -1,6 +1,7 @@
 import { TaskResponse } from "."
 
 export type ListEntry = {
+    id?: string,
     name: string,
     emoji?: string,
 }

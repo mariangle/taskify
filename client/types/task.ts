@@ -8,6 +8,7 @@ import {
 } from "."
 
 export type TaskEntry = {
+    id?: string,
     name: string,
     location?: string,
     dueDate: string,

@@ -27,5 +27,7 @@ namespace server.Context
         public DbSet<server.Models.Subtask>? Subtasks { get; set; }
 
         public DbSet<server.Models.RecurringTask>? RecurringTasks { get; set; }
+
+        public DbSet<server.Models.List>? Lists { get; set; }
     }
 }

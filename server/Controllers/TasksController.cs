@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using server.Context;
 using server.Models;
 using server.Services;
+using System.Threading.Tasks;
 using TaskModel = server.Models.Task;
 
 
@@ -31,11 +32,14 @@ namespace server.Controllers
             {
                 return NotFound();
             }
-
-            var tasks = await _context.Tasks
-                .ToListAsync();
-
-            return tasks;
+            try
+            {
+                return await _context.Tasks.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // GET: api/Tasks/5
@@ -61,10 +65,10 @@ namespace server.Controllers
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> PutTask(Guid id, TaskModel task)
-            {
+        {
             if (id != task.Id)
             {
-                return BadRequest("No permission");
+                return BadRequest("Bad request");
             }
 
             if (!IsAuthorized(id))
@@ -131,13 +135,12 @@ namespace server.Controllers
 
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteTask(Guid id)
         {
-            if (_context.Tasks == null)
-            {
-                return NotFound();
-            }
+
             var task = await _context.Tasks.FindAsync(id);
+
             if (task == null)
             {
                 return NotFound();
@@ -148,10 +151,17 @@ namespace server.Controllers
                 return Unauthorized();
             }
 
-            _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Tasks.Remove(task);
+                await _context.SaveChangesAsync();
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // POST: api/Tasks/2/Subtask
@@ -166,15 +176,24 @@ namespace server.Controllers
 
             subtask.Id = id;
 
-            _context.Subtasks.Add(subtask);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Subtasks.Add(subtask);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSubtask", new { id = subtask.Id }, subtask);
+                return CreatedAtAction("GetSubtask", new { id = subtask.Id }, subtask);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // POST: api/Tasks/2/RecurringTask
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{id}/reccuring_task")]
+        [Authorize]
         public async Task<ActionResult<RecurringTask>> PostRecurringTask(Guid id, RecurringTask recurringTask)
         {
             if (_context.RecurringTasks == null)
@@ -198,7 +217,7 @@ namespace server.Controllers
         private bool IsAuthorized(Guid taskId)
         {
             Guid userId = _userService.GetUserId();
-            return _context.Tasks.Any(e => e.Id == taskId && e.UserId == userId);
+            return _context.Tasks.Any(t => t.Id == taskId && t.UserId == userId);
         }
     }
 }

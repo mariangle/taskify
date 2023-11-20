@@ -21,7 +21,7 @@ const LogoutButton = () => {
     }
 
   return (
-    <Button variant="solid" onClick={onLogout}>Logout</Button>
+    <Button variant="solid" onClick={onLogout} fullWidth>Logout</Button>
   )
 }
 
