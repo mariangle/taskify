@@ -1,6 +1,4 @@
-import { TaskStatus, TaskCategory, TaskPriority } from "@/types";
-
-import { HiArrowSmDown, HiOutlineArrowSmRight, HiArrowSmUp, HiArrowSmRight } from "react-icons/hi";
+import { TaskStatus, TaskPriority } from "@/types";
 
 export const dashboardLinks = [
   { label: 'Dashboard', href: '/dashboard'},
@@ -41,14 +39,10 @@ export type PriorityEnum = {
   label: string,
 }
 
-export type CategoryEnum = {
-  value: TaskCategory,
-  label: string,
-}
 
 export const statuses: StatusEnum[] = [
   {
-    value: 'Todo', label: 'New', color: 'primary',
+    value: 'Incomplete', label: 'New', color: 'primary',
   }, 
   {
     value: 'InProgress', label: 'In Progress', color: 'warning',
@@ -56,19 +50,6 @@ export const statuses: StatusEnum[] = [
   {
     value: 'Completed', label: 'Done', color: 'success',
   }
-]
-
-export const categories: CategoryEnum[] = [
-  { value: 'Work', label: ''}, 
-  { value: 'Personal', label: ''}, 
-  { value: 'Education', label: ''}, 
-  { value: 'Wellness', label: ''}, 
-  { value: 'Chore', label: ''}, 
-  { value: 'Social', label: ''},  
-  { value: 'Travel', label: ''},   
-  { value: 'Finance', label: ''},  
-  { value: 'Urgent', label: ''}, 
-  { value: 'Shopping', label: ''}, 
 ]
 
 export const priorities: PriorityEnum[] = [

@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 
 export const formatToEEEDDMMM = (dateString: string): string => {
     try {

@@ -1,10 +1,11 @@
 export type SubtaskEntry = {
-    title: string,
+    name: string,
     description: string,
 }
 
 export type SubtaskResponse = {
-    title: string,
-    description: string,
-    completed: boolean,
+    id: string,
+    name: string,
+    userId: string,
+    isCompleted: boolean,
 }

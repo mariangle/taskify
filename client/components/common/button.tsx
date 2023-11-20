@@ -1,5 +1,5 @@
 import { Button as NextUIButton, ButtonProps } from "@nextui-org/react"
-import { Spinner  } from "@/components/ui";
+import { Spinner } from "@/components/ui";
 
 interface Props extends ButtonProps {
     children: React.ReactNode

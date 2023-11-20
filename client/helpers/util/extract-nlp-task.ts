@@ -1,25 +1,27 @@
 import { TaskEntry } from "@/types"
-import { danishPhoneNumberRegex, categories, priorities, statuses } from "@/helpers/constants"
+import { danishPhoneNumberRegex, priorities, statuses } from "@/helpers/constants"
 
 const nlp = require('compromise')
 const plg = require('compromise-dates')
 
 const nlpEx = nlp.plugin(plg)
 
-export const extractNlpCommand = async (command: string): Promise<TaskEntry> => {
+export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
     let doc = nlpEx(command);
 
+    // Extract properties to create a task
     const dateString = doc.dates().out('text');
-    const date = doc.dates().json()[0]
+    const date = doc.dates().json()[0] // TODO: Distinguish between date and time
     const mentionsArray = doc.atMentions().out('array');
-    const location = doc.places().out('text');
+    const location = doc.places().out('text').replace('#', '').replace('@', ''); // TODO: Consider finding words after 'at'
     const hashtagsArray = doc.hashTags().out('array');
     const emailsArray = doc.emails().out('array');
     const urlsArray = doc.urls().out('array');
     const phoneNumbersArray = command.match(danishPhoneNumberRegex) ?? [];
     const attachmentsArray = [...emailsArray, ...urlsArray, ...phoneNumbersArray];
-    
-    const title = doc.text()
+
+    // Etract name by removing other properties
+    const name = doc.text()
         .replace(dateString, '')
         .replace(mentionsArray.join(' '), '')
         .replace(location, '')
@@ -29,13 +31,16 @@ export const extractNlpCommand = async (command: string): Promise<TaskEntry> => 
 
     let priority: string | undefined;
     let status: string | undefined;
-    let category: string | undefined;
     let hashtags: string[] = [];
 
+    // Loop over hashtags and remove the #
+    // TODO: This will be used to find listIds...
     hashtagsArray.forEach((hashtag: string) => {
         hashtags.push(hashtag.toLowerCase().replace('#', ''));
     });
 
+
+    // Loop over each mention and check for match with an existing priority, status or category
     mentionsArray.forEach((mention: string) => {
         const lowerCaseMention = mention.toLowerCase().replace('@', '');
 
@@ -49,25 +54,15 @@ export const extractNlpCommand = async (command: string): Promise<TaskEntry> => 
             status = foundStatus.value;
         }
 
-        const foundCategory = categories.find(c => c.value.toLowerCase() === lowerCaseMention);
-        if (foundCategory) {
-            category = foundCategory.value;
-        }
     });
 
     let taskEntry: TaskEntry = {
-        title: title,
-        description: '',
+        name: name,
         location: location,
         dueDate: date?.dates?.end,
-        category: category,
         priority: priority,
         status: status,
-        tags: hashtags,
-        attachments: attachmentsArray
     };
-
-    console.log(taskEntry);
 
     return taskEntry;
 };

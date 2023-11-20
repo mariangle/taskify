@@ -25,7 +25,7 @@ const TaskForm: React.FC<FormProps> = ({
     const router = useRouter();
     const searchParams = useSearchParams();
     const status = searchParams.get('status')
-    const taskStatus = task?.status ? [task.status] : status ? [status] : ['Todo'];
+    const taskStatus = task?.status ? [task.status] : status ? [status] : ['Incomplete'];
 
     const {
         register,
@@ -35,7 +35,6 @@ const TaskForm: React.FC<FormProps> = ({
         resolver: zodResolver(taskSchema),
         defaultValues: {
           ...task,
-          description: '',
           dueDate: formatStringToYYYYMMDD(task?.dueDate) || '',
         },
       });
@@ -80,8 +79,7 @@ const TaskForm: React.FC<FormProps> = ({
         {task && (
             <Button type="button" variant="flat" color="danger" onClick={onDelete}>Delete</Button>
         )}
-        <Input id="title" register={register} errors={errors} isRequired />
-        <Input id="description" register={register} errors={errors} />
+        <Input id="name" register={register} errors={errors} isRequired />
         <Input id="location" register={register} errors={errors} />
         <Input id="dueDate" type="date" register={register} errors={errors} isRequired label="Due" />
         <Select id='status' items={statuses} defaultSelectedKeys={taskStatus} register={register} errors={errors} isRequired>

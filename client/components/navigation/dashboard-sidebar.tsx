@@ -5,6 +5,7 @@ import {
 } from "@nextui-org/react";
 
 import LogoutButton from "../../app/(protected)/components/logout-button";
+import Lists from "./dashboard-lists";
 import { usePathname } from "next/navigation";
 import { dashboardLinks } from "@/helpers/constants";
 import Link from "next/link";
@@ -30,6 +31,7 @@ const DashboardSidebar = () => {
               </Link>
           </li>
         ))}
+        <Lists />
         <LogoutButton />
       </ul>
     </div>

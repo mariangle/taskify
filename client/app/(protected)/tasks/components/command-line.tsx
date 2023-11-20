@@ -11,10 +11,10 @@ import SelectMode from '@/components/select-mode';
 import RecordButtons from '@/components/record-buttons';
 import TaskPreview from './task-preview';
 import { Button } from '@/components/common';
+import { Divider } from '@nextui-org/react';
 
 import { useRouter } from 'next/navigation';
-import { handleError } from '@/helpers/util/error-handler';
-import { extractNlpCommand } from '@/helpers/util/extract-nlp-cmd';
+import { extractNlpTask, handleError } from '@/helpers/util';
 
 import { TaskEntry } from '@/types';
 import TaskService from '@/helpers/services/task-service';
@@ -33,10 +33,9 @@ const CommandLine = ({
 
   React.useEffect(() => {
     const updateTask = async () => {
-        const task = await extractNlpCommand(command);
+        const task = await extractNlpTask(command);
         setTask(task);
     };
-
     updateTask();
 }, [command]);
 
@@ -45,9 +44,10 @@ const CommandLine = ({
 
   const sendCommand = async () => {
     try {
-      if (task){
-        await TaskService.createTask(task)
+      if (!task || !task.name || !task.dueDate) {
+        throw new Error("A name and due date is required to create a task.");
       }
+      await TaskService.createTask(task)
       router.refresh();
       toast.success('Task created!')
       onClose();
@@ -63,22 +63,23 @@ const CommandLine = ({
   }
 
   React.useEffect(() => {
-    setCommand((prevCommand) => prevCommand + " " + transcript);
+    if (transcript) setCommand((prevCommand) => prevCommand + " " + transcript);
   }, [transcript]);
 
   if (!browserSupportsSpeechRecognition || !isMicrophoneAvailable) {}
 
   return (
-    <div className='space-y-4'>
+    <>
+          <Textarea variant='bordered' minRows={1} value={command} onValueChange={setCommand} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
+          <TaskPreview task={task}/>
+          <Divider />
+          <div className='flex items-center gap-2'>
+            <Button onClick={sendCommand}>Create Task</Button>
+            <Button onClick={clearCommand} variant='light'>Clear</Button>
+            <RecordButtons selectedMode={selectedMode}/>
+          </div>
       {/*<SelectMode setSelectedMode={setSelectedMode}/>*/}
-      <Textarea variant='faded' minRows={2} value={command} onValueChange={setCommand}/>
-      <TaskPreview task={task}/>
-      <div className='flex items-center gap-2'>
-        <Button onClick={sendCommand}>Create Task</Button>
-        <Button onClick={clearCommand} variant='light'>Clear</Button>
-        <RecordButtons selectedMode={selectedMode}/>
-      </div>
-    </div>
+    </>
   );
 };
 export default CommandLine;

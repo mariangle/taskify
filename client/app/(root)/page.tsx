@@ -6,8 +6,6 @@ import PageLayout from "@/components/ui/page-layout"
 import Features from "./components/features"
 import TypewriterEffect from "./components/typewriter-effect"
 
-import AuthModal from "@/components/modals/auth-modal";
-
 export default function Home() {
   return (
     <PageLayout>
@@ -52,7 +50,6 @@ export default function Home() {
             Learn More
           </Button>
         </div>
-        <AuthModal></AuthModal>
       </WidthContainer>
     </PageLayout>
   )

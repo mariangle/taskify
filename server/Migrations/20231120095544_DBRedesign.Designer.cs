@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Context;
 
@@ -11,9 +12,11 @@ using server.Context;
 namespace server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231120095544_DBRedesign")]
+    partial class DBRedesign
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,7 @@ namespace server.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Emoji")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -57,9 +61,6 @@ namespace server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("TaskId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -131,7 +132,7 @@ namespace server.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
-                    b.Property<Guid?>("ListId")
+                    b.Property<Guid>("ListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Location")
@@ -220,7 +221,9 @@ namespace server.Migrations
                 {
                     b.HasOne("server.Models.List", "List")
                         .WithMany("Tasks")
-                        .HasForeignKey("ListId");
+                        .HasForeignKey("ListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("server.Models.User", "User")
                         .WithMany("Tasks")

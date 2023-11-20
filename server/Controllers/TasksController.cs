@@ -110,15 +110,23 @@ namespace server.Controllers
             Guid userId = _userService.GetUserId();
             task.UserId = userId;
 
-            if (string.IsNullOrEmpty(task.Title) || task.DueDate == DateTime.MinValue)
+            if (string.IsNullOrEmpty(task.Name) || task.DueDate == DateTime.MinValue)
             {
-                return BadRequest("You must provide both a date and a title.");
+                return BadRequest("You must provide both a date and a name.");
             }
 
-            _context.Tasks.Add(task);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Tasks.Add(task);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTask", new { id = task.Id }, task);
+                return CreatedAtAction("GetTask", new { id = task.Id }, task);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // DELETE: api/Tasks/5

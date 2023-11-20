@@ -1,11 +1,11 @@
 ﻿namespace server.Models
 {
-    public class Subtask
+    public class List
     {
         public Guid Id { get; set; }
-        public Guid TaskId { get; set; }
         public Guid UserId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public bool isCompleted { get; set; }
+        public string? Emoji { get; set; } = string.Empty;
+        public List<Task>? Tasks { get; set; }
     }
 }
