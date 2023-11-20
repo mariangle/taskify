@@ -53,9 +53,9 @@ export const statuses: StatusEnum[] = [
 ]
 
 export const priorities: PriorityEnum[] = [
-  { value: 'Low', label: 'low'}, 
-  { value: 'Medium', label: 'medium'}, 
-  { value: 'High', label: 'high'}, 
+  { value: 'Low', label: 'Low'}, 
+  { value: 'Medium', label: 'Medium'}, 
+  { value: 'High', label: 'High'}, 
 ]
 
 export const danishPhoneNumberRegex = /\+45\s\d{8}/g;
