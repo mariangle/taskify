@@ -14,7 +14,7 @@ const RootNavbar = () => {
     <Navbar shouldHideOnScroll isBordered>
       <NavbarBrand>
         <Link href="/" aria-current="page" className="font-bold text-inherit">
-          SleepScheduler
+          .taskify
         </Link>
       </NavbarBrand>
       <AuthNav />

@@ -1,5 +1,5 @@
 import TaskService from '@/helpers/services/task-service';
-import StatusColumn from './components/status-column';
+import TaskColumn from './components/task-column';
 import CommandModal from '@/components/modals/command-modal';
 
 async function TasksPage() {
@@ -13,9 +13,9 @@ async function TasksPage() {
     <div>
       <CommandModal />
       <div className="grid lg:grid-cols-3 gap-4">
-        <StatusColumn items={openTasks} status="Incomplete" />
-        <StatusColumn items={inProgressTasks} status="InProgress" />
-        <StatusColumn items={completedTasks} status="Completed" />
+        <TaskColumn items={openTasks} status="Incomplete" />
+        <TaskColumn items={inProgressTasks} status="InProgress" />
+        <TaskColumn items={completedTasks} status="Completed" />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ interface Props extends ButtonProps {
 const Button = ({
     children,
     type = 'button',
-    color = 'primary',
+    color = 'default',
     ...props
 } : Props) => {
   return (

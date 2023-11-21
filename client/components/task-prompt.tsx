@@ -9,22 +9,21 @@ import { Textarea } from "@nextui-org/react";
 
 import SelectMode from '@/components/select-mode';
 import RecordButtons from '@/components/record-buttons';
-import TaskPreview from './task-preview';
+import TaskPreview from '../app/(protected)/tasks/components/task-preview';
 import { Button } from '@/components/common';
 import { Divider } from '@nextui-org/react';
 
 import { useRouter } from 'next/navigation';
 import { extractNlpTask, handleError } from '@/helpers/util';
-
+import { Card, CardBody, CardFooter } from '@nextui-org/react';
 import { TaskEntry } from '@/types';
 import TaskService from '@/helpers/services/task-service';
-import toast from 'react-hot-toast';
 
 interface CommandLineProps {
   onClose: () => void;
 }
 
-const CommandLine = ({
+const TaskPrompt = ({
   onClose
 }: CommandLineProps) => {
   const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[0]);
@@ -49,11 +48,9 @@ const CommandLine = ({
       }
       await TaskService.createTask(task)
       router.refresh();
-      toast.success('Task created!')
       onClose();
     } catch (err) {
       handleError(err)
-      console.log(err)
     }
   };
 
@@ -69,17 +66,18 @@ const CommandLine = ({
   if (!browserSupportsSpeechRecognition || !isMicrophoneAvailable) {}
 
   return (
-    <>
-          <Textarea variant='bordered' minRows={1} value={command} onValueChange={setCommand} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
-          <TaskPreview task={task}/>
-          <Divider />
-          <div className='flex items-center gap-2'>
-            <Button onClick={sendCommand}>Create Task</Button>
+    <Card>
+      <CardBody className='space-y-3'>
+        <Textarea variant='bordered' minRows={1} value={command ||''} onValueChange={setCommand} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
+        <TaskPreview task={task}/>
+      </CardBody>
+      <Divider />
+      <CardFooter>
+      <Button onClick={sendCommand}>Create Task</Button>
             <Button onClick={clearCommand} variant='light'>Clear</Button>
             <RecordButtons selectedMode={selectedMode}/>
-          </div>
-      {/*<SelectMode setSelectedMode={setSelectedMode}/>*/}
-    </>
+      </CardFooter>
+    </Card>
   );
 };
-export default CommandLine;
+export default TaskPrompt;

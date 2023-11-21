@@ -9,7 +9,7 @@ interface ColumnProps {
     status: string;
   }
   
-  const StatusColumn = ({ items, status }: ColumnProps) => {
+  const TaskColumn = ({ items, status }: ColumnProps) => {
     const statusInfo = statuses.find((s) => s.value === status);
   
     return (
@@ -19,7 +19,12 @@ interface ColumnProps {
             <Badge status={status} hasNoContent />
             <h2>{statusInfo?.label}</h2>
           </div>
-          <Link href={`/tasks/new?status=${statusInfo?.value}`} className=" text-default-400 text-xs">
+          <Link 
+            href={{
+              pathname: '/tasks/new',
+              query: { status: statusInfo?.value}
+            }} 
+            className=" text-default-400 text-xs">
             Add New +
           </Link>
         </div>
@@ -30,5 +35,5 @@ interface ColumnProps {
     );
   }
 
-  export default StatusColumn
+  export default TaskColumn
   

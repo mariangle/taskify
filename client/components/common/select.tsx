@@ -4,13 +4,13 @@ import {
     SelectProps as NextUIProps 
 } from "@nextui-org/react"
 
-import { Enum } from "@/helpers/constants";
+import { PriorityEnum, StatusEnum } from "@/helpers/constants";
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 import { capitalizeFirstLetter } from '@/helpers/util/formatter';
 
 interface Props extends NextUIProps {
     id: string,
-    items: Enum[],
+    items: PriorityEnum[] | StatusEnum[],
     label?: string,
     errors: FieldErrors,
     register?: UseFormRegister<FieldValues | any>,
@@ -32,7 +32,7 @@ const Select: React.FC<Props> = ({
         {...(register && register(id))}
         {...props}
     >
-        {(status) => <SelectItem key={status.value} className="dark:text-white">{status.label}</SelectItem>}
+        {(item: PriorityEnum | StatusEnum) => <SelectItem key={item.value} className="dark:text-white">{item.label}</SelectItem>}
     </NextUISelect>
   )
 }

@@ -1,4 +1,5 @@
-﻿using server.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using server.Models;
 using System.Security.Claims;
 
 namespace server.Services

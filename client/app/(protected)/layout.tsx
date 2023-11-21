@@ -15,7 +15,7 @@ export default async function Layout(props: PageProps) {
     return (
         <div className="flex h-screen">
             <div className="hidden md:flex flex-col w-1/6 min-w-[250px]">
-                <DashboardSidebar />
+                <DashboardSidebar lists={lists}/>
             </div>
             <div className="flex flex-col flex-1">
                 <DashboardNavbar />

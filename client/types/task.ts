@@ -8,8 +8,10 @@ import {
 } from "."
 
 export type TaskEntry = {
+    id?: string,
     name: string,
     location?: string,
+    listId?: string,
     dueDate: string,
     duration?: string,
     priority?: string,
@@ -21,6 +23,7 @@ export type TaskResponse = {
     id: string,
     name: string,
     location?: string,
+    listId?: string,
     dueDate: string,
     priority?: TaskPriority,
     status: TaskStatus,
