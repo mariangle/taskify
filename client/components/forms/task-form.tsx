@@ -26,6 +26,8 @@ const TaskForm: React.FC<FormProps> = ({
     const searchParams = useSearchParams();
     const status = searchParams.get('status')
     const taskStatus = task?.status ? [task.status] : status ? [status] : ['Incomplete'];
+    const taskPriority = task?.priority ? [task.priority] : priority ? [priority] : ['Medium'];
+    const taskList = task?.listId ? [task.listId]  : listId ? [listId] : [];
 
     const {
         register,
