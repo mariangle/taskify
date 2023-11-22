@@ -7,8 +7,8 @@ const plg = require('compromise-dates')
 
 const nlpEx = nlp.plugin(plg)
 
-export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
-    let doc = nlpEx(command);
+export const extractNlpTask = async (prompt: string): Promise<TaskEntry> => {
+    let doc = nlpEx(prompt);
 
     // Extract properties to create a task
     const dateString = doc.dates().out('text');
@@ -17,7 +17,7 @@ export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
     const hashtagsArray = doc.hashTags().out('array');
     const emailsArray = doc.emails().out('array');
     const urlsArray = doc.urls().out('array');
-    const phoneNumbersArray = command.match(danishPhoneNumberRegex) ?? [];
+    const phoneNumbersArray = prompt.match(danishPhoneNumberRegex) ?? [];
     const attachmentsArray = [...emailsArray, ...urlsArray, ...phoneNumbersArray];
 
     // Etract name by removing other properties

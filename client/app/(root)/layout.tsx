@@ -1,4 +1,4 @@
-import RootNavbar from '@/components/navigation/root-navbar'
+import Navbar from "./components/navbar"
 
 interface PageProps {
     children: React.ReactNode
@@ -9,7 +9,7 @@ export default function Layout({
 } : PageProps){
     return (
         <div>
-            <RootNavbar />
+            <Navbar />
             {children}
         </div>
     )

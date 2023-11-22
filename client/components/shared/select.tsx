@@ -6,7 +6,7 @@ import {
 
 import { PriorityEnum, StatusEnum } from "@/helpers/constants";
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
-import { capitalizeFirstLetter } from '@/helpers/util/formatter';
+import { capitalizeFirstLetter } from '@/helpers/util/format';
 
 interface Props extends NextUIProps {
     id: string,

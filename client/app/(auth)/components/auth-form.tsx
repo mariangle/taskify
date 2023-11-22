@@ -1,7 +1,7 @@
 "use client"
 
 import { HiOutlineEye, HiOutlineEyeOff } from "@/components/ui";
-import { Input, Button } from "@/components/common";
+import { Input, Button } from "@/components/shared";
 
 import z from 'zod';
 import React from "react";
@@ -11,7 +11,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, RegisterSchema} from "./auth-schemas";
 import { useRouter } from "next/navigation";
-import { handleError } from "@/helpers/util/error-handler";
+import { handleError } from "@/helpers/util/error";
 
 import AuthService from "@/helpers/services/auth-service";
 

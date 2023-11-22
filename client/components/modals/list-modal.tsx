@@ -1,10 +1,10 @@
 "use client"
 
 import { ListResponse } from "@/types";
-import { Modal, ModalContent, ModalHeader, Button, useDisclosure, Card, CardHeader, CardBody, Divider, ModalBody } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, useDisclosure, Divider, ModalBody } from "@nextui-org/react";
 import { HiPlus, HiDotsHorizontal } from "react-icons/hi"
-
-import ListForm from "../forms/list-form";
+import Icon from "@/components/ui/icon";
+import ListForm from "../../app/(protected)/components/list-form";
 
 interface ListModalProps {
     list: ListResponse | null
@@ -14,15 +14,13 @@ export default function ListModal({
     list
 } : ListModalProps) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const icon = list ? <HiDotsHorizontal /> :  <HiPlus /> 
+  const icon = list ? <HiDotsHorizontal className="w-3 h-3"/> : <HiPlus className="w-3 h-3"/> 
   const action = list ? 'Edit' : 'Create'
 
   return (
     <>
     { /* ! WARN: A component changed from uncontrolled to controlled. */}
-      <Button onPress={onOpen} variant="bordered" disableAnimation isIconOnly className="rounded-full p-0" size='sm'>
-        {icon}
-      </Button>
+      <Icon icon={icon} onClick={onOpen}/>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop='blur' placement="center">
         <ModalContent className="dark:text-white">
           {onClose => (

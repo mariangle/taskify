@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from './common';
+import { Button } from './shared';
   import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode } from '@/helpers/constants';
 

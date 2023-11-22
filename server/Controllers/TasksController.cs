@@ -25,25 +25,43 @@ namespace server.Controllers
 
         // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks([FromQuery] Guid? listId)
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(
+            [FromQuery] Guid? listId,
+            [FromQuery] bool? unsorted = false,
+            [FromQuery] bool? upcoming = false,
+            [FromQuery] bool? overdue = false
+            )
         {
-            try
+            IQueryable<TaskModel> tasksQuery = _context.Tasks;
+
+            if (listId.HasValue)
             {
-                IQueryable<TaskModel> tasksQuery = _context.Tasks;
-
-                if (listId.HasValue)
-                {
-                    tasksQuery = tasksQuery.Where(task => task.ListId == listId);
-                }
-
-                var tasks = await tasksQuery.ToListAsync();
-
-                return tasks;
+                tasksQuery = tasksQuery.Where(task => task.ListId == listId);
             }
-            catch (Exception ex)
+
+            else if (unsorted == true)
             {
-                return StatusCode(500, "Internal server error");
+                tasksQuery = tasksQuery.Where(task => task.ListId == null);
             }
+
+            if (upcoming == true)
+            {
+                // Filter tasks that are upcoming (due date is after today)
+                tasksQuery = tasksQuery
+                    .Where(task => task.DueDate > DateTime.Today)
+                    .OrderBy(task => task.DueDate)
+                    .Take(10);
+            }
+
+            if (overdue == true)
+            {
+                // Filter tasks that are overdue (due date is before today and task is not completed)
+                tasksQuery = tasksQuery
+                        .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
+            }
+            var tasks = await tasksQuery.ToListAsync();
+
+            return tasks;
         }
 
         // GET: api/Tasks/5

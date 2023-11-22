@@ -1,6 +1,6 @@
 import ListModal from '@/components/modals/list-modal';
 import ListService from '@/helpers/services/list-service';
-import ListTasks from './components/list-tasks';
+import ListTasks from '../components/list-tasks';
 
 import { notFound } from 'next/navigation';
 import { defaultEmoji } from '@/helpers/constants';
@@ -19,9 +19,9 @@ async function ListPage({
   const title = list.emoji ? `${list.emoji} ${list.name}` : `${defaultEmoji} ${list.name}`
   
   return (
-    <div>
-        <div className='flex-between'> 
-            <h1 className='font-bold text-large'>{title}</h1>
+    <div className='bg-white dark:bg-zinc-900 dark:border-zinc-800 rounded-xl border p-4'>
+        <div className='flex-gap my-2'> 
+            <h1 className='font-bold text-xl'>{title}</h1>
             <ListModal list={list}/>
         </div>
         <ListTasks tasks={list.tasks}/>

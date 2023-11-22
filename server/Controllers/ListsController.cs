@@ -134,7 +134,10 @@ namespace server.Controllers
             }
 
             Guid userId = _userService.GetUserId();
-            var tasks = _context.Tasks.Where(t => t.UserId == userId).ToList();
+            var tasks = _context.Tasks
+                .Where(t => t.UserId == userId)
+                .Where(t => t.ListId == id)
+                .ToList();
 
             _context.Tasks.RemoveRange(tasks);
             _context.Lists.Remove(list);

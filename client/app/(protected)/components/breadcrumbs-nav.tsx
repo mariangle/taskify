@@ -1,22 +1,22 @@
 "use client"
 
 import { 
-    Breadcrumbs, 
+    Breadcrumbs as UIBreadcrumbs, 
     BreadcrumbItem
 } from "@nextui-org/react";
 
 import { useSelectedLayoutSegments } from 'next/navigation'
 
-const BreadcrumbsNav = () => {
+const Breadcrumbs = () => {
     const segments = useSelectedLayoutSegments()
 
   return (
-    <Breadcrumbs className="mb-4">
+    <UIBreadcrumbs className="mb-4">
         {segments?.map((segment, index) => (
           <BreadcrumbItem key={index}>{segment}</BreadcrumbItem>
         ))}
-    </Breadcrumbs>
+    </UIBreadcrumbs>
   )
 }
 
-export default BreadcrumbsNav
+export default Breadcrumbs

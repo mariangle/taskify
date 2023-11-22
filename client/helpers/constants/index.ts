@@ -3,7 +3,6 @@ import { TaskStatus, TaskPriority } from "@/types";
 export const dashboardLinks = [
   { label: 'Dashboard', href: '/dashboard'},
   { label: 'Tasks', href: '/tasks'},
-  { label: 'Schedule', href: '/schedule'},
 ]
 
 export type Mode = {
@@ -42,13 +41,13 @@ export type PriorityEnum = {
 
 export const statuses: StatusEnum[] = [
   {
-    value: 'Incomplete', label: 'New', color: 'primary',
+    value: 'Incomplete', label: 'Incomplete', color: 'primary',
   }, 
   {
     value: 'InProgress', label: 'In Progress', color: 'warning',
   }, 
   {
-    value: 'Completed', label: 'Done', color: 'success',
+    value: 'Completed', label: 'Complete', color: 'success',
   }
 ]
 

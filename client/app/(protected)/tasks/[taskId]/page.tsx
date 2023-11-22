@@ -1,4 +1,4 @@
-import TaskForm from "@/components/forms/task-form"
+import TaskForm from "@/app/(protected)/components/task-form"
 import TaskService from "@/helpers/services/task-service"
 import ListService from "@/helpers/services/list-service"
 

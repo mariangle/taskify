@@ -1,7 +1,7 @@
 "use client"
 
 import { ListResponse, TaskResponse } from "@/types";
-import TaskForm from "../forms/task-form";
+import TaskForm from "../../app/(protected)/components/task-form";
 import { Modal, ModalContent, ModalBody, ModalHeader} from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 

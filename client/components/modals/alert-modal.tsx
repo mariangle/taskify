@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Modal, ModalContent, ModalHeader, ModalBody} from "@nextui-org/react";
-import { Button } from "@/components/common";
+import { Button } from "@/components/shared";
 
 interface AlertModalProps {
   title?: string,

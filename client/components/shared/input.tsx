@@ -1,6 +1,6 @@
 import { Input as NextUIInput, InputProps as NextUIInputProps } from '@nextui-org/react';
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
-import { capitalizeFirstLetter } from '@/helpers/util/formatter';
+import { capitalizeFirstLetter } from '@/helpers/util/format';
 
 interface Props extends NextUIInputProps {
   id: string,

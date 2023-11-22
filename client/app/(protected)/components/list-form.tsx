@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Input, Button } from "@/components/common";
+import { Input, Button } from "@/components/shared";
 import { useRouter } from "next/navigation";
 import { ListEntry, ListResponse } from "@/types";
 import useLists from "@/helpers/hooks/use-lists";

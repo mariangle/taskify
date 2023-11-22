@@ -13,7 +13,7 @@ export type TaskEntry = {
     listId?: string | null,
     dueDate?: string | null,
     duration?: string,
-    priority?: string,
+    priority?: string | null,
     status?: string,
     // recurring?: RecurringTask,
 }
@@ -21,12 +21,12 @@ export type TaskEntry = {
 export type TaskResponse = {
     id: string,
     name: string,
-    listId?: string,
-    dueDate?: string,
-    priority?: TaskPriority,
+    listId?: string | null,
+    dueDate?: string | null,
+    priority?: TaskPriority | null,
     status: TaskStatus,
     user: UserResponse,
-    subtasks?: SubtaskResponse[],
+    subtasks?: SubtaskResponse[] | null,
     // recurring?: RecurringTask,
     // notes?: NoteResponse[]
 }

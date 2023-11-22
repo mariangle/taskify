@@ -9,7 +9,7 @@ const ListTasks = ({
     tasks
 }: ListTasksProps) => {
   return (
-    <ul className="space-y-2">
+    <ul>
       {tasks.map((task, index) => (
         <ListTask key={task.id} task={task} isLast={index === tasks.length - 1} />
       ))}

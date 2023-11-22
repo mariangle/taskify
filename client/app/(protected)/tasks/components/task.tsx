@@ -6,19 +6,19 @@ import {
 } from "@nextui-org/react";
 
 import Badge from "@/components/ui/status-badge";
+import PriorityLabel from "@/components/ui/priority-label";
 import TaskActions from "./task-actions";
 import Link from "next/link";
 
-import { HiOutlineClock,  HiOutlineLocationMarker } from "react-icons/hi";
-
+import { HiOutlineClock } from "react-icons/hi";
 import { TaskResponse } from "@/types";
-import { formatToEEEDDMMM } from "@/helpers/util/formatter";
+import { formatDistanceToNow } from "@/helpers/util/format";
 
 interface TaskProps {
     data: TaskResponse
 }
 
-function Task({
+export default function Task({
   data
 }: TaskProps) {
 
@@ -35,11 +35,12 @@ function Task({
             <TaskActions id={data.id}/>
           </div>
           { data.dueDate && (
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center text-xs">
               <HiOutlineClock className="text-default-500" />
-              <p className="text-small text-default-500">{formatToEEEDDMMM(data.dueDate)}</p>
+              <p className="text-default-500">Due {formatDistanceToNow({date: new Date(data.dueDate)})}</p>
             </div>
           )}
+          { data.priority && <PriorityLabel label={data.priority}/>}
         </CardHeader>
         <Divider />
         <CardBody>
@@ -47,5 +48,3 @@ function Task({
     </Card>
   );
 }
-
-export default Task;
