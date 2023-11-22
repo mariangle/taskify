@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react";
 import { Input, Select, Button } from "@/components/common";
 import { 
   Select as ListSelect, 
@@ -20,12 +20,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 interface FormProps { 
   task: TaskResponse | null,
-  lists: ListResponse[] | [];
+  lists: ListResponse[] | [],
+  isModal: boolean,
 }
 
 const TaskForm: React.FC<FormProps> = ({
     task,
     lists,
+    isModal
 }) => {
     const action = task ? 'Save Changes' : 'Create Task'
     const message = task ? 'Changes saved!' : 'Task created!'
@@ -38,10 +40,10 @@ const TaskForm: React.FC<FormProps> = ({
     const status = searchParams.get('status')
     const priority = searchParams.get('priority')
     const listId = searchParams.get('listId')
-    // Determine the value of property by checking if there's a task property; otherwise, look at search params; otherwise, use the default value
+    // Determine the default value by checking if there's a task property; otherwise, look at search params; otherwise, use the default value
     const taskStatus = task?.status ? [task.status] : status ? [status] : ['Incomplete'];
     const taskPriority = task?.priority ? [task.priority] : priority ? [priority] : ['Medium'];
-    const taskList = task?.listId ? [task.listId]  : listId ? [listId] : [''];
+    const taskList = task?.listId ? [task.listId]  : listId ? [listId] : [];
 
     const {
         register,
@@ -58,16 +60,16 @@ const TaskForm: React.FC<FormProps> = ({
       const onSubmit = async (data: TaskSchemaType) => {
         try {
           setIsLoading(true);
-    
+
           const newTask: TaskEntry = task
-            ? { id: task.id, ...data }
-            : data;
+            ? { ...data, listId: !data.listId ? null : data.listId, id: task.id, dueDate: !data.dueDate ? null : data.dueDate }
+            : { ...data, listId: !data.listId ? null : data.listId, dueDate: !data.dueDate ? null : data.dueDate };
 
             task
             ? await TaskService.updateTask(task.id, newTask)
             : await TaskService.createTask(newTask);
           router.refresh();
-          router.push(`/tasks`);
+          isModal ? router.back(): router.push(`/tasks`);
           toast.success(message);
         } catch (error) {
           handleError(error);
@@ -82,7 +84,7 @@ const TaskForm: React.FC<FormProps> = ({
         try {
           await TaskService.deleteTask(task.id);
           router.refresh();
-          router.push(`/tasks`);
+          isModal ? router.back(): router.push(`/tasks`);
           toast.success('Task deleted');
         } catch (error) {
           console.error(error);
@@ -101,7 +103,6 @@ const TaskForm: React.FC<FormProps> = ({
             <Button type="button" variant="flat" color="danger" onClick={() => setIsOpen(true)}>Delete</Button>
         )}
         <Input id="name" register={register} errors={errors} isRequired />
-        <Input id="location" register={register} errors={errors} />
         <Input id="dueDate" type="date" register={register} errors={errors} isRequired label="Due Date" />
         <Select id='status' items={statuses} defaultSelectedKeys={taskStatus} register={register} errors={errors} isRequired>
         </Select>

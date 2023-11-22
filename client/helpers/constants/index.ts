@@ -3,7 +3,7 @@ import { TaskStatus, TaskPriority } from "@/types";
 export const dashboardLinks = [
   { label: 'Dashboard', href: '/dashboard'},
   { label: 'Tasks', href: '/tasks'},
-  { label: 'Calendar', href: '/calendar'},
+  { label: 'Schedule', href: '/schedule'},
 ]
 
 export type Mode = {

@@ -1,5 +1,7 @@
 import ListModal from '@/components/modals/list-modal';
 import ListService from '@/helpers/services/list-service';
+import ListTasks from './components/list-tasks';
+
 import { notFound } from 'next/navigation';
 import { defaultEmoji } from '@/helpers/constants';
 
@@ -15,13 +17,14 @@ async function ListPage({
   if (!list) return notFound();
 
   const title = list.emoji ? `${list.emoji} ${list.name}` : `${defaultEmoji} ${list.name}`
-
+  
   return (
     <div>
         <div className='flex-between'> 
             <h1 className='font-bold text-large'>{title}</h1>
             <ListModal list={list}/>
         </div>
+        <ListTasks tasks={list.tasks}/>
     </div>
   );
 }

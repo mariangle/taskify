@@ -1,15 +1,15 @@
 "use client"
 
-import * as react from "react";
+import React from "react";
 
 const UseHydration = ({ 
     children,
 } : {
     children?: React.ReactNode
 }) => {
-    const [ isMounted, setIsMounted ] = react.useState<boolean>(false);
+    const [ isMounted, setIsMounted ] = React.useState<boolean>(false);
 
-    react.useEffect(() => { 
+    React.useEffect(() => { 
         setIsMounted(true)
     }, [])
 

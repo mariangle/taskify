@@ -34,14 +34,10 @@ function Task({
             </div>
             <TaskActions id={data.id}/>
           </div>
-          <div className="flex gap-2 items-center">
-            <HiOutlineClock className="text-default-500" />
-            <p className="text-small text-default-500">{formatToEEEDDMMM(data.dueDate)}</p>
-          </div>
-          {data.location && (
+          { data.dueDate && (
             <div className="flex gap-2 items-center">
-              <HiOutlineLocationMarker className="text-default-500"/>
-              <p className="text-small text-default-500"> {data.location}</p>
+              <HiOutlineClock className="text-default-500" />
+              <p className="text-small text-default-500">{formatToEEEDDMMM(data.dueDate)}</p>
             </div>
           )}
         </CardHeader>

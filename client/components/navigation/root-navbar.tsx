@@ -7,7 +7,7 @@ import AuthNav from "@/components/navigation/root-auth-nav";
 
 import Link from "next/link";
 
-import * as React from "react";
+import React from "react";
 
 const RootNavbar = () => {
   return (

@@ -3,8 +3,8 @@
 import { HiOutlineEye, HiOutlineEyeOff } from "@/components/ui";
 import { Input, Button } from "@/components/common";
 
-import * as z from 'zod';
-import * as React from "react";
+import z from 'zod';
+import React from "react";
 import toast from "react-hot-toast";
 
 import { SubmitHandler, useForm } from "react-hook-form";

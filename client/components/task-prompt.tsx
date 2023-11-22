@@ -1,7 +1,7 @@
 "use client";
 
 import 'regenerator-runtime/runtime';
-import * as React from "react";
+import React from "react";
 
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode, modes } from '@/helpers/constants';
@@ -43,8 +43,8 @@ const TaskPrompt = ({
 
   const sendCommand = async () => {
     try {
-      if (!task || !task.name || !task.dueDate) {
-        throw new Error("A name and due date is required to create a task.");
+      if (!task || !task.name) {
+        throw new Error("Name is required.");
       }
       await TaskService.createTask(task)
       router.refresh();

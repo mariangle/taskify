@@ -14,7 +14,6 @@ export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
     const dateString = doc.dates().out('text');
     const date = doc.dates().json()[0] // TODO: Distinguish between date and time
     const mentionsArray = doc.atMentions().out('array');
-    const location = doc.places().out('text').replace('#', '').replace('@', ''); // TODO: Consider finding words after 'at'
     const hashtagsArray = doc.hashTags().out('array');
     const emailsArray = doc.emails().out('array');
     const urlsArray = doc.urls().out('array');
@@ -25,7 +24,6 @@ export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
     const name = doc.text()
         .replace(dateString, '')
         .replace(mentionsArray.join(' '), '')
-        .replace(location, '')
         .replace(hashtagsArray.join(' '), '')
         .replace(attachmentsArray.join(' '), '')
         .trim();
@@ -60,7 +58,6 @@ export const extractNlpTask = async (command: string): Promise<TaskEntry> => {
 
     let taskEntry: TaskEntry = {
         name: name,
-        location: location,
         dueDate: date?.dates?.end,
         priority: priority,
         status: status,

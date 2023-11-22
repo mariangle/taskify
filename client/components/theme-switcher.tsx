@@ -1,7 +1,7 @@
 "use client"
 
 import { useTheme } from "next-themes";
-import * as React from "react";
+import React from "react";
 
 import { HiSun, HiMoon } from "react-icons/hi";
 import { Button } from "@nextui-org/react";

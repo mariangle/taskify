@@ -10,9 +10,8 @@ import {
 export type TaskEntry = {
     id?: string,
     name: string,
-    location?: string,
-    listId?: string,
-    dueDate: string,
+    listId?: string | null,
+    dueDate?: string | null,
     duration?: string,
     priority?: string,
     status?: string,
@@ -22,9 +21,8 @@ export type TaskEntry = {
 export type TaskResponse = {
     id: string,
     name: string,
-    location?: string,
     listId?: string,
-    dueDate: string,
+    dueDate?: string,
     priority?: TaskPriority,
     status: TaskStatus,
     user: UserResponse,

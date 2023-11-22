@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react";
 
 import { Input, Button } from "@/components/common";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ interface FormProps {
 
 const ListForm = ({
     list,
-    onClose
+    onClose,
 } : FormProps) => {
     const action = list ? 'Save Changes' : 'Create'
 
@@ -80,6 +80,7 @@ const ListForm = ({
     <>  
       <AlertModal 
         isOpen={isOpen} 
+        description="All tasks in this list will be deleted."
         onClose={() => setIsOpen(false)}
         onConfirm={onDelete}
         loading={isLoading}

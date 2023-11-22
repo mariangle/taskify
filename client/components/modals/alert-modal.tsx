@@ -6,6 +6,8 @@ import { Modal, ModalContent, ModalHeader, ModalBody} from "@nextui-org/react";
 import { Button } from "@/components/common";
 
 interface AlertModalProps {
+  title?: string,
+  description?: string,
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -13,6 +15,8 @@ interface AlertModalProps {
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
+  title,
+  description,
   isOpen,
   onClose,
   onConfirm,
@@ -28,6 +32,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
     return null;
   }
 
+  const modalTitle = title ? title : 'Are you sure?'
+  const modalDescription = description ? description : 'This action cannot be undone.'; 
+
   return (
     <Modal
       isOpen={isOpen}
@@ -36,14 +43,17 @@ const AlertModal: React.FC<AlertModalProps> = ({
       backdrop='blur'>
         <ModalContent className="dark:text-white">
             <ModalHeader>
-                Are you sure?
+              <div className="flex flex-col">
+                <p className="text-md">{modalTitle}</p>
+                <p className="text-small text-default-500">{modalDescription}</p>
+              </div>
             </ModalHeader>
             <ModalBody className="p-4">
                 <div className="flex-gap">
-                    <Button disabled={loading} onClick={onConfirm} variant="shadow">
+                    <Button disabled={loading} onClick={onConfirm} variant="shadow" color="danger">
                         Yes
                     </Button>
-                    <Button disabled={loading} onClick={onClose} variant="bordered">Cancel</Button>
+                    <Button disabled={loading} onClick={onClose} variant="flat">Cancel</Button>
                 </div>
             </ModalBody>
         </ModalContent>

@@ -10,9 +10,8 @@ namespace server.Models
         public Guid UserId { get; set; }
         public Guid? ListId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string? Location { get; set; }
-        public DateTime DueDate { get; set; }
-        public TimeSpan Duration { get; set; }
+        public DateTime? DueDate { get; set; }
+        public TimeSpan? Duration { get; set; }
         public Priority? Priority { get; set; }
         public Status Status { get; set; }
         public List? List { get; set; }

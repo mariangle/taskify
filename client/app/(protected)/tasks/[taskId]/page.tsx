@@ -13,7 +13,7 @@ async function TaskPage({
   const lists = await ListService.getLists();
 
   return (
-    <TaskForm task={task} lists={lists}/>
+    <TaskForm task={task} lists={lists} isModal={false}/>
   )
 }
 

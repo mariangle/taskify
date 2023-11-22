@@ -8,9 +8,8 @@ import {
 } from "@nextui-org/react";
 import { HiDotsHorizontal } from "react-icons/hi"
   
-import * as React from "react"
+import React from "react"
 import { useRouter } from "next/navigation";
-import AlertModal from "@/components/modals/alert-modal";
 import TaskService from "@/helpers/services/task-service";
 
 interface TaskActionsProps {
@@ -19,7 +18,6 @@ interface TaskActionsProps {
 
 const TaskActions = ({ id } : TaskActionsProps) => {
     const router = useRouter();
-    const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
 
     const onDelete = async () => {    
@@ -40,12 +38,6 @@ const TaskActions = ({ id } : TaskActionsProps) => {
 
   return (
     <>
-      <AlertModal 
-          isOpen={isOpen} 
-          onClose={() => setIsOpen(false)}
-          onConfirm={onDelete}
-          loading={isLoading}
-      />
       <Dropdown>
           <DropdownTrigger>
           <Button isIconOnly className="rounded-md" size='sm'>
@@ -54,7 +46,7 @@ const TaskActions = ({ id } : TaskActionsProps) => {
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions" className="dark:text-white">
               <DropdownItem key="edit" onClick={onEdit}>Edit</DropdownItem>
-              <DropdownItem key="delete" onClick={() => setIsOpen(true)} className="text-danger" color="danger">Delete</DropdownItem>
+              <DropdownItem key="delete" onClick={onDelete} className="text-danger" color="danger">Delete</DropdownItem>
           </DropdownMenu>
       </Dropdown>
     </>

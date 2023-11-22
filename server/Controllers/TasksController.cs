@@ -25,16 +25,20 @@ namespace server.Controllers
 
         // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTask()
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks([FromQuery] Guid? listId)
         {
-
-            if (_context.Tasks == null)
-            {
-                return NotFound();
-            }
             try
             {
-                return await _context.Tasks.ToListAsync();
+                IQueryable<TaskModel> tasksQuery = _context.Tasks;
+
+                if (listId.HasValue)
+                {
+                    tasksQuery = tasksQuery.Where(task => task.ListId == listId);
+                }
+
+                var tasks = await tasksQuery.ToListAsync();
+
+                return tasks;
             }
             catch (Exception ex)
             {

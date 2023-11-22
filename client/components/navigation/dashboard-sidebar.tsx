@@ -6,7 +6,7 @@ import { dashboardLinks } from "@/helpers/constants";
 import { cn } from "@nextui-org/react";
 import Link from "next/link";
 
-import * as React from "react";
+import React from "react";
 import { ListResponse } from "@/types";
 
 import ListModal from "@/components/modals/list-modal";

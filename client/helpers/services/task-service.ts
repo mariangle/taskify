@@ -18,13 +18,14 @@ const TaskService = {
   },
   getTasks: async (): Promise<TaskResponse[] | []> => {
     try {
-      const response: AxiosResponse = await api.get(`/tasks`, {
+      const response: AxiosResponse = await api.get(`/tasks`, { // TODO:filter through API
         httpsAgent: new https.Agent({
           rejectUnauthorized: false
         }), 
       });
       return response.data;
     } catch (error) {
+      console.log("Error fetching tasks", error)
       return [];
     }
   },

@@ -7,7 +7,7 @@ interface PageProps {
     children: React.ReactNode;
 }
 
-// TODO: check if user is logged
+// TODO: Check if user is logged in through API
 
 export default async function Layout({ children }: PageProps) {
     const lists = await ListService.getLists()

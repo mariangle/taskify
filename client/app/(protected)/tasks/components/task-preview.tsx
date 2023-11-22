@@ -2,7 +2,7 @@ import StatusBadge from "@/components/ui/status-badge";
 import IconLabel from "@/components/ui/icon-label";
 import Tag from "@/components/ui/tag";
 
-import { HiLocationMarker, HiOutlineClock } from "react-icons/hi";
+import { HiOutlineClock } from "react-icons/hi";
 import { MdOutlineTitle } from "react-icons/md";
 
 import { TaskEntry } from "@/types";
@@ -25,7 +25,6 @@ const TaskPreview = ({ task }: TaskPreviewProps) => (
       <Tag isMissing label={"due date"} icon={<HiOutlineClock />} />
     )}
     {task?.priority && <IconLabel label={task.priority} />}
-    {task?.location && <Tag label={task.location} icon={<HiLocationMarker />} />}
     {task?.status && <StatusBadge status={task.status} />}
   </div>
 );

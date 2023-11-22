@@ -10,7 +10,7 @@ import {
 
 import Link from "next/link";
 import ThemeSwitcher from "@/components/theme-switcher";
-import * as React from "react";
+import React from "react";
 
 import { usePathname } from "next/navigation";
 import { dashboardLinks } from "@/helpers/constants";
