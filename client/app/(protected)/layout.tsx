@@ -4,12 +4,13 @@ import Breadcrumbs from "@/components/navigation/breadcrumbs-nav";
 import ListService from "@/helpers/services/list-service";
 
 interface PageProps {
-    children: React.ReactNode;
+    children: React.ReactNode,
+    modal: React.ReactNode
 }
 
 // TODO: Check if user is logged in through API
 
-export default async function Layout({ children }: PageProps) {
+export default async function Layout(props: PageProps) {
     const lists = await ListService.getLists()
     return (
         <div className="flex h-screen">
@@ -20,7 +21,8 @@ export default async function Layout({ children }: PageProps) {
                 <DashboardNavbar />
                 <div className="p-4 overflow-y-auto">
                     <Breadcrumbs />
-                    {children}
+                    {props.children}
+                    {props.modal}
                 </div>
             </div>
         </div>
