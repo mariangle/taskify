@@ -34,6 +34,7 @@ const TaskForm: React.FC<FormProps> = ({
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
     const [isOpen, setIsOpen] = React.useState<boolean>(false); 
+    const [date, setDate] = React.useState<Date>()
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -70,7 +71,7 @@ const TaskForm: React.FC<FormProps> = ({
           };
 
             task
-            ? await TaskService.updateTask(task.id, newTask)
+            ? await TaskService.updateTask(task.id, { ...newTask, id: task.id })
             : await TaskService.createTask(newTask);
           router.refresh();
           isModal ? router.back(): router.push(`/tasks`);

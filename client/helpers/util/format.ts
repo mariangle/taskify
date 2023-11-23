@@ -1,4 +1,8 @@
-import { format, formatDistanceToNow as formatDistanceToNowFns } from 'date-fns';
+import { 
+    format, 
+    formatDistanceToNow as formatDistanceToNowFns, 
+    isSameDay as IsSameDayFns
+} from 'date-fns';
 
 export const formatToEEEDDMMM = (dateString: string): string => {
     try {
@@ -20,10 +24,14 @@ export const formatStringToYYYYMMDD = (dateString?: string | null): string | nul
     return dateString ? format(new Date(dateString), 'yyyy-MM-dd') : null; 
 }
 
-export const capitalizeFirstLetter = (dateString: string | null): string | null => {
-    return dateString ? dateString.charAt(0).toUpperCase() + dateString.slice(1) : null;
+export const capitalizeFirstLetter = (string: string | null): string | null => {
+    return string ? string.charAt(0).toUpperCase() + string.slice(1) : null;
 }
 
 export const formatDistanceToNow = ({date} : {date: Date}) => {
     return formatDistanceToNowFns(date, { addSuffix: true})
+}
+
+export const IsSameDay = (firstDate: Date, secondDate: Date): boolean => {
+    return IsSameDayFns(new Date(firstDate), secondDate)
 }

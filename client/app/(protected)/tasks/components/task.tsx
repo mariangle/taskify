@@ -6,7 +6,7 @@ import {
 } from "@nextui-org/react";
 
 import Badge from "@/components/ui/status-badge";
-import PriorityLabel from "@/components/ui/priority-label";
+import PriorityLabel from "@/components/priority-label";
 import TaskActions from "./task-actions";
 import Link from "next/link";
 
@@ -23,7 +23,7 @@ export default function Task({
 }: TaskProps) {
 
   return (
-    <Card className="h-content shadow-none border dark:border-zinc-800">
+    <Card className="h-content shadow-none">
         <CardHeader className="block space-y-2">
           <div className="flex justify-between">
             <div className="flex gap-2 items-center">

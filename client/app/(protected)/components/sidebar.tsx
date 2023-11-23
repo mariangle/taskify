@@ -9,7 +9,7 @@ import React from "react";
 import { ListResponse } from "@/types";
 
 import ListModal from "@/components/modals/list-modal";
-import ListItem from "@/components/ui/list-header";
+import ListItem from "./list-header";
 
 interface SidebarProps {
   lists: ListResponse[],
@@ -21,7 +21,7 @@ const Sidebar = ({
   const pathname = usePathname();
 
   return (
-    <aside className="bg-white border-r h-full py-4 dark:bg-zinc-900 dark:border-zinc-800 rounded-xl border">
+    <aside className="bg-white h-full py-4 dark:bg-zinc-900 rounded-xl">
       <ul>
         {dashboardLinks.map((link) => (
           <li key={link.label} className="mb-1">

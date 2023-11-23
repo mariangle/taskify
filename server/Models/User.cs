@@ -13,7 +13,6 @@ namespace server.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public List<Task>? Tasks { get; set; }
-        [NotMapped]
-        public List<string>? Tags { get; set; }
+        public List<Label>? Labels { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace server.Models
         public User? User { get; set; }
         public List<Subtask>? Subtasks { get; set; }
         public List<Note>? Notes { get; set; }
+        public List<LabelTask>? Labels { get; set; }
         public RecurringTask? Recurring { get; set; }
     }
 }

@@ -101,10 +101,10 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.List'  is null.");
             }
 
-            Guid userId = _userService.GetUserId();
-            list.UserId = userId;
+            list.UserId = _userService.GetUserId();
 
-            try {
+            try
+            {
                 _context.Lists.Add(list);
                 await _context.SaveChangesAsync();
 

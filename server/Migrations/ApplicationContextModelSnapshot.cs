@@ -22,6 +22,50 @@ namespace server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("server.Models.Label", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Label");
+                });
+
+            modelBuilder.Entity("server.Models.LabelTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LabelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LabelId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("LabelTask");
+                });
+
             modelBuilder.Entity("server.Models.List", b =>
                 {
                     b.Property<Guid>("Id")
@@ -186,6 +230,30 @@ namespace server.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("server.Models.Label", b =>
+                {
+                    b.HasOne("server.Models.User", null)
+                        .WithMany("Labels")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("server.Models.LabelTask", b =>
+                {
+                    b.HasOne("server.Models.Label", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("LabelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("server.Models.Task", null)
+                        .WithMany("Labels")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("server.Models.Note", b =>
                 {
                     b.HasOne("server.Models.Task", null)
@@ -230,6 +298,11 @@ namespace server.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("server.Models.Label", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
             modelBuilder.Entity("server.Models.List", b =>
                 {
                     b.Navigation("Tasks");
@@ -237,6 +310,8 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Task", b =>
                 {
+                    b.Navigation("Labels");
+
                     b.Navigation("Notes");
 
                     b.Navigation("Recurring");
@@ -246,6 +321,8 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.User", b =>
                 {
+                    b.Navigation("Labels");
+
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

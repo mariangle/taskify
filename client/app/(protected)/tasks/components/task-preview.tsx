@@ -1,5 +1,5 @@
 import StatusBadge from "@/components/ui/status-badge";
-import PriorityLabel from "@/components/ui/priority-label";
+import PriorityLabel from "@/components/priority-label";
 import Tag from "@/components/ui/tag";
 
 import { HiOutlineClock } from "react-icons/hi";

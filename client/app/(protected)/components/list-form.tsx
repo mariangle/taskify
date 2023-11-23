@@ -8,7 +8,7 @@ import { ListEntry, ListResponse } from "@/types";
 import useLists from "@/helpers/hooks/use-lists";
 import { FaTrash } from "react-icons/fa";
 import { extractNlpList, handleError } from "@/helpers/util";
-import ListPreview from "@/components/ui/list-preview";
+import ListPreview from "./list-preview";
 import AlertModal from "@/components/modals/alert-modal";
 
 interface FormProps {

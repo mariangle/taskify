@@ -95,7 +95,6 @@ namespace server.Controllers
 
             return CreatedAtAction("GetSubtask", new { id = subtask.Id }, subtask);
         }
-
         // DELETE: api/Subtasks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubtask(Guid id)

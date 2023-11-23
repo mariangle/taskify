@@ -5,6 +5,7 @@ import AnalyticsPanel from "./components/analytics-panel";
 import TaskService from "@/helpers/services/task-service";
 
 export default async function DashboardPage() {
+  const tasks = await TaskService.getTasks();
   const upcomingTasks = await TaskService.getTasks({ upcoming: true });
   const overdueTasks = await TaskService.getTasks({ overdue: true });
 
@@ -14,7 +15,7 @@ export default async function DashboardPage() {
         <AnalyticsPanel />
       </div>
       <div className="lg:col-span-1">
-        <CalendarPanel />
+        <CalendarPanel tasks={tasks}/>
       </div>
       <div className="col-span-1 lg:col-span-2 grid lg:grid-cols-2 gap-4 lg:gap-6">
         <div>

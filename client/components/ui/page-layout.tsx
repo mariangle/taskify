@@ -1,12 +1,16 @@
+import { cn } from "@nextui-org/react"
+
 interface props {
-    children: React.ReactNode
+    children: React.ReactNode,
+    className?: string
 }
 
 const PageLayout: React.FC<props> = ({
-    children
+    children,
+    className
 }) => {
   return (
-    <div className="min-h-screen py-8">
+    <div className={cn("min-h-screen py-8 w-full max-w-screen-lg p-6 mx-auto", className)}>
         {children}
     </div>
   )

@@ -98,8 +98,7 @@ namespace server.Controllers
                 return Unauthorized("Unauthorized.");
             }
 
-            Guid userId = _userService.GetUserId();
-            task.UserId = userId;
+            task.UserId = _userService.GetUserId();
 
             _context.Entry(task).State = EntityState.Modified;
 
@@ -136,9 +135,9 @@ namespace server.Controllers
             Guid userId = _userService.GetUserId();
             task.UserId = userId;
 
-            if (string.IsNullOrEmpty(task.Name) || task.DueDate == DateTime.MinValue)
+            if (string.IsNullOrEmpty(task.Name))
             {
-                return BadRequest("You must provide both a date and a name.");
+                return BadRequest("Name field is required.");
             }
 
             try

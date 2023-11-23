@@ -12,8 +12,8 @@ using server.Context;
 namespace server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20231120103059_OpenToIncomplete")]
-    partial class OpenToIncomplete
+    [Migration("20231123174858_AddLabel")]
+    partial class AddLabel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,50 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("server.Models.Label", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Label");
+                });
+
+            modelBuilder.Entity("server.Models.LabelTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LabelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LabelId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("LabelTask");
+                });
 
             modelBuilder.Entity("server.Models.List", b =>
                 {
@@ -43,7 +87,7 @@ namespace server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("List");
+                    b.ToTable("Lists");
                 });
 
             modelBuilder.Entity("server.Models.Note", b =>
@@ -128,17 +172,14 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("Duration")
+                    b.Property<TimeSpan?>("Duration")
                         .HasColumnType("time");
 
                     b.Property<Guid?>("ListId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -192,6 +233,30 @@ namespace server.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("server.Models.Label", b =>
+                {
+                    b.HasOne("server.Models.User", null)
+                        .WithMany("Labels")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("server.Models.LabelTask", b =>
+                {
+                    b.HasOne("server.Models.Label", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("LabelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("server.Models.Task", null)
+                        .WithMany("Labels")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("server.Models.Note", b =>
                 {
                     b.HasOne("server.Models.Task", null)
@@ -236,6 +301,11 @@ namespace server.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("server.Models.Label", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
             modelBuilder.Entity("server.Models.List", b =>
                 {
                     b.Navigation("Tasks");
@@ -243,6 +313,8 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Task", b =>
                 {
+                    b.Navigation("Labels");
+
                     b.Navigation("Notes");
 
                     b.Navigation("Recurring");
@@ -252,6 +324,8 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.User", b =>
                 {
+                    b.Navigation("Labels");
+
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

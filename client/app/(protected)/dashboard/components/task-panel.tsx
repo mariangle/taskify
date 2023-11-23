@@ -12,9 +12,9 @@ export default function TaskPanel({
   tasks,
   type,
 } : DashboardTasksList){
-  const titleEmoji = type === 'upcoming' ? '🚀' : '⌛';
+  const titleEmoji = type === 'upcoming' ? '📥' : '⌛';
   const title = `${titleEmoji} ${capitalizeFirstLetter(type)} Tasks`;
-  const desc = type === 'upcoming' ? 'You have exciting tasks ahead! 🌟' : 'Great job! You are all set! 🎉';
+  const desc = type === 'upcoming' ? "All caught up! ⭐ What's next on your agenda?" : 'Great job! You are all set! 🎉';
 
   return (
     <div className="card">

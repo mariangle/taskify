@@ -1,6 +1,6 @@
 "use client"
 
-import { HiOutlineEye, HiOutlineEyeOff } from "@/components/ui";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi"
 import { Input, Button } from "@/components/shared";
 
 import z from 'zod';

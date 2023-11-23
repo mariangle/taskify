@@ -8,7 +8,7 @@ export default function PromptModal() {
 
   return (
     <>
-      <Button onPress={onOpen} variant="shadow" color="primary" disableAnimation className="text-white font-semibold">🚀 New Task</Button>
+      <Button onPress={onOpen} color="primary" disableAnimation className="text-white font-semibold">🚀 New Task</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop='blur' size={'3xl'}>
         <ModalContent className="dark:text-white">
           {onClose => <TaskPrompt onClose={onClose}/>}
