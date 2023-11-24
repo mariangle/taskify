@@ -1,6 +1,6 @@
 import { Code, Link, Button  } from "@nextui-org/react";
 
-import PageLayout from "@/components/ui/page-layout"
+import PageLayout from "@/components/page-layout"
 import Features from "./components/features"
 import TypewriterEffect from "./components/typewriter-effect"
 

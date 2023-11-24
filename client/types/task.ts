@@ -11,7 +11,7 @@ export type TaskEntry = {
     id?: string,
     name: string,
     listId?: string | null,
-    dueDate?: string | null,
+    dueDate?: string | null | Date,
     duration?: string,
     priority?: string | null,
     status?: string,

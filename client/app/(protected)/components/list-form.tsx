@@ -2,7 +2,8 @@
 
 import React from "react";
 
-import { Input, Button } from "@/components/shared";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { ListEntry, ListResponse } from "@/types";
 import useLists from "@/helpers/hooks/use-lists";
@@ -55,12 +56,18 @@ const ListForm = ({
         : await createList(newList)
 
         router.refresh();
+        router.push('/dashboard')
         onClose();
       } catch (error) {
         handleError(error)
       } finally {
           setIsLoading(false)
       }
+    }
+
+    const test = () => {
+      alert("lcikc")
+      onClose();
     }
     
     const onDelete = async () => {
@@ -69,7 +76,6 @@ const ListForm = ({
         try {
           await deleteList(list.id);
           router.refresh();
-          router.push('/tasks')
           onClose();
         } catch (error) {
           handleError(error)
@@ -85,7 +91,7 @@ const ListForm = ({
         onConfirm={onDelete}
         loading={isLoading}
       />
-      <Input id="name" label=""
+      <Input id="name" 
           placeholder="Eg. '💼 Work'"
           value={input || ''}
           onChange={((e) => setInput(e.target.value))}
@@ -93,14 +99,13 @@ const ListForm = ({
       <ListPreview list={extractedList}/>
       <div className="flex-gap">
         <Button
-            isLoading={isLoading}
             type="submit"
             onClick={onSubmit}
         >
             {action}
         </Button>
         {list && (
-            <Button type="button" variant="flat" color="danger" onClick={() => setIsOpen(true)} isIconOnly><FaTrash /></Button>
+            <Button type="button" color="danger" onClick={() => setIsOpen(true)}><FaTrash /></Button>
         )}
       </div>
     </>

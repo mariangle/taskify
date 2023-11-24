@@ -5,17 +5,14 @@ import React from "react";
 
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode, modes } from '@/helpers/constants';
-import { Textarea } from "@nextui-org/react";
+import { Input } from './ui/input';
 
-import SelectMode from '@/components/select-mode';
 import RecordButtons from '@/components/record-buttons';
 import TaskPreview from '../app/(protected)/tasks/components/task-preview';
-import { Button } from '@/components/shared';
-import { Divider } from '@nextui-org/react';
+import { Button } from './ui/button';
 
 import { useRouter } from 'next/navigation';
 import { extractNlpTask, handleError } from '@/helpers/util';
-import { Card, CardBody, CardFooter } from '@nextui-org/react';
 import { TaskEntry } from '@/types';
 import TaskService from '@/helpers/services/task-service';
 
@@ -66,18 +63,15 @@ const TaskPrompt = ({
   if (!browserSupportsSpeechRecognition || !isMicrophoneAvailable) {}
 
   return (
-    <Card>
-      <CardBody className='space-y-3'>
-        <Textarea variant='bordered' minRows={1} value={prompt ||''} onValueChange={setPrompt} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
+    <>
+        <Input value={prompt ||''} onChange={(e) => setPrompt(e.target.value)} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
         <TaskPreview task={task}/>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-      <Button onClick={sendPrompt}>Create Task</Button>
-            <Button onClick={clearPrompt} variant='light'>Clear</Button>
-            <RecordButtons selectedMode={selectedMode}/>
-      </CardFooter>
-    </Card>
+        <div className='flex-gap'>
+          <Button onClick={sendPrompt} variant={'secondary'}>Create Task</Button>
+          <Button onClick={clearPrompt} variant={'ghost'}>Clear</Button>
+          <RecordButtons selectedMode={selectedMode}/>
+        </div>
+    </>
   );
 };
 export default TaskPrompt;

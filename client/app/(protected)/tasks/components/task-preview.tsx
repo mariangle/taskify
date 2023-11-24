@@ -1,6 +1,6 @@
-import StatusBadge from "@/components/ui/status-badge";
+import StatusBadge from "@/components/status-badge"
 import PriorityLabel from "@/components/priority-label";
-import Tag from "@/components/ui/tag";
+import Tag from "@/components/tag";
 
 import { HiOutlineClock } from "react-icons/hi";
 import { MdOutlineTitle } from "react-icons/md";

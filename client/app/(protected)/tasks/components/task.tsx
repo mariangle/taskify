@@ -1,38 +1,29 @@
-import {
-    Card, 
-    CardHeader, 
-    CardBody, 
-    Divider
-} from "@nextui-org/react";
-
-import Badge from "@/components/ui/status-badge";
+import Badge from "@/components/status-badge";
 import PriorityLabel from "@/components/priority-label";
-import TaskActions from "./task-actions";
 import Link from "next/link";
 
 import { HiOutlineClock } from "react-icons/hi";
 import { TaskResponse } from "@/types";
 import { formatDistanceToNow } from "@/helpers/util/format";
+import ListService from "@/helpers/services/list-service";
 
 interface TaskProps {
     data: TaskResponse
 }
 
-export default function Task({
+export default async function Task({
   data
 }: TaskProps) {
+  const lists = await ListService.getLists();
 
   return (
-    <Card className="h-content shadow-none">
-        <CardHeader className="block space-y-2">
+    <div className="h-content shadow-none">
           <div className="flex justify-between">
             <div className="flex gap-2 items-center">
-              <Link href={`/tasks/${data.id}`} className="text-md">
-                {data.name}
-              </Link>
+              {data.name}
               <Badge status={data.status} />
             </div>
-            <TaskActions id={data.id}/>
+            <Link href={`/tasks/${data.id}`}>test</Link>
           </div>
           { data.dueDate && (
             <div className="flex gap-2 items-center text-xs">
@@ -41,10 +32,6 @@ export default function Task({
             </div>
           )}
           { data.priority && <PriorityLabel label={data.priority}/>}
-        </CardHeader>
-        <Divider />
-        <CardBody>
-        </CardBody>
-    </Card>
+    </div>
   );
 }

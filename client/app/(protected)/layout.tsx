@@ -13,7 +13,7 @@ interface PageProps {
 export default async function Layout(props: PageProps) {
     const lists = await ListService.getLists()
     return (
-        <div className="flex h-screen bg-zinc-100 dark:bg-zinc-950 p-4 lg:p-6 gap-4 lg:gap-6">
+        <div className="flex h-screen">
             <div className="hidden md:flex flex-col w-[225px]">
                 <Sidebar lists={lists}/>
             </div>

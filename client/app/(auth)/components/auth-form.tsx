@@ -1,8 +1,9 @@
 "use client"
-
-import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi"
-import { Input, Button } from "@/components/shared";
-
+import {
+  Form,
+} from "@/components/ui/form"
+import FormInput from "@/components/common/form-input";
+import { Button } from "@/components/ui/button";
 import z from 'zod';
 import React from "react";
 import toast from "react-hot-toast";
@@ -34,11 +35,7 @@ const AuthForm = ({
     const authSchema = variant === 'login' ? LoginSchema : RegisterSchema;
     const action = variant === 'login' ? 'Login' : 'Register';
     const successMessage = variant === "login" ? 'Successfully logged in!' : 'Successfully registered. You can now log in.';
-    const {
-      register,
-      handleSubmit,
-      formState: { errors }
-  } = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema)})
+    const form = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema)})
 
     const toggleVisibility = () => setIsVisible(!isVisible);
     const toggleVisibilityConfirm = () => setIsVisibleConfirm(!isVisibleConfirm)
@@ -63,41 +60,21 @@ const AuthForm = ({
   };
 
   return (
-    <form className="max-w-xs space-y-4 mx-auto">
-      <Input id='username' errors={errors} register={register}/>
-      { variant === "register" &&  <Input id='name' errors={errors} register={register}/> }
-      <Input id='password' register={register} errors={errors} type={isVisible ? "text" : "password"}
-        endContent={
-          <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-            {isVisible ? (
-              <HiOutlineEyeOff className="text-2xl text-default-400 pointer-events-none" />
-            ) : (
-              <HiOutlineEye className="text-2xl text-default-400 pointer-events-none" />
-            )}
-          </button>
-        }
-      />   
-      { variant === "register" &&  
-          <Input id='confirmPassword' register={register} errors={errors} type={isVisibleConfirm ? "text" : "password"}
-            endContent={
-              <button className="focus:outline-none" type="button" onClick={toggleVisibilityConfirm}>
-                {isVisibleConfirm ? (
-                  <HiOutlineEyeOff className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                  <HiOutlineEye className="text-2xl text-default-400 pointer-events-none" />
-                )}
-              </button>
-            }
-          />   
-      }
-      <Button
-        isLoading={isLoading}
-        type="submit"
-        onClick={handleSubmit(onSubmit)}
-      >
-        {action}
-      </Button>
-    </form>
+    <Form {...form}>
+        <form className="space-y-4">
+          <FormInput form={form} name="username"/>
+          { variant === "register" && <FormInput form={form} name="name"/>}
+          <FormInput form={form} name="password"/>
+          { variant === "register" && <FormInput form={form} name="confirmPassword"/>}
+        <Button
+          type="submit"
+          onClick={form.handleSubmit(onSubmit)}
+        >
+          {action}
+        </Button>
+      </form>      
+    </Form>
+
   )
 }
 export default AuthForm;

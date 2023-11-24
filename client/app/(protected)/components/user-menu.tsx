@@ -1,64 +1,91 @@
-import {  
-    Dropdown,  
-    DropdownTrigger,  
-    DropdownMenu,  
-    DropdownSection,
-    DropdownItem
-} from "@nextui-org/react";
-import { FaCog, FaUser, FaPalette, FaChartArea, FaSignOutAlt} from "react-icons/fa";
-import { RiLifebuoyLine } from "react-icons/ri";
-import AuthService from "@/helpers/services/auth-service";
-const authService = new AuthService(); 
+import {
+    Cloud,
+    CreditCard,
+    Github,
+    Keyboard,
+    LifeBuoy,
+    LogOut,
+    Mail,
+    MessageSquare,
+    Plus,
+    PlusCircle,
+    Settings,
+    User,
+    UserPlus,
+    Users,
+    Palette,
+    LineChart
+  } from "lucide-react";
+  
+  import { Button } from "@/components/ui/button";
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuGroup,
+    DropdownMenuSub,
+    DropdownMenuSubTrigger,
+    DropdownMenuPortal,
+    DropdownMenuSubContent,
+    DropdownMenuLabel,
+    DropdownMenuShortcut,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu";
+  import ThemeSwitcher from "@/components/theme-switcher";
 
-const UserProfileDropdown = () => {
-    const profileItems = [
-        { label: 'Analytics', key: 'analytics', icon: <FaChartArea />, href: '/analytics' },
-    ];
-    const settingsItems = [
-        { label: 'Account', key: 'account', icon: <FaUser />, href: '/settings/account' },
-        { label: 'General', key: 'general', icon: <FaCog />, href: '/settings/general' },
-        { label: 'Appearance', key: 'settings', icon: <FaPalette />, href: '/settings/appearance' },
-    ];
-    const otherItems = [
-        { label: 'Support', key: 'support', icon: <RiLifebuoyLine />, href: '/support' },
-    ];
+  
+  import AuthService from "@/helpers/services/auth-service";
+  const authService = new AuthService();
+  
+  const UserProfileDropdown = () => {
+    
+      const dropdownItems = [
+        { label: "Analytics", key: "analytics", icon: <LineChart className="mr-2 h-4 w-4" />, href: "/analytics" },
+        { label: "Billing", key: "billing", icon: <CreditCard className="mr-2 h-4 w-4" />, href: "/settings/account" },
+        { label: "Account", key: "account", icon: <Settings className="mr-2 h-4 w-4" />, href: "/settings/account", shortcut: "⌘S"},
+      ];
+  
     const onLogout = async () => {
-        await authService.logout();
-    }
-
+      await authService.logout();
+    };
+  
     return (
-        <Dropdown>
-            <DropdownTrigger>
-            🥵
-            </DropdownTrigger>
-            <DropdownMenu aria-label="User Menu" className="dark:text-white">
-                <DropdownSection title="Profile" showDivider>  
-                    {profileItems.map((item) => (
-                        <DropdownItem key={item.key} href={item.href} startContent={item.icon}>
-                            {item.label}
-                        </DropdownItem>
-                    ))}
-                </DropdownSection>
-                <DropdownSection title="Settings" showDivider>  
-                    {settingsItems.map((item) => (
-                        <DropdownItem key={item.key} href={item.href} startContent={item.icon}>
-                            {item.label}
-                        </DropdownItem>
-                    ))}
-                </DropdownSection>
-                <DropdownSection showDivider>  
-                    {otherItems.map((item) => (
-                        <DropdownItem key={item.key} href={item.href} startContent={item.icon}>
-                            {item.label}
-                        </DropdownItem>
-                    ))}
-                </DropdownSection>
-                <DropdownItem textValue="signout" onClick={onLogout} startContent={<FaSignOutAlt />}>
-                    Sign Out
-                </DropdownItem>
-            </DropdownMenu>
-        </Dropdown>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">Open</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+                {dropdownItems.map((item) => (
+                    <DropdownMenuItem key={item.key} >
+                        {item.icon}
+                        <span>{item.label}</span>
+                        <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                ))}
+                <ThemeSwitcher />
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+                <DropdownMenuItem>
+                    <LifeBuoy className="mr-2 h-4 w-4" />
+                    <span>Support</span>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+                <DropdownMenuItem onClick={onLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sign Out</span>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
-}
-
-export default UserProfileDropdown;
+  };
+  
+  export default UserProfileDropdown;
+  

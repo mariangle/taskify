@@ -1,6 +1,6 @@
 import { statuses } from "@/helpers/constants";
 import { TaskResponse } from "@/types";
-import Badge from "@/components/ui/status-badge";
+import Badge from "@/components/status-badge";
 import Link from "next/link";
 import Task from "./task";
 

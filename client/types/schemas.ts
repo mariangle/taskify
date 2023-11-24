@@ -3,11 +3,11 @@ import z from "zod"
 const isStatusValid = (value: string) => ['Incomplete', 'InProgress', 'Completed'].includes(value);
 
 export const taskSchema = z.object({
-  name: z.string().min(3),
-  dueDate: z.string().optional().nullable(),
-  status: z.string().refine(isStatusValid, { message: 'Please select a status' }),
-  priority: z.string().nullable().optional(),
-  listId: z.string().optional().nullable(),
+  name: z.string().min(2),
+  status: z.string().min(2),
+  dueDate: z.union([z.string(), z.date()]).optional(),
+  priority: z.string().optional(),
+  listId: z.string().optional(),
   // recuring
 })
 

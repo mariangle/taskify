@@ -1,39 +1,46 @@
-import { 
-    Select as NextUISelect, 
-    SelectItem,
-    SelectProps as NextUIProps 
-} from "@nextui-org/react"
 
-import { PriorityEnum, StatusEnum } from "@/helpers/constants";
+import { Select as UISelect, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
-import { capitalizeFirstLetter } from '@/helpers/util/format';
 
-interface Props extends NextUIProps {
+interface Props {
     id: string,
-    items: PriorityEnum[] | StatusEnum[],
+    items: any,
     label?: string,
+    selectLabel: string,
+    defaultValue?: string | undefined,
     errors: FieldErrors,
     register?: UseFormRegister<FieldValues | any>,
+    isRequired?: boolean
 }
 
 const Select: React.FC<Props> = ({
     id,
     register,
+    selectLabel,
+    defaultValue,
+    items,
     label,
     errors,
-    ...props
+    isRequired
 }) => {
   return (
-    <NextUISelect
-        className="max-w-xs"
-        label={label ? label : `Select ${capitalizeFirstLetter(id)}`}
-        isInvalid={errors[id] ? true : false}
-        errorMessage={errors[id] ? String(errors[id]?.message) : ''}
-        {...(register && register(id))}
-        {...props}
-    >
-        {(item: PriorityEnum | StatusEnum) => <SelectItem key={item.value} className="dark:text-white">{item.label}</SelectItem>}
-    </NextUISelect>
+    <UISelect defaultValue={defaultValue} {...(register && register(id, { required: isRequired}))}>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder={label ? label : `Select a ${id}`} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>{selectLabel}</SelectLabel>
+          {items.map((item: any, index: number) => (
+              <SelectItem key={index} value={item.label}>{item.label}</SelectItem>
+          ))}
+          {!isRequired && <SelectItem key="none" value={'None'}>None</SelectItem>}
+        </SelectGroup>
+      </SelectContent>
+      {errors?.[id] && (
+          <span>{String(errors[id]?.message)}</span>
+        )}  
+    </UISelect>
   )
 }
 

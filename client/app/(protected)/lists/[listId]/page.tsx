@@ -19,8 +19,8 @@ async function ListPage({
   const title = list.emoji ? `${list.emoji} ${list.name}` : `${defaultEmoji} ${list.name}`
   
   return (
-    <div className='bg-white dark:bg-zinc-900 dark:border-zinc-800 rounded-xl border p-4'>
-        <div className='flex-gap my-2'> 
+    <div className='rounded-xl border p-4'>
+        <div className='flex-gap my-2'>
             <h1 className='font-bold text-xl'>{title}</h1>
             <ListModal list={list}/>
         </div>

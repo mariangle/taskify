@@ -1,9 +1,13 @@
 "use client"
-
+import * as React from "react"
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog"
 import { ListResponse } from "@/types";
-import { Modal, ModalContent, ModalHeader, useDisclosure, Divider, ModalBody } from "@nextui-org/react";
-import { HiPlus, HiDotsHorizontal } from "react-icons/hi"
-import Icon from "@/components/ui/icon";
+import { CircleEllipsis, PlusCircle } from "lucide-react"
+
+import useClickOutside from "@/helpers/hooks/use-click-outside";
 import ListForm from "../../app/(protected)/components/list-form";
 
 interface ListModalProps {
@@ -13,30 +17,24 @@ interface ListModalProps {
 export default function ListModal({
     list
 } : ListModalProps) {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const icon = list ? <HiDotsHorizontal className="w-3 h-3"/> : <HiPlus className="w-3 h-3"/> 
-  const action = list ? 'Edit' : 'Create'
+  const [isOpen, setIsOpen] = React.useState(false)
+  const icon = list ? <CircleEllipsis className="w-4 h-4" /> : <PlusCircle className="w-4 h-4" />
+  const dialogRef = React.useRef(null);
+
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  useClickOutside(dialogRef, () => setIsOpen(false));
 
   return (
     <>
-    { /* ! WARN: A component changed from uncontrolled to controlled. */}
-      <Icon icon={icon} onClick={onOpen}/>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop='blur' placement="center">
-        <ModalContent className="dark:text-white">
-          {onClose => (
-            <>
-              <ModalHeader className="pb-2 pt-4 px-4 flex-col items-start">
-                  <p className="text-tiny uppercase font-bold">{action} list</p>
-                  <small className="text-default-500">12 tasks</small>
-              </ModalHeader>
-              <Divider />
-              <ModalBody className="p-4">
-                <ListForm onClose={onClose} list={list}/>
-              </ModalBody>
-            </>
-            )}
-        </ModalContent>
-      </Modal>
+      <div onClick={open} className="cursor-pointer">
+        {icon}
+      </div>
+      <Dialog open={isOpen}>
+        <DialogContent ref={dialogRef}>
+          <ListForm list={list} onClose={close}/>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

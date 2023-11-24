@@ -1,4 +1,4 @@
-import Tag from "@/components/ui/tag";
+import Tag from "@/components/tag";
 import { ListEntry } from "@/types";
 import { defaultEmoji } from "@/helpers/constants";
 

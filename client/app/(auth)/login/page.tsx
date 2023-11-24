@@ -1,4 +1,4 @@
-import PageLayout from "@/components/ui/page-layout"
+import PageLayout from "@/components/page-layout"
 import AuthForm from "../components/auth-form"
 
 import Link from "next/link"

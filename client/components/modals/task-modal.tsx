@@ -1,8 +1,13 @@
 "use client"
 
+import * as React from "react"
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog"
+
 import { ListResponse, TaskResponse } from "@/types";
 import TaskForm from "../../app/(protected)/components/task-form";
-import { Modal, ModalContent, ModalBody, ModalHeader} from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 interface ModalProps {
@@ -15,21 +20,26 @@ export default function TaskModal({
     lists,
 } : ModalProps ) {
     const router = useRouter();
-    const action = task ? 'Edit Task' : 'Create Task'
+    const [isOpen, setIsOpen] = React.useState(false);
 
-    const onBack = () => {
-        router.back();
-    }
+    const close = () => {
+      setIsOpen(false);
+      
+      router.back();
+      router.refresh();
+    };
+
+    React.useEffect(() => {
+      setIsOpen(true)
+    }, [])
+
+    if (!isOpen) return null;
 
   return (
-    <Modal isOpen={true} onOpenChange={onBack} backdrop='blur' size={'3xl'}>
-        <ModalContent className="dark:text-white">
-            <ModalHeader onClick={onBack}>{action}</ModalHeader>
-            <ModalBody>
-                <TaskForm task={task} lists={lists} isModal={true}/>
-            </ModalBody>
-            <ModalHeader></ModalHeader>
-        </ModalContent>
-    </Modal>
+    <Dialog open={isOpen} onOpenChange={close}>
+      <DialogContent>
+          <TaskForm task={task} lists={lists} onClose={close}/>
+        </DialogContent>
+    </Dialog>
   );
 }

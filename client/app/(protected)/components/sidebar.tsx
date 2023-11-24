@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { dashboardLinks } from "@/helpers/constants";
-import { cn } from "@nextui-org/react";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import React from "react";
@@ -21,7 +21,7 @@ const Sidebar = ({
   const pathname = usePathname();
 
   return (
-    <aside className="bg-white h-full py-4 dark:bg-zinc-900 rounded-xl">
+    <aside className="h-full py-4 border-r">
       <ul>
         {dashboardLinks.map((link) => (
           <li key={link.label} className="mb-1">
@@ -29,7 +29,7 @@ const Sidebar = ({
               href={link.href} 
               className={cn(
                 pathname.includes(link.href) 
-                ? 'text-black dark:text-white font-semibold bg-gradient-to-l from-secondary-500/20 border-r-3 border-secondary' 
+                ? 'text-black dark:text-white font-semibold bg-gradient-to-l from-sky-500/20 border-r border-red-500' 
                 : 'font-medium text-default-500',
                 "w-full block px-4 py-3"
               )}

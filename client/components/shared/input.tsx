@@ -1,8 +1,9 @@
-import { Input as NextUIInput, InputProps as NextUIInputProps } from '@nextui-org/react';
 import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
-import { capitalizeFirstLetter } from '@/helpers/util/format';
+import { Input as UIInput, InputProps } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { capitalizeFirstLetter } from '@/helpers/util';
 
-interface Props extends NextUIInputProps {
+interface Props extends InputProps {
   id: string,
   label?: string,
   required?: boolean;
@@ -12,16 +13,16 @@ interface Props extends NextUIInputProps {
 
 const Input: React.FC<Props> = ({ id, register, label, errors, required = true, ...props }) => {
   return (
-    <NextUIInput
-      size='sm'
-      variant='bordered'
-      placeholder=' '
-      label={label ?? capitalizeFirstLetter(id)}
-      {...(register && register(id, { required }))}
-      isInvalid={errors?.[id] ? true : false}
-      errorMessage={errors?.[id] ? String(errors[id]?.message) : ''}
-      {...props}
-    />
+    <div>
+      <Label>{label ?? capitalizeFirstLetter(id)}</Label>
+      <UIInput
+        {...(register && register(id, { required }))}
+        {...props}
+      />
+        {errors?.[id] && (
+          <span>{String(errors[id]?.message)}</span>
+        )}
+    </div>
   );
 };
 

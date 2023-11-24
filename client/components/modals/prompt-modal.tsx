@@ -1,19 +1,31 @@
 "use client"
 
+import * as React from "react"
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+
+import useClickOutside from "@/helpers/hooks/use-click-outside";
 import TaskPrompt from "@/components/task-prompt";
-import { Modal, ModalContent, Button, useDisclosure } from "@nextui-org/react";
 
 export default function PromptModal() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [isOpen, setIsOpen] = React.useState(false)
+  const dialogRef = React.useRef(null);
+
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  useClickOutside(dialogRef, close);
 
   return (
     <>
-      <Button onPress={onOpen} color="primary" disableAnimation className="text-white font-semibold">🚀 New Task</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop='blur' size={'3xl'}>
-        <ModalContent className="dark:text-white">
-          {onClose => <TaskPrompt onClose={onClose}/>}
-        </ModalContent>
-      </Modal>
+      <Button onClick={open}>🚀 New Task</Button>
+      <Dialog open={isOpen}>
+        <DialogContent ref={dialogRef}>
+          <TaskPrompt onClose={close}/>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

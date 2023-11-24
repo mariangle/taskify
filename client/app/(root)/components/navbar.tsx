@@ -3,7 +3,7 @@ import {
   NavbarBrand,   
 } from "@nextui-org/react";
 
-import Logo from "@/components/ui/logo";
+import Logo from "@/components/logo";
 import AuthNav from "./root-auth-nav";
 
 import Link from "next/link";
