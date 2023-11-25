@@ -24,12 +24,13 @@ namespace server.Controllers
 
         // GET: api/Lists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<List>>> GetList()
+        public async Task<ActionResult<IEnumerable<List>>> GetLists()
         {
             if (_context.Lists == null)
             {
                 return NotFound();
             }
+
             return await _context.Lists.ToListAsync();
         }
 
@@ -41,7 +42,9 @@ namespace server.Controllers
             {
                 return NotFound();
             }
-            var list = await _context.Lists.FindAsync(id);
+            var list = await _context.Lists
+                .Include(l => l.Tasks)  
+                .FirstOrDefaultAsync(l => l.Id == id);
 
             if (list == null)
             {
@@ -98,10 +101,10 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.List'  is null.");
             }
 
-            Guid userId = _userService.GetUserId();
-            list.UserId = userId;
+            list.UserId = _userService.GetUserId();
 
-            try {
+            try
+            {
                 _context.Lists.Add(list);
                 await _context.SaveChangesAsync();
 
@@ -125,16 +128,18 @@ namespace server.Controllers
                 return NotFound("Not found");
             }
 
-            Guid userId = _userService.GetUserId();
-            var foundList = await _context.Lists.FindAsync(id);
-
-            var test = _context.Lists.Any(l => l.Id == id && l.UserId == userId);
-
             if (!IsAuthorized(id))
             {
                 return Unauthorized();
             }
 
+            Guid userId = _userService.GetUserId();
+            var tasks = _context.Tasks
+                .Where(t => t.UserId == userId)
+                .Where(t => t.ListId == id)
+                .ToList();
+
+            _context.Tasks.RemoveRange(tasks);
             _context.Lists.Remove(list);
             await _context.SaveChangesAsync();
 

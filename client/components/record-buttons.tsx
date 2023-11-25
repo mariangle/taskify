@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Button } from './common';
+import React from "react";
+import { Button } from "@/components/ui/button";
   import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode } from '@/helpers/constants';
 
@@ -41,19 +41,18 @@ const RecordButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode }) => {
   return (
     <>
       {selectedMode.value === 'hold' && (
-        <button
+        <Button
           onTouchStart={handleHoldStart}
           onMouseDown={handleHoldStart}
           onTouchEnd={handleHoldEnd}
           onMouseUp={handleHoldEnd}
         >
            {listening ? 'Listening...' : 'Hold-to-talk'}
-        </button>
+        </Button>
       )}
       {selectedMode.value === 'auto' && (
         <Button
           color='danger'
-          variant='flat'
           onClick={handleAutoClick}
         >
           {listening ? 'Listening...' : 'Start Recording'}
@@ -62,7 +61,6 @@ const RecordButtons: React.FC<DictaphoneButtonsProps> = ({ selectedMode }) => {
       {selectedMode.value === 'manual' && (
         <Button
           color='danger'
-          variant='flat'
           onClick={handleManualClick}
         >
           {listening ? 'Stop Recording' : 'Start Recording'}

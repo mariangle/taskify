@@ -1,50 +1,47 @@
 "use client";
 
 import 'regenerator-runtime/runtime';
-import * as React from "react";
+import React from "react";
 
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { Mode, modes } from '@/helpers/constants';
-import { Textarea } from "@nextui-org/react";
+import { Input } from './ui/input';
 
-import SelectMode from '@/components/select-mode';
 import RecordButtons from '@/components/record-buttons';
 import TaskPreview from '../app/(protected)/tasks/components/task-preview';
-import { Button } from '@/components/common';
-import { Divider } from '@nextui-org/react';
+import { Button } from './ui/button';
 
 import { useRouter } from 'next/navigation';
 import { extractNlpTask, handleError } from '@/helpers/util';
-import { Card, CardBody, CardFooter } from '@nextui-org/react';
 import { TaskEntry } from '@/types';
 import TaskService from '@/helpers/services/task-service';
 
-interface CommandLineProps {
+interface PromptLineProps {
   onClose: () => void;
 }
 
 const TaskPrompt = ({
   onClose
-}: CommandLineProps) => {
+}: PromptLineProps) => {
   const [selectedMode, setSelectedMode] = React.useState<Mode>(modes[0]);
-  const [command, setCommand] = React.useState<string>("");
+  const [prompt, setPrompt] = React.useState<string>("");
   const [task, setTask] = React.useState<TaskEntry | null>(null);
 
   React.useEffect(() => {
     const updateTask = async () => {
-        const task = await extractNlpTask(command);
+        const task = await extractNlpTask(prompt);
         setTask(task);
     };
     updateTask();
-}, [command]);
+}, [prompt]);
 
   const router = useRouter();
   const { transcript, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
 
-  const sendCommand = async () => {
+  const sendPrompt = async () => {
     try {
-      if (!task || !task.name || !task.dueDate) {
-        throw new Error("A name and due date is required to create a task.");
+      if (!task || !task.name) {
+        throw new Error("Name is required.");
       }
       await TaskService.createTask(task)
       router.refresh();
@@ -54,30 +51,27 @@ const TaskPrompt = ({
     }
   };
 
-  const clearCommand = () => {
-    setCommand("");
+  const clearPrompt = () => {
+    setPrompt("");
     resetTranscript();
   }
 
   React.useEffect(() => {
-    if (transcript) setCommand((prevCommand) => prevCommand + " " + transcript);
+    if (transcript) setPrompt((prevPrompt) => prevPrompt + " " + transcript);
   }, [transcript]);
 
   if (!browserSupportsSpeechRecognition || !isMicrophoneAvailable) {}
 
   return (
-    <Card>
-      <CardBody className='space-y-3'>
-        <Textarea variant='bordered' minRows={1} value={command ||''} onValueChange={setCommand} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
+    <>
+        <Input value={prompt ||''} onChange={(e) => setPrompt(e.target.value)} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
         <TaskPreview task={task}/>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-      <Button onClick={sendCommand}>Create Task</Button>
-            <Button onClick={clearCommand} variant='light'>Clear</Button>
-            <RecordButtons selectedMode={selectedMode}/>
-      </CardFooter>
-    </Card>
+        <div className='flex-gap'>
+          <Button onClick={sendPrompt} variant={'secondary'}>Create Task</Button>
+          <Button onClick={clearPrompt} variant={'ghost'}>Clear</Button>
+          <RecordButtons selectedMode={selectedMode}/>
+        </div>
+    </>
   );
 };
 export default TaskPrompt;

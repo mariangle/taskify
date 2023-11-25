@@ -1,6 +1,4 @@
-import PageLayout from "@/components/ui/page-layout"
-import WidthContainer from "@/components/ui/width-container"
-
+import PageLayout from "@/components/page-layout"
 import AuthForm from "../components/auth-form"
 
 import Link from "next/link"
@@ -8,10 +6,8 @@ import Link from "next/link"
 export default function Register(){
     return (
         <PageLayout>
-            <WidthContainer>
-                <AuthForm variant="register"/>
-                <Link href="/login">login instead.</Link>
-            </WidthContainer>
+            <AuthForm variant="register"/>
+            <Link href="/login">login instead.</Link>
         </PageLayout>
     )
 }

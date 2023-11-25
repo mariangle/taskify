@@ -1,44 +1,40 @@
 "use client"
-
+import * as React from "react"
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog"
 import { ListResponse } from "@/types";
-import { Modal, ModalContent, ModalHeader, Button, useDisclosure, Card, CardHeader, CardBody, Divider, ModalBody } from "@nextui-org/react";
-import { HiPlus, HiDotsHorizontal } from "react-icons/hi"
+import { MoreHorizontal, Plus } from "lucide-react"
 
-import ListForm from "../forms/list-form";
+import useClickOutside from "@/helpers/hooks/use-click-outside";
+import ListForm from "../../app/(protected)/components/list-form";
 
-interface ListModalProps {
+interface ModalProps {
     list: ListResponse | null
 }
 
 export default function ListModal({
     list
-} : ListModalProps) {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const icon = list ? <HiDotsHorizontal /> :  <HiPlus /> 
-  const action = list ? 'Edit' : 'Create'
+} : ModalProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const icon = list ? <MoreHorizontal className="w-3 h-3" /> : <Plus className="w-3 h-3" />
+  const dialogRef = React.useRef(null);
+
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  useClickOutside(dialogRef, () => setIsOpen(false));
 
   return (
     <>
-    { /* ! WARN: A component changed from uncontrolled to controlled. */}
-      <Button onPress={onOpen} variant="bordered" disableAnimation isIconOnly className="rounded-full p-0" size='sm'>
+      <div onClick={open} className="cursor-pointer bg-border p-1 rounded-full block">
         {icon}
-      </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop='blur' placement="center">
-        <ModalContent className="dark:text-white">
-          {onClose => (
-            <>
-              <ModalHeader className="pb-2 pt-4 px-4 flex-col items-start">
-                  <p className="text-tiny uppercase font-bold">{action} list</p>
-                  <small className="text-default-500">12 tasks</small>
-              </ModalHeader>
-              <Divider />
-              <ModalBody className="p-4">
-                <ListForm onClose={onClose} list={list}/>
-              </ModalBody>
-            </>
-            )}
-        </ModalContent>
-      </Modal>
+      </div>
+      <Dialog open={isOpen}>
+        <DialogContent ref={dialogRef}>
+          <ListForm list={list} onClose={close}/>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

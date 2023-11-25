@@ -1,15 +1,12 @@
 import { Code, Link, Button  } from "@nextui-org/react";
 
-import WidthContainer from "@/components/ui/width-container"
-import PageLayout from "@/components/ui/page-layout"
-
+import PageLayout from "@/components/page-layout"
 import Features from "./components/features"
 import TypewriterEffect from "./components/typewriter-effect"
 
 export default function Home() {
   return (
     <PageLayout>
-      <WidthContainer>
         { /* HERO SECTION */ }
         <div className="min-h-[30vh] flex flex-col justify-center">
           <div>
@@ -50,7 +47,6 @@ export default function Home() {
             Learn More
           </Button>
         </div>
-      </WidthContainer>
     </PageLayout>
   )
 }

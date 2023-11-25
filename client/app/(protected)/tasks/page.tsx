@@ -1,6 +1,5 @@
 import TaskService from '@/helpers/services/task-service';
 import TaskColumn from './components/task-column';
-import CommandModal from '@/components/modals/command-modal';
 
 async function TasksPage() {
   const tasks = await TaskService.getTasks();
@@ -10,12 +9,11 @@ async function TasksPage() {
   const completedTasks = tasks.filter((task) => task.status === 'Completed');
 
   return (
-    <div>
-      <CommandModal />
+    <div className='space-y-2 lg:space-y-4'>
       <div className="grid lg:grid-cols-3 gap-4">
-        <TaskColumn items={openTasks} status="Incomplete" />
-        <TaskColumn items={inProgressTasks} status="InProgress" />
-        <TaskColumn items={completedTasks} status="Completed" />
+        <TaskColumn tasks={openTasks} status="Incomplete" />
+        <TaskColumn tasks={inProgressTasks} status="InProgress" />
+        <TaskColumn tasks={completedTasks} status="Completed" />
       </div>
     </div>
   );

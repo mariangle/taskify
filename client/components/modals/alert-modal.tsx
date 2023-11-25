@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { Modal, ModalContent, ModalHeader, ModalBody} from "@nextui-org/react";
-import { Button } from "@/components/common";
+import * as React from "react"
+import { Button } from "@/components/ui/button"
+import { Modal } from "@/components/ui/modal";
 
 interface AlertModalProps {
+  title?: string,
+  description?: string,
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -13,14 +14,16 @@ interface AlertModalProps {
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
+  title,
+  description,
   isOpen,
   onClose,
   onConfirm,
   loading
 }) => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = React.useState<boolean>(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsMounted(true);
   }, []);
 
@@ -28,25 +31,22 @@ const AlertModal: React.FC<AlertModalProps> = ({
     return null;
   }
 
+  const modalTitle = title ? title : 'Are you sure?'
+  const modalDescription = description ? description : 'This action cannot be undone.'; 
+
   return (
     <Modal
+      title={modalTitle}
+      description={modalDescription}
       isOpen={isOpen}
       onClose={onClose}
-      onOpenChange={onClose}
-      backdrop='blur'>
-        <ModalContent className="dark:text-white">
-            <ModalHeader>
-                Are you sure?
-            </ModalHeader>
-            <ModalBody className="p-4">
-                <div className="flex-gap">
-                    <Button disabled={loading} onClick={onConfirm} variant="shadow">
-                        Yes
-                    </Button>
-                    <Button disabled={loading} onClick={onClose} variant="bordered">Cancel</Button>
-                </div>
-            </ModalBody>
-        </ModalContent>
+    >
+      <div className="pt-6 space-x-2 flex items-center justify-end w-full">
+        <Button disabled={loading} variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button disabled={loading} variant="destructive" onClick={onConfirm}>Continue</Button>
+      </div>
     </Modal>
   );
 };

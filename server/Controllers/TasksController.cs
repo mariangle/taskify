@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using server.Context;
 using server.Models;
 using server.Services;
-using System.Threading.Tasks;
 using TaskModel = server.Models.Task;
 
 
@@ -25,21 +24,45 @@ namespace server.Controllers
 
         // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTask()
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(
+            [FromQuery] Guid? listId,
+            [FromQuery] bool? unsorted = false,
+            [FromQuery] bool? upcoming = false,
+            [FromQuery] bool? overdue = false
+            )
         {
+            IQueryable<TaskModel> tasksQuery = _context.Tasks;
 
-            if (_context.Tasks == null)
+            if (listId.HasValue)
             {
-                return NotFound();
+                tasksQuery = tasksQuery.Where(task => task.ListId == listId);
             }
-            try
+
+            else if (unsorted == true)
             {
-                return await _context.Tasks.ToListAsync();
+                tasksQuery = tasksQuery.Where(task => task.ListId == null);
             }
-            catch (Exception ex)
+
+            if (upcoming == true)
             {
-                return StatusCode(500, "Internal server error");
+                // Filter tasks that are upcoming (due date is after today)
+                tasksQuery = tasksQuery
+                    .Where(task => task.DueDate > DateTime.Today)
+                    .OrderBy(task => task.DueDate)
+                    .Take(10);
             }
+
+            if (overdue == true)
+            {
+                // Filter tasks that are overdue (due date is before today and task is not completed)
+                tasksQuery = tasksQuery
+                        .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
+            }
+            var tasks = await tasksQuery
+                 // .Include(task => task.Labels)
+                .ToListAsync();
+
+            return tasks;
         }
 
         // GET: api/Tasks/5
@@ -50,7 +73,9 @@ namespace server.Controllers
             {
                 return NotFound();
             }
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _context.Tasks
+               .Include(task => task.Labels)
+               .FirstOrDefaultAsync(t => t.Id == id);
 
             if (task == null)
             {
@@ -76,8 +101,7 @@ namespace server.Controllers
                 return Unauthorized("Unauthorized.");
             }
 
-            Guid userId = _userService.GetUserId();
-            task.UserId = userId;
+            task.UserId = _userService.GetUserId();
 
             _context.Entry(task).State = EntityState.Modified;
 
@@ -99,28 +123,25 @@ namespace server.Controllers
                 }
             }
         }
-
-        // POST: api/Tasks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<TaskModel>> PostTask(TaskModel task)
         {
             if (_context.Tasks == null)
             {
-                return Problem("Entity set 'ApplicationContext.Task'  is null.");
+                return Problem("Entity set 'ApplicationContext.Task' is null.");
             }
 
             Guid userId = _userService.GetUserId();
             task.UserId = userId;
 
-            if (string.IsNullOrEmpty(task.Name) || task.DueDate == DateTime.MinValue)
+            if (string.IsNullOrEmpty(task.Name))
             {
-                return BadRequest("You must provide both a date and a name.");
+                return BadRequest("Name field is required.");
             }
 
             try
-            {
+            {     
                 _context.Tasks.Add(task);
                 await _context.SaveChangesAsync();
 
@@ -132,7 +153,6 @@ namespace server.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
         [Authorize]
@@ -175,6 +195,7 @@ namespace server.Controllers
             }
 
             subtask.Id = id;
+
 
             try
             {

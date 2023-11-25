@@ -1,5 +1,4 @@
 import { ListEntry } from "@/types";
-import { capitalizeFirstLetter } from ".";
 
 const nlp = require('compromise');
 const plg = require('compromise-dates');
@@ -26,7 +25,7 @@ export const extractNlpList = async (input: string): Promise<ListEntry> => {
     }
 
     const listEntry: ListEntry = { 
-        name: capitalizeFirstLetter(name), 
+        name: name, 
         emoji
     };
 

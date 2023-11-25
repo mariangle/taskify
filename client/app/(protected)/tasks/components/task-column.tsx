@@ -1,23 +1,25 @@
 import { statuses } from "@/helpers/constants";
 import { TaskResponse } from "@/types";
-import Badge from "@/components/ui/status-badge";
 import Link from "next/link";
-import Task from "./task";
+import TaskCard from "./task-card";
 
 interface ColumnProps {
-    items: TaskResponse[];
+    tasks: TaskResponse[];
     status: string;
   }
   
-  const TaskColumn = ({ items, status }: ColumnProps) => {
+  const TaskColumn = ({ tasks, status }: ColumnProps) => {
     const statusInfo = statuses.find((s) => s.value === status);
-  
+
     return (
       <div className='space-y-4'>
-        <div className='flex justify-between items-center'>
-          <div className='flex gap-2 items-center'>
-            <Badge status={status} hasNoContent />
-            <h2>{statusInfo?.label}</h2>
+        <div className='flex-between'>
+          <div className='flex-gap items-end'>
+            <span className={`flex items-center justify-center h-2 w-2 -translate-y-1.5 rounded-full bg-${statusInfo?.color}-500`}/>
+            <div className="flex gap-1">
+              <h2 className="font-bold">{statusInfo?.label}</h2>
+              <p className="text-xs flex items-end mb-[2.5px] text-default-500">({tasks.length})</p>
+            </div>
           </div>
           <Link 
             href={{
@@ -28,8 +30,8 @@ interface ColumnProps {
             Add New +
           </Link>
         </div>
-        <div className='space-y-4'>
-          {items.map((item) => <Task key={item.id} data={item} />)}
+        <div className='space-y-4 lg:space-y-6'>
+          {tasks.map((item) => <TaskCard key={item.id} data={item} />)}
         </div>
       </div>
     );

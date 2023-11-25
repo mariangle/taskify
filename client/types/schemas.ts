@@ -1,17 +1,14 @@
-import * as z from 'zod';
+import z from "zod"
 
-const isPriorityValid = (value: string) => ['Low', 'High', 'Medium'].includes(value);
 const isStatusValid = (value: string) => ['Incomplete', 'InProgress', 'Completed'].includes(value);
-const isDateString = (value: string) => !isNaN(Date.parse(value));
 
 export const taskSchema = z.object({
-  name: z.string().min(3),
-  location: z.string().optional(),
-  dueDate: z.string().refine(isDateString, { message: 'Due date must be a valid date string' }),
-  status: z.string().refine(isStatusValid, { message: 'Please select a status' }),
-  priority: z.string().refine(isPriorityValid, { message: 'Please select priority'}),
+  name: z.string().min(2),
+  status: z.string().min(2),
+  dueDate: z.union([z.string(), z.date()]).optional(),
+  priority: z.string().optional(),
   listId: z.string().optional(),
-  // recuring
+  labelIds: z.array(z.string()).optional(),
 })
 
 export type TaskSchemaType = z.infer<typeof taskSchema>;

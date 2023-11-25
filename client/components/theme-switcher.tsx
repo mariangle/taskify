@@ -1,26 +1,49 @@
-"use client"
-
-import { useTheme } from "next-themes";
 import * as React from "react";
-
-import { HiSun, HiMoon } from "react-icons/hi";
-import { Button } from "@nextui-org/react";
+import { Moon, Sun, Palette, Monitor, PlusCircle } from "lucide-react";
+import { useTheme } from "next-themes";
+import {
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
+  DropdownMenuSeparator
+} from "@/components/ui/dropdown-menu";
 
 export default function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
-  const [ isMounted, setIsMounted ] = React.useState<boolean>(false)
+  const { setTheme } = useTheme();
 
-  React.useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) return null;
-
-  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+  const handleThemeChange = (selectedTheme: string) => {
+    setTheme(selectedTheme);
+  };
 
   return (
-    <Button onClick={toggleTheme} isIconOnly aria-label="Toggle Theme">
-      {theme === "dark" ? <HiMoon /> : <HiSun />}
-    </Button>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <Palette className="mr-2 h-4 w-4" />
+        <span>Appearance</span>
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          <DropdownMenuItem onClick={() => handleThemeChange('dark')}>
+            <Moon className="mr-2 h-4 w-4" />
+            <span>Dark</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleThemeChange('light')}>
+            <Sun className="mr-2 h-4 w-4" />
+            <span>Light</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleThemeChange('system')}>
+            <Monitor className="mr-2 h-4 w-4" />
+            <span>System</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <PlusCircle className="mr-2 h-4 w-4" />
+            <span>Appearance Settings</span>
+          </DropdownMenuItem>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   );
 }

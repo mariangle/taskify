@@ -21,7 +21,6 @@ export const config = {
         '/dashboard', 
         // ? '/dashboard/:path*' Middleware doesn't run on all paths with prefix
         '/tasks',
-        '/calendar',
         '/settings'
     ],
   }

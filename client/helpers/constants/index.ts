@@ -3,7 +3,6 @@ import { TaskStatus, TaskPriority } from "@/types";
 export const dashboardLinks = [
   { label: 'Dashboard', href: '/dashboard'},
   { label: 'Tasks', href: '/tasks'},
-  { label: 'Calendar', href: '/calendar'},
 ]
 
 export type Mode = {
@@ -26,15 +25,15 @@ export const modes: Mode[] = [
   },
 ];
 
-type NextUIColorVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'default'
-
 export type StatusEnum = {
+  id: number,
   value: TaskStatus,
   label: string,
-  color?: NextUIColorVariant,
+  color?: string,
 }
 
 export type PriorityEnum = {
+  id: number,
   value: TaskPriority,
   label: string,
 }
@@ -42,22 +41,22 @@ export type PriorityEnum = {
 
 export const statuses: StatusEnum[] = [
   {
-    value: 'Incomplete', label: 'New', color: 'primary',
+    id: 1, value: 'Incomplete', label: 'Incomplete', color: 'sky',
   }, 
   {
-    value: 'InProgress', label: 'In Progress', color: 'warning',
+    id: 2, value: 'InProgress', label: 'In Progress', color: 'yellow',
   }, 
   {
-    value: 'Completed', label: 'Done', color: 'success',
+    id: 3, value: 'Completed', label: 'Complete', color: 'emerald',
   }
 ]
 
 export const priorities: PriorityEnum[] = [
-  { value: 'Low', label: 'Low'}, 
-  { value: 'Medium', label: 'Medium'}, 
-  { value: 'High', label: 'High'}, 
+  { id: 1, value: 'Low', label: 'Low'}, 
+  { id: 2, value: 'Medium', label: 'Medium'}, 
+  { id: 3, value: 'High', label: 'High'}, 
 ]
 
 export const danishPhoneNumberRegex = /\+45\s\d{8}/g;
-export const defaultEmoji =  "📋";
+export const defaultEmoji =  "🌟";
 
