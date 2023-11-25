@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using server.Context;
 using server.Models;
 using server.Services;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using TaskModel = server.Models.Task;
 
 
@@ -58,9 +61,13 @@ namespace server.Controllers
                 tasksQuery = tasksQuery
                         .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
             }
-            var tasks = await tasksQuery
-                 // .Include(task => task.Labels)
+
+            var tasks = await _context.Tasks
+                .Include(t => t.Labels      )
                 .ToListAsync();
+
+            // .Include(task => task.Labels)
+
 
             return tasks;
         }
@@ -141,16 +148,15 @@ namespace server.Controllers
             }
 
             try
-            {     
+            {
                 _context.Tasks.Add(task);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetTask", new { id = task.Id }, task);
-
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, ex);
             }
         }
         // DELETE: api/Tasks/5
@@ -159,7 +165,9 @@ namespace server.Controllers
         public async Task<IActionResult> DeleteTask(Guid id)
         {
 
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _context.Tasks
+                .Include(t => t.Labels) 
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (task == null)
             {
@@ -173,6 +181,7 @@ namespace server.Controllers
 
             try
             {
+                // Remove labels first. Probably wanna do this onCascade
                 _context.Tasks.Remove(task);
                 await _context.SaveChangesAsync();
 
@@ -229,6 +238,88 @@ namespace server.Controllers
 
             return CreatedAtAction("GetRecurringTask", new { id = recurringTask.Id }, recurringTask);
         }
+
+        // POST: api/TaskLabels
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("{taskId}/labels/{labelId}")]
+        [Authorize]
+        public async Task<ActionResult> AddLabelToTask([FromRoute] Guid taskId, [FromRoute] Guid labelId)
+        {
+            try
+            {
+                // Check if the task and label exist
+                var task = await _context.Tasks.FindAsync(taskId);
+                var label = await _context.Labels.FindAsync(labelId);
+
+                // Check if task and label exist
+                if (task != null && label != null)
+                {
+                    // Initialize the Labels collection if it's null
+                    if (task.Labels == null)
+                    {
+                        task.Labels = new List<Label>();
+                    }
+
+                    // Add the label to the task's Labels collection
+
+                    task.Labels.Add(label);
+
+                    // Save changes relation in the database
+                    await _context.SaveChangesAsync();
+
+                    return Ok("Label added to the task successfully.");
+                }
+                else
+                {
+                    return BadRequest("Invalid task and label id.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+        // DELETE: api/TaskLabels/5
+        [HttpDelete("{taskId}/labels/{labelId}")]
+        [Authorize]
+        public async Task<IActionResult> RemoveLabelFromTask(Guid taskId, Guid labelId)
+        {
+
+            // Find the task based on taskId
+            var task = await _context.Tasks.Include(t => t.Labels)
+                .FirstOrDefaultAsync(t => t.Id == taskId);
+
+            if (task == null)
+            {
+                return NotFound("Task not found.");
+            }
+
+            // Find the label based on labelId
+            var label = await _context.Labels.FindAsync(labelId);
+
+            if (label == null)
+            {
+                return NotFound("Label not found.");
+            }
+
+            // Check if the label is associated with the task before removing
+            if (task.Labels.Contains(label))
+            {
+                // Remove the label from the task's Labels collection
+                task.Labels.Remove(label);
+
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("You cannot remove a label that hasn't been added to a task.");
+            }
+        }
+
 
         private bool TaskExists(Guid id)
         {

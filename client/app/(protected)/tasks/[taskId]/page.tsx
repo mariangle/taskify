@@ -17,6 +17,7 @@ async function TaskPage({
   return (
     <div className="h-full">
       <TaskForm task={task} lists={lists} labels={labels}/>
+      {JSON.stringify(task)}
     </div>
   )
 }

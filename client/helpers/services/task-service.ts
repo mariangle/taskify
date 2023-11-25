@@ -10,6 +10,11 @@ interface ParamsOptions {
   overdue?: boolean,
 }
 
+interface TaskLabelRelation {
+  labelId: string,
+  taskId: string
+}
+
 const api = axios.create({
   baseURL: 'https://localhost:7232/api',
 });
@@ -76,8 +81,7 @@ const TaskService = {
     } catch (error) {
       throw error;
     }
-  },
-  
+  },  
   deleteTask: async (taskId: string): Promise<TaskResponse> => {
     try {
       const response: AxiosResponse = await api.delete(`/tasks/${taskId}`, requestOptions);
@@ -85,7 +89,22 @@ const TaskService = {
     } catch (error: any) {
       throw error;
     }
-  }
+  },
+  addLabel: async ({ taskId, labelId }: TaskLabelRelation): Promise<void> => {
+    console.log("Sending request to:", `/tasks/${taskId}/labels/${labelId}`);
+    const response: AxiosResponse = await api.post(`/tasks/${taskId}/labels/${labelId}`, null, requestOptions);
+    console.log("Response:", response.data);
+    console.log("in PAI", `/tasks/${taskId}/labels/${labelId}`)
+    return response.data;
+  },
+  removeLabel: async ({ labelId, taskId }: TaskLabelRelation): Promise<void> => {
+    try {
+      const response: AxiosResponse = await api.delete(`/tasks/${taskId}/labels/${labelId}`, requestOptions);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default TaskService;

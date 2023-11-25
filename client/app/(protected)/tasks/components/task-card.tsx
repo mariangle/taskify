@@ -22,7 +22,6 @@ interface TaskProps {
 export default async function TaskCard({
   data
 }: TaskProps) {
-  const labels = await LabelService.getTaskLabels({ taskId: data.id})
 
   return (
     <Card>
@@ -47,7 +46,7 @@ export default async function TaskCard({
           )}
         </CardContent>
       )}
-      labels: {labels?.map((label) => (
+      labels: {data.labels?.map((label) => (
         <div key={label.id}>
           {label.name}
         </div>

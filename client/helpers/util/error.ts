@@ -52,12 +52,8 @@ const handleResponseError = (response: any) => {
 
 const handleRequestError = (error: any) => {
   // TODO: Create API endpoint to check whether user is logged or not
-  if (error.withCredentials  === false) {
-    toast.error('Please log in or check your credentials.');
-  } else {
     console.error('Request error:', error);
-    toast.error('No response received from the server.');
-  }
+    toast.error('Something went wrong.');
 };
 
 const handleClientError = (error: Error) => {

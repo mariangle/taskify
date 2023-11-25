@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { LabelResponse, ListResponse, TaskEntry, TaskResponse } from "@/types";
 import { taskSchema, TaskSchemaType } from "@/types/schemas";
 import TaskService from "@/helpers/services/task-service";
-import TaskLabelService from "@/helpers/services/task-label-service";
 import AlertModal from "@/components/modals/alert-modal";
 import { handleError } from "@/helpers/util/error";
 import toast from "react-hot-toast";
@@ -70,46 +69,40 @@ const TaskForm: React.FC<FormProps> = ({
       const onSubmit = async (data: TaskSchemaType) => {
         const labelIds = selectedLabels.map(label => label.id);
         try {
-          setIsLoading(true);
-
-          const newTask: TaskEntry = {
-            ...data,
-            dueDate: data.dueDate ? data.dueDate : null,
-            labelIds: labelIds || undefined
+            setIsLoading(true);
+    
+            const newTask: TaskEntry = {
+                ...data,
+                dueDate: data.dueDate || null,
+                labelIds: labelIds || undefined
           };
-          
+  
           if (task) {
-            // Update the task
-            await TaskService.updateTask(task.id, { ...newTask, id: task.id });
-            // Associate the task with labels
-            if (labelIds && labelIds.length > 0) {
-              for (const labelId of labelIds) {
-                console.log("associating")
-                await TaskLabelService.associateTaskLabel({ taskId: task.id, labelId });
-              }
-            }
+              await TaskService.updateTask(task.id, { ...newTask, id: task.id });
+  
+              const currentLabels = existingLabels.map(label => label.id);
+              const labelsToAdd = labelIds.filter(labelId => !currentLabels.includes(labelId));
+              const labelsToRemove = currentLabels.filter(labelId => !labelIds.includes(labelId));
+  
+              for (const labelId of labelsToAdd) await TaskService.addLabel({ taskId: task.id, labelId });
+              for (const labelId of labelsToRemove) await TaskService.removeLabel({ taskId: task.id, labelId });
           } else {
-            // Create a new task
-            const createdTask = await TaskService.createTask(newTask);
-            // !! No ID??
-            // Associate the task with labels
-            if (labelIds && labelIds.length > 0) {
-              for (const labelId of labelIds) {
-                console.log("associating")
-                await TaskLabelService.associateTaskLabel({ taskId: createdTask.id, labelId });
+              const createdTask = await TaskService.createTask(newTask);
+  
+              if (labelIds?.length) {
+                  for (const labelId of labelIds) await TaskService.addLabel({ taskId: createdTask.id, labelId });
               }
-            }
           }
-
-          router.refresh();
-          onClose && onClose();
-          toast.success(message);
+  
+            router.refresh();
+            onClose && onClose();
+            toast.success(message);
         } catch (error) {
-          handleError(error);
+            handleError(error);
         } finally {
-          setIsLoading(false);
+            setIsLoading(false);
         }
-      };
+      };    
 
       const onDelete = async () => {
         if (!task) return;
