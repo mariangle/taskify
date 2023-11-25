@@ -1,36 +1,32 @@
 "use client"
 
-import {
-  Navbar as MainNavbar, 
-  NavbarMenuToggle as MobileBurger,
-} from "@nextui-org/react";
-
-import React from "react";
 import UserMenu from "./user-menu";
-import MobileMenu from "./mobile-menu";
-import SearchModal from "@/components/modals/search.modal";
 import PromptModal from "@/components/modals/prompt-modal";
+import LabelSwitcher from "@/components/label-filter";
+import { LabelResponse, TaskResponse } from "@/types";
+import SearchMenu from "@/components/search-menu";
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+interface NavbarProps {
+  labels: LabelResponse[] | [],
+  tasks: TaskResponse[] | []
+}
+const Navbar = ({
+  labels,
+  tasks
+}: NavbarProps) => {
   return (
-    <MainNavbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" className="border-b">
-      <div className="z-10 flex items-center gap-4">      
-        <MobileBurger
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="md:hidden z-10 p-2"
-        />
-        <div className="flex-center">
-          <SearchModal />      
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex h-14 items-center justify-between px-4">
+        <div>
+          <LabelSwitcher labels={labels}/>
+        </div>
+        <div className="flex-gap">
+          <PromptModal />
+          <SearchMenu tasks={tasks}/>
+          <UserMenu />
         </div>
       </div>
-      <div className="flex-gap">
-        <PromptModal />
-        <UserMenu />
-      </div>
-      <MobileMenu />
-    </MainNavbar>
+    </header>
   )
 }
 

@@ -1,25 +1,22 @@
 "use client"
 
 import { usePathname } from "next/navigation";
-import { dashboardLinks } from "@/helpers/constants";
+import { dashboardLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import React from "react";
-import { LabelResponse, ListResponse } from "@/types";
+import { ListResponse } from "@/types";
 
 import ListModal from "@/components/modals/list-modal";
-import LabelModal from "@/components/modals/label-modal";
 import ListItem from "./list-header";
 
 interface SidebarProps {
   lists: ListResponse[] | [],
-  labels: LabelResponse[] | []
 }
 
 const Sidebar = ({
   lists,
-  labels
 }: SidebarProps) => {
   const pathname = usePathname();
 
@@ -49,17 +46,6 @@ const Sidebar = ({
             <div className="space-y-2 my-2 text-default-500">
                 <ListItem />
                 {lists && lists.map((list) => <ListItem list={list} key={list.id}/>)}
-            </div>
-            <div>
-              labels
-              <LabelModal label={null}/>
-              {labels.map((label) => (
-              <div className="flex items-center gap-x-2" key={label.id}>
-                 <div className="h-6 w-6 rounded-full border" style={{ backgroundColor: label.color }} />
-              {label.name}
-              <LabelModal label={label}/>
-            </div>
-              ))}
             </div>
         </div>
       </ul>

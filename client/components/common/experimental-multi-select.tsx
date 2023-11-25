@@ -10,7 +10,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
-import { FormLabel } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 
 export type Item = Record<"value" | "label", string>;
 
@@ -62,7 +62,7 @@ export function ExperimentalMultiSelect<T extends { id: string }>({
 
   return (
     <Command onKeyDown={handleKeyDown} className="flex-1 overflow-visible space-y-2 bg-transparent h-fit">
-      <FormLabel>{label}</FormLabel>
+      <Label htmlFor='label'>{label}test</Label>
          <div
         className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
       >       <div className="flex gap-1 flex-wrap">
@@ -100,7 +100,7 @@ export function ExperimentalMultiSelect<T extends { id: string }>({
       <div className="relative mt-2">
         {open && selectables.length > 0 ? (
           <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-            <CommandGroup className=" overflow-auto">
+            <CommandGroup className=" overflow-auto" id="label">
               {selectables.map((item) => (
                 <CommandItem
                   key={item.id}

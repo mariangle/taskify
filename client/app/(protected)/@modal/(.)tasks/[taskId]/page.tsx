@@ -1,7 +1,7 @@
 import TaskModal from "@/components/modals/task-modal"
-import TaskService from "@/helpers/services/task-service"
-import ListService from "@/helpers/services/list-service"
-import LabelService from "@/helpers/services/label-service"
+import TaskService from "@/services/task-service"
+import ListService from "@/services/list-service"
+import LabelService from "@/services/label-service"
 
 // This route intercepts /tasks/[taskId]
 // Have to use static route then dynamic route for it to work

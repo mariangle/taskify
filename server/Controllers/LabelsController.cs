@@ -113,14 +113,29 @@ namespace server.Controllers
             {
                 return NotFound();
             }
-            var label = await _context.Labels.FindAsync(id);
-            if (label == null)
+
+            // Retrieve tasks with the label and include the Labels collection
+            var tasksWithLabel = _context.Tasks
+                .Include(t => t.Labels)
+                .Where(t => t.Labels.Any(l => l.Id == id));
+
+            foreach (var task in tasksWithLabel)
             {
-                return NotFound();
+                // Remove the label from the Labels collection of the task
+                var labelToRemove = task.Labels.FirstOrDefault(l => l.Id == id);
+                if (labelToRemove != null)
+                {
+                    task.Labels.Remove(labelToRemove);
+                }
             }
 
-            _context.Labels.Remove(label);
-            await _context.SaveChangesAsync();
+            // Remove the label itself
+            var label = await _context.Labels.FindAsync(id);
+            if (label != null)
+            {
+                _context.Labels.Remove(label);
+                await _context.SaveChangesAsync();
+            }
 
             return NoContent();
         }

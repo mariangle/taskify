@@ -12,15 +12,17 @@ import * as React from "react"
 import { Button } from "@/components/ui/button";
 import { LabelResponse, ListResponse, TaskEntry, TaskResponse } from "@/types";
 import { taskSchema, TaskSchemaType } from "@/types/schemas";
-import TaskService from "@/helpers/services/task-service";
+import TaskService from "@/services/task-service";
 import AlertModal from "@/components/modals/alert-modal";
-import { handleError } from "@/helpers/util/error";
+import { handleError } from "@/util/error";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
-import { priorities, statuses } from "@/helpers/constants";
+import { priorities, statuses } from "@/lib/constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExperimentalMultiSelect } from "@/components/common/experimental-multi-select";
+
+// TODO: Change styling https://ui.shadcn.com/docs/components/combobox
 
 interface FormProps { 
   task: TaskResponse | null,
@@ -42,6 +44,8 @@ const TaskForm: React.FC<FormProps> = ({
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
     const [isOpen, setIsOpen] = React.useState<boolean>(false); 
     const [selectedLabels, setSelectedLabels] = React.useState<LabelResponse[]>(existingLabels);
+    const openDialog = () => setIsOpen(true);
+    const closeDialog = () => setIsOpen(false); 
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -114,7 +118,6 @@ const TaskForm: React.FC<FormProps> = ({
           toast.success('Task deleted');
         } catch (error) {
           handleError(error);
-          setIsOpen(false);
         }
       };
 
@@ -126,10 +129,10 @@ const TaskForm: React.FC<FormProps> = ({
 
   return (
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <AlertModal 
             isOpen={isOpen} 
-            onClose={() => setIsOpen(false)}
+            onClose={closeDialog}
             onConfirm={onDelete}
             loading={isLoading}
           />
@@ -143,20 +146,23 @@ const TaskForm: React.FC<FormProps> = ({
                 items={labels}
                 selectedItems={selectedLabels}
                 onSelectedItemsChange={setSelectedLabels}
-                placeholder=""
+                placeholder="Apply label.."
               />
           <div className="flex-gap w-full">
-            { task && <FormSelect items={statuses} form={form} name="status"/>       }
+            { task && <FormSelect items={statuses} form={form} name="status"/>}
             <FormSelect items={priorities} form={form} name="priority"/>    
           </div>
-          <div className="flex-gap justify-end z-10">
-            <Button type="submit" onClick={() => console.log("SUBMIT")}>
+          <div className="flex-gap justify-between mt-4">
+            <div>
+              {task && <Button type="button" variant={'secondary'} onClick={openDialog}>Delete</Button>}     
+            </div>
+            <div className="flex-gap">
+              <Button type="button" variant={'ghost'} onClick={onClose}>Cancel</Button>   
+              <Button type="submit">
                 {action}
-            </Button>
-            <button type="button" onClick={() => console.log(form.getValues)}>test</button>
-            {task && <Button type="button" variant={'destructive'} onClick={() => setIsOpen(true)}>Delete</Button>}          
+              </Button>    
+            </div> 
           </div>
-          {JSON.stringify(form.getValues())}
         </form>
       </Form>
   );

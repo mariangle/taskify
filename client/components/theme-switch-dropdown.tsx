@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 
-export default function ThemeSwitcher() {
+export default function ThemeSwitchDropdown() {
   const { setTheme } = useTheme();
 
   const handleThemeChange = (selectedTheme: string) => {

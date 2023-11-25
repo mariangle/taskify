@@ -1,6 +1,6 @@
 import Tag from "@/components/tag";
 import { ListEntry } from "@/types";
-import { defaultEmoji } from "@/helpers/constants";
+import { defaultEmoji } from "@/lib/constants";
 
 const ListPreview = ({ list }: { list: ListEntry | null }) => {
     const defaultTitle = "title is missing";

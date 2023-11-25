@@ -2,7 +2,8 @@
 import * as React from "react";
 import { TaskResponse } from "@/types";
 import { cn } from "@nextui-org/react";
-import { formatDistanceToNow } from "@/helpers/util/format";
+import { formatDistanceToNow } from "@/util/format";
+import { isOverdue } from "@/util/format";
 import TaskCheckbox from "../../tasks/components/task-checkbox";
 
 interface ListTasksProps {
@@ -11,6 +12,7 @@ interface ListTasksProps {
 }
 
 function ListTask({ task, isLast }: ListTasksProps) {
+
   return (
     <li
       className={cn(
@@ -18,7 +20,10 @@ function ListTask({ task, isLast }: ListTasksProps) {
         "list-none flex flex-col space-y-1"
       )}
     >
-      <TaskCheckbox task={task}/>
+      <div className="text-base">
+        <TaskCheckbox task={task} />
+        <span className={isOverdue({ date: task.dueDate, status: task.status}) ? "text-destructive" : ""}>{task.name}</span>
+      </div>
       {task.dueDate && task.status !== "Completed" && (
         <p className={cn("text-xs text-muted-foreground")}>
           Due {formatDistanceToNow({ date: new Date(task.dueDate) })}

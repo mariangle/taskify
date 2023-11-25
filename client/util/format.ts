@@ -1,7 +1,9 @@
+import { TaskStatus } from '@/types';
 import { 
     format, 
     formatDistanceToNow as formatDistanceToNowFns, 
-    isSameDay as IsSameDayFns
+    isSameDay as IsSameDayFns,
+    isBefore
 } from 'date-fns';
 
 export const formatToEEEDDMMM = (dateString: string): string => {
@@ -35,3 +37,16 @@ export const formatDistanceToNow = ({date} : {date: Date}) => {
 export const IsSameDay = (firstDate: Date, secondDate: Date): boolean => {
     return IsSameDayFns(new Date(firstDate), secondDate)
 }
+
+interface IsOverdueProps {
+    date?: Date | string | undefined | null;
+    status: TaskStatus;
+  }
+  
+  export const isOverdue = ({ date, status }: IsOverdueProps): boolean => {
+    if (!date) return false;
+  
+    const parsedDate = typeof date === 'string' ? new Date(date) : date;
+  
+    return isBefore(parsedDate, new Date()) && status !== "Completed";
+  };

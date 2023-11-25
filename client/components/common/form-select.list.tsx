@@ -1,8 +1,8 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select"
 import { FieldValues, Path, UseFormReturn } from "react-hook-form"
-import { capitalizeFirstLetter } from "@/helpers/util"
-import { defaultEmoji } from "@/helpers/constants"
+import { capitalizeFirstLetter } from "@/util"
+import { defaultEmoji } from "@/lib/constants"
 import { ListResponse } from "@/types"
 
 

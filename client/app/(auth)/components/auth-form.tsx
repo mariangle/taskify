@@ -12,9 +12,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, RegisterSchema} from "./auth-schemas";
 import { useRouter } from "next/navigation";
-import { handleError } from "@/helpers/util/error";
+import { handleError } from "@/util/error";
 
-import AuthService from "@/helpers/services/auth-service";
+import AuthService from "@/services/auth-service";
 
 interface Props { variant: "register" | "login" }
 

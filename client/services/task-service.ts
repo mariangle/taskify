@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { TaskEntry, TaskResponse } from '@/types';
-import { requestOptions } from '@/helpers/util';
+import { requestOptions } from '@/util';
 import https from "https"
 
 interface ParamsOptions {
   listId?: string,
+  labelId?: string,
   unsorted?: boolean,
   upcoming?: boolean,
   overdue?: boolean,
@@ -35,6 +36,10 @@ const TaskService = {
   
       if (params.listId) {
         queryParams.listId = params.listId;
+      }
+
+      if (params.labelId) {
+        queryParams.labelId = params.labelId;
       }
 
       if (params.unsorted !== undefined) {

@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import TaskService from '@/helpers/services/task-service';
+import TaskService from '@/services/task-service';
 
 async function BraindumpListPage() {
   const tasks = await TaskService.getTasks({ unsorted: true });

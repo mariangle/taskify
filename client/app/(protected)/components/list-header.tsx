@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { defaultEmoji } from "@/helpers/constants";
+import { defaultEmoji } from "@/lib/constants";
 
 import { ListResponse } from "@/types";
 

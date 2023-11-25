@@ -29,10 +29,10 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(
             [FromQuery] Guid? listId,
+            [FromQuery] Guid? labelId,
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
-            [FromQuery] bool? overdue = false
-            )
+            [FromQuery] bool? overdue = false)
         {
             IQueryable<TaskModel> tasksQuery = _context.Tasks;
 
@@ -41,33 +41,34 @@ namespace server.Controllers
                 tasksQuery = tasksQuery.Where(task => task.ListId == listId);
             }
 
-            else if (unsorted == true)
+            if (labelId.HasValue)
+            {
+                tasksQuery = tasksQuery.Where(task => task.Labels.Any(label => label.Id == labelId));
+            }
+
+            if (unsorted == true)
             {
                 tasksQuery = tasksQuery.Where(task => task.ListId == null);
             }
 
             if (upcoming == true)
             {
-                // Filter tasks that are upcoming (due date is after today)
+                // Filter tasks that are upcoming (due date is after today and task is not completed)
                 tasksQuery = tasksQuery
-                    .Where(task => task.DueDate > DateTime.Today)
-                    .OrderBy(task => task.DueDate)
-                    .Take(10);
+                    .Where(task => task.DueDate > DateTime.Today && task.Status == Status.Incomplete)
+                    .OrderBy(task => task.DueDate);
             }
 
             if (overdue == true)
             {
                 // Filter tasks that are overdue (due date is before today and task is not completed)
                 tasksQuery = tasksQuery
-                        .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
+                    .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
             }
 
-            var tasks = await _context.Tasks
-                .Include(t => t.Labels      )
+            var tasks = await tasksQuery
+                .Include(t => t.Labels)
                 .ToListAsync();
-
-            // .Include(task => task.Labels)
-
 
             return tasks;
         }
@@ -171,7 +172,7 @@ namespace server.Controllers
 
             if (task == null)
             {
-                return NotFound();
+                return NotFound("Task not found.");
             }
 
             if (!IsAuthorized(id))
@@ -247,11 +248,9 @@ namespace server.Controllers
         {
             try
             {
-                // Check if the task and label exist
                 var task = await _context.Tasks.FindAsync(taskId);
                 var label = await _context.Labels.FindAsync(labelId);
 
-                // Check if task and label exist
                 if (task != null && label != null)
                 {
                     // Initialize the Labels collection if it's null
@@ -260,18 +259,14 @@ namespace server.Controllers
                         task.Labels = new List<Label>();
                     }
 
-                    // Add the label to the task's Labels collection
-
                     task.Labels.Add(label);
-
-                    // Save changes relation in the database
                     await _context.SaveChangesAsync();
 
                     return Ok("Label added to the task successfully.");
                 }
                 else
                 {
-                    return BadRequest("Invalid task and label id.");
+                    return BadRequest("Invalid task or label.");
                 }
             }
             catch (Exception ex)
@@ -316,7 +311,7 @@ namespace server.Controllers
             }
             else
             {
-                return BadRequest("You cannot remove a label that hasn't been added to a task.");
+                return BadRequest("Cannot remove a label that has not been added to the task.");
             }
         }
 

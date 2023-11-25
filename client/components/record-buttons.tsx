@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
   import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode } from '@/helpers/constants';
+import { Mode } from '@/lib/constants';
 
 interface DictaphoneButtonsProps {
   selectedMode: Mode,

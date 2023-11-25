@@ -6,14 +6,15 @@ import {
   Form,
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 import AlertModal from "@/components/modals/alert-modal";
 import FormInput from "@/components/common/form-input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LabelResponse } from "@/types/label";
-import LabelService from "@/helpers/services/label-service";
+import LabelService from "@/services/label-service";
 import { useRouter } from "next/navigation";
-import { handleError } from "@/helpers/util";
+import { handleError } from "@/util";
 
 export const LabelSchema = z.object({
   name: z.string().min(2),
@@ -36,6 +37,8 @@ export default function LabelForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false); 
   const [isOpen, setIsOpen] = React.useState<boolean>(false); 
+  const openDialog = () => setIsOpen(true);
+  const closeDialog = () => setIsOpen(true);
 
   const form = useForm<LabelSchemaType>({
     resolver: zodResolver(LabelSchema),
@@ -77,20 +80,28 @@ export default function LabelForm({
 
   return (
     <Form {...form}>
-      <form>
+      <form>        
         <AlertModal 
             isOpen={isOpen} 
-            onClose={() => setIsOpen(false)}
+            onClose={closeDialog}
             onConfirm={onDelete}
             loading={isLoading}
-          />
-        <FormInput form={form} name="name"/>    
-        <FormInput form={form} name="color" type="color"/> 
-        <div className="flex-gap justify-end">
-            <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
-                {action}
-            </Button>
-        {label && <Button type="button" variant={'destructive'} onClick={() => setIsOpen(true)}>Delete</Button>}          
+            description="This action will remove the labels from tasks that are currently associated with this label."
+        />
+        <div className="flex-gap w-full">
+          <FormInput form={form} name="color" type="color" className="aspect-square"/>           
+          <FormInput form={form} name="name" fullWidth/>    
+        </div>
+        <div className="flex justify-between">
+            <div>
+              {label && <Button type="button" variant={'secondary'} onClick={openDialog} size={'icon'}><Trash className="w-4 h-4"/></Button>}      
+            </div>
+            <div className="flex-gap">
+              <Button type="button" variant={'ghost'} onClick={onClose}>Cancel</Button>   
+              <Button type="submit" onClick={form.handleSubmit(onSubmit)} variant={'default'}>
+                  {action}
+              </Button>
+            </div>    
         </div>
       </form>
     </Form>

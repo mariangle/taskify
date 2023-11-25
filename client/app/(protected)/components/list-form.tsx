@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { ListEntry, ListResponse } from "@/types";
-import useLists from "@/helpers/hooks/use-lists";
 import { FaTrash } from "react-icons/fa";
-import { extractNlpList, handleError } from "@/helpers/util";
+import { extractNlpList, handleError } from "@/util";
 import ListPreview from "./list-preview";
 import AlertModal from "@/components/modals/alert-modal";
+import ListService from "@/services/list-service";
 
 interface FormProps {
     list: ListResponse | null,
@@ -21,14 +21,15 @@ const ListForm = ({
     list,
     onClose,
 } : FormProps) => {
-    const action = list ? 'Save Changes' : 'Create'
+    const action = list ? 'Save Changes' : 'Create List'
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [input, setInput] = React.useState<string>('')
     const [extractedList, setExtractedList] = React.useState<ListEntry | null>(null);
     const router = useRouter();
-    const { createList, updateList, deleteList } = useLists();
+    const closeDialog = () => setIsOpen(false);
+    const openDialog = () => setIsOpen(true)
       
     React.useEffect(() => {
       const updateTask = async () => {
@@ -46,17 +47,17 @@ const ListForm = ({
       try {
         setIsLoading(true)
 
-        if (!extractedList) return;
+        if (!extractedList?.name) throw new Error("A name is required.");
+
         const newList: ListEntry = list
         ? { id: list.id, ...extractedList }
         : extractedList;
         
-        list 
-        ? await updateList(list.id, newList)
-        : await createList(newList)
+        list  
+        ? await ListService.updateList(list.id, newList)
+        : await ListService.createList(newList)
 
         router.refresh();
-        router.push('/dashboard')
         onClose();
       } catch (error) {
         handleError(error)
@@ -64,22 +65,16 @@ const ListForm = ({
           setIsLoading(false)
       }
     }
-
-    const test = () => {
-      alert("lcikc")
-      onClose();
-    }
     
     const onDelete = async () => {
         if (!list) return;
     
         try {
-          await deleteList(list.id);
+          await ListService.deleteList(list.id)
           router.refresh();
           onClose();
         } catch (error) {
           handleError(error)
-          setIsOpen(false);
         }
       };
 
@@ -88,26 +83,34 @@ const ListForm = ({
       <AlertModal 
         isOpen={isOpen} 
         description="All tasks in this list will be deleted."
-        onClose={() => setIsOpen(false)}
+        onClose={closeDialog}
         onConfirm={onDelete}
         loading={isLoading}
       />
-      <Input id="name" 
-          placeholder="Eg. '💼 Work'"
-          value={input || ''}
-          onChange={((e) => setInput(e.target.value))}
-      />
-      <ListPreview list={extractedList}/>
-      <div className="flex-gap">
-        <Button
-            type="submit"
-            onClick={onSubmit}
-        >
-            {action}
-        </Button>
-        {list && (
-            <Button type="button" color="danger" onClick={() => setIsOpen(true)}><FaTrash /></Button>
-        )}
+      <div className="flex">
+        <Input id="name" 
+            placeholder="Work"
+            value={input || ''}
+            onChange={((e) => setInput(e.target.value))}
+            className="w-full"
+        />
+      </div>
+      <div className="flex justify-between">
+        <div>
+          {list && (
+              <Button type="button" variant={'secondary'} onClick={openDialog}><FaTrash /></Button>
+          )}
+        </div>
+        <div className="flex-gap">
+          <Button variant={'ghost'} onClick={onClose}>Cancel</Button>
+          <Button
+              type="submit"
+              onClick={onSubmit}
+              variant={'default'}
+          >
+              {action}
+          </Button>
+        </div>
       </div>
     </>
   )

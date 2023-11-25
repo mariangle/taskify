@@ -4,7 +4,7 @@ import 'regenerator-runtime/runtime';
 import React from "react";
 
 import { useSpeechRecognition } from 'react-speech-recognition';
-import { Mode, modes } from '@/helpers/constants';
+import { Mode, modes } from '@/lib/constants';
 import { Input } from './ui/input';
 
 import RecordButtons from '@/components/record-buttons';
@@ -12,9 +12,9 @@ import TaskPreview from '../app/(protected)/tasks/components/task-preview';
 import { Button } from './ui/button';
 
 import { useRouter } from 'next/navigation';
-import { extractNlpTask, handleError } from '@/helpers/util';
+import { extractNlpTask, handleError } from '@/util';
 import { TaskEntry } from '@/types';
-import TaskService from '@/helpers/services/task-service';
+import TaskService from '@/services/task-service';
 
 interface PromptLineProps {
   onClose: () => void;
@@ -64,7 +64,7 @@ const TaskPrompt = ({
 
   return (
     <>
-        <Input value={prompt ||''} onChange={(e) => setPrompt(e.target.value)} placeholder='Eg. Doctor appointment tomorrow at 2 pm'/>
+        <Input value={prompt ||''} onChange={(e) => setPrompt(e.target.value)} placeholder='Eg. Doctor appointment tomorrow at 2 pm' className='border-none'/>
         <TaskPreview task={task}/>
         <div className='flex-gap'>
           <Button onClick={sendPrompt} variant={'secondary'}>Create Task</Button>

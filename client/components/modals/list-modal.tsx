@@ -7,7 +7,7 @@ import {
 import { ListResponse } from "@/types";
 import { MoreHorizontal, Plus } from "lucide-react"
 
-import useClickOutside from "@/helpers/hooks/use-click-outside";
+import useClickOutside from "@/hooks/use-click-outside";
 import ListForm from "../../app/(protected)/components/list-form";
 
 interface ModalProps {
@@ -31,7 +31,7 @@ export default function ListModal({
         {icon}
       </div>
       <Dialog open={isOpen}>
-        <DialogContent ref={dialogRef}>
+        <DialogContent ref={dialogRef} className="p-4">
           <ListForm list={list} onClose={close}/>
         </DialogContent>
       </Dialog>

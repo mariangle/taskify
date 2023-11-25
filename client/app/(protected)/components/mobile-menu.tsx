@@ -5,7 +5,7 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 
-import { dashboardLinks } from "@/helpers/constants";
+import { dashboardLinks } from "@/lib/constants";
 import { usePathname } from "next/navigation";
 
 const MobileMenu = () => {

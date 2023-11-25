@@ -1,9 +1,12 @@
-import PanelHeader from "./panel-header"
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 
 export default function ProjectsPanel() {
   return (
-    <div className="card">
-      <PanelHeader title="🎯 Projects"/>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>🚀 Projects</CardTitle>
+        <CardDescription>Deploy your new project in one-click.</CardDescription>
+      </CardHeader>
+    </Card>
   )
 }

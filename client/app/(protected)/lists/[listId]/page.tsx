@@ -1,9 +1,9 @@
 import ListModal from '@/components/modals/list-modal';
-import ListService from '@/helpers/services/list-service';
+import ListService from '@/services/list-service';
 import ListTasks from '../components/list-tasks';
 
 import { notFound } from 'next/navigation';
-import { defaultEmoji } from '@/helpers/constants';
+import { defaultEmoji } from '@/lib/constants';
 
 interface PageProps {
     params: { listId: string }

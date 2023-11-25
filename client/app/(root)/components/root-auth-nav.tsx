@@ -1,6 +1,6 @@
 import { Button, NavbarContent, NavbarItem } from "@nextui-org/react"
 import Link from "next/link"
-import { isTokenValid } from "@/helpers/services/token-service";
+import { isTokenValid } from "@/services/token-service";
 
 // TODO: Create an API endpoint to validate user
 const AuthNav = () => {

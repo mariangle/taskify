@@ -1,19 +1,8 @@
 import {
-    Cloud,
     CreditCard,
-    Github,
-    Keyboard,
     LifeBuoy,
     LogOut,
-    Mail,
-    MessageSquare,
-    Plus,
-    PlusCircle,
     Settings,
-    User,
-    UserPlus,
-    Users,
-    Palette,
     LineChart
   } from "lucide-react";
   
@@ -24,18 +13,14 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuGroup,
-    DropdownMenuSub,
-    DropdownMenuSubTrigger,
-    DropdownMenuPortal,
-    DropdownMenuSubContent,
     DropdownMenuLabel,
     DropdownMenuShortcut,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu";
-  import ThemeSwitcher from "@/components/theme-switcher";
+  import ThemeSwitchDropdown from "@/components/theme-switch-dropdown";
 
   
-  import AuthService from "@/helpers/services/auth-service";
+  import AuthService from "@/services/auth-service";
   const authService = new AuthService();
   
   const UserProfileDropdown = () => {
@@ -43,7 +28,7 @@ import {
       const dropdownItems = [
         { label: "Analytics", key: "analytics", icon: <LineChart className="mr-2 h-4 w-4" />, href: "/analytics" },
         { label: "Billing", key: "billing", icon: <CreditCard className="mr-2 h-4 w-4" />, href: "/settings/account" },
-        { label: "Account", key: "account", icon: <Settings className="mr-2 h-4 w-4" />, href: "/settings/account", shortcut: "⌘S"},
+        { label: "Account Settings", key: "account", icon: <Settings className="mr-2 h-4 w-4" />, href: "/settings/account", shortcut: "⌘S"},
       ];
   
     const onLogout = async () => {
@@ -66,7 +51,7 @@ import {
                         <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 ))}
-                <ThemeSwitcher />
+                <ThemeSwitchDropdown />
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

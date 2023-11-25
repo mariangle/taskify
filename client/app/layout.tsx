@@ -2,25 +2,14 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
-import ToasterContext from '@/contexts/toaster-context'
-import ThemeContext from '@/contexts/theme-context'
-import NextUIContext from '@/contexts/next-ui-context'
+import ToastContext from '@/components/providers/toast-provider'
+import ThemeProvider from '@/components/providers/theme-provider'
+import UIProvider from '@/components/providers/ui-provider'
+import { config } from '@/lib/config'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Taskify',
-    template: `%s | Taskify`,
-  },
-  description: "Collaborate, manage projects, and reach new productivity peaks",
-  icons: [
-    {
-      url: "/logo.svg",
-      href: "/logo.svg"
-    }
-  ]
-}
+export const metadata: Metadata = config.metadata;
 
 export default function RootLayout(props: {
   children: React.ReactNode,
@@ -29,15 +18,15 @@ export default function RootLayout(props: {
   return (
       <html lang="en">
         <body className={inter.className}>
-          <NextUIContext>
-            <ThemeContext>
+          <UIProvider>
+            <ThemeProvider>
               <main className="text-foreground bg-background">
                 {props.children}
                 {props.modal}                  
-                <ToasterContext />
+                <ToastContext />
               </main>
-            </ThemeContext>
-          </NextUIContext>
+            </ThemeProvider>
+          </UIProvider>
         </body>
       </html>
   )

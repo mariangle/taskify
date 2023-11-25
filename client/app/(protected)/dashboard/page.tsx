@@ -2,7 +2,7 @@ import TaskPanel from "./components/task-panel";
 import CalendarPanel from "./components/calendar-panel";
 import ProjectsPanel from "./components/projects-panel";
 import AnalyticsPanel from "./components/analytics-panel";
-import TaskService from "@/helpers/services/task-service";
+import TaskService from "@/services/task-service";
 
 export default async function DashboardPage() {
   const tasks = await TaskService.getTasks();

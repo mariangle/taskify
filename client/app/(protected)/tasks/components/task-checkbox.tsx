@@ -4,7 +4,7 @@ import { TaskResponse } from "@/types";
 import { Checkbox } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
-import TaskService from "@/helpers/services/task-service";
+import TaskService from "@/services/task-service";
 
 interface TaskCheckboxProps {
     task: TaskResponse
@@ -13,7 +13,6 @@ interface TaskCheckboxProps {
 export default function TaskCheckbox({
     task
 }: TaskCheckboxProps){
-    const isOverdue = task.status !== "Completed" && task?.dueDate && new Date(task.dueDate) < new Date();
     const [isSelected, setIsSelected] = React.useState(task.status === "Completed");
     const [isLoading, setIsLoading] = React.useState(false);
     const router = useRouter();
@@ -45,7 +44,6 @@ export default function TaskCheckbox({
             color="default"
             onClick={updateStatus}
         >
-            <span className={!!isOverdue ? "text-destructive" : ""}>{task.name}</span>
       </Checkbox>
     )
 }

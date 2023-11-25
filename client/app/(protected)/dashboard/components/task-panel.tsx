@@ -1,6 +1,7 @@
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+
 import ListTasks from "../../lists/components/list-tasks"
-import PanelHeader from "@/app/(protected)/dashboard/components/panel-header";
-import { capitalizeFirstLetter } from "@/helpers/util"
+import { capitalizeFirstLetter } from "@/util"
 import { TaskResponse } from "@/types"
 
 interface DashboardTasksList{
@@ -17,13 +18,20 @@ export default function TaskPanel({
   const desc = type === 'upcoming' ? "All caught up! ⭐ What's next on your agenda?" : 'Great job! You are all set! 🎉';
 
   return (
-    <div className="card">
-      <PanelHeader title={title} items={tasks}/>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex-gap">
+          {title} 
+            <span className="text-xs flex items-end pb-1 text-default-500">({tasks.length})</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
       {tasks.length === 0 ? (
-        <p className="py-2 text-default-500 text-sm">{desc}</p>
+        <CardDescription>{desc}</CardDescription>
       ) : (
         <ListTasks tasks={tasks} />
       )}
-    </div>
+      </CardContent>
+    </Card>
   );
 };

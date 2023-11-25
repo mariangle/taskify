@@ -7,7 +7,7 @@ import {
 import { LabelResponse } from "@/types";
 import { CircleEllipsis, PlusCircle } from "lucide-react"
 
-import useClickOutside from "@/helpers/hooks/use-click-outside";
+import useClickOutside from "@/hooks/use-click-outside";
 import LabelForm from "@/app/(protected)/components/label-form";
 
 interface ModalProps {
@@ -31,7 +31,7 @@ export default function LabelModal({
         {icon}
       </div>
       <Dialog open={isOpen}>
-        <DialogContent ref={dialogRef}>
+        <DialogContent ref={dialogRef} className="p-4">
           <LabelForm label={label} onClose={close}/>
         </DialogContent>
       </Dialog>

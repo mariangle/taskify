@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
-import useClickOutside from "@/helpers/hooks/use-click-outside";
+import useClickOutside from "@/hooks/use-click-outside";
 import TaskPrompt from "@/components/task-prompt";
 
 export default function PromptModal() {
@@ -20,7 +20,7 @@ export default function PromptModal() {
 
   return (
     <>
-      <Button onClick={open}>🚀 New Task</Button>
+      <Button onClick={open} size={'sm'}>🚀 New Task</Button>
       <Dialog open={isOpen}>
         <DialogContent ref={dialogRef}>
           <TaskPrompt onClose={close}/>

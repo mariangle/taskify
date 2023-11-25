@@ -1,4 +1,4 @@
-import { statuses } from "@/helpers/constants";
+import { statuses } from "@/lib/constants";
 import { TaskResponse } from "@/types";
 import Link from "next/link";
 import TaskCard from "./task-card";
@@ -31,7 +31,7 @@ interface ColumnProps {
           </Link>
         </div>
         <div className='space-y-4 lg:space-y-6'>
-          {tasks.map((item) => <TaskCard key={item.id} data={item} />)}
+          {tasks.map((task) => <TaskCard key={task.id} task={task} />)}
         </div>
       </div>
     );

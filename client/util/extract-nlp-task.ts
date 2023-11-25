@@ -1,6 +1,6 @@
 import { TaskEntry } from "@/types"
-import { danishPhoneNumberRegex, priorities, statuses } from "@/helpers/constants"
-import ListService from "@/helpers/services/list-service"
+import { danishPhoneNumberRegex, priorities, statuses } from "@/lib/constants"
+import ListService from "@/services/list-service"
 
 const nlp = require('compromise')
 const plg = require('compromise-dates')

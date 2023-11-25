@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { LabelEntry, LabelResponse } from '@/types';
-import { requestOptions } from '@/helpers/util';
+import { requestOptions } from '@/util';
 import https from "https"
 
 const api = axios.create({
