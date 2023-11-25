@@ -6,18 +6,20 @@ import {
   DialogContent,
 } from "@/components/ui/dialog"
 
-import { ListResponse, TaskResponse } from "@/types";
+import { LabelResponse, ListResponse, TaskResponse } from "@/types";
 import TaskForm from "../../app/(protected)/components/task-form";
 import { useRouter } from "next/navigation";
 
 interface ModalProps {
     task: TaskResponse | null,
     lists: ListResponse[] | [],
+    labels: LabelResponse[] | [],
 }
 
 export default function TaskModal({
     task,
     lists,
+    labels
 } : ModalProps ) {
     const router = useRouter();
     const [isOpen, setIsOpen] = React.useState(false);
@@ -38,7 +40,7 @@ export default function TaskModal({
   return (
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogContent>
-          <TaskForm task={task} lists={lists} onClose={close}/>
+          <TaskForm task={task} labels={labels} lists={lists} onClose={close}/>
         </DialogContent>
     </Dialog>
   );

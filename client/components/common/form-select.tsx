@@ -32,10 +32,10 @@ interface FormSelectProps<T extends FieldValues> {
 
     return (
         <FormField
-        control={form.control}
-        name={name}
-        render={({ field }) => (
-          <FormItem>
+          control={form.control}
+          name={name}
+          render={({ field }) => (
+          <FormItem className="w-full flex-1">
             <FormLabel>{formLabel}</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>

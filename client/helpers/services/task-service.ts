@@ -69,7 +69,6 @@ const TaskService = {
       return null;
     }
   },
-
   updateTask:async (taskId: string, updatedTask: TaskEntry): Promise<TaskResponse> => {
     try {
       const response: AxiosResponse = await api.put(`/tasks/${taskId}`, updatedTask, requestOptions);

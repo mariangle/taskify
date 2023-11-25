@@ -25,13 +25,11 @@ export const modes: Mode[] = [
   },
 ];
 
-type NextUIColorVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'default'
-
 export type StatusEnum = {
   id: number,
   value: TaskStatus,
   label: string,
-  color?: NextUIColorVariant,
+  color?: string,
 }
 
 export type PriorityEnum = {
@@ -43,13 +41,13 @@ export type PriorityEnum = {
 
 export const statuses: StatusEnum[] = [
   {
-    id: 1, value: 'Incomplete', label: 'Incomplete', color: 'primary',
+    id: 1, value: 'Incomplete', label: 'Incomplete', color: 'sky',
   }, 
   {
-    id: 2, value: 'InProgress', label: 'In Progress', color: 'warning',
+    id: 2, value: 'InProgress', label: 'In Progress', color: 'yellow',
   }, 
   {
-    id: 3, value: 'Completed', label: 'Complete', color: 'success',
+    id: 3, value: 'Completed', label: 'Complete', color: 'emerald',
   }
 ]
 
@@ -60,5 +58,5 @@ export const priorities: PriorityEnum[] = [
 ]
 
 export const danishPhoneNumberRegex = /\+45\s\d{8}/g;
-export const defaultEmoji =  "📋";
+export const defaultEmoji =  "🌟";
 

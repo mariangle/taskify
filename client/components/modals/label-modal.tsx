@@ -4,21 +4,21 @@ import {
   Dialog,
   DialogContent,
 } from "@/components/ui/dialog"
-import { ListResponse } from "@/types";
-import { MoreHorizontal, Plus } from "lucide-react"
+import { LabelResponse } from "@/types";
+import { CircleEllipsis, PlusCircle } from "lucide-react"
 
 import useClickOutside from "@/helpers/hooks/use-click-outside";
-import ListForm from "../../app/(protected)/components/list-form";
+import LabelForm from "@/app/(protected)/components/label-form";
 
 interface ModalProps {
-    list: ListResponse | null
+    label: LabelResponse | null
 }
 
-export default function ListModal({
-    list
+export default function LabelModal({
+    label
 } : ModalProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const icon = list ? <MoreHorizontal className="w-3 h-3" /> : <Plus className="w-3 h-3" />
+  const icon = label ? <CircleEllipsis className="w-4 h-4" /> : <PlusCircle className="w-4 h-4" />
   const dialogRef = React.useRef(null);
 
   const open = () => setIsOpen(true);
@@ -27,12 +27,12 @@ export default function ListModal({
 
   return (
     <>
-      <div onClick={open} className="cursor-pointer bg-border p-1 rounded-full block">
+      <div onClick={open} className="cursor-pointer">
         {icon}
       </div>
       <Dialog open={isOpen}>
         <DialogContent ref={dialogRef}>
-          <ListForm list={list} onClose={close}/>
+          <LabelForm label={label} onClose={close}/>
         </DialogContent>
       </Dialog>
     </>

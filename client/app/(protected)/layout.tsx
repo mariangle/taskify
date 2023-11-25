@@ -2,6 +2,7 @@ import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 
 import ListService from "@/helpers/services/list-service";
+import LabelService from "@/helpers/services/label-service";
 
 interface PageProps {
     children: React.ReactNode,
@@ -12,14 +13,16 @@ interface PageProps {
 
 export default async function Layout(props: PageProps) {
     const lists = await ListService.getLists()
+    const labels = await LabelService.getLabels()
+
     return (
         <div className="flex h-screen">
             <div className="hidden md:flex flex-col w-[225px]">
-                <Sidebar lists={lists}/>
+                <Sidebar lists={lists} labels={labels}/>
             </div>
-            <div className="flex flex-col gap-4 flex-1 lg:gap-6">
+            <div className="flex flex-col flex-1">
                 <Navbar />
-                <div className="overflow-y-auto">
+                <div className="overflow-y-auto h-full p-4">
                     {props.children}
                     {props.modal}
                 </div>

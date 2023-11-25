@@ -8,7 +8,7 @@ export const taskSchema = z.object({
   dueDate: z.union([z.string(), z.date()]).optional(),
   priority: z.string().optional(),
   listId: z.string().optional(),
-  // recuring
+  labelIds: z.array(z.string()).optional(),
 })
 
 export type TaskSchemaType = z.infer<typeof taskSchema>;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Context;
 
@@ -11,9 +12,11 @@ using server.Context;
 namespace server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231124233720_TaskLabelRename")]
+    partial class TaskLabelRename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("LabelTask", b =>
-                {
-                    b.Property<Guid>("LabelsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TasksId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("LabelsId", "TasksId");
-
-                    b.HasIndex("TasksId");
-
-                    b.ToTable("LabelTask");
-                });
 
             modelBuilder.Entity("server.Models.Label", b =>
                 {
@@ -206,9 +194,6 @@ namespace server.Migrations
                     b.Property<Guid>("TaskId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LabelId");
@@ -246,21 +231,6 @@ namespace server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("LabelTask", b =>
-                {
-                    b.HasOne("server.Models.Label", null)
-                        .WithMany()
-                        .HasForeignKey("LabelsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("server.Models.Task", null)
-                        .WithMany()
-                        .HasForeignKey("TasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("server.Models.Label", b =>
@@ -318,26 +288,22 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.TaskLabel", b =>
                 {
-                    b.HasOne("server.Models.Label", "Label")
-                        .WithMany("LabelTasks")
+                    b.HasOne("server.Models.Label", null)
+                        .WithMany("Tasks")
                         .HasForeignKey("LabelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("server.Models.Task", "Task")
-                        .WithMany("TaskLabels")
+                    b.HasOne("server.Models.Task", null)
+                        .WithMany("Labels")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Label");
-
-                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("server.Models.Label", b =>
                 {
-                    b.Navigation("LabelTasks");
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("server.Models.List", b =>
@@ -347,13 +313,13 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Task", b =>
                 {
+                    b.Navigation("Labels");
+
                     b.Navigation("Notes");
 
                     b.Navigation("Recurring");
 
                     b.Navigation("Subtasks");
-
-                    b.Navigation("TaskLabels");
                 });
 
             modelBuilder.Entity("server.Models.User", b =>

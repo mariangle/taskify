@@ -30,16 +30,19 @@ const handleResponseError = (response: any) => {
 
   switch (status) {
     case 400: 
-      toast.error(data.title)
+      toast.error(data.message)
     case 401:
       // TODO: Handle unauthorized access (e.g., user not logged in, expired or invalid token)
-      toast.error(data.title)
+      toast.error(data.message)
       break;
     case 404:
-      toast.error(data.title)
+      toast.error(data.message)
+      break;
+    case 409:
+      toast.error(data.message)
       break;
     case 500:
-      toast.error(data.title)
+      toast.error(data.message)
       break;
     default:
       console.error('Unhandled response error:', response);

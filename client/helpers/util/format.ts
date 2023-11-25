@@ -12,9 +12,9 @@ export const formatToEEEDDMMM = (dateString: string): string => {
     }
 };
 
-export const formatToEEEDDMMMYYYYY = (dateString: string): string => {
+export const formatToEEEDDMMMYYYYY = (date: string | Date): string => {
     try {
-        return format(new Date(dateString), 'EEE, dd MMM yyyy');
+        return format(new Date(date), 'EEE, dd MMM yyyy');
     } catch (error) {
         return '';
     }

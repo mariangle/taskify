@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Context;
 
@@ -11,9 +12,11 @@ using server.Context;
 namespace server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231125090657_UserIdTaskLabel")]
+    partial class UserIdTaskLabel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("LabelTask", b =>
-                {
-                    b.Property<Guid>("LabelsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TasksId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("LabelsId", "TasksId");
-
-                    b.HasIndex("TasksId");
-
-                    b.ToTable("LabelTask");
-                });
 
             modelBuilder.Entity("server.Models.Label", b =>
                 {
@@ -248,21 +236,6 @@ namespace server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LabelTask", b =>
-                {
-                    b.HasOne("server.Models.Label", null)
-                        .WithMany()
-                        .HasForeignKey("LabelsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("server.Models.Task", null)
-                        .WithMany()
-                        .HasForeignKey("TasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("server.Models.Label", b =>
                 {
                     b.HasOne("server.Models.User", null)
@@ -319,7 +292,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.Models.TaskLabel", b =>
                 {
                     b.HasOne("server.Models.Label", "Label")
-                        .WithMany("LabelTasks")
+                        .WithMany("TaskLabels")
                         .HasForeignKey("LabelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -337,7 +310,7 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Label", b =>
                 {
-                    b.Navigation("LabelTasks");
+                    b.Navigation("TaskLabels");
                 });
 
             modelBuilder.Entity("server.Models.List", b =>

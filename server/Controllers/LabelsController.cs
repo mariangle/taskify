@@ -24,22 +24,22 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Label>>> GetLabel()
         {
-            if (_context.Label == null)
+            if (_context.Labels == null)
             {
                 return NotFound();
             }
-            return await _context.Label.ToListAsync();
+            return await _context.Labels.ToListAsync();
         }
 
         // GET: api/Labels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Label>> GetLabel(Guid id)
         {
-            if (_context.Label == null)
+            if (_context.Labels == null)
             {
                 return NotFound();
             }
-            var label = await _context.Label.FindAsync(id);
+            var label = await _context.Labels.FindAsync(id);
 
             if (label == null)
             {
@@ -59,6 +59,12 @@ namespace server.Controllers
                 return BadRequest();
             }
 
+            if (!IsAuthorized(id))
+            {
+                return Unauthorized();
+            }
+
+            label.UserId = _userService.GetUserId();
             _context.Entry(label).State = EntityState.Modified;
 
             try
@@ -86,14 +92,14 @@ namespace server.Controllers
         [Authorize]
         public async Task<ActionResult<Label>> PostLabel(Label label)
         {
-            if (_context.Label == null)
+            if (_context.Labels == null)
             {
                 return Problem("Entity set 'ApplicationContext.Label'  is null.");
             }
 
             label.UserId = _userService.GetUserId();
 
-            _context.Label.Add(label);
+            _context.Labels.Add(label);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetLabel", new { id = label.Id }, label);
@@ -103,17 +109,17 @@ namespace server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLabel(Guid id)
         {
-            if (_context.Label == null)
+            if (_context.Labels == null)
             {
                 return NotFound();
             }
-            var label = await _context.Label.FindAsync(id);
+            var label = await _context.Labels.FindAsync(id);
             if (label == null)
             {
                 return NotFound();
             }
 
-            _context.Label.Remove(label);
+            _context.Labels.Remove(label);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -121,7 +127,12 @@ namespace server.Controllers
 
         private bool LabelExists(Guid id)
         {
-            return (_context.Label?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Labels?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+        private bool IsAuthorized(Guid listId)
+        {
+            Guid userId = _userService.GetUserId();
+            return _context.Labels.Any(l => l.Id == listId && l.UserId == userId);
         }
     }
 }

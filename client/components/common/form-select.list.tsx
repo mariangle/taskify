@@ -2,6 +2,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescripti
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select"
 import { FieldValues, Path, UseFormReturn } from "react-hook-form"
 import { capitalizeFirstLetter } from "@/helpers/util"
+import { defaultEmoji } from "@/helpers/constants"
 import { ListResponse } from "@/types"
 
 
@@ -31,7 +32,7 @@ interface FormSelectProps<T extends FieldValues> {
         control={form.control}
         name={name}
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="space-y-2 flex flex-col">
             <FormLabel>{formLabel}</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
@@ -42,7 +43,7 @@ interface FormSelectProps<T extends FieldValues> {
               <SelectContent>
                 {items.map((item) => (
                     <div key={item.id}>
-                        <SelectItem value={item.id}>{item.name}</SelectItem>
+                        <SelectItem value={item.id}>{item.emoji || defaultEmoji} {item.name}</SelectItem>
                     </div>
                 ))}
               </SelectContent>

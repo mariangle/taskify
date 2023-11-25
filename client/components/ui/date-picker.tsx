@@ -27,7 +27,7 @@ export function DatePicker({ selected, placeholder, onSelect } : DatePickerProps
         <PopoverTrigger asChild>
           <Button
             variant={'outline'}
-            className={cn('w-[240px] justify-start text-left font-normal', !selected && 'text-muted-foreground')}
+            className={cn('max-w-[240px] w-full justify-start text-left font-normal', !selected && 'text-muted-foreground')}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {selected ? <span>{formatToEEEDDMMM(selected)}</span> : <span>{placeholder || 'Pick a date' }</span>}

@@ -79,6 +79,7 @@ const ListForm = ({
           onClose();
         } catch (error) {
           handleError(error)
+          setIsOpen(false);
         }
       };
 

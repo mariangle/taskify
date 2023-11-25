@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using server.Context;
 using server.Models;
 using server.Services;
-using System.Threading.Tasks;
 using TaskModel = server.Models.Task;
 
 
@@ -59,7 +58,9 @@ namespace server.Controllers
                 tasksQuery = tasksQuery
                         .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
             }
-            var tasks = await tasksQuery.ToListAsync();
+            var tasks = await tasksQuery
+                 // .Include(task => task.Labels)
+                .ToListAsync();
 
             return tasks;
         }
@@ -72,7 +73,9 @@ namespace server.Controllers
             {
                 return NotFound();
             }
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _context.Tasks
+               .Include(task => task.Labels)
+               .FirstOrDefaultAsync(t => t.Id == id);
 
             if (task == null)
             {
@@ -120,16 +123,13 @@ namespace server.Controllers
                 }
             }
         }
-
-        // POST: api/Tasks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<TaskModel>> PostTask(TaskModel task)
         {
             if (_context.Tasks == null)
             {
-                return Problem("Entity set 'ApplicationContext.Task'  is null.");
+                return Problem("Entity set 'ApplicationContext.Task' is null.");
             }
 
             Guid userId = _userService.GetUserId();
@@ -141,7 +141,7 @@ namespace server.Controllers
             }
 
             try
-            {
+            {     
                 _context.Tasks.Add(task);
                 await _context.SaveChangesAsync();
 
@@ -153,7 +153,6 @@ namespace server.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
         [Authorize]
@@ -196,6 +195,7 @@ namespace server.Controllers
             }
 
             subtask.Id = id;
+
 
             try
             {
