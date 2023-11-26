@@ -4,6 +4,7 @@ import './globals.css'
 
 import ToastContext from '@/components/providers/toast-provider'
 import ThemeProvider from '@/components/providers/theme-provider'
+import Toaster from '@/components/providers/toaster-provider'
 import UIProvider from '@/components/providers/ui-provider'
 import { config } from '@/lib/config'
 
@@ -24,6 +25,7 @@ export default function RootLayout(props: {
                 {props.children}
                 {props.modal}                  
                 <ToastContext />
+                <Toaster/>
               </main>
             </ThemeProvider>
           </UIProvider>

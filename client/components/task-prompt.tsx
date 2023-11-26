@@ -8,7 +8,7 @@ import { Mode, modes } from '@/lib/constants';
 import { Input } from './ui/input';
 
 import RecordButtons from '@/components/record-buttons';
-import TaskPreview from '../app/(protected)/tasks/components/task-preview';
+import TaskPreview from '../app/(platform)/tasks/components/task-preview';
 import { Button } from './ui/button';
 
 import { useRouter } from 'next/navigation';

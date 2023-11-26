@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog"
 
 import { LabelResponse, ListResponse, TaskResponse } from "@/types";
-import TaskForm from "../../app/(protected)/components/task-form";
+import TaskForm from "../../app/(platform)/components/task-form";
 import { useRouter } from "next/navigation";
 
 interface ModalProps {

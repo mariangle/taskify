@@ -11,6 +11,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandSeparator
 } from "@/components/ui/command"
 import {
   Popover,
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/popover"
 import { useRouter, useSearchParams } from "next/navigation"
 import { LabelResponse } from "@/types"
+import Link from "next/link"
 
 interface LabelSwitcherProps {
   labels: LabelResponse[] | []
@@ -67,18 +69,22 @@ export default function LabelFilter({
                 value={label.name}
                 onSelect={(currentValue) => handleLabelSelect(currentValue, label.id)}
               >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === label.name ? "opacity-100" : "opacity-0"
-                  )}
-                />
                 <span className="flex-gap">
                   <div className="h-2 w-2 rounded-full border" style={{ backgroundColor: label.color }} />
                   {label.name}
                 </span>
+                <Check
+                  className={cn(
+                    "ml-2 h-4 w-4",
+                    value === label.name ? "opacity-100" : "opacity-0"
+                  )}
+                />
               </CommandItem>
             ))}
+            <CommandSeparator />
+            <CommandItem>
+              <Link href={'/settings/labels'} onClick={() => setOpen(false)}>Edit Labels</Link>
+            </CommandItem>
           </CommandGroup>
         </Command>
       </PopoverContent>

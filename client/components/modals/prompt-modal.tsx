@@ -22,7 +22,7 @@ export default function PromptModal() {
     <>
       <Button onClick={open} size={'sm'}>🚀 New Task</Button>
       <Dialog open={isOpen}>
-        <DialogContent ref={dialogRef}>
+        <DialogContent ref={dialogRef} className="p-4">
           <TaskPrompt onClose={close}/>
         </DialogContent>
       </Dialog>

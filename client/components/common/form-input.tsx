@@ -29,14 +29,15 @@ interface FormInputProps<T extends FieldValues> extends InputProps {
         control={form.control}
         name={name}
         render={({ field }) => (
-          <FormItem className={cn(fullWidth ? 'w-full' : '', 'mb-4')}>
+          <FormItem className={cn(fullWidth ? 'w-full' : '')}>
             <FormLabel>{formLabel}</FormLabel>
             <FormControl>
-              <Input placeholder={formPlaceholder} {...field} {...props} id={name}/>
+              <Input placeholder={formPlaceholder} {...field} {...props} id={name} />
             </FormControl>
             {description && (
               <FormDescription>
                 {description}
+                YO
               </FormDescription>
             )}
             <FormMessage />

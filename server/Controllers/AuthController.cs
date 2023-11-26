@@ -93,6 +93,13 @@ namespace server.Controllers
             return user;
         }
 
+        [HttpGet("check")]
+        public bool CheckLogged()
+        {
+            var result = HttpContext.User.Identity.IsAuthenticated;
+            return result;
+        }
+
         [HttpPost("logout"), Authorize]
         public async Task<ActionResult> Logout()
         {

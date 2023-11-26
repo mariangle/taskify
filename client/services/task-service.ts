@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import { api } from '@/lib/api';
+import { AxiosResponse } from 'axios';
 import { TaskEntry, TaskResponse } from '@/types';
 import { requestOptions } from '@/util';
 import https from "https"
@@ -16,14 +17,10 @@ interface TaskLabelRelation {
   taskId: string
 }
 
-const api = axios.create({
-  baseURL: 'https://localhost:7232/api',
-});
-
 const TaskService = {
-  createTask: async (task: TaskEntry): Promise<TaskResponse> => {
+  createTask: async (task: TaskEntry) => {
     try {
-      const response: AxiosResponse = await api.post('/tasks', task, requestOptions);
+      const response: AxiosResponse<TaskResponse> = await api.post('/tasks', task, requestOptions);
       return response.data;
     } catch (error) {
       throw error;
@@ -96,10 +93,7 @@ const TaskService = {
     }
   },
   addLabel: async ({ taskId, labelId }: TaskLabelRelation): Promise<void> => {
-    console.log("Sending request to:", `/tasks/${taskId}/labels/${labelId}`);
     const response: AxiosResponse = await api.post(`/tasks/${taskId}/labels/${labelId}`, null, requestOptions);
-    console.log("Response:", response.data);
-    console.log("in PAI", `/tasks/${taskId}/labels/${labelId}`)
     return response.data;
   },
   removeLabel: async ({ labelId, taskId }: TaskLabelRelation): Promise<void> => {
