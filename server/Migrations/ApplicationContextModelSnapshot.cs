@@ -194,35 +194,15 @@ namespace server.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("server.Models.TaskLabel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LabelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TaskId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LabelId");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("TaskLabels");
-                });
-
             modelBuilder.Entity("server.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -238,10 +218,6 @@ namespace server.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -316,30 +292,6 @@ namespace server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("server.Models.TaskLabel", b =>
-                {
-                    b.HasOne("server.Models.Label", "Label")
-                        .WithMany("LabelTasks")
-                        .HasForeignKey("LabelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("server.Models.Task", "Task")
-                        .WithMany("TaskLabels")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Label");
-
-                    b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("server.Models.Label", b =>
-                {
-                    b.Navigation("LabelTasks");
-                });
-
             modelBuilder.Entity("server.Models.List", b =>
                 {
                     b.Navigation("Tasks");
@@ -352,8 +304,6 @@ namespace server.Migrations
                     b.Navigation("Recurring");
 
                     b.Navigation("Subtasks");
-
-                    b.Navigation("TaskLabels");
                 });
 
             modelBuilder.Entity("server.Models.User", b =>

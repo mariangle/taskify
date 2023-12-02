@@ -4,7 +4,7 @@ import { SelectSingleEventHandler } from "react-day-picker"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Calendar as CalendarIcon } from "lucide-react"
-import { formatToEEEDDMMM } from "@/helpers/util/format"
+import { formatToEEEDDMMM } from "@/util/format"
 
 import { cn } from "@/lib/utils"
 

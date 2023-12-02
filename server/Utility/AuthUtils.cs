@@ -20,8 +20,8 @@ namespace server.Utility
             List<Claim> claims = new List<Claim>
             {
                 new Claim("Id", user.Id.ToString()),
-                new Claim("Name", user.Username),
-                new Claim("Username", user.Username),
+                new Claim("Name", user.Name),
+                new Claim("Email", user.Email),
                 // new Claim(ClaimTypes.Role, "User")
             };
 

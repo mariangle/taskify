@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using server.Context;
 using server.Models;
 using server.Services;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using TaskModel = server.Models.Task;
 
 
@@ -26,10 +29,12 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(
             [FromQuery] Guid? listId,
+            [FromQuery] Guid? labelId,
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
-            [FromQuery] bool? overdue = false
-            )
+            [FromQuery] bool? overdue = false,
+            [FromQuery] bool? incomplete = false
+)
         {
             IQueryable<TaskModel> tasksQuery = _context.Tasks;
 
@@ -38,28 +43,40 @@ namespace server.Controllers
                 tasksQuery = tasksQuery.Where(task => task.ListId == listId);
             }
 
-            else if (unsorted == true)
+            if (labelId.HasValue)
+            {
+                // Tasks with a specific label
+                tasksQuery = tasksQuery.Where(task => task.Labels.Any(label => label.Id == labelId));
+            }
+
+            if (unsorted == true)
             {
                 tasksQuery = tasksQuery.Where(task => task.ListId == null);
             }
 
             if (upcoming == true)
             {
-                // Filter tasks that are upcoming (due date is after today)
+                // Filter tasks that are upcoming (due date is after today and task is not completed)
                 tasksQuery = tasksQuery
-                    .Where(task => task.DueDate > DateTime.Today)
-                    .OrderBy(task => task.DueDate)
-                    .Take(10);
+                    .Where(task => task.DueDate > DateTime.Today && task.Status == Status.Incomplete)
+                    .OrderBy(task => task.DueDate);
             }
 
             if (overdue == true)
             {
                 // Filter tasks that are overdue (due date is before today and task is not completed)
                 tasksQuery = tasksQuery
-                        .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
+                    .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
             }
+
+            if (incomplete == true)
+            {
+                tasksQuery = tasksQuery
+                    .Where(task => task.Status == Status.Incomplete);
+            }
+
             var tasks = await tasksQuery
-                 // .Include(task => task.Labels)
+                .Include(t => t.Labels)
                 .ToListAsync();
 
             return tasks;
@@ -141,16 +158,15 @@ namespace server.Controllers
             }
 
             try
-            {     
+            {
                 _context.Tasks.Add(task);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetTask", new { id = task.Id }, task);
-
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, ex);
             }
         }
         // DELETE: api/Tasks/5
@@ -159,11 +175,13 @@ namespace server.Controllers
         public async Task<IActionResult> DeleteTask(Guid id)
         {
 
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _context.Tasks
+                .Include(t => t.Labels) 
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (task == null)
             {
-                return NotFound();
+                return NotFound("Task not found.");
             }
 
             if (!IsAuthorized(id))
@@ -173,6 +191,7 @@ namespace server.Controllers
 
             try
             {
+                // Remove labels first. Probably wanna do this onCascade
                 _context.Tasks.Remove(task);
                 await _context.SaveChangesAsync();
 
@@ -229,6 +248,82 @@ namespace server.Controllers
 
             return CreatedAtAction("GetRecurringTask", new { id = recurringTask.Id }, recurringTask);
         }
+
+        // POST: api/TaskLabels
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("{taskId}/labels/{labelId}")]
+        [Authorize]
+        public async Task<ActionResult> AddLabelToTask([FromRoute] Guid taskId, [FromRoute] Guid labelId)
+        {
+            try
+            {
+                var task = await _context.Tasks.FindAsync(taskId);
+                var label = await _context.Labels.FindAsync(labelId);
+
+                if (task != null && label != null)
+                {
+                    // Initialize the Labels collection if it's null
+                    if (task.Labels == null)
+                    {
+                        task.Labels = new List<Label>();
+                    }
+
+                    task.Labels.Add(label);
+                    await _context.SaveChangesAsync();
+
+                    return Ok("Label added to the task successfully.");
+                }
+                else
+                {
+                    return BadRequest("Invalid task or label.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+        // DELETE: api/TaskLabels/5
+        [HttpDelete("{taskId}/labels/{labelId}")]
+        [Authorize]
+        public async Task<IActionResult> RemoveLabelFromTask(Guid taskId, Guid labelId)
+        {
+
+            // Find the task based on taskId
+            var task = await _context.Tasks.Include(t => t.Labels)
+                .FirstOrDefaultAsync(t => t.Id == taskId);
+
+            if (task == null)
+            {
+                return NotFound("Task not found.");
+            }
+
+            // Find the label based on labelId
+            var label = await _context.Labels.FindAsync(labelId);
+
+            if (label == null)
+            {
+                return NotFound("Label not found.");
+            }
+
+            // Check if the label is associated with the task before removing
+            if (task.Labels.Contains(label))
+            {
+                // Remove the label from the task's Labels collection
+                task.Labels.Remove(label);
+
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("Cannot remove a label that has not been added to the task.");
+            }
+        }
+
 
         private bool TaskExists(Guid id)
         {
