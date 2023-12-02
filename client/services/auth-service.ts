@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { setCookie, destroyCookie } from 'nookies'
-import Cookies from "js-cookie"
 import { UserResponse } from '@/types';
+import { setToken } from '@/lib/_actions/set-token';
 
 class AuthService {
   private api: AxiosInstance;
@@ -12,48 +11,22 @@ class AuthService {
     });
   }
 
-  async login(username: string, password: string): Promise<void> {
+  async login(email: string, password: string): Promise<void> {
     try {
-      const response: AxiosResponse = await this.api.post('/login', { username, password });
-      // const { accessToken, refreshToken } = response.data;
-      setCookie(null, 'access_token', response.data, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: '/',
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: 'strict',
-      });
-      setCookie(null, 'refresh_token', response.data, {
-        maxAge: 30 * 24 * 60 * 60, 
-        path: '/',
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: 'strict',
-      });;
+      const response: AxiosResponse = await this.api.post('/login', { email, password });
+      await setToken(response.data)
     } catch (error) {
       throw error;
     }
   }
 
-  async register(username: string, name: string, password: string): Promise<UserResponse> {
+  async register(email: string, name: string, password: string): Promise<UserResponse> {
     try {
-      const response: AxiosResponse = await this.api.post('/register', { username, name, password });
+      const response: AxiosResponse = await this.api.post('/register', { email, name, password });
       return response.data;
     } catch (error) {
       throw error;
     }
-  }
-
-  logout(): void {
-    destroyCookie(null, 'access_token');
-    destroyCookie(null, 'refresh_token');
-  }
-
-  isLogged(): boolean {
-    let isLogged = true;
-    const token =  Cookies.get('access_token') 
-
-    isLogged = !!token; 
-    
-    return isLogged;
   }
 }
 

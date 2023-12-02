@@ -4,7 +4,7 @@ namespace server.Services
 {
     public interface IUserService
     {
-        User GetCurrentUser();
+        UserDto GetCurrentUser();
 
         Guid GetUserId();
     }

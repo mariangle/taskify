@@ -16,13 +16,16 @@ import {
     Moon,
     MoreVertical,
     Pizza,
-    Plus,
     Settings,
+    Plus,
     SunMedium,
     Trash,
     Twitter,
     User,
+    LogOut,
+    LifeBuoy,
     X,
+    LineChart
   } from "lucide-react"
 
   import type { IconNode } from "lucide-react"
@@ -40,11 +43,14 @@ import {
     page: File,
     media: Image,
     settings: Settings,
-    billing: CreditCard,
+    creditCard: CreditCard,
     ellipsis: MoreVertical,
+    support: LifeBuoy,
+    logOut: LogOut,
     add: Plus,
     warning: AlertTriangle,
     user: User,
+    lineChart: LineChart,
     arrowRight: ArrowRight,
     help: HelpCircle,
     pizza: Pizza,

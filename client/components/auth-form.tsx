@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema, RegisterSchema} from "@/lib/validations/auth";
+import { LoginSchema, RegisterSchema} from "@/lib/validations/authentication";
 import { useRouter } from "next/navigation";
 import { handleError } from "@/util/error";
 
@@ -39,11 +39,11 @@ const AuthForm = ({
     try {
       setIsLoading(true);
       if (variant === 'login') {
-        await authService.login(data.username, data.password);
+        await authService.login(data.email, data.password);
         toast.success(successMessage);
         router.push('/dashboard')
       } else if (variant === 'register'){
-        await authService.register(data.username, data.name, data.password);
+        await authService.register(data.email, data.name, data.password);
         toast.success(successMessage);
         router.push('/login')
       }
@@ -57,7 +57,7 @@ const AuthForm = ({
   return (
     <Form {...form}>
         <form className="space-y-4 max-w-sm w-full">
-          <FormInput form={form} name="username"/>
+          <FormInput form={form} name="email"/>
           { variant === "register" && <FormInput form={form} name="name"/>}
           <FormInput 
             form={form} 

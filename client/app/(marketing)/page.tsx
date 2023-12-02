@@ -1,12 +1,11 @@
 import { Code, Link, Button  } from "@nextui-org/react";
 
-import PageLayout from "@/components/page-layout"
 import Features from "./components/features"
 import TypewriterEffect from "./components/typewriter-effect"
 
 export default function Home() {
   return (
-    <PageLayout>
+    <div className="py-8 w-full max-w-screen-lg p-6 mx-auto">
         { /* HERO SECTION */ }
         <div className="min-h-[30vh] flex flex-col justify-center">
           <div>
@@ -47,6 +46,6 @@ export default function Home() {
             Learn More
           </Button>
         </div>
-    </PageLayout>
+    </div>
   )
 }

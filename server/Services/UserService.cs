@@ -11,21 +11,19 @@ namespace server.Services
         public UserService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
         {
             _httpContextAccessor = httpContextAccessor;
-
         }
 
-        public User GetCurrentUser()
+        public UserDto GetCurrentUser()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst("Id")?.Value;
             var parsedUserId = userId != null ? Guid.Parse(userId) : Guid.Empty;
 
-            var username = _httpContextAccessor.HttpContext.User.FindFirst("Username")?.Value;
+            var email = _httpContextAccessor.HttpContext.User.FindFirst("Email")?.Value;
             var name = _httpContextAccessor.HttpContext.User.FindFirst("Name")?.Value;
 
-            return new User
+            return new UserDto
             {
-                Id = parsedUserId,
-                Username = username,
+                Email = email,
                 Name = name
             };
         }

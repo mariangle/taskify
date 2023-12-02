@@ -7,9 +7,10 @@ using server.Context;
 using server.Models;
 using server.Services;
 using server.Utility;
+using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
+using System.Text;
 
 namespace server.Controllers
 {
@@ -20,21 +21,23 @@ namespace server.Controllers
         private readonly AuthUtils _auth;
         private readonly ApplicationContext _context;
         private readonly IUserService _userService;
+        private readonly IConfiguration _config;
 
         public AuthController(ApplicationContext context, IConfiguration configuration, IUserService userService)
         {
             _context = context;
             _userService = userService;
             _auth = new AuthUtils(configuration);
+            _config = configuration;
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto req)
         {
 
-            if (req.Username == null)
+            if (req.Email == null)
             {
-                return BadRequest("Username is required.");
+                return BadRequest("Email is required.");
             }
 
             if (req.Password == null)
@@ -42,9 +45,9 @@ namespace server.Controllers
                 return BadRequest("Password is required.");
             }
 
-            string lowerCaseUsername = req.Username.ToLower();
+            string lowerCaseEmail = req.Email.ToLower();
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == lowerCaseUsername);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == lowerCaseEmail);
 
             if (user == null)
             {
@@ -64,21 +67,21 @@ namespace server.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto req)
         {
-            if (req.Username == null || req.Name == null || req.Password == null)
+            if (req.Email == null || req.Name == null || req.Password == null)
             {
                 return BadRequest("Missing fields.");
             }
 
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == req.Username);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
             if (existingUser != null)
             {
-                return BadRequest("Username already exists.");
+                return BadRequest("Email already exists.");
             }
 
             User user = new User
             {
                 Id = Guid.NewGuid(),
-                Username = req.Username,
+                Email = req.Email,
                 Name = req.Name
             };
 
@@ -93,15 +96,16 @@ namespace server.Controllers
             return user;
         }
 
-        [HttpGet("check")]
-        public bool CheckLogged()
+        [HttpGet("validate-token")]
+        [Authorize]
+        public ActionResult ValidateToken()
         {
-            var result = HttpContext.User.Identity.IsAuthenticated;
-            return result;
+            var currentUser = _userService.GetCurrentUser();
+            return Ok(currentUser);
         }
 
         [HttpPost("logout"), Authorize]
-        public async Task<ActionResult> Logout()
+        public ActionResult Logout()
         {
             return Ok("Logout successful");
         }

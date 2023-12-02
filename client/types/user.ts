@@ -1,7 +1,7 @@
 import { TaskResponse } from "."
 
 export type UserEntry = {
-    username: string,
+    email: string,
     password: string,
     name: string,
 }
@@ -9,7 +9,7 @@ export type UserEntry = {
 export type UserResponse = {
     id: string,
     image: string,
-    username: string,
+    email: string,
     password: string
     name: string,
     tasks: TaskResponse[],

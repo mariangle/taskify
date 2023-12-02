@@ -32,7 +32,9 @@ namespace server.Controllers
             [FromQuery] Guid? labelId,
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
-            [FromQuery] bool? overdue = false)
+            [FromQuery] bool? overdue = false,
+            [FromQuery] bool? incomplete = false
+)
         {
             IQueryable<TaskModel> tasksQuery = _context.Tasks;
 
@@ -43,6 +45,7 @@ namespace server.Controllers
 
             if (labelId.HasValue)
             {
+                // Tasks with a specific label
                 tasksQuery = tasksQuery.Where(task => task.Labels.Any(label => label.Id == labelId));
             }
 
@@ -64,6 +67,12 @@ namespace server.Controllers
                 // Filter tasks that are overdue (due date is before today and task is not completed)
                 tasksQuery = tasksQuery
                     .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
+            }
+
+            if (incomplete == true)
+            {
+                tasksQuery = tasksQuery
+                    .Where(task => task.Status == Status.Incomplete);
             }
 
             var tasks = await tasksQuery

@@ -29,13 +29,14 @@ export default function TaskPanel({
           {title} 
             <span className="text-xs flex items-end pb-1 text-default-500">({tasks.length})</span>
         </CardTitle>
-        <CardDescription>
-        {tasks.length === 0 ? (
-          desc
-        ) : (
-          <ListTasks tasks={tasks} />
-        )}
-        </CardDescription>
+        {tasks.length === 0 
+          ? (
+            <CardDescription>
+              {desc}
+            </CardDescription>
+          ) : (
+            <ListTasks tasks={tasks} />
+          )}
       </CardHeader>
     </Card>
   );

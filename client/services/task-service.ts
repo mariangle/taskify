@@ -2,7 +2,7 @@ import { api } from '@/lib/api';
 import { AxiosResponse } from 'axios';
 import { TaskEntry, TaskResponse } from '@/types';
 import { requestOptions } from '@/util';
-import https from "https"
+import { agent } from '@/lib/agent';
 
 interface ParamsOptions {
   listId?: string,
@@ -52,9 +52,7 @@ const TaskService = {
       }
   
       const response: AxiosResponse = await api.get('/tasks', {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
+        httpsAgent: agent,
         params: queryParams, 
       });
   
@@ -67,9 +65,7 @@ const TaskService = {
   getTask: async (taskId: string): Promise<TaskResponse | null> => {
     try {
       const response: AxiosResponse = await api.get(`/tasks/${taskId}`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false // ! only use in dev
-        }), 
+        httpsAgent: agent, 
       });
       return response.data;
     } catch (error) {

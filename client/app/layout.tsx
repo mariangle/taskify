@@ -14,7 +14,6 @@ export const metadata: Metadata = config.metadata;
 
 export default function RootLayout(props: {
   children: React.ReactNode,
-  modal: React.ReactNode,
 }) {
   return (
       <html lang="en">
@@ -23,7 +22,6 @@ export default function RootLayout(props: {
             <ThemeProvider>
               <main className="text-foreground bg-background">
                 {props.children}
-                {props.modal}                  
                 <ToastContext />
                 <Toaster/>
               </main>

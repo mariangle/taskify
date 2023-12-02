@@ -5,18 +5,25 @@ import ListService from "@/services/list-service";
 import LabelService from "@/services/label-service";
 import TaskService from "@/services/task-service";
 
+import { authenticate } from "@/lib/_actions/authenticate";
+import { redirect } from "next/navigation";
+
 interface PageProps {
     children: React.ReactNode,
     modal: React.ReactNode,
 }
 
-// TODO: Check if user is logged in through API
-
 export default async function Layout(props: PageProps) {
-    const tasks = await TaskService.getTasks()
-    const lists = await ListService.getLists()
-    const labels = await LabelService.getLabels()
+    const isAuthenticated  = await authenticate();
 
+    if (!isAuthenticated) redirect('/login')
+
+    const [tasks, lists, labels] = await Promise.all([
+        TaskService.getTasks(),
+        ListService.getLists(),
+        LabelService.getLabels()
+      ]);
+    
     return (
         <div className="flex h-screen overflow-y-hidden">
             <div className="hidden md:flex flex-col w-[175px]">

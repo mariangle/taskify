@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { LabelEntry, LabelResponse } from '@/types';
 import { requestOptions } from '@/util';
-import https from "https"
+import { agent } from '@/lib/agent';
 
 const api = axios.create({
   baseURL: 'https://localhost:7232/api',
@@ -19,9 +19,7 @@ const LabelService = {
   getLabels: async (): Promise<LabelResponse[] | []> => {
     try {
       const response: AxiosResponse = await api.get(`/labels`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false
-        }), 
+        httpsAgent: agent, 
       });
       return response.data;
     } catch (error) {
@@ -32,9 +30,7 @@ const LabelService = {
   getLabel: async (labelId: string): Promise<LabelResponse | null> => {
     try {
       const response: AxiosResponse = await api.get(`/labels/${labelId}`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false // ! only use in dev
-        }), 
+        httpsAgent: agent, 
       });
       return response.data;
     } catch (error) {
@@ -44,11 +40,8 @@ const LabelService = {
   getTaskLabels: async ({ taskId } : { taskId: string}): Promise<LabelResponse[] | null> => {
     try {
       const response: AxiosResponse = await api.get(`/tasks/${taskId}/labels`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false // ! only use in dev
-        }), 
+        httpsAgent: agent, 
       });
-      console.log(response.data)
       return response.data;
     } catch (error) {
       return null;

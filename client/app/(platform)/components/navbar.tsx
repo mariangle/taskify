@@ -1,6 +1,6 @@
 "use client"
 
-import UserMenu from "./user-menu";
+import UserMenu from "./user-nav";
 import PromptModal from "@/components/modals/prompt-modal";
 import LabelSwitcher from "@/components/label-filter";
 import { LabelResponse, TaskResponse } from "@/types";

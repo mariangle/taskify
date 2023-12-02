@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { ListEntry, ListResponse } from '@/types';
 import { requestOptions } from '@/util';
-import https from "https"
+import { agent } from '@/lib/agent';
 
 const api = axios.create({
   baseURL: 'https://localhost:7232/api',
@@ -19,9 +19,7 @@ const ListService = {
   getLists: async (): Promise<ListResponse[] | []> => {
     try {
       const response: AxiosResponse = await api.get(`/lists`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false
-        }), 
+        httpsAgent: agent, 
       });
       return response.data;
     } catch (error) {
@@ -33,9 +31,7 @@ const ListService = {
   getList: async (listId: string): Promise<ListResponse | null> => {
     try {
       const response: AxiosResponse = await api.get(`/lists/${listId}`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false // ! only use in dev
-        }), 
+        httpsAgent: agent, 
       });
       return response.data;
     } catch (error) {

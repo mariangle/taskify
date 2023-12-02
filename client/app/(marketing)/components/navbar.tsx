@@ -6,10 +6,9 @@ import {
 } from "@nextui-org/react";
 
 import Link from "next/link";
-
-import { isTokenValid } from "@/services/token-service";
 import { Icons } from "@/components/ui/icons";
 import { buttonVariants } from "@/components/ui/button";
+import { useIsLogged } from "@/hooks/use-is-logged";
 
 
 export default function Navbar(){
@@ -27,11 +26,9 @@ export default function Navbar(){
 }
 
 function AuthNavigation (){
-  const isLogged = isTokenValid();
-  
   return (
       <NavbarContent justify="end">
-        {isLogged ? (
+        {false ? (
           <NavbarItem>
             <Link href="/dashboard" className={buttonVariants({ variant: "outline" })}>
               Dashboard
