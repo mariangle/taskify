@@ -1,5 +1,6 @@
 import ListTask from "./list-task" 
 import { TaskResponse } from "@/types"
+import ListTaskForm from "./list-task-form"
 
 interface ListTasksProps {
     tasks: TaskResponse[] | []
@@ -9,10 +10,8 @@ const ListTasks = ({
     tasks
 }: ListTasksProps) => {
   return (
-    <ul>
-      {tasks.map((task, index) => (
-        <ListTask key={task.id} task={task} isLast={index === tasks.length - 1} />
-      ))}
+    <ul className="space-y-2">
+      {tasks.map((task) => <ListTaskForm key={task.id} task={task}/>)}
     </ul>
   )
 }

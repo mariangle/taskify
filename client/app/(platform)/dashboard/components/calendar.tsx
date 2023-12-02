@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Icons } from "@/components/icons"
 import { DayContentProps, DayPicker } from "react-day-picker"
 import { isSameDay } from "date-fns"
 import { cn } from "@/lib/utils"
@@ -78,8 +78,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <Icons.chevronLeft className="h-4 w-4" />,
+        IconRight: ({ ...props }) => <Icons.chevronRight className="h-4 w-4" />,
         DayContent: ({ ...props }) => <CalendarDateItem {...props} tasks={tasks}/>,
       }}
       {...props}

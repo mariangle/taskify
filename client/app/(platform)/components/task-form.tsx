@@ -7,6 +7,7 @@ import FormInput from "@/components/common/form-input";
 import FormSelect from "@/components/common/form-select";
 import FormSelectList from "@/components/common/form-select.list";
 import FormDatePicker from "@/components/common/form-date-picker";
+import { PriorityPicker } from "../lists/components/priority-picker";
 
 import * as React from "react"
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ import { priorities, statuses } from "@/lib/constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExperimentalMultiSelect } from "@/components/common/experimental-multi-select";
+import { useTaskForm } from "@/hooks/use-task-form";
 
 // TODO: Change styling https://ui.shadcn.com/docs/components/combobox
 
@@ -33,13 +35,13 @@ interface FormProps {
 
 const TaskForm: React.FC<FormProps> = ({
     task,
-    lists,
     onClose,
-    labels,
 }) => {
     const action = task ? 'Save Changes' : 'Create Task'
     const message = task ? 'Changes saved!' : 'Task created!'
     const existingLabels = task?.labels || []
+
+    const { labels, lists, projects } = useTaskForm();
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
     const [isOpen, setIsOpen] = React.useState<boolean>(false); 
@@ -47,6 +49,7 @@ const TaskForm: React.FC<FormProps> = ({
     const openDialog = () => setIsOpen(true);
     const closeDialog = () => setIsOpen(false); 
 
+    const { deleteTask } = useTaskForm()
     const router = useRouter();
     const searchParams = useSearchParams();
     const status = searchParams.get('status')
@@ -68,6 +71,7 @@ const TaskForm: React.FC<FormProps> = ({
         priority: taskPriority,
         dueDate: task?.dueDate || '',
         labelIds: taskLabels || [],
+        projectId: task?.projectId || ''
       }})
 
       const onSubmit = async (data: TaskSchemaType) => {
@@ -108,17 +112,10 @@ const TaskForm: React.FC<FormProps> = ({
         }
       };    
 
-      const onDelete = async () => {
+      const onDelete = async () => {  
         if (!task) return;
-    
-        try {
-          await TaskService.deleteTask(task.id);
-          router.refresh();
-          onClose && onClose();
-          toast.success('Task deleted');
-        } catch (error) {
-          handleError(error);
-        }
+        await deleteTask(task.id)
+        onClose && onClose();
       };
 
       React.useEffect(() => {
@@ -140,6 +137,7 @@ const TaskForm: React.FC<FormProps> = ({
           <div className="flex-gap mt-4">
               <FormDatePicker form={form} name="dueDate" placeholder="Select Date"/>
               <FormSelectList items={lists} form={form} name="listId" label="List" placeholder="None"/>  
+              <FormSelectList items={projects} form={form} name="projectId" label="Project" placeholder="None"/>  
           </div>   
           <ExperimentalMultiSelect 
                 label="Labels" 

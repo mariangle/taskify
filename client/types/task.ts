@@ -1,7 +1,6 @@
 import { 
     UserResponse, 
     RecurringTask, 
-    NoteResponse,
     SubtaskResponse, 
     TaskPriority, 
     TaskStatus, 
@@ -16,20 +15,23 @@ export type TaskEntry = {
     duration?: string,
     priority?: string | null,
     status?: string,
-    labelIds?: string[] | null
+    labelIds?: string[] | null,
+    note?: string,
+    labels?: LabelResponse[] | []
     // recurring?: RecurringTask,
 }
 
 export type TaskResponse = {
     id: string,
     name: string,
+    projectId?: string | null,
     listId?: string | null,
     dueDate?: string | null,
     priority?: TaskPriority | null,
+    note?: string,
     status: TaskStatus,
     user: UserResponse,
     subtasks?: SubtaskResponse[] | [],
     labels?: LabelResponse[] | []
     // recurring?: RecurringTask,
-    // notes?: NoteResponse[]
 }

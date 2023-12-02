@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ThemeSwitchDropdown from "@/components/theme-switch-dropdown";
-import { Icons } from "@/components/ui/icons";
+import { Icons } from "@/components/icons";
 
 export default function UserNav(){
   

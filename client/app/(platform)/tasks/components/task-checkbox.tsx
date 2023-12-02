@@ -1,17 +1,19 @@
 "use client"
 import * as React from "react"
 import { TaskResponse } from "@/types";
-import { Checkbox } from "@nextui-org/react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 
 import TaskService from "@/services/task-service";
 
 interface TaskCheckboxProps {
-    task: TaskResponse
+    task: TaskResponse,
+    disabled?: boolean,
 }
 
 export default function TaskCheckbox({
-    task
+    task,
+    disabled
 }: TaskCheckboxProps){
     const [isSelected, setIsSelected] = React.useState(task.status === "Completed");
     const [isLoading, setIsLoading] = React.useState(false);
@@ -37,10 +39,9 @@ export default function TaskCheckbox({
 
     return (
         <Checkbox
-            isSelected={isSelected}
-            onValueChange={setIsSelected}
-            lineThrough
-            radius="full"
+            checked={isSelected}
+            onCheckedChange={() => setIsSelected}
+            disabled={disabled}
             color="default"
             onClick={updateStatus}
         >

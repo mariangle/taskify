@@ -25,7 +25,18 @@ import {
     LogOut,
     LifeBuoy,
     X,
-    LineChart
+    LineChart,
+    Info,
+    MoreHorizontal,
+    Tags,
+    CircleEllipsis,
+    PlusCircle,
+    Palette,
+    Monitor,
+    Send,
+    ChevronsUpDown,
+    CheckCircle,
+    Search,
   } from "lucide-react"
 
   import type { IconNode } from "lucide-react"
@@ -38,8 +49,11 @@ import {
     spinner: Loader2,
     chevronLeft: ChevronLeft,
     chevronRight: ChevronRight,
+    chevronUpDown: ChevronsUpDown,
+    screen: Monitor,
     trash: Trash,
     post: FileText,
+    appearance: Palette,
     page: File,
     media: Image,
     settings: Settings,
@@ -51,12 +65,19 @@ import {
     warning: AlertTriangle,
     user: User,
     lineChart: LineChart,
-    arrowRight: ArrowRight,
     help: HelpCircle,
     pizza: Pizza,
     sun: SunMedium,
     moon: Moon,
     laptop: Laptop,
+    info: Info,
+    tags: Tags,
+    more: MoreHorizontal,
+    circle: CircleEllipsis,
+    send: Send,
+    search: Search,
+    addCircle: PlusCircle,
+    checkCircle: CheckCircle,
     gitHub: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

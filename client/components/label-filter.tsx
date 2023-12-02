@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Icons } from "@/components/icons"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -55,7 +55,7 @@ export default function LabelFilter({
           {value
             ? labels.find((label) => label.name === value)?.name
             : 'Filter'}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <Icons.chevronUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -73,7 +73,7 @@ export default function LabelFilter({
                   <div className="h-2 w-2 rounded-full border" style={{ backgroundColor: label.color }} />
                   {label.name}
                 </span>
-                <Check
+                <Icons.check
                   className={cn(
                     "ml-2 h-4 w-4",
                     value === label.name ? "opacity-100" : "opacity-0"

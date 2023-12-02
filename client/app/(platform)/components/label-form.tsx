@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { Icons } from "@/components/icons";
 import AlertModal from "@/components/modals/alert-modal";
 import FormInput from "@/components/common/form-input";
 import { useForm } from "react-hook-form";
@@ -81,7 +81,7 @@ export default function LabelForm({
         <div className="flex items-end gap-4 w-full">
           <FormInput form={form} name="color" type="color" className="aspect-square"/>           
           <FormInput form={form} name="name" fullWidth/>    
-          {label && <Button type="button" variant={'secondary'} onClick={openDialog} size={'icon'} className="w-14"><Trash className="w-4 h-4"/></Button>}      
+          {label && <Button type="button" variant={'secondary'} onClick={openDialog} size={'icon'} className="w-14"><Icons.trash className="w-4 h-4"/></Button>}      
           <Button type="submit" onClick={form.handleSubmit(onSubmit)} variant={'default'}>
                   {action}
               </Button>

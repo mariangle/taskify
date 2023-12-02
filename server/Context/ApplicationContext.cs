@@ -31,5 +31,7 @@ namespace server.Context
         public DbSet<server.Models.List>? Lists { get; set; }
 
         public DbSet<server.Models.Label>? Labels { get; set; }
+
+        public DbSet<server.Models.Project>? Projects { get; set; }
     }
 }

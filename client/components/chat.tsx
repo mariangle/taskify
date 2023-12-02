@@ -1,12 +1,11 @@
 "use client"
 import * as React from "react"
-import { Send } from "lucide-react"
+import { Icons } from "@/components/icons"
 
 import { cn } from "@/lib/utils"
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
 } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -93,7 +92,7 @@ export default function Chat() {
               onChange={(event) => setInput(event.target.value)}
             />
             <Button type="submit" size="icon" disabled={inputLength === 0}>
-              <Send className="h-4 w-4" />
+              <Icons.send className="h-4 w-4" />
               <span className="sr-only">Send</span>
             </Button>
           </form>

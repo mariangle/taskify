@@ -1,53 +1,46 @@
-import {
-  Navbar as NextNavbar, 
-  NavbarBrand,   
-  NavbarContent,
-  NavbarItem
-} from "@nextui-org/react";
-
 import Link from "next/link";
-import { Icons } from "@/components/ui/icons";
+import { Icons } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
-import { useIsLogged } from "@/hooks/use-is-logged";
-
+import { authenticate } from "@/lib/_actions/authenticate";
 
 export default function Navbar(){
+
   return (
-    <NextNavbar shouldHideOnScroll isBordered>
-      <NavbarBrand>
+    <div>
+      <div>
         <Link href="/" aria-current="page" className="font-bold text-inherit flex-gap">
           <Icons.logo className="w-6 h-6" />
           Taskify
         </Link>
-      </NavbarBrand>
+      </div>
       <AuthNavigation />
-    </NextNavbar>
+    </div>
   )
 }
 
 function AuthNavigation (){
   return (
-      <NavbarContent justify="end">
+      <div>
         {false ? (
-          <NavbarItem>
+          <div>
             <Link href="/dashboard" className={buttonVariants({ variant: "outline" })}>
               Dashboard
             </Link>
-          </NavbarItem>
+          </div>
         ) : (
           <>
-            <NavbarItem className="hidden sm:flex">
+            <div className="hidden sm:flex">
               <Link href="/login" className={buttonVariants({ variant: "outline" })}>
                 Login
               </Link>
-            </NavbarItem>
-            <NavbarItem>
+            </div>
+            <div>
               <Link href="/register" className={buttonVariants({ variant: "default" })}>
                 Sign Up
               </Link>
-            </NavbarItem>
+            </div>
           </>
         )}
-      </NavbarContent>
+      </div>
   )
 }

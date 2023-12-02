@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { HiOutlineMicrophone, HiOutlineBell, HiOutlineCalendar, HiOutlineMoon } from "react-icons/hi"
 
 export const features = [
@@ -26,14 +26,14 @@ interface Props {
 
 const FeatureCard: React.FC<Props> = ({ title, description, icon }) => {
   return (
-    <Card isBlurred className="bg-white/5 dark:bg-default-400/10">
+    <Card  className="bg-white/5 dark:bg-default-400/10">
         <CardHeader className="pb-0 px-5 pt-4 text-base font-semibold">
             <div className="text-purple p-2 rounded-full bg-secondary-100/80 mr-3">
                 {icon}
             </div>
             {title}
         </CardHeader>
-        <CardBody  className="text">{description}</CardBody>
+        <CardContent  className="text">{description}</CardContent>
     </Card>
   );
 };

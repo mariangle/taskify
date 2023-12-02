@@ -6,7 +6,6 @@ import { HiOutlineClock } from "react-icons/hi";
 import { MdOutlineTitle } from "react-icons/md";
 
 import { TaskEntry } from "@/types";
-import { formatToEEEDDMMMYYYYY } from "@/util/format";
 import { format } from "date-fns";
 
 interface TaskPreviewProps {

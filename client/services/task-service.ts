@@ -7,6 +7,7 @@ import { agent } from '@/lib/agent';
 interface ParamsOptions {
   listId?: string,
   labelId?: string,
+  projectId?: string,
   unsorted?: boolean,
   upcoming?: boolean,
   overdue?: boolean,
@@ -26,7 +27,7 @@ const TaskService = {
       throw error;
     }
   },
-  // Define default value for the entire argument using Partial. cool.
+  // Define default value for the entire argument using Partial
   getTasks: async (params: Partial<ParamsOptions> = {}): Promise<TaskResponse[] | []> => {
     try {
       const queryParams: { [key: string]: string | boolean } = {};
@@ -37,6 +38,10 @@ const TaskService = {
 
       if (params.labelId) {
         queryParams.labelId = params.labelId;
+      }
+
+      if (params.projectId) {
+        queryParams.projectId = params.projectId;
       }
 
       if (params.unsorted !== undefined) {
@@ -72,7 +77,7 @@ const TaskService = {
       return null;
     }
   },
-  updateTask:async (taskId: string, updatedTask: TaskEntry): Promise<TaskResponse> => {
+  updateTask: async (taskId: string, updatedTask: TaskEntry): Promise<TaskResponse> => {
     try {
       const response: AxiosResponse = await api.put(`/tasks/${taskId}`, updatedTask, requestOptions);
       return response.data;

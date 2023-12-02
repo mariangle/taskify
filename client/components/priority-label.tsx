@@ -1,9 +1,5 @@
-import { Chip } from "@nextui-org/react";
-import { 
-    HiArrowSmDown, 
-    HiArrowSmUp, 
-    HiArrowSmRight,
-} from "react-icons/hi";
+import { Badge } from "@/components/ui/badge";
+import { priorities } from "@/lib/constants";
 
 interface CategoryProps {
     label: string,
@@ -11,24 +7,13 @@ interface CategoryProps {
 
 const PriorityLabel = ({ label }: CategoryProps) => {
 
-    const items = [
-        { name: 'Low', label: 'low priority', icon: <HiArrowSmDown /> },
-        { name: 'Medium', label: 'medium priority', icon: <HiArrowSmRight /> },
-        { name: 'High', label: 'high priority', icon: <HiArrowSmUp /> },
-    ]
-
-    const item = items.find((item) => item.name === label)
+    const priority = priorities.find((p) => p.label === label)!
 
     return (
-        <Chip 
-            variant='flat'
-            size='sm'
-        >
-            <div className="flex gap-1 items-center text-xs">
-                {item?.icon}
-                <p>{item?.label}</p>
-            </div>
-        </Chip>
+        <Badge variant={'secondary'}>
+            <priority.icon />
+            <p className="pl-2">{priority?.label}</p>
+        </Badge>
     );
 }
 

@@ -1,7 +1,6 @@
-import { Code, Link, Button  } from "@nextui-org/react";
-
 import Features from "./components/features"
 import TypewriterEffect from "./components/typewriter-effect"
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Home() {
   return (
@@ -9,6 +8,7 @@ export default function Home() {
         { /* HERO SECTION */ }
         <div className="min-h-[30vh] flex flex-col justify-center">
           <div>
+          <Checkbox />
               <h1 className="heading blue-gradient">Shape&nbsp;</h1>
               <h1 className="heading">your schedule.</h1>
           </div>
@@ -32,19 +32,8 @@ export default function Home() {
             <p className="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia obcaecati libero ipsa amet distinctio eos odit dolores omnis facere perspiciatis.</p>
           </div>
           <div className="my-8">
-              <Code color='success' className='whitespace-pre-wrap w-full'>
-                  <TypewriterEffect />
-              </Code>
+            <TypewriterEffect />
           </div>
-          <Button
-            href="/commands"
-            as={Link}
-            color="success"
-            variant="solid"
-            size="sm"
-          >
-            Learn More
-          </Button>
         </div>
     </div>
   )

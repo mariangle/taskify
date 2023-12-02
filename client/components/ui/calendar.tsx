@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Icons } from "@/components/icons"
 import { DayPicker } from "react-day-picker"
 
-import { cn } from "@nextui-org/react"
+import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
@@ -54,8 +54,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4 bg-red-200 text-red-200" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <Icons.chevronLeft className="h-4 w-4 bg-red-200 text-red-200" />,
+        IconRight: ({ ...props }) => <Icons.chevronRight className="h-4 w-4" />,
       }}
       {...props}
     />

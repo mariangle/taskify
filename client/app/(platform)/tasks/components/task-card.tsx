@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { MoreHorizontal, Tags } from "lucide-react";
+import { Icons } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import PriorityLabel from "@/components/priority-label";
 import Link from "next/link";
@@ -31,7 +31,7 @@ export default async function TaskCard({
             <span className={isOverdue({ date: task.dueDate, status: task.status}) ? "text-destructive" : ""}>{task.name}</span>
           </div>
           <Link href={`/tasks/${task.id}`} className="bg-border p-1 rounded-full block">
-            <MoreHorizontal className="w-2 h-2"/>
+            <Icons.more className="w-2 h-2"/>
           </Link>
         </CardTitle>
       </CardHeader>
@@ -48,7 +48,7 @@ export default async function TaskCard({
           )}
           { task?.labels && task.labels?.length > 0 && (
           <div className="flex-gap-sm">
-            <Tags className="h-3 w-3" />
+            <Icons.tags className="h-3 w-3" />
             <div className="flex-gap">
               {task.labels.map((label) => (
                 <Badge key={label.id} variant={'outline'} className="flex-gap">  

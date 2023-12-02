@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@/components/ui/button";
-import { Loader2 as Loader } from "lucide-react";
+import { Icons } from "@/components/icons";
 
 interface Props extends ButtonProps {
     isLoading?: boolean,
@@ -16,10 +16,9 @@ export default function FormButton({
   return (
     <Button 
         disabled={isLoading}
-        className="bg-background"
         {...props}
     >
-        { isLoading && <Loader className="mr-2 h-4 w-4 animate-spin"/>}
+        { isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>}
         { isLoading && loadingText ? loadingText : children }
     </Button>
   )

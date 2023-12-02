@@ -5,7 +5,7 @@ import {
   DialogContent,
 } from "@/components/ui/dialog"
 import { ListResponse } from "@/types";
-import { MoreHorizontal, Plus } from "lucide-react"
+import { Icons } from "@/components/icons";
 
 import useClickOutside from "@/hooks/use-click-outside";
 import ListForm from "../../app/(platform)/components/list-form";
@@ -18,7 +18,7 @@ export default function ListModal({
     list
 } : ModalProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const icon = list ? <MoreHorizontal className="w-3 h-3 text-background" /> : <Plus className="w-3 h-3 text-background" />
+  const icon = list ? <Icons.more className="w-3 h-3 text-background" /> : <Icons.add className="w-3 h-3 text-background" />
   const dialogRef = React.useRef(null);
 
   const open = () => setIsOpen(true);

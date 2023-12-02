@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using NuGet.ProjectModel;
 using server.Context;
@@ -30,6 +31,7 @@ namespace server.Controllers
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(
             [FromQuery] Guid? listId,
             [FromQuery] Guid? labelId,
+            [FromQuery] Guid? projectId,
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
             [FromQuery] bool? overdue = false,
@@ -41,6 +43,11 @@ namespace server.Controllers
             if (listId.HasValue)
             {
                 tasksQuery = tasksQuery.Where(task => task.ListId == listId);
+            }
+
+            if (projectId.HasValue)
+            {
+                tasksQuery = tasksQuery.Where(task => task.ProjectId == projectId);
             }
 
             if (labelId.HasValue)

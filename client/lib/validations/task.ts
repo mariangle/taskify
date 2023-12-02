@@ -6,6 +6,7 @@ export const TaskSchema = z.object({
   dueDate: z.union([z.string(), z.date()]).optional(),
   priority: z.string().optional(),
   listId: z.string().optional(),
+  projectId: z.string().optional(),
   labelIds: z.array(z.string()).optional(),
 })
 

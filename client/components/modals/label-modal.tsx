@@ -5,7 +5,7 @@ import {
   DialogContent,
 } from "@/components/ui/dialog"
 import { LabelResponse } from "@/types";
-import { CircleEllipsis, PlusCircle } from "lucide-react"
+import { Icons } from "@/components/icons";
 
 import useClickOutside from "@/hooks/use-click-outside";
 import LabelForm from "@/app/(platform)/components/label-form";
@@ -18,7 +18,7 @@ export default function LabelModal({
     label
 } : ModalProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const icon = label ? <CircleEllipsis className="w-4 h-4" /> : <PlusCircle className="w-4 h-4" />
+  const icon = label ? <Icons.circle className="w-4 h-4" /> : <Icons.addCircle className="w-4 h-4" />
   const dialogRef = React.useRef(null);
 
   const open = () => setIsOpen(true);

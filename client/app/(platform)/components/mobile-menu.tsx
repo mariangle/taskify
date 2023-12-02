@@ -1,8 +1,4 @@
-import {
-  NavbarMenu,
-  NavbarMenuItem,
-  cn
-} from "@nextui-org/react";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import { dashboardLinks } from "@/lib/constants";
@@ -12,9 +8,9 @@ const MobileMenu = () => {
   const pathname = usePathname();
 
   return (
-    <NavbarMenu>
+    <div>
         {dashboardLinks.map((link) => (
-        <NavbarMenuItem key={link.label}>
+        <div key={link.label}>
         <Link 
         key={link.label}
             href={link.href} 
@@ -25,9 +21,9 @@ const MobileMenu = () => {
             >
             {link.label}
             </Link>
-        </NavbarMenuItem>
+        </div>
         ))}
-    </NavbarMenu>
+    </div>
   )
 }
 

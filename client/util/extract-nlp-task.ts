@@ -1,6 +1,5 @@
 import { TaskEntry } from "@/types"
 import { danishPhoneNumberRegex, priorities, statuses } from "@/lib/constants"
-import ListService from "@/services/list-service"
 
 const nlp = require('compromise')
 const plg = require('compromise-dates')
@@ -20,7 +19,7 @@ export const extractNlpTask = async (prompt: string): Promise<TaskEntry> => {
     const phoneNumbersArray = prompt.match(danishPhoneNumberRegex) ?? [];
     const attachmentsArray = [...emailsArray, ...urlsArray, ...phoneNumbersArray];
 
-    // Etract name by removing other properties
+    // Extract name by removing other properties
     const name = doc.text()
         .replace(dateString, '')
         .replace(mentionsArray.join(' '), '')
@@ -37,8 +36,6 @@ export const extractNlpTask = async (prompt: string): Promise<TaskEntry> => {
     hashtagsArray.forEach((hashtag: string) => {
         hashtags.push(hashtag.toLowerCase().replace('#', ''));
     });
-
-    ListService
     
     // Loop over each mention and check for match with an existing priority, status or category
     mentionsArray.forEach((mention: string) => {
