@@ -14,10 +14,11 @@ export type TaskEntry = {
     dueDate?: string | null | Date,
     duration?: string,
     priority?: string | null,
+    projectId?: string | null,
     status?: string,
     labelIds?: string[] | null,
     note?: string,
-    labels?: LabelResponse[] | []
+    labels?: LabelResponse[] | [],
     // recurring?: RecurringTask,
 }
 
@@ -28,6 +29,8 @@ export type TaskResponse = {
     listId?: string | null,
     dueDate?: string | null,
     priority?: TaskPriority | null,
+    createdAt?: string,
+    updatedAt?: string,
     note?: string,
     status: TaskStatus,
     user: UserResponse,

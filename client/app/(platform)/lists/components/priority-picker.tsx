@@ -29,7 +29,8 @@ interface PriorityPickerProps {
 }
 
 export function PriorityPicker({
-  priority, setPriority
+  priority, 
+  setPriority
 } : PriorityPickerProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -47,8 +48,8 @@ export function PriorityPicker({
           <Button
           variant={"ghost"}
           className={cn(
-            "justify-start text-left font-normal",
-            !priority && "text-muted-foreground text-xs"
+            "text-xs p-2 h-fit",
+            !priority && "text-muted-foreground"
           )}
           >
             {priority ? (

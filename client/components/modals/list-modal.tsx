@@ -7,7 +7,7 @@ import {
 import { ListResponse } from "@/types";
 import { Icons } from "@/components/icons";
 
-import useClickOutside from "@/hooks/use-click-outside";
+import { useClickOutside } from "@/hooks/use-click-outside";
 import ListForm from "../../app/(platform)/components/list-form";
 
 interface ModalProps {

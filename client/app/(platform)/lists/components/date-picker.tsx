@@ -15,13 +15,18 @@ import {
 
 interface DatePickerProps {  
   date: Date | undefined
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>,
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined | null>>,
 }
 
 export function DatePicker({
   date,
   setDate,
 }: DatePickerProps) {
+
+  const handleSelect = (selectedDate: Date | undefined) => {
+    // Unselect date if its undefined
+    selectedDate ? setDate(selectedDate) : setDate(null)
+  }
   
   return (
     <Popover>
@@ -29,8 +34,8 @@ export function DatePicker({
         <Button
           variant={"ghost"}
           className={cn(
-            "justify-start text-left font-normal",
-            !date && "text-muted-foreground text-xs"
+            "text-xs p-2 h-fit",
+            !date && "text-muted-foreground"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -41,11 +46,10 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={(selectedDate) => {
-            setDate(selectedDate);
-          }}
+          onSelect={(selectedDate) => handleSelect(selectedDate)}
           initialFocus
         />
+        {JSON.stringify(date)}
       </PopoverContent>
     </Popover>
   );

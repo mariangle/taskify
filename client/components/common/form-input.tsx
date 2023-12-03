@@ -5,7 +5,7 @@ import { capitalizeFirstLetter } from "@/util"
 import { cn } from "@/lib/utils"
 
 interface FormInputProps<T extends FieldValues> extends InputProps {
-  form: UseFormReturn<T> | any
+  form?: UseFormReturn<T> | any
   name: Path<T>
   label?: string
   placeholder?: string
@@ -37,7 +37,6 @@ interface FormInputProps<T extends FieldValues> extends InputProps {
             {description && (
               <FormDescription>
                 {description}
-                YO
               </FormDescription>
             )}
             <FormMessage />

@@ -30,8 +30,8 @@ async function ListPage({
             <ListModal list={list}/>
           </div>
         </CardHeader>
-        <CardContent>
-        <ListTaskForm list={list}/>
+        <CardContent className="space-y-2">
+          <ListTaskForm list={list}/>
           <ListTasks tasks={list.tasks}/>
         </CardContent>
     </Card>

@@ -5,7 +5,6 @@ import './globals.css'
 import ToastContext from '@/components/providers/toast-provider'
 import ThemeProvider from '@/components/providers/theme-provider'
 import Toaster from '@/components/providers/toaster-provider'
-import UIProvider from '@/components/providers/ui-provider'
 import { config } from '@/lib/config'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,7 +17,6 @@ export default function RootLayout(props: {
   return (
       <html lang="en">
         <body className={inter.className}>
-          <UIProvider>
             <ThemeProvider>
               <main className="text-foreground bg-background">
                 {props.children}
@@ -26,7 +24,6 @@ export default function RootLayout(props: {
                 <Toaster/>
               </main>
             </ThemeProvider>
-          </UIProvider>
         </body>
       </html>
   )

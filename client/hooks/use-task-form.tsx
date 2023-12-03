@@ -1,62 +1,74 @@
 import * as React from 'react'
 
-import { LabelResponse, ListResponse, ProjectResponse, TaskResponse } from '@/types';
+import { TaskEntry, TaskResponse } from '@/types';
 
-import ListService from '@/services/list-service';
-import LabelService from '@/services/label-service';
+import { revalidate } from '@/lib/_actions/revalidate-path';
+
 import TaskService from '@/services/task-service';
 import { handleError } from '@/util';
 import toast from 'react-hot-toast';
+import { useParams } from 'next/navigation';
 
-import { revalidate } from "@/lib/_actions/revalidate-path";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TaskSchema, TaskSchemaType } from '@/lib/validations/task';
-import ProjectService from '@/services/project-service';
-
-export const useTaskForm = (initialData?: TaskResponse, close?: () => void) => {
-    const [labels, setLabels] = React.useState<LabelResponse[]>([])
-    const [lists, setLists] = React.useState<ListResponse[]>([])
-    const [projects, setProjects] = React.useState<ProjectResponse[]>([])
+export const useTaskForm = (initialData?: TaskResponse) => {
+    const [isSaving, setIsSaving] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     const [isOpen, setIsOpen] = React.useState(false);
-    const toggle = () => setIsOpen((prev) => !prev)
+    const open = () => setIsOpen(true)
+    const close = () => setIsOpen(false)
 
+    const params = useParams();
 
-
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const lists = await ListService.getLists();
-            const labels = await LabelService.getLabels(); 
-            const projects = await ProjectService.getProjects(); 
-            setLists(lists)
-            setLabels(labels)    
-            setProjects(projects)           
-       
-        }
-
-        fetchData();
-    }, [])
-
-    const submit = () => {
-
-    }
+    const [taskEntry, setTaskEntry] = React.useState<TaskEntry | undefined>(initialData);
 
     const deleteTask = async (taskId: string) => {  
         try {
           await TaskService.deleteTask(taskId);
           toast.success('Task deleted');
+          revalidate({ path: `/lists/${params.listId}`})
         } catch (e) {
           handleError(e);
         }
       };
 
+      const submitTask = async (data: TaskEntry) => {
+        setIsLoading(true)
+        try {
+            if (initialData) {
+                await TaskService.updateTask(initialData.id, { ...initialData, ...data});
+                console.log("Editing task:", data);
+                toast.success("Task saved successfully");
+
+            } else {
+                await TaskService.createTask(data);
+                toast.success("Task created successfully");
+
+                setTaskEntry({
+                  name: '',
+                  priority: undefined,
+                  note: undefined,
+                  listId: params.listId as string || undefined,
+                  dueDate: undefined,
+                });
+            }
+            revalidate({ path: `/lists/${params.listId}`})
+        } catch (e) {
+            console.error("Error saving task:", e);
+            toast.error("Something went wrong.");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return {
-        isOpen, 
-        toggle, 
-        lists, 
-        labels, 
-        projects,
-        deleteTask
+        isOpen,
+        isSaving,
+        taskEntry,
+        setTaskEntry,
+        open, 
+        close,
+        submitTask,
+        deleteTask,
+        setIsSaving,
+        isLoading
     }
 }

@@ -132,7 +132,15 @@ namespace server.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok();
+
+                var updatedTask = await _context.Tasks.FindAsync(id);
+
+                if (updatedTask == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(updatedTask);
             }
 
             catch (DbUpdateConcurrencyException)

@@ -35,13 +35,14 @@ interface FormProps {
 
 const TaskForm: React.FC<FormProps> = ({
     task,
+    lists,
+    labels,
     onClose,
 }) => {
     const action = task ? 'Save Changes' : 'Create Task'
     const message = task ? 'Changes saved!' : 'Task created!'
     const existingLabels = task?.labels || []
 
-    const { labels, lists, projects } = useTaskForm();
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false); 
     const [isOpen, setIsOpen] = React.useState<boolean>(false); 
@@ -137,7 +138,7 @@ const TaskForm: React.FC<FormProps> = ({
           <div className="flex-gap mt-4">
               <FormDatePicker form={form} name="dueDate" placeholder="Select Date"/>
               <FormSelectList items={lists} form={form} name="listId" label="List" placeholder="None"/>  
-              <FormSelectList items={projects} form={form} name="projectId" label="Project" placeholder="None"/>  
+              { /* <FormSelectList items={projects} form={form} name="projectId" label="Project" placeholder="None"/>  */}
           </div>   
           <ExperimentalMultiSelect 
                 label="Labels" 

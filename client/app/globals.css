@@ -63,6 +63,9 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .input-transparent{
+    @apply border-none bg-transparent focus-visible:ring-0 focus-visible:ring-opacity-0 focus-visible:ring-offset-0;
+  }
   .flex-between{
     @apply flex justify-between items-center;
   }

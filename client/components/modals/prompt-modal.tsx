@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
-import useClickOutside from "@/hooks/use-click-outside";
+import { useClickOutside } from "@/hooks/use-click-outside";
 import TaskPrompt from "@/components/task-prompt";
 
 export default function PromptModal() {
