@@ -1,16 +1,14 @@
-import Navbar from "./components/navbar"
+import Navbar from './_components/navbar'
 
 interface PageProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
-export default function Layout({
-    children
-} : PageProps){
-    return (
-        <div>
-            <Navbar />
-            {children}
-        </div>
-    )
+export default function Layout({ children }: PageProps) {
+  return (
+    <div>
+      <Navbar />
+      {children}
+    </div>
+  )
 }

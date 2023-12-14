@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
-import ListTasks from '../components/list-tasks';
+import ListTasks from '../_components/list-tasks';
 import { Icons } from '@/components/icons';
 import {
   Tooltip,

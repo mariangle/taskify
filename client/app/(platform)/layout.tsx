@@ -1,5 +1,5 @@
-import Sidebar from "./components/sidebar";
-import Navbar from "./components/navbar";
+import Sidebar from "./_components/sidebar";
+import Navbar from "./_components/navbar";
 
 import ListService from "@/services/list-service";
 import LabelService from "@/services/label-service";

@@ -8,7 +8,7 @@ import { LabelResponse } from "@/types";
 import { Icons } from "@/components/icons";
 
 import { useClickOutside } from "@/hooks/use-click-outside";
-import LabelForm from "@/app/(platform)/components/label-form";
+import LabelForm from "@/app/(platform)/_components/label-form";
 
 interface ModalProps {
     label: LabelResponse | null

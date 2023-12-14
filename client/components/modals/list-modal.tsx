@@ -8,7 +8,7 @@ import { ListResponse } from "@/types";
 import { Icons } from "@/components/icons";
 
 import { useClickOutside } from "@/hooks/use-click-outside";
-import ListForm from "../../app/(platform)/components/list-form";
+import ListForm from "../../app/(platform)/_components/list-form";
 
 interface ModalProps {
     list: ListResponse | null
@@ -18,7 +18,7 @@ export default function ListModal({
     list
 } : ModalProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const icon = list ? <Icons.more className="w-3 h-3 text-background" /> : <Icons.add className="w-3 h-3 text-background" />
+  const icon = list ? <Icons.more className="w-3 h-3" /> : <Icons.add className="w-3 h-3" />
   const dialogRef = React.useRef(null);
 
   const open = () => setIsOpen(true);

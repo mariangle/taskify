@@ -7,7 +7,7 @@ import FormInput from "@/components/common/form-input";
 import FormSelect from "@/components/common/form-select";
 import FormSelectList from "@/components/common/form-select.list";
 import FormDatePicker from "@/components/common/form-date-picker";
-import { PriorityPicker } from "../lists/components/priority-picker";
+import { PriorityPicker } from "../lists/_components/priority-picker";
 
 import * as React from "react"
 import { Button } from "@/components/ui/button";

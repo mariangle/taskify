@@ -155,6 +155,7 @@ namespace server.Controllers
                 }
             }
         }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<TaskModel>> PostTask(TaskModel task)
@@ -229,7 +230,6 @@ namespace server.Controllers
             }
 
             subtask.Id = id;
-
 
             try
             {

@@ -1,6 +1,6 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import ListTasks from "../../lists/components/list-tasks"
+import ListTasks from "../../lists/_components/list-tasks"
 import { capitalizeFirstLetter } from "@/util"
 import { TaskResponse } from "@/types"
 import { useMounted } from "@/hooks/use-mounted"

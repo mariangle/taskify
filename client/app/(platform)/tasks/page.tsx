@@ -1,5 +1,5 @@
 import TaskService from '@/services/task-service';
-import TaskColumn from './components/project-column';
+import TaskColumn from './_components/project-column';
 import { Suspense } from 'react';
 import Spinner from '@/components/ui/spinner';
 

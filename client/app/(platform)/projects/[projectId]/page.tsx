@@ -1,5 +1,4 @@
 import ProjectService from '@/services/project-service';
-import KanbanColumn from './kanban-column';
 
 import { notFound } from 'next/navigation';
 import TaskService from '@/services/task-service';
@@ -19,11 +18,7 @@ async function ListPage({
   
   return (
     <div>
-        <div className='grid md:grid-cols-3'>
-            <KanbanColumn label='Todo' tasks={tasks}/>
-            <div></div>
-            <div></div>
-        </div>
+      To be created...
     </div>
   );
 }

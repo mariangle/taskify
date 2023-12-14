@@ -1,8 +1,8 @@
-import TaskPanel from "./components/task-panel";
-import CalendarPanel from "./components/calendar-panel";
-import ProjectsPanel from "./components/projects-panel";
-import LineChart from "./components/line-chart";
-import AnalyticsPanel from "./components/analytics-panel";
+import TaskPanel from "./_components/task-panel";
+import CalendarPanel from "./_components/calendar-panel";
+import ProjectsPanel from "./_components/projects-panel";
+import LineChart from "./_components/line-chart";
+import AnalyticsPanel from "./_components/analytics-panel";
 import TaskService from "@/services/task-service";
 
 export default async function DashboardPage() {

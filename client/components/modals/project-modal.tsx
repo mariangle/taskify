@@ -9,7 +9,7 @@ import { ProjectResponse } from "@/types";
 import { Icons } from "@/components/icons";
 
 import { useClickOutside } from "@/hooks/use-click-outside";
-import ProjectForm from "@/app/(platform)/components/project-form";
+import ProjectForm from "@/app/(platform)/_components/project-form";
 
 interface ModalProps {
     project?: ProjectResponse

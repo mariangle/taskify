@@ -26,11 +26,13 @@ type Priority = {
 interface PriorityPickerProps {
   priority: string | undefined | null,
   setPriority: React.Dispatch<React.SetStateAction<string | null>>,
+  onClick?: () => void
 }
 
 export function PriorityPicker({
   priority, 
-  setPriority
+  setPriority,
+  onClick
 } : PriorityPickerProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -42,15 +44,15 @@ export function PriorityPicker({
   }
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-4" onClick={onClick}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-          variant={"ghost"}
-          className={cn(
-            "text-xs p-2 h-fit",
-            !priority && "text-muted-foreground"
-          )}
+            variant={"ghost"}
+            className={cn(
+              "text-xs p-2 h-fit",
+              !priority && "text-muted-foreground"
+            )}
           >
             {priority ? (
               <>
@@ -58,7 +60,7 @@ export function PriorityPicker({
                 {priorityInfo?.label}
               </>
             ) : (
-              <>Apply Priority</>
+              <>Set Priority</>
             )}
           </Button>
         </PopoverTrigger>

@@ -27,7 +27,7 @@ export type TaskResponse = {
     name: string,
     projectId?: string | null,
     listId?: string | null,
-    dueDate?: string | null,
+    dueDate?: string,
     priority?: TaskPriority | null,
     createdAt?: string,
     updatedAt?: string,

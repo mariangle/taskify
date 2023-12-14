@@ -11,6 +11,8 @@ body {
 
 @layer base {
   :root {
+    --font-inter: var(--font-inter);
+    --font-poppins: var(--font-poppins);
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -32,7 +34,7 @@ body {
     --ring: 240 5.9% 10%;
     --radius: 0.75rem;
   }
- 
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -56,26 +58,56 @@ body {
   }
 }
 
+.font-poppins {
+  font-family: var(--font-poppins);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
 @layer base {
   * {
     @apply border-border;
   }
+  .heading {
+    @apply text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1];
+  }
+  .subheading {
+    @apply text-4xl font-bold tracking-tight;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
-  .input-transparent{
+  .purple-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF1CF7] to-[#b249f8];
+  }
+
+  .blue-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-tr from-[#5EA2EF] to-[#0072F5];
+  }
+
+  .green-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-t from-emerald-400 to-emerald-500;
+  }
+
+  .orange-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF705B] to-[#FFB457];
+  }
+  .input-transparent {
     @apply border-none bg-transparent focus-visible:ring-0 focus-visible:ring-opacity-0 focus-visible:ring-offset-0;
   }
-  .flex-between{
+  .flex-between {
     @apply flex justify-between items-center;
   }
-  .flex-gap{
+  .flex-gap {
     @apply flex gap-2 items-center;
   }
-  .flex-gap-sm{
+  .flex-gap-sm {
     @apply flex gap-1 items-center flex-wrap;
   }
-  .flex-center{
+  .flex-center {
     @apply flex items-center justify-center;
   }
 }

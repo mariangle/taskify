@@ -1,5 +1,5 @@
 import { TaskResponse } from "@/types"
-import ListTaskForm from "./list-task-form"
+import ListTaskForm from "./editable-task"
 
 interface ListTasksProps {
     tasks: TaskResponse[] | []

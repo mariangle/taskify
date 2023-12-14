@@ -18,7 +18,11 @@ export const useTaskForm = (initialData?: TaskResponse) => {
 
     const params = useParams();
 
-    const [taskEntry, setTaskEntry] = React.useState<TaskEntry | undefined>(initialData);
+    const [taskEntry, setTaskEntry] = React.useState<TaskEntry | undefined>({
+      ...initialData,
+      name: initialData?.name || '',
+      listId: params.listId as string || undefined
+    });
 
     const deleteTask = async (taskId: string) => {  
         try {
@@ -69,6 +73,7 @@ export const useTaskForm = (initialData?: TaskResponse) => {
         submitTask,
         deleteTask,
         setIsSaving,
-        isLoading
+        isLoading,
+        params
     }
 }

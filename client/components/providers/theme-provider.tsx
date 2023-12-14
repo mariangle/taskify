@@ -6,7 +6,6 @@ export default function ThemeProvder({children}: { children: React.ReactNode }) 
   return (
     <NextThemesProvider 
       attribute="class" 
-      defaultTheme="system"
       >
       {children}
     </NextThemesProvider>
