@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Moon, Sun, Palette, Monitor, PlusCircle } from "lucide-react";
+import { Icons } from "@/components/icons";
 import { useTheme } from "next-themes";
 import {
   DropdownMenuItem,
@@ -20,26 +20,26 @@ export default function ThemeSwitchDropdown() {
   return (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger>
-        <Palette className="mr-2 h-4 w-4" />
+        <Icons.appearance className="mr-2 h-4 w-4" />
         <span>Appearance</span>
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
           <DropdownMenuItem onClick={() => handleThemeChange('dark')}>
-            <Moon className="mr-2 h-4 w-4" />
+            <Icons.moon className="mr-2 h-4 w-4" />
             <span>Dark</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleThemeChange('light')}>
-            <Sun className="mr-2 h-4 w-4" />
+            <Icons.sun className="mr-2 h-4 w-4" />
             <span>Light</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleThemeChange('system')}>
-            <Monitor className="mr-2 h-4 w-4" />
+            <Icons.screen className="mr-2 h-4 w-4" />
             <span>System</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <PlusCircle className="mr-2 h-4 w-4" />
+            <Icons.addCircle className="mr-2 h-4 w-4" />
             <span>Appearance Settings</span>
           </DropdownMenuItem>
         </DropdownMenuSubContent>

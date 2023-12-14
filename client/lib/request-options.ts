@@ -1,18 +1,14 @@
-import { parseCookies } from 'nookies'
+ import { parseCookies } from 'nookies'
 
-// Only works in server components/pages
-
-const cookies = parseCookies()
-const accessToken = cookies['access_token']
-
-const requestOptions = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
-  
-export { 
-  accessToken,
-  requestOptions
-}
+ function getAccessToken(){
+   const cookies = parseCookies()
+   const accessToken = cookies['access_token']
+   return accessToken
+ }
+ 
+ export const requestOptions = {
+   headers: {
+     'Content-Type': 'application/json',
+     Authorization: `Bearer ${getAccessToken()}`,
+   },
+ };

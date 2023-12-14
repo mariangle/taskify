@@ -1,30 +1,23 @@
 import { statuses } from "@/lib/constants";
-import { Chip } from "@nextui-org/react";
+import { Badge } from "@/components/ui/badge";
 
 interface StatusProps {
   status: string;
-  hasNoContent?: boolean;
 }
 
-const Badge = ({
+const StatusBadge = ({
   status,
-  hasNoContent
 }: StatusProps) => {
   const statusInfo = statuses.find((s) => s.value === status);
   const { label } = statusInfo || {};
 
-  if (hasNoContent) {
-    return <Chip className='w-2 h-2 rounded-full' variant='shadow' />
-  }
-
   return (
-    <Chip 
-      variant='flat'
-      size='sm'
+    <Badge 
+      variant={'secondary'}
     >
       {label}
-    </Chip>
+    </Badge>
   );
 };
 
-export default Badge;
+export default StatusBadge;

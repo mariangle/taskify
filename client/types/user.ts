@@ -1,4 +1,4 @@
-import { TaskResponse } from "."
+import { TaskResponse, ProjectResponse } from "."
 
 export type UserEntry = {
     email: string,
@@ -13,4 +13,5 @@ export type UserResponse = {
     password: string
     name: string,
     tasks: TaskResponse[],
+    projects: ProjectResponse[]
 }

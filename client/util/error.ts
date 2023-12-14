@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import toast from 'react-hot-toast';
 
 export const handleError = (error: unknown) => {
@@ -25,24 +25,30 @@ const handleAxiosError = (error: AxiosError) => {
   }
 };
 
-const handleResponseError = (response: any) => {
+const handleResponseError = (response: AxiosResponse) => {
   const { status, data } = response;
+
+  if (!data) {
+    console.error(response);
+    toast.error('An unexpected error occurred.');
+    return;
+  }
 
   switch (status) {
     case 400: 
-      toast.error(data.message)
+      toast.error(data);
+      break;
     case 401:
-      // TODO: Handle unauthorized access (e.g., user not logged in, expired or invalid token)
-      toast.error(data.message)
+      toast.error(data);
       break;
     case 404:
-      toast.error(data.message)
+      toast.error(data);
       break;
     case 409:
-      toast.error(data.message)
+      toast.error(data);
       break;
     case 500:
-      toast.error(data.message)
+      toast.error(data);
       break;
     default:
       console.error('Unhandled response error:', response);
@@ -51,7 +57,6 @@ const handleResponseError = (response: any) => {
 };
 
 const handleRequestError = (error: any) => {
-  // TODO: Create API endpoint to check whether user is logged or not
     console.error('Request error:', error);
     toast.error('Something went wrong.');
 };

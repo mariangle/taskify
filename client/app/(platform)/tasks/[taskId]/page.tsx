@@ -1,4 +1,4 @@
-import TaskForm from "@/app/(platform)/components/task-form"
+import TaskForm from "@/app/(platform)/_components/task-form"
 import TaskService from "@/services/task-service"
 import ListService from "@/services/list-service"
 import LabelService from "@/services/label-service";

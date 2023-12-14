@@ -1,8 +1,14 @@
-import { TaskStatus, TaskPriority } from "@/types";
+import { 
+  HiArrowSmDown, 
+  HiArrowSmUp, 
+  HiArrowSmRight,
+} from "react-icons/hi";
 
 export const dashboardLinks = [
   { label: 'Dashboard', href: '/dashboard'},
   { label: 'Tasks', href: '/tasks'},
+  { label: 'Projects', href: '/projects'},
+
 ]
 
 export type Mode = {
@@ -38,9 +44,9 @@ export const statuses = [
 ]
 
 export const priorities = [
-  { id: 1, value: 'Low', label: 'Low'}, 
-  { id: 2, value: 'Medium', label: 'Medium'}, 
-  { id: 3, value: 'High', label: 'High'}, 
+  { id: 1, value: 'Low', label: 'Low', icon: HiArrowSmDown}, 
+  { id: 2, value: 'Medium', label: 'Medium', icon: HiArrowSmRight}, 
+  { id: 3, value: 'High', label: 'High', icon: HiArrowSmUp}, 
 ]
 
 export const danishPhoneNumberRegex = /\+45\s\d{8}/g;

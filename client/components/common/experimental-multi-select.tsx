@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { X } from "lucide-react";
+import { Icons } from "@/components/icons";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,7 +18,7 @@ export type FancyMultiSelectProps<T extends { id: string }> = {
   items: T[],
   selectedItems: T[],
   placeholder: string,
-  label: string,
+  label?: string,
   onSelectedItemsChange: (selectedItems: T[]) => void;
 };
 
@@ -58,15 +58,15 @@ export function ExperimentalMultiSelect<T extends { id: string }>({
     [onSelectedItemsChange]
   );
 
-  const selectables = items.filter((item) => !selectedItems.includes(item));
+  const selectables = items.filter((item) => !selectedItems.some((selected) => selected.id === item.id));
 
   return (
-    <Command onKeyDown={handleKeyDown} className="flex-1 overflow-visible space-y-2 bg-transparent h-fit">
-      <Label htmlFor='label'>{label}test</Label>
+    <Command onKeyDown={handleKeyDown} className="overflow-visible space-y-2 bg-transparent h-fit z-50 w-fit">
+      { label && <Label htmlFor='label'>{label}</Label>}
          <div
         className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
       >       <div className="flex gap-1 flex-wrap">
-          {selectedItems.map((item) => (
+          {selectedItems && selectedItems.map((item) => (
             <Badge key={item.id} variant="secondary">
               {item.name}
               <button
@@ -82,7 +82,7 @@ export function ExperimentalMultiSelect<T extends { id: string }>({
                 }}
                 onClick={() => handleUnselect(item)}
               >
-                  <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                  <Icons.close className="h-3 w-3 text-muted-foreground hover:text-foreground" />
               </button>
             </Badge>
           ))}
@@ -100,7 +100,7 @@ export function ExperimentalMultiSelect<T extends { id: string }>({
       <div className="relative mt-2">
         {open && selectables.length > 0 ? (
           <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-            <CommandGroup className=" overflow-auto" id="label">
+            <CommandGroup className="overflow-auto " id="label">
               {selectables.map((item) => (
                 <CommandItem
                   key={item.id}

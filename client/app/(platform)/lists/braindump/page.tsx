@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
-import ListTasks from '../components/list-tasks';
-import { Info } from 'lucide-react';
+import ListTasks from '../_components/list-tasks';
+import { Icons } from '@/components/icons';
 import {
   Tooltip,
   TooltipContent,
@@ -21,7 +21,7 @@ async function BraindumpListPage() {
               <h1 className='font-bold text-xl'>🧠 Braindump</h1>
               <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger><Info className='w-4 h-4'/></TooltipTrigger>
+                <TooltipTrigger><Icons.info className='w-4 h-4'/></TooltipTrigger>
                 <TooltipContent>
                   <p>Dump unsorted tasks here to clear your mind and boost productivity. Get everything out of your head!</p>
                 </TooltipContent>

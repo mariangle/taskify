@@ -1,11 +1,13 @@
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 import ListModal from '@/components/modals/list-modal';
-import ListService from '@/services/list-service';
-import ListTasks from '../components/list-tasks';
+import ListService from "@/services/list-service"
+import ListTasks from '../_components/list-tasks';
 
 import { notFound } from 'next/navigation';
 import { defaultEmoji } from '@/lib/constants';
+
+import ListTaskForm from '../_components/editable-task';
 
 interface PageProps {
     params: { listId: string }
@@ -28,7 +30,8 @@ async function ListPage({
             <ListModal list={list}/>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-2">
+          <ListTaskForm list={list}/>
           <ListTasks tasks={list.tasks}/>
         </CardContent>
     </Card>

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { UserResponse } from '@/types';
-import { setToken } from '@/lib/_actions/set-token';
+import { setToken as setServerToken } from '@/lib/_actions/set-token';
 
 class AuthService {
   private api: AxiosInstance;
@@ -14,7 +14,7 @@ class AuthService {
   async login(email: string, password: string): Promise<void> {
     try {
       const response: AxiosResponse = await this.api.post('/login', { email, password });
-      await setToken(response.data)
+      await setServerToken(response.data)
     } catch (error) {
       throw error;
     }

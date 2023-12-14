@@ -2,17 +2,7 @@
 
 import * as React from "react"
 
-import {
-  Circle,
-  CheckCircle,
-  Sun,
-  Moon,
-  Monitor,
-  LineChart,
-  Settings,
-  Tags,
-  Search
-} from "lucide-react";
+import { Icons } from "@/components/icons";
 
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -26,7 +16,6 @@ import {
   CommandList,  
   CommandSeparator,
   CommandShortcut,
-
 } from "@/components/ui/command"
 import { TaskResponse } from "@/types"
 import { config } from "@/lib/config"
@@ -67,7 +56,7 @@ export default function SearchMenu({ tasks, ...props }: SearchTaskProps) {
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="inline-flex"><Search className="w-4 h-4"/></span>
+        <span className="inline-flex"><Icons.search className="w-4 h-4"/></span>
         <span className="hidden lg:inline-flex ml-2">Search...</span>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
@@ -76,17 +65,17 @@ export default function SearchMenu({ tasks, ...props }: SearchTaskProps) {
           <CommandEmpty>Nothing found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
             <CommandItem>
-              <Settings className="mr-2 h-4 w-4" />
+              <Icons.settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Tags className="mr-2 h-4 w-4" />
+              <Icons.tags className="mr-2 h-4 w-4" />
               <span>Labels</span>
               <CommandShortcut>⌘L</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <LineChart className="mr-2 h-4 w-4" />
+              <Icons.lineChart className="mr-2 h-4 w-4" />
               <span>Analytics</span>
             </CommandItem>
           </CommandGroup>
@@ -102,8 +91,8 @@ export default function SearchMenu({ tasks, ...props }: SearchTaskProps) {
                 >
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">
                     {task.status === 'Completed'
-                    ? <CheckCircle className="h-3 w-3" />
-                    : <Circle className="h-3 w-3"/>
+                    ? <Icons.checkCircle className="h-3 w-3" />
+                    : <Icons.circle className="h-3 w-3"/>
                     }
                   </div>
                   {task.name}
@@ -113,15 +102,15 @@ export default function SearchMenu({ tasks, ...props }: SearchTaskProps) {
           <CommandSeparator />
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-              <Sun className="mr-2 h-4 w-4" />
+              <Icons.sun className="mr-2 h-4 w-4" />
               Light
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-              <Moon className="mr-2 h-4 w-4" />
+              <Icons.moon className="mr-2 h-4 w-4" />
               Dark
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-              <Monitor className="mr-2 h-4 w-4" />
+              <Icons.screen className="mr-2 h-4 w-4" />
               System
             </CommandItem>
           </CommandGroup>

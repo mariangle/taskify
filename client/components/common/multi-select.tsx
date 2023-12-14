@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -8,55 +7,58 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { LabelResponse } from "@/types";
 
-interface ISelectProps {
-  values: {
-    key: string;
-    value: string;
-  }[];
+interface MultiSelectProps {
+  items: LabelResponse[];
+  selectedLabels: string[];
+  onChange: (selectedLabels: string[]) => void;
 }
-const MultiSelect = ({ values }: ISelectProps) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const handleSelectChange = (value: string) => {
-    if (!selectedItems.includes(value)) {
-      setSelectedItems((prev) => [...prev, value]);
+
+const MultiSelect = ({ items, selectedLabels, onChange }: MultiSelectProps) => {
+  const handleSelectChange = (selectedLabelId: string) => {
+    const isLabelSelected = selectedLabels.includes(selectedLabelId);
+
+    if (isLabelSelected) {
+      // Remove the label if already selected
+      onChange(selectedLabels.filter(labelId => labelId !== selectedLabelId));
     } else {
-      const referencedArray = [...selectedItems];
-      const indexOfItemToBeRemoved = referencedArray.indexOf(value);
-      referencedArray.splice(indexOfItemToBeRemoved, 1);
-      setSelectedItems(referencedArray);
+      // Add the label if not selected
+      onChange([...selectedLabels, selectedLabelId]);
     }
   };
 
-  const isOptionSelected = (value: string): boolean => {
-    return selectedItems.includes(value) ? true : false;
+  const isLabelSelected = (selectedId: string): boolean => {
+    return selectedLabels.some(labelId => labelId === selectedId);
   };
+
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="flex gap-2 font-bold">
-            <span>Select Values</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" onCloseAutoFocus={(e) => e.preventDefault()}>
-          <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {values.map((value: ISelectProps["values"][0], index: number) => {
-            return (
-              <DropdownMenuCheckboxItem
-                onSelect={(e) => e.preventDefault()}
-                key={index}
-                checked={isOptionSelected(value.key)}
-                onCheckedChange={() => handleSelectChange(value.key)}
-              >
-                {value.value}
-              </DropdownMenuCheckboxItem>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+            variant={"ghost"}
+            className={cn(
+              "justify-start text-left font-normal",
+              !date && "text-muted-foreground text-xs"
+            )}
+          >
+          <span>Select Values</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" onCloseAutoFocus={(e) => e.preventDefault()}>
+        <DropdownMenuLabel>Labels</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {items?.map((label: LabelResponse, index: number) => (
+          <DropdownMenuCheckboxItem
+            key={index}
+            checked={isLabelSelected(label.id)}
+            onCheckedChange={() => handleSelectChange(label.id)}
+          >
+            {label.name}
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

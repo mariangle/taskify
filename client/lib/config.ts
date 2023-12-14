@@ -4,29 +4,45 @@ export const config = {
       default: '.taskify',
       template: `%s | Taskify`,
     },
-    description: "Collaborate, manage projects, and reach new productivity peaks",
+    description: 'Collaborate, manage projects, and reach new productivity peaks',
     icons: [
       {
-        url: "/logo.svg",
-        href: "/logo.svg"
-      }
-    ]
+        url: '/logo.svg',
+        href: '/logo.svg',
+      },
+    ],
   },
   settings: [
     {
-      title: "Account",
+      title: 'Account',
       items: [
         {
-          title: "Introduction",
-          href: "/docs",
+          title: 'Introduction',
+          href: '/docs',
           items: [],
         },
         {
-          title: "Installation",
-          href: "/docs/installation",
+          title: 'Installation',
+          href: '/docs/installation',
           items: [],
         },
       ],
     },
   ],
+  marketing: {
+    links: [
+      {
+        label: 'Features',
+        href: '',
+      },
+      {
+        label: 'Pricing',
+        href: '',
+      },
+      {
+        label: 'Docs',
+        href: '',
+      },
+    ],
+  },
 }
