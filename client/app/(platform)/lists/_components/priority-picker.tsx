@@ -1,46 +1,33 @@
-"use client"
+'use client'
 
-import * as React from "react"
+import * as React from 'react'
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { priorities } from "@/lib/constants"
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { priorities } from '@/lib/constants'
 
 type Priority = {
-  id: number,
-  value: string,
+  id: number
+  value: string
   label: string
 }
 
 interface PriorityPickerProps {
-  priority: string | undefined | null,
-  setPriority: React.Dispatch<React.SetStateAction<string | null>>,
+  priority: string | undefined | null
+  setPriority: React.Dispatch<React.SetStateAction<string | null>>
   onClick?: () => void
 }
 
-export function PriorityPicker({
-  priority, 
-  setPriority,
-  onClick
-} : PriorityPickerProps) {
+export function PriorityPicker({ priority, setPriority, onClick }: PriorityPickerProps) {
   const [open, setOpen] = React.useState(false)
 
   const priorityInfo = priorities.find((p: Priority) => p.value === priority)!
 
   const handleSelect = (p: Priority) => {
-    p.value === priority ? setPriority(null) :  setPriority(p.value);
-    setOpen(false);
+    p.value === priority ? setPriority(null) : setPriority(p.value)
+    setOpen(false)
   }
 
   return (
@@ -48,10 +35,10 @@ export function PriorityPicker({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            variant={"ghost"}
+            variant={'ghost'}
             className={cn(
-              "text-xs p-2 h-fit",
-              !priority && "text-muted-foreground"
+              'text-xs p-0 h-fit hover:text-foreground hover:bg-background',
+              !priority && 'text-muted-foreground',
             )}
           >
             {priority ? (
@@ -70,18 +57,16 @@ export function PriorityPicker({
               <CommandGroup>
                 {priorities.map((priorityOption) => (
                   <CommandItem
-                  key={priorityOption.id}
-                  value={priorityOption.value}
-                  onSelect={() => {
-                    handleSelect(priorityOption)
-                  }}
-                      > 
-                      <priorityOption.icon
+                    key={priorityOption.id}
+                    value={priorityOption.value}
+                    onSelect={() => {
+                      handleSelect(priorityOption)
+                    }}
+                  >
+                    <priorityOption.icon
                       className={cn(
-                        "mr-2 h-4 w-4",
-                        priorityOption.value === priorityOption?.value
-                          ? "opacity-100"
-                          : "opacity-40"
+                        'mr-2 h-4 w-4',
+                        priorityOption.value === priorityOption?.value ? 'opacity-100' : 'opacity-40',
                       )}
                     />
                     <span>{priorityOption.label}</span>

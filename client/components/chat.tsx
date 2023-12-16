@@ -1,39 +1,31 @@
-"use client"
-import * as React from "react"
-import { Icons } from "@/components/icons"
+'use client'
+import * as React from 'react'
+import { Icons } from '@/components/icons'
 
-import { cn } from "@/lib/utils"
-import {
-  Avatar,
-  AvatarFallback,
-} from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { cn } from '@/lib/utils'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
 
 export default function Chat() {
   const [open, setOpen] = React.useState(false)
 
   const [messages, setMessages] = React.useState([
     {
-      role: "agent",
-      content: "Hi, how can I help you today?",
+      role: 'agent',
+      content: 'Hi, how can I help you today?',
     },
     {
-      role: "user",
+      role: 'user',
       content: "Hey, I'm having trouble with my account.",
     },
     {
-      role: "agent",
-      content: "What seems to be the problem?",
+      role: 'agent',
+      content: 'What seems to be the problem?',
     },
   ])
-  const [input, setInput] = React.useState("")
+  const [input, setInput] = React.useState('')
   const inputLength = input.trim().length
 
   return (
@@ -45,7 +37,7 @@ export default function Chat() {
               <AvatarFallback>AI</AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-sm font-medium leading-none">Agent</p>
+              <p className="text-sm font-medium leading-none">Your Agent</p>
               <p className="text-sm text-muted-foreground">.taskify</p>
             </div>
           </div>
@@ -56,10 +48,8 @@ export default function Chat() {
               <div
                 key={index}
                 className={cn(
-                  "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
-                  message.role === "user"
-                    ? "ml-auto bg-primary text-primary-foreground"
-                    : "bg-muted"
+                  'flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm',
+                  message.role === 'user' ? 'ml-auto bg-primary text-primary-foreground' : 'bg-muted',
                 )}
               >
                 {message.content}
@@ -75,11 +65,11 @@ export default function Chat() {
               setMessages([
                 ...messages,
                 {
-                  role: "user",
+                  role: 'user',
                   content: input,
                 },
               ])
-              setInput("")
+              setInput('')
             }}
             className="flex w-full items-center space-x-2"
           >

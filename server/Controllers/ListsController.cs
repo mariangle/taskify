@@ -42,8 +42,10 @@ namespace server.Controllers
             {
                 return NotFound();
             }
+
             var list = await _context.Lists
-                .Include(l => l.Tasks)  
+                .Include(l => l.Tasks!)
+                    .ThenInclude(t => t.Labels!) 
                 .FirstOrDefaultAsync(l => l.Id == id);
 
             if (list == null)

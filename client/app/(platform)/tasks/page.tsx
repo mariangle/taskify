@@ -1,32 +1,26 @@
-import TaskService from '@/services/task-service';
-import TaskColumn from './_components/project-column';
-import { Suspense } from 'react';
-import Spinner from '@/components/ui/spinner';
+import TaskService from '@/services/task-service'
+import TaskPrompt from '@/components/task-prompt'
+import Chat from '@/components/chat'
 
-import * as React from "react"
+import * as React from 'react'
 
 interface TasksPageProps {
   searchParams: { [key: string]: string | boolean }
 }
 
-async function TasksPage({
-  searchParams
-}: TasksPageProps) {
-  const tasks = await TaskService.getTasks(searchParams);
+async function TasksPage({ searchParams }: TasksPageProps) {
+  const tasks = await TaskService.getTasks(searchParams)
 
   // TODO: Reversing to get newest but probably should do it through API
 
   return (
-    <div className='space-y-2 lg:space-y-4'>
-      <div className="grid lg:grid-cols-8 gap-4">
-        <div className='col-span-6'>
-
-        </div>
-        <div className='col-span-2'>
-        </div>
+    <div className="space-y-2 lg:space-y-4">
+      <div className="flex">
+        <Chat />
+        <TaskPrompt />
       </div>
     </div>
-  );
+  )
 }
 
-export default TasksPage;
+export default TasksPage

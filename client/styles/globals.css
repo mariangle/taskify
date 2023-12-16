@@ -58,14 +58,6 @@ body {
   }
 }
 
-.font-poppins {
-  font-family: var(--font-poppins);
-}
-
-.font-inter {
-  font-family: var(--font-inter);
-}
-
 @layer base {
   * {
     @apply border-border;
