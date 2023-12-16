@@ -30,7 +30,7 @@ async function ListPage({ params }: PageProps) {
         </div>
       </CardHeader>
       <CardContent className="space-y-2">
-        <EditableTask list={list} lists={lists} labels={labels} />
+        <EditableTask lists={lists} labels={labels} />
         <ul>
           {list.tasks.map((task) => (
             <EditableTask key={task.id} task={task} lists={lists} labels={labels} />

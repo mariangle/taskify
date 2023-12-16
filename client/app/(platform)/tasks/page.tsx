@@ -1,7 +1,4 @@
 import TaskService from '@/services/task-service'
-import TaskPrompt from '@/components/task-prompt'
-import Chat from '@/components/chat'
-
 import * as React from 'react'
 
 interface TasksPageProps {
@@ -15,10 +12,7 @@ async function TasksPage({ searchParams }: TasksPageProps) {
 
   return (
     <div className="space-y-2 lg:space-y-4">
-      <div className="flex">
-        <Chat />
-        <TaskPrompt />
-      </div>
+      <div className="flex"></div>
     </div>
   )
 }

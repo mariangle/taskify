@@ -1,27 +1,34 @@
 'use client'
 
-import { Suspense } from 'react'
-import { usePathname } from 'next/navigation'
+import React from 'react'
+import { useParams, usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { dashboardLinks } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
-
-import { ListResponse, ProjectResponse } from '@/types'
+import { useGlobalStore } from '@/hooks/use-global-store'
+import { ListResponse } from '@/types'
 import { Icons } from '@/components/icons'
+import { defaultEmoji } from '@/lib/constants'
 
+import SettingsModal from '@/components/modals/settings-modal'
 import ListModal from '@/components/modals/list-modal'
-import ListItem from './list-header'
 
 interface SidebarProps {
   lists: ListResponse[]
-  projects: ProjectResponse[]
 }
 
-const Sidebar = ({ lists, projects }: SidebarProps) => {
+const Sidebar = ({ lists }: SidebarProps) => {
   const pathname = usePathname()
+  const params = useParams()
+  const { showSidebar } = useGlobalStore()
 
   return (
-    <aside className="h-full border-r flex flex-col justify-between">
+    <aside
+      className={cn(
+        'transition-all w-48 duration-300 h-full border-r flex flex-col justify-between',
+        showSidebar ? '-ml-96' : '-ml-0',
+      )}
+    >
       <div>
         <div className="h-14 px-6 font-extrabold text-center">
           <Link href="/" aria-current="page" className="font-bold text-inherit flex-gap h-full">
@@ -36,7 +43,7 @@ const Sidebar = ({ lists, projects }: SidebarProps) => {
                 href={link.href}
                 className={cn(
                   pathname.includes(link.href)
-                    ? 'font-semibold bg-gradient-to-l from-primary/20 border-r-3 border-primary'
+                    ? 'font-semibold bg-gradient-to-l from-primary/20 border-r-2 border-primary'
                     : 'font-medium',
                   'w-full block px-6 py-2 text-sm',
                 )}
@@ -46,26 +53,53 @@ const Sidebar = ({ lists, projects }: SidebarProps) => {
             </li>
           ))}
         </ul>
-        <ul>
-          <div className="px-6 text-sm">
-            <div className="flex-between py-3 font-extrabold">
+        <div>
+          <div className="text-sm">
+            <div className="flex-between py-2 font-extrabold px-6">
               <h4>My Lists</h4>
               <ListModal list={null} />
             </div>
-            <div className="space-y-2 my-2 font-medium text-sm">
-              <ListItem />
-              <Suspense fallback={'LOADING'}>
-                {lists && lists.map((list) => <ListItem list={list} key={list.id} />)}
-              </Suspense>
-            </div>
+            <ul className="font-medium text-sm">
+              <li>
+                <Link
+                  href={`/lists/braindump`}
+                  className={cn(
+                    'flex-between py-2 block px-6',
+                    pathname === `/lists/braindump` ? 'bg-gradient-to-l from-primary/20 border-r-2 border-primary' : '',
+                  )}
+                >
+                  🧠 Braindump
+                </Link>
+              </li>
+              {lists?.map((list) => (
+                <li key={list.id}>
+                  <Link
+                    className={cn(
+                      'flex-between py-2 block px-6',
+                      `/lists/${params.listId}` === `/lists/${list.id}`
+                        ? 'bg-gradient-to-l from-primary/20 border-r-2 border-primary'
+                        : '',
+                    )}
+                    href={`/lists/${list.id}`}
+                  >
+                    <div className="truncate ...">
+                      {list.emoji ? list.emoji : defaultEmoji} {list.name}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </ul>
+        </div>
       </div>
       <div className="p-6 text-xs font-medium space-y-2">
-        <div className="flex-gap">
-          <Icons.settings className="mr-2 h-4 w-4" />
-          Settings
-        </div>
+        <SettingsModal>
+          <div className="flex-gap">
+            <Icons.settings className="mr-2 h-4 w-4" />
+            Settings
+          </div>
+        </SettingsModal>
+
         <div className="flex-gap">
           <Icons.logOut className="mr-2 h-4 w-4" />
           Sign Out

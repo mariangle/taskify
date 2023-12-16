@@ -64,7 +64,7 @@ export default function LabelFilter({ labels }: LabelSwitcherProps) {
             ))}
             <CommandSeparator />
             <CommandItem>
-              <Link href={'/settings/labels'} onClick={() => setOpen(false)}>
+              <Link href={'/settings/labels'} onClick={() => setOpen(false)} className="w-full">
                 Edit Labels
               </Link>
             </CommandItem>

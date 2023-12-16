@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { MentionsInput as ReactMentionInput, Mention } from 'react-mentions'
-import { inputStyle } from '@/styles/default-styles'
+import { inputStyle } from '@/styles/styles'
 import { ListResponse, LabelResponse, TaskEntry, TaskResponse } from '@/types'
 
 interface Event {

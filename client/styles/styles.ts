@@ -29,3 +29,34 @@ export const inputStyle = {
     },
   },
 }
+
+export const toastStyles = {
+  blank: {
+    style: {
+      background: 'hsl(var(--background))',
+      color: 'hsl(var(--foreground))',
+      border: '1px solid hsl(var(--border))',
+    },
+  },
+  success: {
+    iconTheme: {
+      primary: '#00a859',
+      secondary: 'white',
+    },
+    style: {
+      background: 'hsl(var(--background))',
+      color: 'hsl(var(--foreground))',
+      border: '1px solid hsl(var(--border))',
+    },
+  },
+  error: {
+    iconTheme: {
+      primary: 'white',
+      secondary: '#ff6161',
+    },
+    style: {
+      background: 'hsl(var(--destructive))',
+      color: 'white',
+    },
+  },
+}

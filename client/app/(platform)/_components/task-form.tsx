@@ -5,7 +5,6 @@ import FormInput from '@/components/common/form-input'
 import FormSelect from '@/components/common/form-select'
 import FormSelectList from '@/components/common/form-select.list'
 import FormDatePicker from '@/components/common/form-date-picker'
-import { PriorityPicker } from '../lists/_components/priority-picker'
 
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
@@ -13,7 +12,6 @@ import { LabelResponse, ListResponse, TaskEntry, TaskResponse } from '@/types'
 import { TaskSchema, TaskSchemaType } from '@/lib/validations/task'
 import TaskService from '@/services/task-service'
 import AlertModal from '@/components/modals/alert-modal'
-import { handleError } from '@/util/error'
 import toast from 'react-hot-toast'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { priorities, statuses } from '@/lib/constants'
@@ -25,7 +23,7 @@ import { useTaskForm } from '@/hooks/use-task-form'
 // TODO: Change styling https://ui.shadcn.com/docs/components/combobox
 
 interface FormProps {
-  task: TaskResponse | null
+  task?: TaskResponse | null
   lists: ListResponse[] | []
   labels: LabelResponse[] | []
   onClose?: () => void

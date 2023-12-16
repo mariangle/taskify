@@ -41,7 +41,7 @@ export default function LabelBadge({ label, noBorder, taskId }: LabelBadgeProps)
   }
 
   return (
-    <Badge key={label.id} variant={'outline'} className="flex-gap-sm">
+    <Badge key={label.id} variant={'outline'} className="flex-gap">
       <div className="h-2 w-2 rounded-full border" style={{ backgroundColor: label.color }} />
       {label.name}
       {taskId && !isLoading && (
