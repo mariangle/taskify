@@ -35,8 +35,9 @@ namespace server.Controllers
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
             [FromQuery] bool? overdue = false,
-            [FromQuery] bool? incomplete = false
-)
+            [FromQuery] bool? incomplete = false,
+            [FromQuery] bool? completed = false
+            )
         {
             IQueryable<TaskModel> tasksQuery = _context.Tasks;
 
@@ -80,6 +81,12 @@ namespace server.Controllers
             {
                 tasksQuery = tasksQuery
                     .Where(task => task.Status == Status.Incomplete);
+            }
+
+            if (completed == true)
+            {
+                tasksQuery = tasksQuery
+                    .Where(task => task.Status == Status.Completed);
             }
 
             var tasks = await tasksQuery
@@ -165,7 +172,7 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.Task' is null.");
             }
 
-            Guid userId = _userService.GetUserId(); 
+            Guid userId = _userService.GetUserId();
             task.UserId = userId;
 
             if (string.IsNullOrEmpty(task.Name))
@@ -192,7 +199,7 @@ namespace server.Controllers
         {
 
             var task = await _context.Tasks
-                .Include(t => t.Labels) 
+                .Include(t => t.Labels)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (task == null)

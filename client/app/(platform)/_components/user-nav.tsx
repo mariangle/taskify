@@ -1,8 +1,7 @@
-import { deleteToken } from './logoutAction'
+import { deleteToken } from '@/lib/_actions/logout'
 import { revalidate } from '@/lib/_actions/revalidate-path'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +12,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import ThemeSwitchDropdown from '@/components/theme-switch-dropdown'
 import { Icons } from '@/components/icons'
 
 export default function UserNav() {
@@ -41,7 +39,9 @@ export default function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <div className="rounded-full p-2 bg-muted cursor-pointer">
+          <Icons.user className="w-5 h-5" />
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -56,7 +56,6 @@ export default function UserNav() {
               </DropdownMenuItem>
             </Link>
           ))}
-          <ThemeSwitchDropdown />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

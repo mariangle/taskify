@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-
+import { Icons } from '@/components/icons'
 import { useClickOutside } from '@/hooks/use-click-outside'
 import TaskForm from '@/app/(platform)/_components/task-form'
 import LabelService from '@/services/label-service'
@@ -33,8 +33,9 @@ export default function PromptModal() {
 
   return (
     <>
-      <Button onClick={open} size={'sm'}>
-        🚀 New Task
+      <Button onClick={open} variant={'theme'}>
+        <Icons.addCircle className="w-4 h-4" />
+        <span className="sr-only">New Task</span>
       </Button>
       <Dialog open={isOpen}>
         <DialogContent ref={dialogRef} className="p-4">

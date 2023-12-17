@@ -21,11 +21,9 @@ export default async function Layout(props: PageProps) {
 
   return (
     <div className="flex h-screen overflow-y-hidden">
-      <div className="block">
-        <Sidebar lists={lists} />
-      </div>
+      <Sidebar lists={lists} />
       <div className="flex flex-col flex-1 bg-zinc-100 dark:bg-background overflow-y-hidden">
-        <Navbar tasks={tasks} />
+        <Navbar tasks={tasks} lists={lists} />
         <div className="overflow-y-auto h-full p-4">
           {props.children}
           {props.modal}

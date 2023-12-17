@@ -14,7 +14,6 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 
-import Link from 'next/link'
 import LabelBadge from '@/components/ui/label-badge'
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -22,19 +21,22 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils'
 import { useSearchParams } from 'next/navigation'
 import { useRouter, usePathname } from 'next/navigation'
-import { SearchParamsOptions } from '@/services/task-service'
+import { SearchParamsOptions, queryParamsMapping } from '@/lib/search-params'
 import { LabelResponse } from '@/types'
 
 // https://nextjs.org/docs/app/api-reference/functions/use-search-params
 
+export type FilterOption = keyof SearchParamsOptions | 'clear'
+
 interface FilterBadgeProps {
-  name: keyof SearchParamsOptions
+  name: FilterOption
   label: string
 }
 
 interface TaskFilterProps {
   labels: LabelResponse[]
 }
+
 export default function TaskFilter({ labels }: TaskFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -44,12 +46,13 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
   const overdue = searchParams.get('overdue')
   const upcoming = searchParams.get('upcoming')
   const incomplete = searchParams.get('incomplete')
+  const completed = searchParams.get('completed')
   const labelId = searchParams.get('labelId')
 
   const selectedLabel = labels?.find((label) => label.id === labelId)
 
   const createQueryString = React.useCallback(
-    (name: keyof SearchParamsOptions, value: string) => {
+    (name: FilterOption, value: string) => {
       const params = new URLSearchParams(searchParams)
       params.set(name, value)
 
@@ -58,9 +61,15 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
     [searchParams],
   )
 
-  const removeQueryString = (name: string) => {
+  const removeQueryString = (name: FilterOption) => {
     const params = new URLSearchParams(searchParams.toString())
-    params.delete(name)
+
+    name === 'clear'
+      ? Object.keys(queryParamsMapping).forEach((param) => {
+          params.delete(param)
+        })
+      : params.delete(name)
+
     const newQueryString = params.toString()
 
     router.push(`${pathname}?${newQueryString}`)
@@ -69,7 +78,20 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
   const FilterBadge = ({ name, label }: FilterBadgeProps) => {
     return (
       <Badge variant={'secondary'} className="flex-gap mb-2">
+        {label}
         <Icons.close className="w-2 h-2 hover:cursor-pointer" onClick={() => removeQueryString(name)} />
+      </Badge>
+    )
+  }
+
+  const FilterOption = ({ name, label }: { name: FilterOption; label: string }) => {
+    return (
+      <Badge
+        variant={'secondary'}
+        onClick={() => {
+          router.push(pathname + '?' + createQueryString(name, 'true'))
+        }}
+      >
         {label}
       </Badge>
     )
@@ -78,71 +100,38 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
   const [showFilter, setShowFilter] = React.useState(false)
   const [open, setOpen] = React.useState<boolean>(false)
 
+  const hasFilter = selectedLabel || incomplete || unsorted || completed || overdue || upcoming
+
   return (
-    <div>
-      <div className="flex-gap">
+    <div className="sticky top-0">
+      <div className="flex-gap flex-wrap">
         {selectedLabel && <FilterBadge name="labelId" label={selectedLabel.name} />}
         {incomplete && <FilterBadge name="incomplete" label="Incomplete" />}
         {unsorted && <FilterBadge name="unsorted" label="Unsorted" />}
+        {completed && <FilterBadge name="completed" label="Completed" />}
         {overdue && <FilterBadge name="overdue" label="Overdue" />}
         {upcoming && <FilterBadge name="upcoming" label="Upcoming" />}
+        {hasFilter && <FilterBadge name="clear" label="Clear all" />}
       </div>
       <div className="flex-gap">
         {showFilter && (
           <>
-            {(!unsorted || !overdue || !upcoming) && (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" size={'sm'}>
-                    Category
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-fit p-2">
-                  <div className="flex flex-col gap-2">
-                    {!unsorted && (
-                      <Badge
-                        variant={'secondary'}
-                        onClick={() => {
-                          router.push(pathname + '?' + createQueryString('unsorted', 'true'))
-                        }}
-                      >
-                        Unsorted
-                      </Badge>
-                    )}
-                    {!overdue && (
-                      <Badge
-                        variant={'secondary'}
-                        onClick={() => {
-                          router.push(pathname + '?' + createQueryString('overdue', 'true'))
-                        }}
-                      >
-                        Overdue
-                      </Badge>
-                    )}
-                    {!upcoming && (
-                      <Badge
-                        variant={'secondary'}
-                        onClick={() => {
-                          router.push(pathname + '?' + createQueryString('upcoming', 'true'))
-                        }}
-                      >
-                        Upcoming
-                      </Badge>
-                    )}
-                    {!incomplete && (
-                      <Badge
-                        variant={'secondary'}
-                        onClick={() => {
-                          router.push(pathname + '?' + createQueryString('incomplete', 'true'))
-                        }}
-                      >
-                        Incomplete
-                      </Badge>
-                    )}
-                  </div>
-                </PopoverContent>
-              </Popover>
-            )}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size={'sm'}>
+                  Category
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-fit p-2">
+                <div className="flex gap-2">
+                  {!unsorted && <FilterOption name="unsorted" label="Unsorted" />}
+                  {!overdue && <FilterOption name="overdue" label="Overdue" />}
+                  {!upcoming && <FilterOption name="upcoming" label="Upcoming" />}
+                  {!incomplete && <FilterOption name="incomplete" label="Incomplete" />}
+                  {!completed && <FilterOption name="completed" label="Completed" />}
+                </div>
+              </PopoverContent>
+            </Popover>
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button

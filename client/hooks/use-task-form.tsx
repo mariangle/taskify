@@ -32,7 +32,7 @@ export const useTaskForm = (initialData?: TaskResponse) => {
   const deleteTask = async (taskId: string) => {
     try {
       await TaskService.deleteTask(taskId)
-      toast.success('Task deleted')
+      toast.success('Task deleted!')
       revalidate({ path: `/lists/${params.listId}` })
     } catch (e) {
       handleError(e)

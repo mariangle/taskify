@@ -1,3 +1,5 @@
+import { LayoutGrid, ListTodo, Briefcase } from 'lucide-react'
+
 export const config = {
   metadata: {
     title: {
@@ -42,6 +44,28 @@ export const config = {
       {
         label: 'Docs',
         href: '',
+      },
+    ],
+  },
+  platform: {
+    links: [
+      {
+        label: 'Dashboard',
+        icon: LayoutGrid,
+        href: '/dashboard',
+        color: 'text-sky-500',
+      },
+      {
+        label: 'Tasks',
+        icon: ListTodo,
+        href: '/tasks',
+        color: 'text-green-500',
+      },
+      {
+        label: 'Projects',
+        icon: Briefcase,
+        href: '/projects',
+        color: 'text-pink-500',
       },
     ],
   },

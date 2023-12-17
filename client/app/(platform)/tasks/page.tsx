@@ -8,12 +8,14 @@ import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
 import { Skeleton } from '@/components/ui/skeleton'
 
+import { MyDrawer } from '@/components/drawer'
+
 interface TasksPageProps {
   searchParams: { [key: string]: string | boolean }
 }
 
 async function TasksPage({ searchParams }: TasksPageProps) {
-  const tasks = await TaskService.getTasks({ incomplete: true, ...searchParams })
+  const tasks = await TaskService.getTasks({ ...searchParams })
   const labels = await LabelService.getLabels()
   const lists = await ListService.getLists()
 
@@ -35,6 +37,8 @@ async function TasksPage({ searchParams }: TasksPageProps) {
       <React.Suspense fallback={<Skeleton className="h-8 w-[250px]" />}>
         <TaskFilter labels={labels} />
       </React.Suspense>
+      <MyDrawer />
+
       <div className="space-y-2">
         <React.Suspense fallback={<LoadingSkeleton />}>
           <Card>

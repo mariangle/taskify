@@ -3,16 +3,7 @@ import { AxiosResponse } from 'axios'
 import { TaskEntry, TaskResponse } from '@/types'
 import { requestOptions } from '@/util'
 import { agent } from '@/lib/agent'
-
-export interface SearchParamsOptions {
-  listId?: string
-  labelId?: string
-  projectId?: string
-  unsorted?: boolean
-  upcoming?: boolean
-  overdue?: boolean
-  incomplete?: boolean
-}
+import { SearchParamsOptions, queryParamsMapping } from '@/lib/search-params'
 
 interface TaskLabelRelation {
   labelId: string
@@ -24,8 +15,8 @@ const TaskService = {
     try {
       const response: AxiosResponse<TaskResponse> = await api.post('/tasks', task, requestOptions)
       return response.data
-    } catch (error) {
-      throw error
+    } catch (err) {
+      throw err
     }
   },
   // Define default value for the entire argument using Partial
@@ -33,32 +24,16 @@ const TaskService = {
     try {
       const queryParams: { [key: string]: string | boolean } = {}
 
-      if (params.listId) {
-        queryParams.listId = params.listId
-      }
+      // Loop through each [param, queryParam] pair in the queryParamsMapping object
+      for (const [param, queryParam] of Object.entries(queryParamsMapping)) {
+        // Extract the value of the current parameter from the params object
+        const paramValue = params[param as keyof SearchParamsOptions]
 
-      if (params.labelId) {
-        queryParams.labelId = params.labelId
-      }
-
-      if (params.projectId) {
-        queryParams.projectId = params.projectId
-      }
-
-      if (params.unsorted !== undefined) {
-        queryParams.unsorted = params.unsorted
-      }
-
-      if (params.upcoming !== undefined) {
-        queryParams.upcoming = params.upcoming
-      }
-
-      if (params.overdue !== undefined) {
-        queryParams.overdue = params.overdue
-      }
-
-      if (params.incomplete !== undefined) {
-        queryParams.incomplete = params.incomplete
+        // Check if the extracted parameter value is not undefined
+        if (paramValue !== undefined) {
+          // Assign the non-undefined parameter value to the corresponding property in the queryParams object
+          queryParams[queryParam] = paramValue
+        }
       }
 
       const response: AxiosResponse = await api.get('/tasks', {
@@ -67,47 +42,50 @@ const TaskService = {
       })
 
       return response.data
-    } catch (error) {
-      console.error('Error fetching tasks:', error)
-      return []
+    } catch (err) {
+      throw err
     }
   },
-  getTask: async (taskId: string): Promise<TaskResponse | null> => {
+  getTask: async (taskId: string): Promise<TaskResponse> => {
     try {
       const response: AxiosResponse = await api.get(`/tasks/${taskId}`, {
         httpsAgent: agent,
       })
       return response.data
-    } catch (error) {
-      return null
+    } catch (err) {
+      throw err
     }
   },
   updateTask: async (taskId: string, updatedTask: TaskEntry): Promise<TaskResponse> => {
     try {
       const response: AxiosResponse = await api.put(`/tasks/${taskId}`, updatedTask, requestOptions)
       return response.data
-    } catch (error) {
-      throw error
+    } catch (err) {
+      throw err
     }
   },
   deleteTask: async (taskId: string): Promise<TaskResponse> => {
     try {
       const response: AxiosResponse = await api.delete(`/tasks/${taskId}`, requestOptions)
       return response.data
-    } catch (error: any) {
-      throw error
+    } catch (err: any) {
+      throw err
     }
   },
   addLabel: async ({ taskId, labelId }: TaskLabelRelation): Promise<void> => {
-    const response: AxiosResponse = await api.post(`/tasks/${taskId}/labels/${labelId}`, null, requestOptions)
-    return response.data
+    try {
+      const response: AxiosResponse = await api.post(`/tasks/${taskId}/labels/${labelId}`, null, requestOptions)
+      return response.data
+    } catch (err) {
+      throw err
+    }
   },
   removeLabel: async ({ labelId, taskId }: TaskLabelRelation): Promise<void> => {
     try {
       const response: AxiosResponse = await api.delete(`/tasks/${taskId}/labels/${labelId}`, requestOptions)
       return response.data
-    } catch (error) {
-      throw error
+    } catch (err) {
+      throw err
     }
   },
 }
