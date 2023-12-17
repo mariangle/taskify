@@ -4,6 +4,7 @@ import { useTaskForm } from '@/hooks/use-task-form'
 import TaskCheckbox from '../../tasks/_components/task-checkbox'
 import { PriorityPicker } from './priority-picker'
 import * as React from 'react'
+import { cn } from '@/lib/utils'
 import MentionsInput from '@/components/mentions-input'
 import LabelBadge from '@/components/ui/label-badge'
 
@@ -22,9 +23,10 @@ interface TaskFormProps {
   task?: TaskResponse
   lists?: ListResponse[]
   labels?: LabelResponse[]
+  hasBorder?: boolean
 }
 
-const TaskForm = ({ task, lists, labels }: TaskFormProps) => {
+const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
   const { isOpen, open, isLoading, close, submitTask, setTaskEntry, taskEntry, deleteTask, params } = useTaskForm(task)
   const [hasChanges, setHasChanges] = React.useState<boolean>(false)
   const [isEditing, setIsEditing] = React.useState<boolean>(false)
@@ -75,7 +77,7 @@ const TaskForm = ({ task, lists, labels }: TaskFormProps) => {
   }, [isHover, open, close, isEditing, hasChanges, task])
 
   return (
-    <li className="border-b list-none py-1" ref={hoverRef}>
+    <li className={cn('list-none py-2', task && hasBorder && 'border-b')} ref={hoverRef}>
       <div className="flex items-center max-w-md">
         <TaskCheckbox task={task} />
         <MentionsInput

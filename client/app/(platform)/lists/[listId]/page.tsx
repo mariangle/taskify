@@ -2,7 +2,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card'
 
 import ListModal from '@/components/modals/list-modal'
 import ListService from '@/services/list-service'
-import EditableTask from '../_components/task-form'
+import TaskForm from '../_components/task-form'
 
 import { notFound } from 'next/navigation'
 import { defaultEmoji } from '@/lib/constants'
@@ -13,9 +13,11 @@ interface PageProps {
 }
 
 async function ListPage({ params }: PageProps) {
-  const list = await ListService.getList(params.listId)
-  const lists = await ListService.getLists()
-  const labels = await LabelService.getLabels()
+  const [list, lists, labels] = await Promise.all([
+    ListService.getList(params.listId),
+    ListService.getLists(),
+    LabelService.getLabels(),
+  ])
 
   if (!list) return notFound()
 
@@ -30,11 +32,11 @@ async function ListPage({ params }: PageProps) {
         </div>
       </CardHeader>
       <CardContent className="space-y-2">
-        <EditableTask lists={lists} labels={labels} />
         <ul>
           {list.tasks.map((task) => (
-            <EditableTask key={task.id} task={task} lists={lists} labels={labels} />
+            <TaskForm key={task.id} task={task} lists={lists} labels={labels} hasBorder />
           ))}
+          <TaskForm lists={lists} labels={labels} hasBorder />
         </ul>
       </CardContent>
     </Card>

@@ -1,4 +1,6 @@
 import { deleteToken } from './logoutAction'
+import { revalidate } from '@/lib/_actions/revalidate-path'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,16 +18,15 @@ import { Icons } from '@/components/icons'
 
 export default function UserNav() {
   const dropdownItems = [
-    { label: 'Analytics', key: 'analytics', icon: <Icons.lineChart className="mr-2 h-4 w-4" />, href: '/analytics' },
     {
-      label: 'Billing',
-      key: 'billing',
+      label: 'Subscription',
+      key: 'subscription',
       icon: <Icons.creditCard className="mr-2 h-4 w-4" />,
       href: '/settings/account',
     },
     {
-      label: 'Account Settings',
-      key: 'account',
+      label: 'Settings',
+      key: 'settings',
       icon: <Icons.settings className="mr-2 h-4 w-4" />,
       href: '/settings/account',
       shortcut: '⌘S',
@@ -33,7 +34,8 @@ export default function UserNav() {
   ]
 
   const onLogout = async () => {
-    deleteToken()
+    await deleteToken()
+    revalidate({ path: '/dashboard' })
   }
 
   return (

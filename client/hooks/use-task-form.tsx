@@ -7,16 +7,18 @@ import { revalidate } from '@/lib/_actions/revalidate-path'
 import TaskService from '@/services/task-service'
 import { handleError } from '@/util'
 import toast from 'react-hot-toast'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 export const useTaskForm = (initialData?: TaskResponse) => {
   const [isSaving, setIsSaving] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
+
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
   const params = useParams()
+  const pathname = usePathname()
 
   const labelIds = initialData?.labels?.map((label) => label.id)
 
@@ -57,7 +59,7 @@ export const useTaskForm = (initialData?: TaskResponse) => {
           await TaskService.removeLabel({ taskId: initialData.id, labelId: labelToRemove.id })
         }
 
-        toast.success('Task saved successfully')
+        toast.success('Changes saved!')
       } else {
         const createdTask = await TaskService.createTask(data)
 
@@ -65,9 +67,9 @@ export const useTaskForm = (initialData?: TaskResponse) => {
           for (const labelId of data.labelIds) await TaskService.addLabel({ taskId: createdTask.id, labelId })
         }
 
-        toast.success('Task created successfully')
+        toast.success('Task created!')
       }
-      revalidate({ path: `/lists/${params.listId}` })
+      revalidate({ path: pathname })
     } catch (e) {
       console.error('Error saving task:', e)
       toast.error('Something went wrong.')

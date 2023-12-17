@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  Filter,
   Bot,
   Spline,
   Check,
@@ -71,6 +72,7 @@ export const Icons = {
   support: LifeBuoy,
   logOut: LogOut,
   add: Plus,
+  filter: Filter,
   warning: AlertTriangle,
   user: User,
   lineChart: LineChart,

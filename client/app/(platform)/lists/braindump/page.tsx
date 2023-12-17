@@ -1,7 +1,6 @@
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
 
-import ListTaskForm from '../_components/task-form'
-import EditableTask from '../_components/task-form'
+import TaskForm from '../_components/task-form'
 
 import { Icons } from '@/components/icons'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -11,9 +10,11 @@ import ListService from '@/services/list-service'
 import LabelService from '@/services/label-service'
 
 async function BraindumpListPage() {
-  const tasks = await TaskService.getTasks({ unsorted: true })
-  const lists = await ListService.getLists()
-  const labels = await LabelService.getLabels()
+  const [tasks, lists, labels] = await Promise.all([
+    TaskService.getTasks({ unsorted: true }),
+    ListService.getLists(),
+    LabelService.getLabels(),
+  ])
 
   return (
     <Card>
@@ -35,12 +36,12 @@ async function BraindumpListPage() {
         </div>
       </CardHeader>
       <CardContent>
-        <ListTaskForm lists={lists} labels={labels} />
         <ul>
           {tasks.map((task) => (
-            <EditableTask key={task.id} task={task} lists={lists} labels={labels} />
+            <TaskForm key={task.id} task={task} lists={lists} labels={labels} hasBorder />
           ))}
         </ul>
+        <TaskForm lists={lists} labels={labels} hasBorder />
       </CardContent>
     </Card>
   )

@@ -32,8 +32,8 @@ const Sidebar = ({ lists }: SidebarProps) => {
       <div>
         <div className="h-14 px-6 font-extrabold text-center">
           <Link href="/" aria-current="page" className="font-bold text-inherit flex-gap h-full">
-            <Icons.logo className="w-6 h-6 text-primary" />
-            Taskify
+            <Icons.logo className="w-4 h-4 text-primary" />
+            taskify
           </Link>
         </div>
         <ul>
@@ -43,9 +43,9 @@ const Sidebar = ({ lists }: SidebarProps) => {
                 href={link.href}
                 className={cn(
                   pathname.includes(link.href)
-                    ? 'font-semibold bg-gradient-to-l from-primary/20 border-r-2 border-primary'
+                    ? 'font-semibold bg-gradient-to-l from-primary/25 border-r-2 border-primary'
                     : 'font-medium',
-                  'w-full block px-6 py-2 text-sm',
+                  'w-full block px-6 py-2',
                 )}
               >
                 {link.label}
@@ -54,12 +54,12 @@ const Sidebar = ({ lists }: SidebarProps) => {
           ))}
         </ul>
         <div>
-          <div className="text-sm">
+          <div>
             <div className="flex-between py-2 font-extrabold px-6">
               <h4>My Lists</h4>
               <ListModal list={null} />
             </div>
-            <ul className="font-medium text-sm">
+            <ul className="font-medium">
               <li>
                 <Link
                   href={`/lists/braindump`}

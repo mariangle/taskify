@@ -2,7 +2,6 @@ import Sidebar from './_components/sidebar'
 import Navbar from './_components/navbar'
 
 import ListService from '@/services/list-service'
-import LabelService from '@/services/label-service'
 import TaskService from '@/services/task-service'
 
 import { authenticate } from '@/lib/_actions/authenticate'
@@ -18,11 +17,7 @@ export default async function Layout(props: PageProps) {
 
   if (!isAuthenticated) redirect('/login')
 
-  const [tasks, lists, labels] = await Promise.all([
-    TaskService.getTasks(),
-    ListService.getLists(),
-    LabelService.getLabels(),
-  ])
+  const [tasks, lists] = await Promise.all([TaskService.getTasks(), ListService.getLists()])
 
   return (
     <div className="flex h-screen overflow-y-hidden">
@@ -30,7 +25,7 @@ export default async function Layout(props: PageProps) {
         <Sidebar lists={lists} />
       </div>
       <div className="flex flex-col flex-1 bg-zinc-100 dark:bg-background overflow-y-hidden">
-        <Navbar tasks={tasks} labels={labels} />
+        <Navbar tasks={tasks} />
         <div className="overflow-y-auto h-full p-4">
           {props.children}
           {props.modal}

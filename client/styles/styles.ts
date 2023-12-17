@@ -1,7 +1,6 @@
 export const inputStyle = {
   control: {
     backgroundColor: 'transparent',
-    color: 'hsl(var(--foreground))',
     fontWeight: 'normal',
     fontSize: 14,
   },

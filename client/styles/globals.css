@@ -102,7 +102,4 @@ body {
   .flex-center {
     @apply flex items-center justify-center;
   }
-  .custom-toast {
-    @apply bg-red-500;
-  }
 }

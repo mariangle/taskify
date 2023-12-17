@@ -165,7 +165,7 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.Task' is null.");
             }
 
-            Guid userId = _userService.GetUserId();
+            Guid userId = _userService.GetUserId(); 
             task.UserId = userId;
 
             if (string.IsNullOrEmpty(task.Name))

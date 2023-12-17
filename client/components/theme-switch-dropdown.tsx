@@ -1,21 +1,20 @@
-import * as React from "react";
-import { Icons } from "@/components/icons";
-import { useTheme } from "next-themes";
+import * as React from 'react'
+import { Icons } from '@/components/icons'
+import { useTheme } from 'next-themes'
 import {
   DropdownMenuItem,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuPortal,
   DropdownMenuSubContent,
-  DropdownMenuSeparator
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 
 export default function ThemeSwitchDropdown() {
-  const { setTheme } = useTheme();
+  const { setTheme } = useTheme()
 
   const handleThemeChange = (selectedTheme: string) => {
-    setTheme(selectedTheme);
-  };
+    setTheme(selectedTheme)
+  }
 
   return (
     <DropdownMenuSub>
@@ -37,13 +36,8 @@ export default function ThemeSwitchDropdown() {
             <Icons.screen className="mr-2 h-4 w-4" />
             <span>System</span>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Icons.addCircle className="mr-2 h-4 w-4" />
-            <span>Appearance Settings</span>
-          </DropdownMenuItem>
         </DropdownMenuSubContent>
       </DropdownMenuPortal>
     </DropdownMenuSub>
-  );
+  )
 }

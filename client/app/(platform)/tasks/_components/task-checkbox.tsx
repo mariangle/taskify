@@ -5,6 +5,7 @@ import * as React from 'react'
 import { TaskResponse } from '@/types'
 import { Checkbox } from '@/components/ui/checkbox'
 import { handleError } from '@/util'
+import toast from 'react-hot-toast'
 
 import TaskService from '@/services/task-service'
 import { useRouter } from 'next/navigation'
@@ -20,15 +21,19 @@ export default function TaskCheckbox({ task }: { task?: TaskResponse }) {
   if (!task) return <Checkbox disabled />
 
   const onToggleStatus = async () => {
-    const statusToString = isCompleted ? 'Incomplete' : 'Completed'
-    const updatedTask = { ...task, status: statusToString }
-
     try {
+      const updatedTask = { ...task, status: isCompleted ? 'Incomplete' : 'Completed' }
+
       await TaskService.updateTask(task.id, updatedTask)
+
+      if (!isCompleted) {
+        toast.success('Task completed!')
+      }
+
       setIsCompleted((prev) => !prev)
       router.refresh()
-    } catch (e) {
-      handleError(e)
+    } catch (error) {
+      handleError(error)
     }
   }
 
