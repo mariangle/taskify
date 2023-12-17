@@ -1,7 +1,6 @@
 export interface SearchParamsOptions {
   listId?: string
   labelId?: string
-  projectId?: string
   unsorted?: boolean
   upcoming?: boolean
   overdue?: boolean
@@ -12,7 +11,6 @@ export interface SearchParamsOptions {
 export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchParamsOptions> = {
   listId: 'listId',
   labelId: 'labelId',
-  projectId: 'projectId',
   unsorted: 'unsorted',
   upcoming: 'upcoming',
   overdue: 'overdue',

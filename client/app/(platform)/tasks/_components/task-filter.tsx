@@ -116,6 +116,18 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
       <div className="flex-gap">
         {showFilter && (
           <>
+            <Button variant={'outline'} size={'sm'}>
+              <Icons.menu className="w-4 h-4 mr-2" />
+              List
+            </Button>
+            <Button variant={'outline'} size={'sm'}>
+              <Icons.grid className="w-4 h-4 mr-2" />
+              Table
+            </Button>
+            <Button variant={'outline'} size={'sm'}>
+              <Icons.kanban className="w-4 h-4 mr-2" />
+              Kanban
+            </Button>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" size={'sm'}>

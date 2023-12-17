@@ -7,18 +7,15 @@ export type TaskEntry = {
   dueDate?: string | null | Date
   duration?: string
   priority?: string | null
-  projectId?: string | null
   status?: string
   labelIds?: string[] | null
   note?: string
-  // ! temp labels?: LabelResponse[] | [],
   // recurring?: RecurringTask,
 }
 
 export type TaskResponse = {
   id: string
   name: string
-  projectId?: string | null
   listId?: string | null
   dueDate?: string
   priority?: TaskPriority | null

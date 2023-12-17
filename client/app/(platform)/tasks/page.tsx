@@ -1,12 +1,9 @@
-import { Card, CardHeader } from '@/components/ui/card'
-
+import KanbanColumn from './_components/kanban-column'
 import TaskService from '@/services/task-service'
-import TaskForm from '../lists/_components/task-form'
 import TaskFilter from './_components/task-filter'
 import * as React from 'react'
 import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
-import { Skeleton } from '@/components/ui/skeleton'
 
 import { MyDrawer } from '@/components/drawer'
 
@@ -15,45 +12,23 @@ interface TasksPageProps {
 }
 
 async function TasksPage({ searchParams }: TasksPageProps) {
-  const tasks = await TaskService.getTasks({ ...searchParams })
+  const tasks = await TaskService.getTasks(searchParams)
   const labels = await LabelService.getLabels()
   const lists = await ListService.getLists()
 
-  const LoadingSkeleton = () => {
-    return Array.from({ length: 3 }, (_, index) => (
-      <Card key={index}>
-        <CardHeader className="p-4">
-          <div className="flex-gap">
-            <Skeleton className="h-4 w-4" />
-            <Skeleton className="h-4 w-[200px]" />
-          </div>
-        </CardHeader>
-      </Card>
-    ))
-  }
+  const incompleteTasks = tasks.filter((task) => task.status === 'Incomplete')
+  const pendingTasks = tasks.filter((task) => task.status === 'InProgress')
+  const completedTasks = tasks.filter((task) => task.status === 'Completed')
 
   return (
     <div className="space-y-2">
-      <React.Suspense fallback={<Skeleton className="h-8 w-[250px]" />}>
-        <TaskFilter labels={labels} />
-      </React.Suspense>
-      <MyDrawer />
+      <TaskFilter labels={labels} />
 
-      <div className="space-y-2">
-        <React.Suspense fallback={<LoadingSkeleton />}>
-          <Card>
-            <CardHeader className="p-0 px-4">
-              <TaskForm labels={labels} lists={lists} />
-            </CardHeader>
-          </Card>
-          {tasks.map((task) => (
-            <Card key={task.id}>
-              <CardHeader className="p-0 px-4">
-                <TaskForm task={task} labels={labels} lists={lists} />
-              </CardHeader>
-            </Card>
-          ))}
-        </React.Suspense>
+      <MyDrawer />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <KanbanColumn tasks={incompleteTasks} color="bg-orange-500" status="Incomplete" lists={lists} labels={labels} />
+        <KanbanColumn tasks={pendingTasks} color="bg-sky-500" status="In Progress" lists={lists} labels={labels} />
+        <KanbanColumn tasks={completedTasks} color="bg-emerald-500" status="Completed" lists={lists} labels={labels} />
       </div>
     </div>
   )

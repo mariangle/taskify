@@ -20,20 +20,10 @@ const appearanceFormSchema = z.object({
     invalid_type_error: 'Select a font',
     required_error: 'Please select a font.',
   }),
-  sidebarItems: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: 'You have to select at least one item.',
-  }),
   navbarItems: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: 'You have to select at least one item.',
   }),
 })
-
-const sidebarItems = [
-  {
-    id: 'projects',
-    label: 'Projects',
-  },
-] as const
 
 const navbarItems = [
   {
@@ -51,7 +41,7 @@ type AppearanceFormValues = z.infer<typeof appearanceFormSchema>
 // This can come from your database or API.
 const defaultValues: Partial<AppearanceFormValues> = {
   theme: 'light',
-  sidebarItems: ['projects'],
+  navbarItems: ['filter'],
 }
 
 export function AppearanceForm() {
@@ -67,43 +57,6 @@ export function AppearanceForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="sidebarItems"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Sidebar</FormLabel>
-                <FormDescription>Select the items you want to display in the sidebar.</FormDescription>
-              </div>
-              {sidebarItems.map((item) => (
-                <FormField
-                  key={item.id}
-                  control={form.control}
-                  name="sidebarItems"
-                  render={({ field }) => {
-                    return (
-                      <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(item.id)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...field.value, item.id])
-                                : field.onChange(field.value?.filter((value) => value !== item.id))
-                            }}
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal">{item.label}</FormLabel>
-                      </FormItem>
-                    )
-                  }}
-                />
-              ))}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="navbarItems"

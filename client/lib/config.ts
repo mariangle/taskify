@@ -1,4 +1,4 @@
-import { LayoutGrid, ListTodo, Briefcase } from 'lucide-react'
+import { LayoutGrid, ListTodo } from 'lucide-react'
 
 export const config = {
   metadata: {
@@ -60,12 +60,6 @@ export const config = {
         icon: ListTodo,
         href: '/tasks',
         color: 'text-green-500',
-      },
-      {
-        label: 'Projects',
-        icon: Briefcase,
-        href: '/projects',
-        color: 'text-pink-500',
       },
     ],
   },

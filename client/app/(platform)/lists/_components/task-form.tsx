@@ -7,6 +7,7 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 import MentionsInput from '@/components/mentions-input'
 import LabelBadge from '@/components/ui/label-badge'
+import { Progress } from '@/components/ui/progress'
 
 import { DatePicker } from './date-picker'
 import { Input } from '@/components/ui/input'

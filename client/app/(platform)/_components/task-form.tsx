@@ -62,7 +62,6 @@ const TaskForm: React.FC<FormProps> = ({ task, lists, labels, onClose }) => {
       priority: taskPriority,
       dueDate: task?.dueDate || '',
       labelIds: taskLabels || [],
-      projectId: task?.projectId || '',
     },
   })
 
@@ -75,7 +74,6 @@ const TaskForm: React.FC<FormProps> = ({ task, lists, labels, onClose }) => {
         ...data,
         dueDate: data.dueDate || null,
         labelIds: labelIds || undefined,
-        projectId: undefined, // ! temporary
       }
 
       if (task) {
@@ -125,7 +123,6 @@ const TaskForm: React.FC<FormProps> = ({ task, lists, labels, onClose }) => {
         <div className="flex-gap mt-4">
           <FormDatePicker form={form} name="dueDate" placeholder="Select Date" />
           <FormSelectList items={lists} form={form} name="listId" label="List" placeholder="None" />
-          {/* <FormSelectList items={projects} form={form} name="projectId" label="Project" placeholder="None"/>  */}
         </div>
         <ExperimentalMultiSelect
           label="Labels"

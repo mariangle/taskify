@@ -66,7 +66,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
     try {
       await ListService.deleteList(list.id)
       router.refresh()
-      router.push('/lists/braindump')
+      router.push('/dashboard')
       onClose()
     } catch (error) {
       handleError(error)

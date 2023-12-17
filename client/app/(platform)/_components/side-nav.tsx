@@ -61,8 +61,8 @@ export function SideNav({ lists, className }: SideNavProps) {
                 href={`/lists/${item.id}`}
                 className={cn(
                   buttonVariants({ variant: 'ghost' }),
-                  'group flex h-12 gap-x-3 rounded-none',
-                  path === `/lists/${item.id}` && 'bg-muted font-bold hover:bg-muted',
+                  'group flex h-12 gap-x-3 rounded-none border-r-2 border-transparent',
+                  path === `/lists/${item.id}` && 'bg-gradient-to-l from-primary/20 border-primary hover:bg-primary/25',
                   showSidebar ? 'justify-between' : 'justify-center',
                 )}
               >
