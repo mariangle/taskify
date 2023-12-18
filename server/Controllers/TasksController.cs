@@ -35,8 +35,10 @@ namespace server.Controllers
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
             [FromQuery] bool? overdue = false,
-            [FromQuery] bool? incomplete = false
-)
+            [FromQuery] bool? pending = false,
+            [FromQuery] bool? incomplete = false,
+            [FromQuery] bool? completed = false
+            )
         {
             IQueryable<TaskModel> tasksQuery = _context.Tasks;
 
@@ -78,12 +80,28 @@ namespace server.Controllers
 
             if (incomplete == true)
             {
+                tasksQuery = tasksQuery.Where(task =>
+                    task.Status == Status.Incomplete &&
+                    !task.Subtasks.Any(subtask => subtask.IsCompleted));
+            }
+
+            if (pending == true)
+            {
+                tasksQuery = tasksQuery.Where(task =>
+                    task.Status != Status.Completed &&
+                    task.Subtasks != null && task.Subtasks.Any(subtask => subtask.IsCompleted));
+            }
+
+            if (completed == true)
+            {
                 tasksQuery = tasksQuery
-                    .Where(task => task.Status == Status.Incomplete);
+                    .Where(task => task.Status == Status.Completed);
             }
 
             var tasks = await tasksQuery
                 .Include(t => t.Labels)
+                .Include(t => t.Subtasks)
+
                 .ToListAsync();
 
             return tasks;
@@ -165,8 +183,7 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.Task' is null.");
             }
 
-            Guid userId = _userService.GetUserId();
-            task.UserId = userId;
+            task.UserId = _userService.GetUserId();
 
             if (string.IsNullOrEmpty(task.Name))
             {
@@ -192,7 +209,7 @@ namespace server.Controllers
         {
 
             var task = await _context.Tasks
-                .Include(t => t.Labels) 
+                .Include(t => t.Labels)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             if (task == null)
@@ -229,19 +246,21 @@ namespace server.Controllers
                 return Problem("Entity set 'ApplicationContext.Subtask'  is null.");
             }
 
-            subtask.Id = id;
+            subtask.TaskId = id;
+            subtask.UserId = _userService.GetUserId();
 
             try
             {
                 _context.Subtasks.Add(subtask);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetSubtask", new { id = subtask.Id }, subtask);
-
+                // Manually create CreatedAt response
+                var locationUri = new Uri($"/api/Subtasks/{subtask.Id}", UriKind.Relative);
+                return Created(locationUri, subtask);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 

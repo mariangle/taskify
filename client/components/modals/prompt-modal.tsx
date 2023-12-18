@@ -1,31 +1,47 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-
-import { useClickOutside } from "@/hooks/use-click-outside";
-import TaskPrompt from "@/components/task-prompt";
+import * as React from 'react'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Icons } from '@/components/icons'
+import { useClickOutside } from '@/hooks/use-click-outside'
+import TaskForm from '@/app/(platform)/_components/task-form'
+import LabelService from '@/services/label-service'
+import ListService from '@/services/list-service'
+import { LabelResponse, ListResponse } from '@/types'
 
 export default function PromptModal() {
   const [isOpen, setIsOpen] = React.useState(false)
-  const dialogRef = React.useRef(null);
+  const [lists, setLists] = React.useState<ListResponse[]>([])
+  const [labels, setLabels] = React.useState<LabelResponse[]>([])
+  const dialogRef = React.useRef(null)
 
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
-  useClickOutside(dialogRef, close);
+  const open = () => setIsOpen(true)
+  const close = () => setIsOpen(false)
+  useClickOutside(dialogRef, close)
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const labels = await LabelService.getLabels()
+      const lists = await ListService.getLists()
+
+      setLabels(labels)
+      setLists(lists)
+    }
+    fetchData()
+  }, [])
 
   return (
     <>
-      <Button onClick={open} size={'sm'}>🚀 New Task</Button>
+      <Button onClick={open} variant={'theme'}>
+        <Icons.addCircle className="w-4 h-4" />
+        <span className="sr-only">New Task</span>
+      </Button>
       <Dialog open={isOpen}>
         <DialogContent ref={dialogRef} className="p-4">
-          <TaskPrompt onClose={close}/>
+          <TaskForm lists={lists} labels={labels} onClose={close} />
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }

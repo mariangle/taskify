@@ -1,3 +1,5 @@
+import { LayoutGrid, ListTodo, Calendar } from 'lucide-react'
+
 export const config = {
   metadata: {
     title: {
@@ -42,6 +44,25 @@ export const config = {
       {
         label: 'Docs',
         href: '',
+      },
+    ],
+  },
+  platform: {
+    links: [
+      {
+        label: 'Dashboard',
+        icon: LayoutGrid,
+        href: '/dashboard',
+      },
+      {
+        label: 'Tasks',
+        icon: ListTodo,
+        href: '/tasks',
+      },
+      {
+        label: 'Calendar',
+        icon: Calendar,
+        href: '/calendar',
       },
     ],
   },

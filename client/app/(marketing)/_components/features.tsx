@@ -37,7 +37,7 @@ export default function Features() {
         <Card key={title}>
           <CardHeader className="space-y-2">
             <div className="flex items-center">
-              <div className="p-2 rounded-full bg-muted w-8 h-8 mr-3 bg-emerald-50 text-emerald-500">{icon}</div>
+              <div className="p-2 rounded-full w-8 h-8 mr-3 bg-emerald-500/10 text-emerald-500">{icon}</div>
               <h4 className="text-sm font-semibold">{title}</h4>
             </div>
             <CardDescription className="m-0 ml-0 pl-0">{description}</CardDescription>
