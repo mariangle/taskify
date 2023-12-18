@@ -1,5 +1,5 @@
 import { LabelResponse, ListResponse, TaskResponse } from '@/types'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 import TaskForm from '../../lists/_components/task-form'
 import { Card, CardHeader } from '@/components/ui/card'
 

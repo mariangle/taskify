@@ -2,54 +2,56 @@
 
 import React from 'react'
 
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
-import { ListEntry, ListResponse } from '@/types'
+import { ListResponse } from '@/types'
+import FormButton from '@/components/common/form-button'
 import { FaTrash } from 'react-icons/fa'
-import { extractNlpList, handleError } from '@/util'
+import { handleError } from '@/lib/util'
 import AlertModal from '@/components/modals/alert-modal'
 import ListService from '@/services/list-service'
-
-// TODO: Create emoji input
+import { ListFormValues, listFormSchema } from '@/lib/validations/list'
+import toast from 'react-hot-toast'
 
 interface FormProps {
-  list: ListResponse | null
+  list?: ListResponse
   onClose: () => void
 }
 
 const ListForm = ({ list, onClose }: FormProps) => {
+  const defaultValues: Partial<ListFormValues> = {
+    name: list?.name,
+  }
+
+  const form = useForm<ListFormValues>({
+    resolver: zodResolver(listFormSchema),
+    defaultValues,
+  })
+
   const action = list ? 'Save Changes' : 'Create List'
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
-  const [input, setInput] = React.useState<string>('')
-  const [extractedList, setExtractedList] = React.useState<ListEntry | null>(null)
   const router = useRouter()
+
   const closeDialog = () => setIsOpen(false)
   const openDialog = () => setIsOpen(true)
 
-  React.useEffect(() => {
-    const updateTask = async () => {
-      const list = await extractNlpList(input)
-      setExtractedList(list)
-    }
-    updateTask()
-  }, [input])
-
-  React.useEffect(() => {
-    setInput(list ? `${list.emoji || ''} ${list?.name || ''}` : '')
-  }, [list])
-
-  const onSubmit = async () => {
+  const onSubmit = async (data: ListFormValues) => {
     try {
       setIsLoading(true)
 
-      if (!extractedList?.name) throw new Error('A name is required.')
-
-      const newList: ListEntry = list ? { id: list.id, ...extractedList } : extractedList
-
-      list ? await ListService.updateList(list.id, newList) : await ListService.createList(newList)
+      if (list) {
+        ListService.updateList(list.id, { id: list.id, ...data })
+        toast.success('List updated!')
+      } else {
+        await ListService.createList(data)
+        toast.success('List created!')
+      }
 
       router.refresh()
       onClose()
@@ -60,13 +62,13 @@ const ListForm = ({ list, onClose }: FormProps) => {
     }
   }
 
-  const onDelete = async () => {
-    if (!list) return
-
+  const onDelete = async (listId: string) => {
     try {
-      await ListService.deleteList(list.id)
+      await ListService.deleteList(listId)
       router.refresh()
-      router.push('/dashboard')
+      router.push('/lists')
+      toast.success('List deleted!')
+
       onClose()
     } catch (error) {
       handleError(error)
@@ -74,41 +76,37 @@ const ListForm = ({ list, onClose }: FormProps) => {
   }
 
   return (
-    <>
-      <AlertModal
-        isOpen={isOpen}
-        description="All tasks in this list will be deleted."
-        onClose={closeDialog}
-        onConfirm={onDelete}
-        loading={isLoading}
-      />
-      <div className="flex">
-        <Input
-          id="name"
-          placeholder="Work"
-          value={input || ''}
-          onChange={(e) => setInput(e.target.value)}
-          className="w-full"
-        />
-      </div>
-      <div className="flex justify-between">
-        <div>
-          {list && (
-            <Button type="button" variant={'secondary'} onClick={openDialog}>
-              <FaTrash />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        {list && (
+          <AlertModal
+            isOpen={isOpen}
+            description="All tasks in this list will be deleted."
+            onClose={closeDialog}
+            onConfirm={() => onDelete(list.id)}
+            loading={isLoading}
+          />
+        )}
+        <Input {...form.register('name')} placeholder="Work" />
+        <div className="flex justify-between pt-4">
+          <div>
+            {list && (
+              <Button type="button" variant={'secondary'} onClick={openDialog}>
+                <FaTrash />
+              </Button>
+            )}
+          </div>
+          <div className="flex-gap">
+            <Button variant={'ghost'} onClick={onClose} type="button">
+              Cancel
             </Button>
-          )}
+            <FormButton type="submit" variant={'default'}>
+              {action}
+            </FormButton>
+          </div>
         </div>
-        <div className="flex-gap">
-          <Button variant={'ghost'} onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit" onClick={onSubmit} variant={'default'}>
-            {action}
-          </Button>
-        </div>
-      </div>
-    </>
+      </form>
+    </Form>
   )
 }
 

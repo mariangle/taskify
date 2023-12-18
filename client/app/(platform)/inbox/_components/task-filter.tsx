@@ -19,14 +19,10 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuTrigger,
-  DropdownMenuLabel,
   DropdownMenuCheckboxItem,
-  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 import { SearchParamsOptions, queryParamsMapping } from '@/lib/search-params'
 import { LabelResponse } from '@/types'
 
@@ -55,7 +51,7 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
   const { unsorted, overdue, upcoming, incomplete, completed, labelId, pending } = Object.fromEntries(useSearchParams())
 
   // TODO: Sort by createdAt, completedAt, filter by status
-  const view = (searchParams.get('view') as ExtendedSearchParamsOptions['view']) ?? 'kanban'
+  const view = (searchParams.get('view') as ExtendedSearchParamsOptions['view']) ?? 'list'
 
   const selectedLabel = labels?.find((label) => label.id === labelId)
 
@@ -88,13 +84,21 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
     </Badge>
   )
 
-  const FilterView = ({ name, label }: { name: ExtendedSearchParamsOptions['view']; label: string }) => (
+  const FilterView = ({
+    name,
+    label,
+    icon,
+  }: {
+    name: ExtendedSearchParamsOptions['view']
+    label: string
+    icon: React.ReactNode
+  }) => (
     <Button
       variant={view === name ? 'secondary' : 'ghost'}
       size={'sm'}
       onClick={() => router.push(pathname + '?' + createQueryString('view', name!))}
     >
-      <Icons.kanban className="w-4 h-4 mr-2" />
+      {icon}
       {label}
     </Button>
   )
@@ -228,9 +232,9 @@ export default function TaskFilter({ labels }: TaskFilterProps) {
           )}
         </div>
         <div className="flex-gap-sm">
-          <FilterView name="list" label="List" />
-          <FilterView name="table" label="Table" />
-          <FilterView name="kanban" label="Kanban" />
+          <FilterView name="list" label="List" icon={<Icons.menu className="w-4 h-4 mr-2" />} />
+          <FilterView name="table" label="Table" icon={<Icons.grid className="w-4 h-4 mr-2" />} />
+          <FilterView name="kanban" label="Kanban" icon={<Icons.kanban className="w-4 h-4 mr-2" />} />
         </div>
       </div>
     </div>

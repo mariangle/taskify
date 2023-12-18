@@ -25,10 +25,10 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subtask>>> GetSubtask()
         {
-          if (_context.Subtasks == null)
-          {
-              return NotFound();
-          }
+            if (_context.Subtasks == null)
+            {
+                return NotFound();
+            }
             return await _context.Subtasks.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Subtask>> GetSubtask(Guid id)
         {
-          if (_context.Subtasks == null)
-          {
-              return NotFound();
-          }
+            if (_context.Subtasks == null)
+            {
+                return NotFound();
+            }
             var subtask = await _context.Subtasks.FindAsync(id);
 
             if (subtask == null)
@@ -78,19 +78,21 @@ namespace server.Controllers
                 }
             }
 
-            // Check if all subtasks are completed
-            var allSubtasksCompleted = _context.Subtasks
-                .Where(s => s.TaskId == subtask.TaskId) // Filter by TaskId
-                .All(s => s.IsCompleted); // Check if all have IsCompleted set to true
+            var subtasks = _context.Subtasks.Where(s => s.TaskId == subtask.TaskId);
 
-            if (allSubtasksCompleted)
+            // Check if at least one subtask is incomplete
+            var anySubtaskIncomplete = subtasks.Any(s => !s.IsCompleted);
+            // Check if all subtasks are completed
+            var allSubtasksCompleted = subtasks.All(s => s.IsCompleted);
+
+            if (allSubtasksCompleted || anySubtaskIncomplete)
             {
-                // If all subtasks are completed, update the status of the associated task
+                // Update the status of the associated task
                 var taskToUpdate = await _context.Tasks.FindAsync(subtask.TaskId);
 
                 if (taskToUpdate != null)
                 {
-                    taskToUpdate.Status = Status.Completed;
+                    taskToUpdate.Status = allSubtasksCompleted ? Status.Completed : Status.Incomplete;
                     await _context.SaveChangesAsync();
                 }
             }
@@ -103,10 +105,10 @@ namespace server.Controllers
         [HttpPost]
         public async Task<ActionResult<Subtask>> PostSubtask(Subtask subtask)
         {
-          if (_context.Subtasks == null)
-          {
-              return Problem("Entity set 'ApplicationContext.Subtask'  is null.");
-          }
+            if (_context.Subtasks == null)
+            {
+                return Problem("Entity set 'ApplicationContext.Subtask'  is null.");
+            }
             _context.Subtasks.Add(subtask);
             await _context.SaveChangesAsync();
 

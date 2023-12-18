@@ -5,7 +5,7 @@ import { TaskEntry, TaskResponse } from '@/types'
 import { revalidate } from '@/lib/_actions/revalidate-path'
 
 import TaskService from '@/services/task-service'
-import { handleError } from '@/util'
+import { handleError } from '@/lib/util'
 import toast from 'react-hot-toast'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 

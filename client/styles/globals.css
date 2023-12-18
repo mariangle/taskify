@@ -60,7 +60,20 @@ body {
 
 @layer base {
   * {
+    scrollbar-width: thin;
+    scrollbar-color: red;
     @apply border-border;
+  }
+  *::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply rounded-full bg-muted;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-sm;
   }
   .heading {
     @apply text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1];

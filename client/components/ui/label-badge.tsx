@@ -7,7 +7,7 @@ import { Icons } from '@/components/icons'
 import { revalidate } from '@/lib/_actions/revalidate-path'
 
 import TaskService from '@/services/task-service'
-import { handleError } from '@/util'
+import { handleError } from '@/lib/util'
 import { usePathname } from 'next/navigation'
 
 interface LabelBadgeProps {

@@ -10,12 +10,12 @@ export function ToggleTheme() {
   const { setTheme, theme } = useTheme()
   const isMounted = useMounted()
 
+  if (!isMounted) return null
+
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setTheme(newTheme)
   }
-
-  if (!isMounted) return null
 
   const renderButton = () => {
     return (
@@ -31,11 +31,9 @@ export function ToggleTheme() {
       <Tabs defaultValue={theme} className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="light" onClick={() => setTheme('light')} className="w-full">
-            <Icons.sun className="mr-2 h-4 w-4" />
             <span>Light</span>
           </TabsTrigger>
           <TabsTrigger value="dark" onClick={() => setTheme('dark')} className="w-full">
-            <Icons.moon className="mr-2 h-4 w-4" />
             <span>Dark</span>
           </TabsTrigger>
         </TabsList>

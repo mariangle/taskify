@@ -1,24 +1,13 @@
-import { useState, useEffect } from 'react'
 import { Icons } from '@/components/icons'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { SideNav } from './side-nav'
 import { Button } from '@/components/ui/button'
-import { ListResponse } from '@/types'
+import { useMounted } from '@/hooks/use-mounted'
 
-interface MobileSidebarProps {
-  lists: ListResponse[]
-}
+export const MobileSidebar = () => {
+  const isMounted = useMounted()
 
-export const MobileSidebar = ({ lists }: MobileSidebarProps) => {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) {
-    return null
-  }
+  if (!isMounted) return null
 
   return (
     <Sheet>
@@ -28,10 +17,8 @@ export const MobileSidebar = ({ lists }: MobileSidebarProps) => {
           <span className="sr-only">Open menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-72">
-        <div className="px-1 py-6 pt-16">
-          <SideNav lists={lists} />
-        </div>
+      <SheetContent side="left" className="w-[250px] p-0 overflow-y-auto">
+        <SideNav />
       </SheetContent>
     </Sheet>
   )

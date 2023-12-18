@@ -38,6 +38,3 @@ export const priorities = [
   { id: 2, value: 'Medium', label: 'Medium', icon: HiArrowSmRight },
   { id: 3, value: 'High', label: 'High', icon: HiArrowSmUp },
 ]
-
-export const danishPhoneNumberRegex = /\+45\s\d{8}/g
-export const defaultEmoji = '🌟'

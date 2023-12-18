@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { SubtaskEntry } from '@/types'
-import { requestOptions } from '@/util'
+import { requestOptions } from '@/lib/util'
 
 const api = axios.create({
   baseURL: 'https://localhost:7232/api',

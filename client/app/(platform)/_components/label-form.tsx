@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LabelResponse } from '@/types/label'
 import { useRouter } from 'next/navigation'
-import { handleError } from '@/util'
+import { handleError } from '@/lib/util'
 import { LabelSchemaType, LabelSchema } from '@/lib/validations/label'
 import LabelService from '@/services/label-service'
 

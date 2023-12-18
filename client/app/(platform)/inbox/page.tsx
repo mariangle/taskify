@@ -58,14 +58,13 @@ async function TasksPage({ searchParams }: TasksPageProps) {
   }
 
   const renderTable = () => {
-    return 'list'
+    return <MyDrawer />
   }
 
   return (
     <div className="space-y-2">
       <TaskFilter labels={labels} />
-      {searchParams.view === 'list' ? renderList() : searchParams.view === 'table' ? renderTable() : renderKanban()}
-      <MyDrawer />
+      {searchParams.view === 'kanban' ? renderKanban() : searchParams.view === 'table' ? renderTable() : renderList()}
     </div>
   )
 }

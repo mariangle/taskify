@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 import { inter } from '@/styles/fonts'
 import '@/styles/globals.css'
 

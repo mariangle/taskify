@@ -1,6 +1,8 @@
 import { deleteToken } from '@/lib/_actions/logout'
+import { Button } from '@/components/ui/button'
 import { revalidate } from '@/lib/_actions/revalidate-path'
-
+import { useGlobalStore } from '@/hooks/use-global-store'
+import { cn } from '@/lib/util/cn'
 import Link from 'next/link'
 import {
   DropdownMenu,
@@ -13,8 +15,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Icons } from '@/components/icons'
+import React from 'react'
 
 export default function UserNav() {
+  const { showSidebar } = useGlobalStore()
+  const [isOpen, setIsOpen] = React.useState(false)
+
   const dropdownItems = [
     {
       label: 'Subscription',
@@ -29,18 +35,40 @@ export default function UserNav() {
       href: '/settings/account',
       shortcut: '⌘S',
     },
+    {
+      label: 'Analytics',
+      key: 'analytics',
+      icon: <Icons.lineChart className="mr-2 h-4 w-4" />,
+      href: '/analytics',
+      shortcut: '⌘S',
+    },
   ]
 
   const onLogout = async () => {
     await deleteToken()
-    revalidate({ path: '/dashboard' })
+    revalidate({ path: '/inbox' })
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <div className="rounded-full p-2 bg-muted cursor-pointer">
-          <Icons.user className="w-5 h-5" />
+        <div className={cn('h-full flex-gap w-full justify-start')}>
+          <Button
+            variant={'ghost'}
+            className={cn('flex px-2 mx-2 rounded-full', showSidebar && 'hover:bg-muted rounded-sm')}
+          >
+            <div className="ring-2 ring-primary rounded-full p-[1px] ml-1">
+              <div className="rounded-full bg-muted border">
+                <Icons.user className="w-5 h-5 p-1" />
+              </div>
+            </div>
+            <div className={cn('ml-2 flex-gap', !showSidebar && 'md:hidden')}>
+              <span className="ml-3">Maria</span>
+              <Icons.chevronDown
+                className={cn('w-3 h-3 transition duration-200', isOpen ? 'rotate-180 transform' : '')}
+              />
+            </div>
+          </Button>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

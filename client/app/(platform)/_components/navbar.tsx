@@ -1,20 +1,13 @@
 'use client'
 
 import React from 'react'
-import UserMenu from './user-nav'
-import { ListResponse, TaskResponse } from '@/types'
-import SearchMenu from '@/components/search-menu'
 import { useGlobalStore } from '@/hooks/use-global-store'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 import { Icons } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { MobileSidebar } from './mobile-sidebar'
 
-interface NavbarProps {
-  tasks: TaskResponse[]
-  lists: ListResponse[]
-}
-const Navbar = ({ tasks, lists }: NavbarProps) => {
+const Navbar = () => {
   const { showSidebar, toggleSidebar } = useGlobalStore()
 
   React.useEffect(() => {
@@ -34,7 +27,7 @@ const Navbar = ({ tasks, lists }: NavbarProps) => {
       <div className="flex h-14 items-center justify-between px-3">
         <div className="flex-gap">
           <div className={cn('block md:!hidden')}>
-            <MobileSidebar lists={lists} />
+            <MobileSidebar />
           </div>
           <div className={cn('md:!block hidden')}>
             <Button variant={'outline'} onClick={toggleSidebar}>
@@ -43,14 +36,8 @@ const Navbar = ({ tasks, lists }: NavbarProps) => {
               />
             </Button>
           </div>
-          <SearchMenu tasks={tasks} />
         </div>
-        <div className="flex-gap">
-          <Button variant={'outline'}>
-            <Icons.bell className="w-4 h-4" />
-          </Button>
-          <UserMenu />
-        </div>
+        <div className="flex-gap"></div>
       </div>
     </header>
   )

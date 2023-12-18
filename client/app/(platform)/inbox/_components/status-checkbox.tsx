@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { SubtaskResponse, TaskResponse } from '@/types'
 import { Checkbox } from '@/components/ui/checkbox'
-import { handleError } from '@/util'
+import { handleError } from '@/lib/util'
 import toast from 'react-hot-toast'
 
 import TaskService from '@/services/task-service'
@@ -29,6 +29,21 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
       const updatedStatus = !isCompleted
 
       if (task) {
+        // Ensure a complete task with subtasks doesn't have completed subtasks
+        const hasCompletedSubtasks =
+          task.subtasks && task.subtasks.length > 0 && task.subtasks.every((subtask) => subtask.isCompleted)
+
+        if (isCompleted && hasCompletedSubtasks) {
+          throw new Error('To mark this task as incomplete, uncheck a subtask.')
+        }
+
+        // Ensure an incomplete task with incomplete tasks doesn't get marked as done
+        const hasIncompleteSubtasks = task.subtasks?.some((subtask) => !subtask.isCompleted)
+
+        if (!isCompleted && hasIncompleteSubtasks) {
+          throw new Error('Complete all subtasks to mark as done.')
+        }
+
         const updatedTask = { ...task, status: updatedStatus ? 'Completed' : 'Incomplete' }
         await TaskService.updateTask(task.id, updatedTask)
       } else if (subtask) {
