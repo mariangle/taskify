@@ -11,7 +11,6 @@ import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { useGlobalStore } from '@/hooks/use-global-store'
 import { ListResponse } from '@/types'
 import { Icons } from '@/components/icons'
-import { defaultEmoji } from '@/lib/constants'
 
 interface SideNavProps {
   lists?: ListResponse[]
@@ -36,7 +35,7 @@ export function SideNav({ lists, className }: SideNavProps) {
           )}
         >
           <item.icon className={cn('h-5 w-5 ', path === item.href && 'text-primary')} />
-          <span className={cn('absolute left-12 text-base', !showSidebar && className)}>{item.label}</span>
+          <span className={cn('absolute left-12 text-sm', !showSidebar && className)}>{item.label}</span>
         </Link>
       ))}
       <Accordion type="single" collapsible className="space-y-2">
@@ -51,7 +50,7 @@ export function SideNav({ lists, className }: SideNavProps) {
             <div>
               <Icons.menu className={cn('h-5 w-5')} />
             </div>
-            <div className={cn('absolute left-12 text-base', !showSidebar && className)}>My Lists</div>
+            <div className={cn('absolute left-12 text-sm', !showSidebar && className)}>My Lists</div>
             {showSidebar && <ChevronDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200" />}
           </AccordionTrigger>
           <AccordionContent>
@@ -61,13 +60,13 @@ export function SideNav({ lists, className }: SideNavProps) {
                 href={`/lists/${item.id}`}
                 className={cn(
                   buttonVariants({ variant: 'ghost' }),
-                  'group flex h-12 gap-x-3 rounded-none border-r-2 border-transparent',
+                  'group relative flex h-12 justify-start text-foreground rounded-none border-r-2 border-transparent',
                   path === `/lists/${item.id}` && 'bg-gradient-to-l from-primary/20 border-primary hover:bg-primary/25',
-                  showSidebar ? 'justify-between' : 'justify-center',
+                  showSidebar ? 'justify-start' : 'justify-center',
                 )}
               >
-                <span>{item.emoji || defaultEmoji}</span>
-                <span className={cn('absolute left-12', !showSidebar && className)}>{item.name}</span>
+                <Icons.listChecks className={cn('h-5 w-5 ', path === `/lists/${item.id}` && 'text-primary')} />
+                <span className={cn('absolute left-12 text-sm', !showSidebar && className)}>{item.name}</span>
               </Link>
             ))}
           </AccordionContent>

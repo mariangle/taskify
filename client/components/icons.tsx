@@ -1,6 +1,5 @@
 import {
   AlertTriangle,
-  Filter,
   ListTodo,
   Bot,
   KanbanSquare,
@@ -10,6 +9,7 @@ import {
   ChevronRight,
   Command,
   CreditCard,
+  ArrowUpDown,
   HelpCircle,
   Laptop,
   Loader2,
@@ -41,6 +41,8 @@ import {
   Plug,
   Calendar,
   Users,
+  SlidersHorizontal,
+  ListChecks,
 } from 'lucide-react'
 
 import type { IconNode } from 'lucide-react'
@@ -54,12 +56,14 @@ export const Icons = {
   ai: Bot,
   listTodo: ListTodo,
   grid: Grid2X2,
+  listChecks: ListChecks,
   bell: Bell,
   logo: Command,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  sort: ArrowUpDown,
   chevronUpDown: ChevronsUpDown,
   screen: Monitor,
   trash: Trash,
@@ -70,7 +74,7 @@ export const Icons = {
   support: LifeBuoy,
   logOut: LogOut,
   add: Plus,
-  filter: Filter,
+  filter: SlidersHorizontal,
   warning: AlertTriangle,
   user: User,
   lineChart: LineChart,

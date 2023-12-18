@@ -5,6 +5,7 @@ import FormInput from '@/components/common/form-input'
 import FormSelect from '@/components/common/form-select'
 import FormSelectList from '@/components/common/form-select.list'
 import FormDatePicker from '@/components/common/form-date-picker'
+import { revalidate } from '@/lib/_actions/revalidate-path'
 
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
@@ -13,14 +14,12 @@ import { TaskSchema, TaskSchemaType } from '@/lib/validations/task'
 import TaskService from '@/services/task-service'
 import AlertModal from '@/components/modals/alert-modal'
 import toast from 'react-hot-toast'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { priorities, statuses } from '@/lib/constants'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ExperimentalMultiSelect } from '@/components/common/experimental-multi-select'
 import { useTaskForm } from '@/hooks/use-task-form'
-
-// TODO: Change styling https://ui.shadcn.com/docs/components/combobox
 
 interface FormProps {
   task?: TaskResponse | null
@@ -42,6 +41,7 @@ const TaskForm: React.FC<FormProps> = ({ task, lists, labels, onClose }) => {
 
   const { deleteTask } = useTaskForm()
   const router = useRouter()
+  const path = usePathname()
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
   const priority = searchParams.get('priority')
@@ -93,6 +93,9 @@ const TaskForm: React.FC<FormProps> = ({ task, lists, labels, onClose }) => {
         }
       }
 
+      revalidate({ path: path, type: 'page' })
+
+      router.push(path)
       router.refresh()
       onClose && onClose()
       toast.success(message)
@@ -119,7 +122,7 @@ const TaskForm: React.FC<FormProps> = ({ task, lists, labels, onClose }) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <AlertModal isOpen={isOpen} onClose={closeDialog} onConfirm={onDelete} loading={isLoading} />
-        <FormInput form={form} name="name" />
+        <FormInput form={form} name="name" label="Name" />
         <div className="flex-gap mt-4">
           <FormDatePicker form={form} name="dueDate" placeholder="Select Date" />
           <FormSelectList items={lists} form={form} name="listId" label="List" placeholder="None" />

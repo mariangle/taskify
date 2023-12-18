@@ -18,7 +18,7 @@ import { LabelSchemaType, LabelSchema } from '@/lib/validations/label'
 import LabelService from '@/services/label-service'
 
 interface FormProps {
-  label: LabelResponse | null
+  label?: LabelResponse
 }
 
 export default function LabelForm({ label }: FormProps) {

@@ -78,6 +78,23 @@ namespace server.Controllers
                 }
             }
 
+            // Check if all subtasks are completed
+            var allSubtasksCompleted = _context.Subtasks
+                .Where(s => s.TaskId == subtask.TaskId) // Filter by TaskId
+                .All(s => s.IsCompleted); // Check if all have IsCompleted set to true
+
+            if (allSubtasksCompleted)
+            {
+                // If all subtasks are completed, update the status of the associated task
+                var taskToUpdate = await _context.Tasks.FindAsync(subtask.TaskId);
+
+                if (taskToUpdate != null)
+                {
+                    taskToUpdate.Status = Status.Completed;
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             return NoContent();
         }
 

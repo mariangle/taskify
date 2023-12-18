@@ -73,29 +73,36 @@ const MentionsInput = ({ value, setTaskEntry, task, lists, labels }: AdvancedInp
     setTaskEntry('listId', undefined, extractedListIds.length > 0 ? extractedListIds[0] : undefined)
   }
 
+  // Update prompt when there is a change in the task (indicating a server-side update)
+  React.useEffect(() => {
+    setPrompt(task?.name || '')
+  }, [task])
+
   return (
-    <ReactMentionInput
-      value={prompt}
-      onChange={(e) => handleChange(e)}
-      style={{ ...inputStyle }}
-      disabled={task?.status === 'Completed'}
-      className="w-full"
-      placeholder="Add a new task..."
-      spellCheck={false}
-    >
-      <Mention
-        markup="@[__display__](at:__id__)"
-        trigger="@"
-        data={formattedLists || []}
-        className="bg-emerald-200 dark:bg-emerald-700"
-      />
-      <Mention
-        markup="@[__display__](hash:__id__)"
-        trigger="#"
-        data={formattedLabels || []}
-        className="bg-sky-200 dark:bg-sky-700"
-      />
-    </ReactMentionInput>
+    <>
+      <ReactMentionInput
+        value={prompt}
+        onChange={(e) => handleChange(e)}
+        style={{ ...inputStyle }}
+        disabled={task?.status === 'Completed'}
+        className="w-full"
+        placeholder="Add a new task..."
+        spellCheck={false}
+      >
+        <Mention
+          markup="@[__display__](at:__id__)"
+          trigger="@"
+          data={formattedLists || []}
+          className="bg-emerald-200 dark:bg-emerald-700"
+        />
+        <Mention
+          markup="@[__display__](hash:__id__)"
+          trigger="#"
+          data={formattedLabels || []}
+          className="bg-sky-200 dark:bg-sky-700"
+        />
+      </ReactMentionInput>
+    </>
   )
 }
 

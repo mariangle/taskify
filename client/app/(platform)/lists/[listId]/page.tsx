@@ -7,16 +7,18 @@ import TaskForm from '../_components/task-form'
 import { notFound } from 'next/navigation'
 import { defaultEmoji } from '@/lib/constants'
 import LabelService from '@/services/label-service'
+import TaskService from '@/services/task-service'
 
 interface PageProps {
   params: { listId: string }
 }
 
 async function ListPage({ params }: PageProps) {
-  const [list, lists, labels] = await Promise.all([
+  const [list, lists, labels, tasks] = await Promise.all([
     ListService.getList(params.listId),
     ListService.getLists(),
     LabelService.getLabels(),
+    TaskService.getTasks({ listId: params.listId }),
   ])
 
   if (!list) return notFound()
@@ -33,10 +35,10 @@ async function ListPage({ params }: PageProps) {
       </CardHeader>
       <CardContent className="space-y-2">
         <ul>
-          {list.tasks.map((task) => (
-            <TaskForm key={task.id} task={task} lists={lists} labels={labels} hasBorder />
+          <TaskForm lists={lists} labels={labels} isList />
+          {tasks.map((task) => (
+            <TaskForm key={task.id} task={task} lists={lists} labels={labels} isList />
           ))}
-          <TaskForm lists={lists} labels={labels} hasBorder />
         </ul>
       </CardContent>
     </Card>

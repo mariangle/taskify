@@ -28,11 +28,6 @@ export const statuses = [
   },
   {
     id: 2,
-    value: 'InProgress',
-    label: 'In Progress',
-  },
-  {
-    id: 3,
     value: 'Completed',
     label: 'Complete',
   },

@@ -15,19 +15,19 @@ interface NavbarProps {
   lists: ListResponse[]
 }
 const Navbar = ({ tasks, lists }: NavbarProps) => {
-  const { showSidebar, handleToggle } = useGlobalStore()
+  const { showSidebar, toggleSidebar } = useGlobalStore()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        handleToggle()
+        toggleSidebar()
       }
     }
 
     document.addEventListener('keydown', down)
     return () => document.removeEventListener('keydown', down)
-  }, [handleToggle])
+  }, [toggleSidebar])
 
   return (
     <header className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -37,7 +37,7 @@ const Navbar = ({ tasks, lists }: NavbarProps) => {
             <MobileSidebar lists={lists} />
           </div>
           <div className={cn('md:!block hidden')}>
-            <Button variant={'outline'} onClick={handleToggle}>
+            <Button variant={'outline'} onClick={toggleSidebar}>
               <Icons.chevronLeft
                 className={cn('w-3 h-3 transition duration-300', showSidebar ? 'rotate-180 transform' : '')}
               />

@@ -1,4 +1,4 @@
-import { LayoutGrid, ListTodo } from 'lucide-react'
+import { LayoutGrid, ListTodo, Calendar } from 'lucide-react'
 
 export const config = {
   metadata: {
@@ -53,13 +53,16 @@ export const config = {
         label: 'Dashboard',
         icon: LayoutGrid,
         href: '/dashboard',
-        color: 'text-sky-500',
       },
       {
         label: 'Tasks',
         icon: ListTodo,
         href: '/tasks',
-        color: 'text-green-500',
+      },
+      {
+        label: 'Calendar',
+        icon: Calendar,
+        href: '/calendar',
       },
     ],
   },

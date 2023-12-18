@@ -36,10 +36,7 @@ export function PriorityPicker({ priority, setPriority, onClick }: PriorityPicke
         <PopoverTrigger asChild>
           <Button
             variant={'ghost'}
-            className={cn(
-              'text-xs p-0 h-fit hover:text-foreground hover:bg-background',
-              !priority && 'text-muted-foreground',
-            )}
+            className={cn('text-xs text-muted-foreground p-0 h-fit hover:text-foreground hover:bg-background')}
           >
             {priority ? (
               <>

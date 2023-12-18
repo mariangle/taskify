@@ -1,41 +1,41 @@
 'use client'
 
 import { useTaskForm } from '@/hooks/use-task-form'
-import TaskCheckbox from '../../tasks/_components/task-checkbox'
+import StatusCheckbox from '../../tasks/_components/status-checkbox'
 import { PriorityPicker } from './priority-picker'
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 import MentionsInput from '@/components/mentions-input'
 import LabelBadge from '@/components/ui/label-badge'
-import { Progress } from '@/components/ui/progress'
+import TaskOverlay from '@/components/modals/task-modal'
 
 import { DatePicker } from './date-picker'
 import { Input } from '@/components/ui/input'
 import { Icons } from '@/components/icons'
 import { LabelResponse, ListResponse, TaskEntry, TaskResponse } from '@/types'
 import FormButton from '@/components/common/form-button'
-import SubtaskPanel from './subtask-panel'
 
 import { useEventListener } from 'usehooks-ts'
 import { useHover } from 'usehooks-ts'
-import { useDebounce } from 'usehooks-ts'
+import { Button } from '@/components/ui/button'
+import SubtaskForm from '../../_components/subtask-form'
+import { Progress } from '@/components/ui/progress'
 
 interface TaskFormProps {
   task?: TaskResponse
-  lists?: ListResponse[]
-  labels?: LabelResponse[]
-  hasBorder?: boolean
+  lists: ListResponse[]
+  labels: LabelResponse[]
+  isList?: boolean
 }
 
-const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
-  const { isOpen, open, isLoading, close, submitTask, setTaskEntry, taskEntry, deleteTask, params } = useTaskForm(task)
+const TaskForm = ({ task, lists, labels, isList }: TaskFormProps) => {
+  const { isOpen, open, isLoading, close, submitTask, setTaskEntry, taskEntry, deleteTask } = useTaskForm(task)
   const [hasChanges, setHasChanges] = React.useState<boolean>(false)
   const [isEditing, setIsEditing] = React.useState<boolean>(false)
-  const [showSubtaskPanel, setShowSubtaskPanel] = React.useState<boolean>(true)
+  const [showSubtaskPanel, setShowSubtaskPanel] = React.useState<boolean>(false)
 
   const hoverRef = React.useRef(null)
   const isHover = useHover(hoverRef)
-  const debouncedEntry = useDebounce(taskEntry, 2000)
 
   const handleChange = (id: keyof TaskEntry, e?: any, value?: React.SetStateAction<any>) => {
     setHasChanges(true)
@@ -47,7 +47,7 @@ const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
     }
     setTimeout(() => {
       setIsEditing(false)
-    }, 2000)
+    }, 3000)
   }
 
   const down = (e: KeyboardEvent) => {
@@ -70,7 +70,7 @@ const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
   }, [task, setTaskEntry])
 
   React.useEffect(() => {
-    if (isHover && task?.status !== 'Completed') open()
+    if (isHover) open()
     if (!isHover && !isEditing) {
       setIsEditing(false)
       close()
@@ -78,9 +78,12 @@ const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
   }, [isHover, open, close, isEditing, hasChanges, task])
 
   return (
-    <li className={cn('list-none py-2', task && hasBorder && 'border-b')} ref={hoverRef}>
-      <div className="flex items-center max-w-md">
-        <TaskCheckbox task={task} />
+    <li
+      className={cn('list-none py-2', task?.status === 'Completed' && !isOpen && 'opacity-50', isList && 'border-b')}
+      ref={hoverRef}
+    >
+      <div className="flex items-center ">
+        <StatusCheckbox task={task} />
         <MentionsInput
           value={taskEntry?.name || ''}
           setTaskEntry={handleChange}
@@ -88,7 +91,19 @@ const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
           labels={labels}
           lists={lists}
         />
+        <TaskOverlay task={task} lists={lists} labels={labels} />
       </div>
+      {hasChanges && taskEntry?.name && (
+        <FormButton onClick={() => submitTask(taskEntry)} disabled={isLoading} size={'sm'}>
+          {task ? 'Save Changes' : 'Create'}
+        </FormButton>
+      )}
+      {!isList && task?.subtasks && task.subtasks.length > 0 && (
+        <Progress
+          value={(task.subtasks.filter((subtask) => subtask.isCompleted).length / task.subtasks.length) * 100}
+          className="mb-2 max-w-[550px]"
+        />
+      )}
       <div className={'rounded-sm transition-all duration-300 overflow-hidden'}>
         <div className="flex-gap items-center text-xs">
           {task?.labels && task.labels.map((label) => <LabelBadge key={label.id} label={label} taskId={task.id} />)}
@@ -116,6 +131,20 @@ const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
               setDate={(value) => handleChange('dueDate', undefined, value)}
             />
           )}
+          {task && !isList && (isOpen || (task?.subtasks && task.subtasks.length > 0)) && (
+            <Button
+              variant={'ghost'}
+              className="text-xs p-0 m-0 h-fit text-muted-foreground hover:text-foreground"
+              onClick={() => setShowSubtaskPanel(!showSubtaskPanel)}
+            >
+              <Icons.subtask className="w-4 h-4 mr-1" />
+              {task?.subtasks && task.subtasks.length > 0 && (
+                <span>
+                  {task.subtasks.filter((subtask) => subtask.isCompleted).length}/{task.subtasks.length}
+                </span>
+              )}
+            </Button>
+          )}
           {(isOpen || task?.note) && (
             <Input
               placeholder={taskEntry?.note || 'Add note'}
@@ -126,12 +155,14 @@ const TaskForm = ({ task, lists, labels, hasBorder }: TaskFormProps) => {
             />
           )}
         </div>
-        {task && task?.subtasks && <SubtaskPanel subtasks={task.subtasks} />}
       </div>
-      {hasChanges && taskEntry?.name && (
-        <FormButton onClick={() => submitTask(taskEntry)} disabled={isLoading} size={'sm'}>
-          {task ? 'Save Changes' : 'Create'}
-        </FormButton>
+      {showSubtaskPanel && (
+        <div className="pl-6 border-t mt-2">
+          {task?.subtasks?.map((subtask) => (
+            <SubtaskForm key={subtask.id} subtask={subtask} task={task} />
+          ))}
+          {task && <SubtaskForm task={task} />}
+        </div>
       )}
     </li>
   )

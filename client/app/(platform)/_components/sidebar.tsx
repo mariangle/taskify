@@ -19,7 +19,7 @@ export default function Sidebar({ lists }: SidebarProps) {
   const { showSidebar, switch: switchState } = useGlobalStore()
 
   const className =
-    'text-background opacity-0 transition-all duration-300 group-hover:z-50 group-hover:ml-4 group-hover:rounded group-hover:bg-foreground group-hover:p-2 group-hover:opacity-100'
+    'text-foreground border opacity-0 transition-all duration-300 group-hover:z-50 group-hover:ml-4 group-hover:rounded group-hover:bg-background group-hover:p-2 group-hover:opacity-100'
 
   return (
     <nav

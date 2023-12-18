@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { formatDistanceToNow } from '@/util/format'
 
 interface DatePickerProps {
   date: Date | undefined
@@ -28,10 +27,7 @@ export function DatePicker({ date, setDate, onClick }: DatePickerProps) {
         <Button
           onClick={onClick}
           variant={'ghost'}
-          className={cn(
-            'text-xs hover:text-foreground hover:bg-background p-0 h-fit',
-            !date && 'text-muted-foreground',
-          )}
+          className={cn('text-xs hover:text-foreground hover:bg-background p-0 h-fit text-muted-foreground')}
         >
           <CalendarIcon className="mr-1 h-3 w-3" />
           {date ? format(date, 'PPP') : <span>Due Date</span>}
