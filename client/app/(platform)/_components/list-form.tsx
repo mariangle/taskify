@@ -16,6 +16,7 @@ import AlertModal from '@/components/modals/alert-modal'
 import ListService from '@/services/list-service'
 import { ListFormValues, listFormSchema } from '@/lib/validations/list'
 import toast from 'react-hot-toast'
+import { useGlobalStore } from '@/hooks/use-global-store'
 
 interface FormProps {
   list?: ListResponse
@@ -37,6 +38,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const router = useRouter()
+  const { rerenderClient } = useGlobalStore()
 
   const closeDialog = () => setIsOpen(false)
   const openDialog = () => setIsOpen(true)
@@ -52,7 +54,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
         await ListService.createList(data)
         toast.success('List created!')
       }
-
+      rerenderClient()
       router.refresh()
       onClose()
     } catch (error) {
@@ -68,7 +70,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
       router.refresh()
       router.push('/lists')
       toast.success('List deleted!')
-
+      rerenderClient()
       onClose()
     } catch (error) {
       handleError(error)

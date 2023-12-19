@@ -19,7 +19,7 @@ export default function Sidebar({ lists }: SidebarProps) {
   return (
     <>
       <aside className="border-r sticky top-0 w-40 h-screen bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 text-sm text-muted-foreground">
-        <div className="py-2 px-6 flex-between h-14">
+        <div className="py-2 pl-6 px-4 flex-between h-14">
           <span className="uppercase text-xs">Lists</span>
           <ListModal />
         </div>

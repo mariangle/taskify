@@ -18,7 +18,7 @@ export default async function Layout(props: PageProps) {
   const lists = await ListService.getLists()
 
   return (
-    <div className="flex h-screen overflow-y-hidden">
+    <div className="flex h-screen overflow-y-hidden overflow-x-hidden">
       <Sidebar />
       <div className="flex w-full">
         <div className="hidden lg:block">

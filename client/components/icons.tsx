@@ -43,6 +43,7 @@ import {
   Users,
   SlidersHorizontal,
   ListChecks,
+  Dot,
 } from 'lucide-react'
 
 import type { IconNode } from 'lucide-react'
@@ -50,6 +51,7 @@ import type { IconNode } from 'lucide-react'
 export type Icon = IconNode
 
 export const Icons = {
+  dot: Dot,
   users: Users,
   calendar: Calendar,
   integration: Plug,

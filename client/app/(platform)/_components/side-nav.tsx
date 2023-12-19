@@ -18,7 +18,7 @@ export function SideNav() {
   const { showSidebar } = useGlobalStore()
 
   return (
-    <nav>
+    <nav className={''}>
       <div className="h-14">
         <UserNav />
       </div>
@@ -27,11 +27,11 @@ export function SideNav() {
           <div className="bg-primary rounded-full p-1 ml-[2px]">
             <Icons.add className={cn('h-3 w-3 text-background')} />
           </div>
-          {<span className={cn('ml-2 block text-primary', !showSidebar && 'md:hidden')}>Add task</span>}
+          <span className={cn('ml-2 block text-primary', !showSidebar && 'md:hidden')}>Add task</span>
         </Button>
       </div>
       <SearchMenu />
-      <div className="px-2">
+      <div className="px-4 py-1">
         <Separator />
       </div>
       {config.platform.links.map((item) => (

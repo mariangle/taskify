@@ -31,7 +31,9 @@ const AuthForm = ({ variant }: Props) => {
   const authSchema = variant === 'login' ? LoginSchema : RegisterSchema
   const action = variant === 'login' ? 'Login' : 'Register'
   const successMessage =
-    variant === 'login' ? 'Successfully logged in!' : 'Successfully registered. You can now log in.'
+    variant === 'login'
+      ? 'Successfully logged in! Redirecting to dashboard...'
+      : 'Successfully registered. You can now log in.'
   const form = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema) })
 
   const onSubmit: SubmitHandler<AuthSchemaType> = async (data: AuthSchemaType) => {
@@ -56,17 +58,11 @@ const AuthForm = ({ variant }: Props) => {
   return (
     <Form {...form}>
       <form className="space-y-4 max-w-sm w-full">
-        <FormInput form={form} name="email" />
-        {variant === 'register' && <FormInput form={form} name="name" />}
-        <FormInput form={form} name="password" type="password" />
+        <FormInput form={form} name="email" label="Email" />
+        {variant === 'register' && <FormInput form={form} name="name" label="Name" />}
+        <FormInput form={form} name="password" type="password" label="Password" />
         {variant === 'register' && (
-          <FormInput
-            form={form}
-            name="confirmPassword"
-            type="password"
-            label="Confirm Password"
-            placeholder="Confirm Password"
-          />
+          <FormInput form={form} name="confirmPassword" type="password" label="Confirm Password" />
         )}
         <FormButton
           type="submit"

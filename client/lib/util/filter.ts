@@ -7,6 +7,7 @@ export interface SearchParamsOptions {
   incomplete?: boolean
   pending?: boolean
   completed?: boolean
+  view?: string
 }
 
 export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchParamsOptions> = {
@@ -18,4 +19,13 @@ export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchP
   pending: 'pending',
   incomplete: 'incomplete',
   completed: 'completed',
+  view: 'view',
 }
+
+export interface ExtendedSearchParamsOptions extends SearchParamsOptions {
+  view?: 'kanban' | 'table' | 'list'
+  clear: string
+  status: 'incomplete' | 'pending' | 'completed'
+}
+
+export type FilterOption = keyof ExtendedSearchParamsOptions

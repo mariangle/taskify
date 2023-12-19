@@ -1,19 +1,15 @@
 import KanbanColumn from './_components/kanban-column'
-import { Card, CardHeader, CardContent } from '@/components/ui/card'
+import { Card, CardHeader, CardContent, CardDescription } from '@/components/ui/card'
 
 import TaskService from '@/services/task-service'
-import TaskFilter from './_components/task-filter'
 import * as React from 'react'
 import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
-import { SearchParamsOptions } from '@/lib/search-params'
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 import TaskForm from '../lists/_components/task-form'
+import FilterSummary from '../../../components/filter/filter-summary'
 
 import { MyDrawer } from '@/components/drawer'
-
-interface ExtendedSearchParamsOptions extends SearchParamsOptions {
-  view?: 'kanban' | 'table' | 'list' | undefined
-}
 
 interface TasksPageProps {
   searchParams: Partial<ExtendedSearchParamsOptions>
@@ -38,17 +34,20 @@ async function TasksPage({ searchParams }: TasksPageProps) {
     )
   }
   const renderList = () => {
+    const incompleteTasks = tasks.filter((t) => t.status !== 'Completed')
+
     return (
       <Card>
         <CardHeader className="pb-0">
           <div className="flex-gap">
-            <h1 className="font-bold text-xl">Tasks</h1>
+            <h1 className="font-bold text-xl">Inbox</h1>
           </div>
+          <CardDescription>This is where your unsorted tasks reside.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
           <ul>
             <TaskForm lists={lists} labels={labels} isList />
-            {tasks.map((task) => (
+            {incompleteTasks.map((task) => (
               <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
             ))}
           </ul>
@@ -63,7 +62,7 @@ async function TasksPage({ searchParams }: TasksPageProps) {
 
   return (
     <div className="space-y-2">
-      <TaskFilter labels={labels} />
+      <FilterSummary labels={labels} />
       {searchParams.view === 'kanban' ? renderKanban() : searchParams.view === 'table' ? renderTable() : renderList()}
     </div>
   )

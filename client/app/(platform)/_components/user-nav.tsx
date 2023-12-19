@@ -19,7 +19,6 @@ import React from 'react'
 
 export default function UserNav() {
   const { showSidebar } = useGlobalStore()
-  const [isOpen, setIsOpen] = React.useState(false)
 
   const dropdownItems = [
     {
@@ -50,23 +49,21 @@ export default function UserNav() {
   }
 
   return (
-    <DropdownMenu onOpenChange={setIsOpen}>
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className={cn('h-full flex-gap w-full justify-start')}>
+        <div className="h-full flex-gap w-full justify-start ml-1">
           <Button
             variant={'ghost'}
             className={cn('flex px-2 mx-2 rounded-full', showSidebar && 'hover:bg-muted rounded-sm')}
           >
-            <div className="ring-2 ring-primary rounded-full p-[1px] ml-1">
+            <div className="ring-2 ring-primary rounded-full p-[1px]">
               <div className="rounded-full bg-muted border">
                 <Icons.user className="w-5 h-5 p-1" />
               </div>
             </div>
-            <div className={cn('ml-2 flex-gap', !showSidebar && 'md:hidden')}>
+            <div className={cn('flex-gap', !showSidebar && 'md:hidden')}>
               <span className="ml-3">Maria</span>
-              <Icons.chevronDown
-                className={cn('w-3 h-3 transition duration-200', isOpen ? 'rotate-180 transform' : '')}
-              />
+              <Icons.chevronDown className="w-3 h-3 transition duration-200" />
             </div>
           </Button>
         </div>
