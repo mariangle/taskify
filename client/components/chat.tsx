@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { Icons } from '@/components/icons'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'

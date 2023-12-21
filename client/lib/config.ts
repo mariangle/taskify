@@ -1,4 +1,4 @@
-import { LayoutGrid, ListTodo, Calendar } from 'lucide-react'
+import { Inbox, GanttChartSquare, CalendarClock, CalendarDays } from 'lucide-react'
 
 export const config = {
   metadata: {
@@ -50,19 +50,24 @@ export const config = {
   platform: {
     links: [
       {
-        label: 'Dashboard',
-        icon: LayoutGrid,
-        href: '/dashboard',
+        label: 'Inbox',
+        icon: Inbox,
+        href: '/inbox',
       },
       {
-        label: 'Tasks',
-        icon: ListTodo,
-        href: '/tasks',
+        label: 'Today',
+        icon: CalendarDays,
+        href: '/today',
       },
       {
-        label: 'Calendar',
-        icon: Calendar,
-        href: '/calendar',
+        label: 'Upcoming',
+        icon: CalendarClock,
+        href: '/upcoming',
+      },
+      {
+        label: 'Lists',
+        icon: GanttChartSquare,
+        href: '/lists',
       },
     ],
   },

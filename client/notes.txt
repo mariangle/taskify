@@ -1,0 +1,14 @@
+# improvements
+- improve creating task flow like todoist (modal, form)
+- figure out where to see completed tasks
+- make global filter store to persist filters
+- use one theme (green?)
+
+# new features
+- table view
+
+# migrate
+- replace .net web api with nextjs api
+
+# bugs
+- after selecting a date it goes to previous day after updating

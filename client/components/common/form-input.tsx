@@ -1,8 +1,7 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from '@/components/ui/form'
 import { Input, InputProps } from '@/components/ui/input'
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
-import { capitalizeFirstLetter } from '@/util'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 
 interface FormInputProps<T extends FieldValues> extends InputProps {
   form?: UseFormReturn<T> | any
@@ -21,8 +20,6 @@ const FormInput = <T extends FieldValues>({
   description,
   ...props
 }: FormInputProps<T>) => {
-  const formPlaceholder = placeholder ? placeholder : `${capitalizeFirstLetter(name)}`
-
   return (
     <FormField
       control={form.control}
@@ -31,7 +28,7 @@ const FormInput = <T extends FieldValues>({
         <FormItem className={cn(fullWidth ? 'w-full' : '')}>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Input placeholder={formPlaceholder} {...field} {...props} id={name} />
+            <Input placeholder={placeholder} {...field} {...props} id={name} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

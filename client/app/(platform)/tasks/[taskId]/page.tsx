@@ -13,7 +13,7 @@ async function TaskPage({ params }: PageProps) {
   const labels = await LabelService.getLabels()
 
   return (
-    <div className="h-full">
+    <div className="h-full p-4">
       <TaskForm task={task} lists={lists} labels={labels} />
     </div>
   )

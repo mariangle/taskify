@@ -1,10 +1,10 @@
 'use client'
 
 import { useTaskForm } from '@/hooks/use-task-form'
-import StatusCheckbox from '../../tasks/_components/status-checkbox'
+import StatusCheckbox from '../../inbox/_components/status-checkbox'
 import { PriorityPicker } from './priority-picker'
 import * as React from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/util/cn'
 import MentionsInput from '@/components/mentions-input'
 import LabelBadge from '@/components/ui/label-badge'
 import TaskOverlay from '@/components/modals/task-modal'
@@ -78,10 +78,7 @@ const TaskForm = ({ task, lists, labels, isList }: TaskFormProps) => {
   }, [isHover, open, close, isEditing, hasChanges, task])
 
   return (
-    <li
-      className={cn('list-none py-2', task?.status === 'Completed' && !isOpen && 'opacity-50', isList && 'border-b')}
-      ref={hoverRef}
-    >
+    <li className={cn('list-none', task?.status === 'Completed' && !isOpen && 'opacity-50')} ref={hoverRef}>
       <div className="flex items-center ">
         <StatusCheckbox task={task} />
         <MentionsInput
@@ -101,7 +98,14 @@ const TaskForm = ({ task, lists, labels, isList }: TaskFormProps) => {
       {!isList && task?.subtasks && task.subtasks.length > 0 && (
         <Progress
           value={(task.subtasks.filter((subtask) => subtask.isCompleted).length / task.subtasks.length) * 100}
-          className="mb-2 max-w-[550px]"
+          className={cn('mb-2 max-w-[550px]')}
+          indicatorColor={
+            task.subtasks.every((subtask) => subtask.isCompleted)
+              ? 'bg-emerald-500'
+              : task.subtasks.some((subtask) => subtask.isCompleted)
+              ? 'bg-sky-500'
+              : ''
+          }
         />
       )}
       <div className={'rounded-sm transition-all duration-300 overflow-hidden'}>
@@ -131,7 +135,7 @@ const TaskForm = ({ task, lists, labels, isList }: TaskFormProps) => {
               setDate={(value) => handleChange('dueDate', undefined, value)}
             />
           )}
-          {task && !isList && (isOpen || (task?.subtasks && task.subtasks.length > 0)) && (
+          {task && (isOpen || (task?.subtasks && task.subtasks.length > 0)) && (
             <Button
               variant={'ghost'}
               className="text-xs p-0 m-0 h-fit text-muted-foreground hover:text-foreground"

@@ -2,6 +2,7 @@ import {
   AlertTriangle,
   ListTodo,
   Bot,
+  ChevronDown,
   KanbanSquare,
   Spline,
   Check,
@@ -15,7 +16,6 @@ import {
   Loader2,
   LucideProps,
   Moon,
-  Bell,
   Menu,
   Settings,
   Plus,
@@ -43,6 +43,7 @@ import {
   Users,
   SlidersHorizontal,
   ListChecks,
+  Dot,
 } from 'lucide-react'
 
 import type { IconNode } from 'lucide-react'
@@ -50,6 +51,7 @@ import type { IconNode } from 'lucide-react'
 export type Icon = IconNode
 
 export const Icons = {
+  dot: Dot,
   users: Users,
   calendar: Calendar,
   integration: Plug,
@@ -57,7 +59,6 @@ export const Icons = {
   listTodo: ListTodo,
   grid: Grid2X2,
   listChecks: ListChecks,
-  bell: Bell,
   logo: Command,
   close: X,
   spinner: Loader2,
@@ -85,6 +86,7 @@ export const Icons = {
   info: Info,
   tags: Tags,
   more: MoreHorizontal,
+  chevronDown: ChevronDown,
   kanban: KanbanSquare,
   subtask: Spline,
   circle: CircleEllipsis,

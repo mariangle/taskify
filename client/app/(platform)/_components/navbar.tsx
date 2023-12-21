@@ -1,21 +1,16 @@
 'use client'
 
 import React from 'react'
-import UserMenu from './user-nav'
-import { ListResponse, TaskResponse } from '@/types'
-import SearchMenu from '@/components/search-menu'
-import { useGlobalStore } from '@/hooks/use-global-store'
-import { cn } from '@/lib/utils'
+import { useLayoutStore } from '@/store/layout-store'
+import { cn } from '@/lib/util/cn'
 import { Icons } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { MobileSidebar } from './mobile-sidebar'
+import ListSwitcher from '../lists/_components/list-switcher'
+import FilterOverlay from '@/components/filter/filter-overlay'
 
-interface NavbarProps {
-  tasks: TaskResponse[]
-  lists: ListResponse[]
-}
-const Navbar = ({ tasks, lists }: NavbarProps) => {
-  const { showSidebar, toggleSidebar } = useGlobalStore()
+const Navbar = () => {
+  const { showSidebar, toggleSidebar } = useLayoutStore()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -33,23 +28,25 @@ const Navbar = ({ tasks, lists }: NavbarProps) => {
     <header className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-14 items-center justify-between px-3">
         <div className="flex-gap">
-          <div className={cn('block md:!hidden')}>
-            <MobileSidebar lists={lists} />
+          <div className="block md:!hidden">
+            <MobileSidebar />
           </div>
-          <div className={cn('md:!block hidden')}>
+          <div className="md:!block hidden">
             <Button variant={'outline'} onClick={toggleSidebar}>
-              <Icons.chevronLeft
+              <Icons.chevronRight
                 className={cn('w-3 h-3 transition duration-300', showSidebar ? 'rotate-180 transform' : '')}
               />
             </Button>
           </div>
-          <SearchMenu tasks={tasks} />
+          <div className="lg:hidden">
+            <ListSwitcher />
+          </div>
         </div>
         <div className="flex-gap">
-          <Button variant={'outline'}>
-            <Icons.bell className="w-4 h-4" />
+          <FilterOverlay />
+          <Button variant={'outline'} onClick={() => alert('reminder: a calendar view here?')}>
+            <Icons.chevronLeft className="w-3 h-3" />
           </Button>
-          <UserMenu />
         </div>
       </div>
     </header>

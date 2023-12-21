@@ -1,6 +1,8 @@
 import { deleteToken } from '@/lib/_actions/logout'
+import { Button } from '@/components/ui/button'
 import { revalidate } from '@/lib/_actions/revalidate-path'
-
+import { useLayoutStore } from '@/store/layout-store'
+import { cn } from '@/lib/util/cn'
 import Link from 'next/link'
 import {
   DropdownMenu,
@@ -13,34 +15,51 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Icons } from '@/components/icons'
+import React from 'react'
 
 export default function UserNav() {
+  const { showSidebar, toggleSettings } = useLayoutStore()
+  const [isOpen, setIsOpen] = React.useState(false)
+
   const dropdownItems = [
     {
-      label: 'Subscription',
+      label: 'Plan',
       key: 'subscription',
       icon: <Icons.creditCard className="mr-2 h-4 w-4" />,
       href: '/settings/account',
     },
     {
-      label: 'Settings',
-      key: 'settings',
-      icon: <Icons.settings className="mr-2 h-4 w-4" />,
-      href: '/settings/account',
+      label: 'Analytics',
+      key: 'analytics',
+      icon: <Icons.lineChart className="mr-2 h-4 w-4" />,
+      href: '/analytics',
       shortcut: '⌘S',
     },
   ]
 
   const onLogout = async () => {
     await deleteToken()
-    revalidate({ path: '/dashboard' })
+    revalidate({ path: '/inbox' })
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <div className="rounded-full p-2 bg-muted cursor-pointer">
-          <Icons.user className="w-5 h-5" />
+        <div className="h-full flex-gap w-full justify-start ml-1">
+          <Button
+            variant={'ghost'}
+            className={cn('flex px-2 mx-2 rounded-full', showSidebar && 'hover:bg-muted rounded-sm')}
+          >
+            <div className="ring-2 ring-primary rounded-full p-[1px]">
+              <div className="rounded-full bg-muted border">
+                <Icons.user className="w-5 h-5 p-1" />
+              </div>
+            </div>
+            <div className={cn('flex-gap', !showSidebar && 'md:hidden')}>
+              <span className="ml-3">Maria</span>
+              <Icons.chevronDown className="w-3 h-3 transition duration-200" />
+            </div>
+          </Button>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -56,6 +75,17 @@ export default function UserNav() {
               </DropdownMenuItem>
             </Link>
           ))}
+          <Button
+            onClick={() => {
+              toggleSettings()
+              setIsOpen(false)
+            }}
+            variant={'ghost'}
+            className="w-full px-2 py-0 justify-start"
+          >
+            <Icons.settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </Button>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

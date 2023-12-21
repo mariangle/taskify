@@ -4,32 +4,30 @@ import ListModal from '@/components/modals/list-modal'
 import ListService from '@/services/list-service'
 import TaskForm from '../_components/task-form'
 
-import { notFound } from 'next/navigation'
-import { defaultEmoji } from '@/lib/constants'
 import LabelService from '@/services/label-service'
 import TaskService from '@/services/task-service'
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 
 interface PageProps {
   params: { listId: string }
+  searchParams: Partial<ExtendedSearchParamsOptions>
 }
 
-async function ListPage({ params }: PageProps) {
+async function ListPage({ params, searchParams }: PageProps) {
   const [list, lists, labels, tasks] = await Promise.all([
     ListService.getList(params.listId),
     ListService.getLists(),
     LabelService.getLabels(),
-    TaskService.getTasks({ listId: params.listId }),
+    TaskService.getTasks({ listId: params.listId, ...searchParams }),
   ])
 
-  if (!list) return notFound()
-
-  const title = list.emoji ? `${list.emoji} ${list.name}` : `${defaultEmoji} ${list.name}`
+  if (!list) return null
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader className="pb-0">
         <div className="flex-gap">
-          <h1 className="font-bold text-xl">{title}</h1>
+          <h1 className="font-bold text-xl">{list.name}</h1>
           <ListModal list={list} />
         </div>
       </CardHeader>

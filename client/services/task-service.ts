@@ -1,9 +1,9 @@
 import { api } from '@/lib/api'
 import { AxiosResponse } from 'axios'
 import { TaskEntry, TaskResponse } from '@/types'
-import { requestOptions } from '@/util'
+import { requestOptions } from '@/lib/util'
 import { agent } from '@/lib/agent'
-import { SearchParamsOptions, queryParamsMapping } from '@/lib/search-params'
+import { SearchParamsOptions, queryParamsMapping } from '@/lib/util/filter'
 
 interface TaskLabelRelation {
   labelId: string

@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { ListResponse } from '@/types'
 import { Icons } from '@/components/icons'
 
@@ -8,7 +8,7 @@ import { useClickOutside } from '@/hooks/use-click-outside'
 import ListForm from '../../app/(platform)/_components/list-form'
 
 interface ModalProps {
-  list: ListResponse | null
+  list?: ListResponse
 }
 
 export default function ListModal({ list }: ModalProps) {
@@ -25,8 +25,12 @@ export default function ListModal({ list }: ModalProps) {
       <button className="rounded-full p-1 hover:bg-accent" onClick={open}>
         {icon}
       </button>
-      <Dialog open={isOpen}>
-        <DialogContent ref={dialogRef} className="p-4">
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent ref={dialogRef} className="p-6">
+          <DialogHeader>
+            <DialogTitle>{list ? `Edit ${list.name}` : 'Create list'}</DialogTitle>
+            <DialogDescription>Anyone who has this link will be able to view this.</DialogDescription>
+          </DialogHeader>
           <ListForm list={list} onClose={close} />
         </DialogContent>
       </Dialog>

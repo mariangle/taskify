@@ -26,7 +26,7 @@ function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
     <div className="flex gap-4">
       {isAuthenticated ? (
         <div>
-          <Link href="/dashboard" className={buttonVariants({ variant: 'outline' })}>
+          <Link href="/inbox" className={buttonVariants({ variant: 'outline' })}>
             Dashboard
           </Link>
         </div>

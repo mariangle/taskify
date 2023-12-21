@@ -1,7 +1,5 @@
 'use client'
 
-import * as z from 'zod'
-
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { revalidate } from '@/lib/_actions/revalidate-path'
@@ -10,7 +8,7 @@ import { Form } from '@/components/ui/form'
 import { SubtaskResponse, TaskResponse } from '@/types'
 import { Icons } from '@/components/icons'
 import FormButton from '@/components/common/form-button'
-import StatusCheckbox from '../tasks/_components/status-checkbox'
+import StatusCheckbox from '../inbox/_components/status-checkbox'
 import { Input } from '@/components/ui/input'
 import toast from 'react-hot-toast'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'

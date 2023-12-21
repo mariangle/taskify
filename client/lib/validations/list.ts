@@ -1,7 +1,7 @@
-import * as z from 'zod';
+import * as z from 'zod'
 
-export const ListSchema = z.object({
-    value: z.string().min(2).max(10),
-  })
-  
-export type ListSchemaType = z.infer<typeof ListSchema>
+export const listFormSchema = z.object({
+  name: z.string().min(2).max(10),
+})
+
+export type ListFormValues = z.infer<typeof listFormSchema>
