@@ -13,7 +13,6 @@ import { DatePicker } from './date-picker'
 import { Input } from '@/components/ui/input'
 import { Icons } from '@/components/icons'
 import { LabelResponse, ListResponse, TaskEntry, TaskResponse } from '@/types'
-import FormButton from '@/components/common/form-button'
 
 import { useEventListener } from 'usehooks-ts'
 import { useHover } from 'usehooks-ts'
@@ -91,9 +90,9 @@ const TaskForm = ({ task, lists, labels, isList }: TaskFormProps) => {
         <TaskOverlay task={task} lists={lists} labels={labels} />
       </div>
       {hasChanges && taskEntry?.name && (
-        <FormButton onClick={() => submitTask(taskEntry)} disabled={isLoading} size={'sm'}>
+        <Button onClick={() => submitTask(taskEntry)} disabled={isLoading} size={'sm'}>
           {task ? 'Save Changes' : 'Create'}
-        </FormButton>
+        </Button>
       )}
       {!isList && task?.subtasks && task.subtasks.length > 0 && (
         <Progress
@@ -112,14 +111,14 @@ const TaskForm = ({ task, lists, labels, isList }: TaskFormProps) => {
         <div className="flex-gap items-center text-xs">
           {task?.labels && task.labels.map((label) => <LabelBadge key={label.id} label={label} taskId={task.id} />)}
           {task && isOpen && (
-            <FormButton
+            <Button
               onClick={() => deleteTask(task.id)}
-              disabled={isLoading}
+              isLoading={isLoading}
               variant={'link'}
               className="text-xs p-0 m-0 h-fit text-muted-foreground hover:text-foreground"
             >
               <Icons.trash className="w-3 h-3" />
-            </FormButton>
+            </Button>
           )}
           {(isOpen || task?.priority) && (
             <PriorityPicker

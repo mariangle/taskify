@@ -11,4 +11,4 @@
 - replace .net web api with nextjs api
 
 # bugs
-- after selecting a date it goes to previous day after updating
+- after selecting a date it goes to previous day after updating 

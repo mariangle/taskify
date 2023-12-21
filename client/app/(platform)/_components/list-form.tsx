@@ -9,14 +9,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 import { ListResponse } from '@/types'
-import FormButton from '@/components/common/form-button'
 import { FaTrash } from 'react-icons/fa'
 import { handleError } from '@/lib/util'
 import AlertModal from '@/components/modals/alert-modal'
 import ListService from '@/services/list-service'
 import { ListFormValues, listFormSchema } from '@/lib/validations/list'
 import toast from 'react-hot-toast'
-import { useLayoutStore } from '@/store/layout-store'
+import { useSignalStore } from '@/store/signal-store'
 
 interface FormProps {
   list?: ListResponse
@@ -38,7 +37,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const router = useRouter()
-  const { rerenderClient } = useLayoutStore()
+  const { triggerSignal } = useSignalStore()
 
   const closeDialog = () => setIsOpen(false)
   const openDialog = () => setIsOpen(true)
@@ -54,7 +53,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
         await ListService.createList(data)
         toast.success('List created!')
       }
-      rerenderClient()
+      triggerSignal()
       router.refresh()
       onClose()
     } catch (error) {
@@ -70,7 +69,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
       router.refresh()
       router.push('/lists')
       toast.success('List deleted!')
-      rerenderClient()
+      triggerSignal()
       onClose()
     } catch (error) {
       handleError(error)
@@ -102,9 +101,9 @@ const ListForm = ({ list, onClose }: FormProps) => {
             <Button variant={'ghost'} onClick={onClose} type="button">
               Cancel
             </Button>
-            <FormButton type="submit" variant={'default'}>
+            <Button type="submit" variant={'default'}>
               {action}
-            </FormButton>
+            </Button>
           </div>
         </div>
       </form>

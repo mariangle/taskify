@@ -15,15 +15,15 @@ import { Separator } from '@/components/ui/seperator'
 
 export function SideNav() {
   const path = usePathname()
-  const { showSidebar } = useLayoutStore()
+  const { showSidebar, toggleTask } = useLayoutStore()
 
   return (
-    <nav className={''}>
+    <nav>
       <div className="h-14">
         <UserNav />
       </div>
       <div className="px-3">
-        <Button variant={'ghost'} className="flex justify-start px-2 w-full">
+        <Button variant={'ghost'} className="flex justify-start px-2 w-full" onClick={() => toggleTask()}>
           <div className="bg-primary rounded-full p-1 ml-[2px]">
             <Icons.add className={cn('h-3 w-3 text-background')} />
           </div>

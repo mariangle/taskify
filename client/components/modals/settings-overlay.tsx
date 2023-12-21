@@ -16,7 +16,7 @@ export default function SettingsModal() {
   return (
     <>
       <Dialog open={showSettings} onOpenChange={toggleSettings}>
-        <DialogContent className="max-w-screen-md h-fit overflow-y-scroll max-h-screen">
+        <DialogContent className="max-w-screen-md h-fit overflow-y-auto max-h-screen">
           <SettingsPanel />
         </DialogContent>
       </Dialog>

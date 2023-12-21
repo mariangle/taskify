@@ -1,7 +1,8 @@
 'use client'
 import { Form } from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
 import FormInput from '@/components/common/form-input'
-import FormButton from '@/components/common/form-button'
+
 import z from 'zod'
 import React from 'react'
 import toast from 'react-hot-toast'
@@ -64,15 +65,15 @@ const AuthForm = ({ variant }: Props) => {
         {variant === 'register' && (
           <FormInput form={form} name="confirmPassword" type="password" label="Confirm Password" />
         )}
-        <FormButton
+        <Button
           type="submit"
           className="w-full"
-          isLoading={isLoading}
+          disabled={isLoading}
           variant={'default'}
           onClick={form.handleSubmit(onSubmit)}
         >
           {action}
-        </FormButton>
+        </Button>
       </form>
     </Form>
   )

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import SettingsOverlay from '@/components/modals/settings-overlay'
+import TaskOverlay from '@/components/modals/task-overlay'
 
 export default function OverlayProvider() {
   const [isMounted, setIsMounted] = useState<boolean>(false)
@@ -16,6 +17,7 @@ export default function OverlayProvider() {
   return (
     <>
       <SettingsOverlay />
+      <TaskOverlay />
     </>
   )
 }

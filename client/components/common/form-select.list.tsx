@@ -5,7 +5,7 @@ import { ListResponse } from '@/types'
 
 interface FormSelectProps<T extends FieldValues> {
   form: UseFormReturn<T>
-  items: ListResponse[]
+  items: any[]
   name: Path<T>
   label?: string
   placeholder?: string

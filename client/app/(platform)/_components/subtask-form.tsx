@@ -7,7 +7,6 @@ import { revalidate } from '@/lib/_actions/revalidate-path'
 import { Form } from '@/components/ui/form'
 import { SubtaskResponse, TaskResponse } from '@/types'
 import { Icons } from '@/components/icons'
-import FormButton from '@/components/common/form-button'
 import StatusCheckbox from '../inbox/_components/status-checkbox'
 import { Input } from '@/components/ui/input'
 import toast from 'react-hot-toast'
@@ -15,6 +14,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import SubtaskService from '@/services/subtask-service'
 import { usePathname } from 'next/navigation'
 import { subtaskFormSchema, SubtaskFormValues } from '@/lib/validations/subtask'
+import { Button } from '@/components/ui/button'
 
 interface SubtaskFormProps {
   subtask?: SubtaskResponse
@@ -63,9 +63,9 @@ const SubtaskForm = ({ subtask, task }: SubtaskFormProps) => {
           <div className="flex-gap-sm">
             <StatusCheckbox subtask={subtask} />
             <Input transparent {...form.register('name')} placeholder="Add subtask" className="w-fit" />
-            <FormButton type="submit" variant={'default'} size={'sm'} onClick={form.handleSubmit(onSubmit)}>
+            <Button type="submit" variant={'default'} size={'sm'} onClick={form.handleSubmit(onSubmit)}>
               {subtask ? 'Save' : 'Create'}
-            </FormButton>
+            </Button>
           </div>
           {subtask && (
             <DropdownMenu>
