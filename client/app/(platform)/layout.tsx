@@ -6,6 +6,8 @@ import { authenticate } from '@/lib/_actions/authenticate'
 import { redirect } from 'next/navigation'
 import ListService from '@/services/list-service'
 
+import OverlayProvider from '@/components/providers/overlay-provider'
+
 interface PageProps {
   children: React.ReactNode
 }
@@ -18,17 +20,20 @@ export default async function Layout(props: PageProps) {
   const lists = await ListService.getLists()
 
   return (
-    <div className="flex h-screen overflow-y-hidden overflow-x-hidden">
-      <Sidebar />
-      <div className="flex w-full">
-        <div className="hidden lg:block">
-          <ListSidebar lists={lists} />
-        </div>
-        <div className="flex flex-col flex-1 bg-zinc-100 dark:bg-background overflow-y-hidden">
-          <Navbar />
-          <div className="overflow-y-auto h-full p-4">{props.children}</div>
+    <>
+      <OverlayProvider />
+      <div className="flex h-screen overflow-y-hidden overflow-x-hidden">
+        <Sidebar />
+        <div className="flex w-full">
+          <div className="hidden lg:block">
+            <ListSidebar lists={lists} />
+          </div>
+          <div className="flex flex-col flex-1 bg-zinc-100 dark:bg-background overflow-y-hidden">
+            <Navbar />
+            <div className="overflow-y-auto h-full p-4">{props.children}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

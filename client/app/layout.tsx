@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { cn } from '@/lib/util/cn'
 import { inter } from '@/styles/fonts'
 import '@/styles/globals.css'
 
@@ -12,7 +11,7 @@ export const metadata: Metadata = config.metadata
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className)}>
+      <body className={inter.className}>
         <ThemeProvider>
           <main className="text-foreground bg-background">
             {props.children}

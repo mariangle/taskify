@@ -9,7 +9,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ListResponse } from '@/types'
 import ListService from '@/services/list-service'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useSignalStore } from '@/store/signal-store'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 
 export default function ListSwitcher() {
@@ -17,7 +17,7 @@ export default function ListSwitcher() {
   const router = useRouter()
   const path = usePathname()
 
-  const { signal } = useGlobalStore()
+  const { signal } = useSignalStore()
 
   const [open, setOpen] = React.useState(false)
   const [lists, setLists] = React.useState<ListResponse[]>()

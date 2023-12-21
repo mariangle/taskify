@@ -16,7 +16,7 @@ import AlertModal from '@/components/modals/alert-modal'
 import ListService from '@/services/list-service'
 import { ListFormValues, listFormSchema } from '@/lib/validations/list'
 import toast from 'react-hot-toast'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 
 interface FormProps {
   list?: ListResponse
@@ -38,7 +38,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const router = useRouter()
-  const { rerenderClient } = useGlobalStore()
+  const { rerenderClient } = useLayoutStore()
 
   const closeDialog = () => setIsOpen(false)
   const openDialog = () => setIsOpen(true)

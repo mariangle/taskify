@@ -2,14 +2,14 @@
 
 import React from 'react'
 import { SideNav } from './side-nav'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 
 import { cn } from '@/lib/util/cn'
 import { Separator } from '@/components/ui/seperator'
 import { ToggleTheme } from './toggle-theme'
 
 export default function Sidebar() {
-  const { showSidebar } = useGlobalStore()
+  const { showSidebar } = useLayoutStore()
 
   // TODO: This might work as mobile menu as well?
 

@@ -9,13 +9,13 @@ import { buttonVariants } from '@/components/ui/button'
 import SearchMenu from '@/components/search-menu'
 import { config } from '@/lib/config'
 import UserNav from './user-nav'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 import React from 'react'
 import { Separator } from '@/components/ui/seperator'
 
 export function SideNav() {
   const path = usePathname()
-  const { showSidebar } = useGlobalStore()
+  const { showSidebar } = useLayoutStore()
 
   return (
     <nav className={''}>

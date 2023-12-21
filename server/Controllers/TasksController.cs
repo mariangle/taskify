@@ -6,6 +6,7 @@ using NuGet.ProjectModel;
 using server.Context;
 using server.Models;
 using server.Services;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TaskModel = server.Models.Task;
@@ -32,6 +33,7 @@ namespace server.Controllers
             [FromQuery] Guid? listId,
             [FromQuery] Guid? labelId,
             [FromQuery] Guid? projectId,
+            [FromQuery] string? dueDate,
             [FromQuery] bool? unsorted = false,
             [FromQuery] bool? upcoming = false,
             [FromQuery] bool? overdue = false,
@@ -96,6 +98,17 @@ namespace server.Controllers
             {
                 tasksQuery = tasksQuery
                     .Where(task => task.Status == Status.Completed);
+            }
+
+            if (!string.IsNullOrEmpty(dueDate))
+            {
+                DateTime parsedDueDate = DateTime.ParseExact(dueDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+                tasksQuery = tasksQuery
+                    .Where(task => task.DueDate.HasValue &&
+                                   task.DueDate.Value.Year == parsedDueDate.Year &&
+                                   task.DueDate.Value.Month == parsedDueDate.Month &&
+                                   task.DueDate.Value.Day == parsedDueDate.Day);
             }
 
             var tasks = await tasksQuery

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 import { cn } from '@/lib/util/cn'
 import { Icons } from '@/components/icons'
 import { Button } from '@/components/ui/button'
@@ -10,7 +10,7 @@ import ListSwitcher from '../lists/_components/list-switcher'
 import FilterOverlay from '@/components/filter/filter-overlay'
 
 const Navbar = () => {
-  const { showSidebar, toggleSidebar } = useGlobalStore()
+  const { showSidebar, toggleSidebar } = useLayoutStore()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {

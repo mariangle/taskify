@@ -1,15 +1,15 @@
+import * as React from 'react'
+
 import KanbanColumn from './_components/kanban-column'
 import { Card, CardHeader, CardContent, CardDescription } from '@/components/ui/card'
 
 import TaskService from '@/services/task-service'
-import * as React from 'react'
 import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
+
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 import TaskForm from '../lists/_components/task-form'
-import FilterSummary from '../../../components/filter/filter-summary'
-
-import { MyDrawer } from '@/components/drawer'
+import FilterSummary from '@/components/filter/filter-summary'
 
 interface TasksPageProps {
   searchParams: Partial<ExtendedSearchParamsOptions>
@@ -57,7 +57,7 @@ async function TasksPage({ searchParams }: TasksPageProps) {
   }
 
   const renderTable = () => {
-    return <MyDrawer />
+    return 'table'
   }
 
   return (

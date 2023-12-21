@@ -1,5 +1,3 @@
-const page = () => {
+export default function Page() {
   return null
 }
-
-export default page

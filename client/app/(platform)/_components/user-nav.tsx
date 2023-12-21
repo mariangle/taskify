@@ -1,7 +1,7 @@
 import { deleteToken } from '@/lib/_actions/logout'
 import { Button } from '@/components/ui/button'
 import { revalidate } from '@/lib/_actions/revalidate-path'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 import { cn } from '@/lib/util/cn'
 import Link from 'next/link'
 import {
@@ -18,21 +18,15 @@ import { Icons } from '@/components/icons'
 import React from 'react'
 
 export default function UserNav() {
-  const { showSidebar } = useGlobalStore()
+  const { showSidebar, toggleSettings } = useLayoutStore()
+  const [isOpen, setIsOpen] = React.useState(false)
 
   const dropdownItems = [
     {
-      label: 'Subscription',
+      label: 'Plan',
       key: 'subscription',
       icon: <Icons.creditCard className="mr-2 h-4 w-4" />,
       href: '/settings/account',
-    },
-    {
-      label: 'Settings',
-      key: 'settings',
-      icon: <Icons.settings className="mr-2 h-4 w-4" />,
-      href: '/settings/account',
-      shortcut: '⌘S',
     },
     {
       label: 'Analytics',
@@ -49,7 +43,7 @@ export default function UserNav() {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <div className="h-full flex-gap w-full justify-start ml-1">
           <Button
@@ -81,6 +75,17 @@ export default function UserNav() {
               </DropdownMenuItem>
             </Link>
           ))}
+          <Button
+            onClick={() => {
+              toggleSettings()
+              setIsOpen(false)
+            }}
+            variant={'ghost'}
+            className="w-full px-2 py-0 justify-start"
+          >
+            <Icons.settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </Button>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

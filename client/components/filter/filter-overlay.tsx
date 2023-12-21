@@ -9,7 +9,7 @@ import { useMounted } from '@/hooks/use-mounted'
 import FilterControl from '@/components/filter/filter-control'
 import { LabelResponse } from '@/types'
 import LabelService from '@/services/label-service'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useSignalStore } from '@/store/signal-store'
 
 export default function FilterOverlay() {
   const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -17,7 +17,7 @@ export default function FilterOverlay() {
   const [labels, setLabels] = React.useState<LabelResponse[]>([])
   const isMounted = useMounted()
 
-  const { signal } = useGlobalStore()
+  const { signal } = useSignalStore()
 
   React.useEffect(() => {
     const getLabels = async () => {
@@ -33,7 +33,7 @@ export default function FilterOverlay() {
     <>
       <div className="md:hidden">
         <Drawer.Root open={openDrawer} onOpenChange={setOpenDrawer}>
-          <Drawer.Trigger>
+          <Drawer.Trigger asChild>
             <Button variant={'outline'} onClick={() => setOpenDrawer(!openDrawer)}>
               <Icons.filter className="w-3 h-3" />
             </Button>

@@ -8,6 +8,7 @@ export interface SearchParamsOptions {
   pending?: boolean
   completed?: boolean
   view?: string
+  dueDate?: string
 }
 
 export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchParamsOptions> = {
@@ -20,6 +21,7 @@ export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchP
   incomplete: 'incomplete',
   completed: 'completed',
   view: 'view',
+  dueDate: 'dueDate',
 }
 
 export interface ExtendedSearchParamsOptions extends SearchParamsOptions {

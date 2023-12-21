@@ -3,10 +3,10 @@ import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/icons'
 import { useTheme } from 'next-themes'
 import { useMounted } from '@/hooks/use-mounted'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 
 export function ToggleTheme() {
-  const { showSidebar } = useGlobalStore()
+  const { showSidebar } = useLayoutStore()
   const { setTheme, theme } = useTheme()
   const isMounted = useMounted()
 

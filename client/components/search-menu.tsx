@@ -16,11 +16,11 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from '@/components/ui/command'
-import { useGlobalStore } from '@/hooks/use-global-store'
+import { useLayoutStore } from '@/store/layout-store'
 
 export default function SearchMenu({ ...props }) {
   const [open, setOpen] = React.useState(false)
-  const { showSidebar } = useGlobalStore()
+  const { showSidebar } = useLayoutStore()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
