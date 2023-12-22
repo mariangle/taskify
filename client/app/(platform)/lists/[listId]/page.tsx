@@ -2,7 +2,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card'
 
 import ListModal from '@/components/modals/list-modal'
 import ListService from '@/services/list-service'
-import TaskForm from '../_components/task-form'
+import TaskForm from '@/components/task/task-board-item'
 
 import LabelService from '@/services/label-service'
 import TaskService from '@/services/task-service'
@@ -33,9 +33,8 @@ async function ListPage({ params, searchParams }: PageProps) {
       </CardHeader>
       <CardContent className="space-y-2">
         <ul>
-          <TaskForm lists={lists} labels={labels} isList />
           {tasks.map((task) => (
-            <TaskForm key={task.id} task={task} lists={lists} labels={labels} isList />
+            <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
           ))}
         </ul>
       </CardContent>

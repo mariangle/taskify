@@ -1,27 +1,30 @@
 export const inputStyle = {
   control: {
-    backgroundColor: 'transparent',
-    fontWeight: 'normal',
-    fontSize: 14,
+    padding: '9px 9px 0px 9px',
   },
   highlighter: {
-    padding: 9,
     border: '1px solid transparent',
+    padding: '0px',
+    margin: '0px',
   },
   input: {
-    padding: '9px',
+    padding: '12px 12px 0px 12px',
     outline: 'none',
-    width: '100%',
   },
   suggestions: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    maxWidth: '150px',
     list: {
       backgroundColor: 'hsl(var(--background))',
       border: '1px solid hsl(var(--border))',
       fontSize: 14,
+      borderRadius: '10px',
+      overflow: 'hidden',
+      boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)',
     },
     item: {
       padding: '5px 15px',
-      borderBottom: '1px solid hsl(var(--border))',
       '&focused': {
         backgroundColor: 'hsl(var(--border))',
       },

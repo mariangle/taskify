@@ -68,7 +68,7 @@ const AuthForm = ({ variant }: Props) => {
         <Button
           type="submit"
           className="w-full"
-          disabled={isLoading}
+          loading={isLoading}
           variant={'default'}
           onClick={form.handleSubmit(onSubmit)}
         >

@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation'
 import { handleError } from '@/lib/util'
 import { LabelSchemaType, LabelSchema } from '@/lib/validations/label'
 import LabelService from '@/services/label-service'
+import { useSignalStore } from '@/store/signal-store'
 
 interface FormProps {
   label?: LabelResponse
@@ -27,6 +28,7 @@ export default function LabelForm({ label }: FormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const openDialog = () => setIsOpen(true)
+  const { triggerSignal } = useSignalStore()
   const closeDialog = () => setIsOpen(false)
 
   const form = useForm<LabelSchemaType>({
@@ -48,6 +50,7 @@ export default function LabelForm({ label }: FormProps) {
         await LabelService.createLabel(data)
         toast.success('Label created!')
       }
+      triggerSignal()
       router.refresh()
     } catch (error) {
       handleError(error)
@@ -61,6 +64,7 @@ export default function LabelForm({ label }: FormProps) {
 
     try {
       await LabelService.deleteLabel(label.id)
+      triggerSignal()
       toast.success('Label deleted!')
       router.refresh()
     } catch (error) {

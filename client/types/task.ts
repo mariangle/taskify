@@ -16,15 +16,15 @@ export type TaskEntry = {
 export type TaskResponse = {
   id: string
   name: string
-  listId?: string | null
+  listId?: string
   dueDate?: string
-  priority?: TaskPriority | null
+  priority?: TaskPriority
   createdAt?: string
   updatedAt?: string
   note?: string
   status: TaskStatus
   user: UserResponse
-  subtasks?: SubtaskResponse[] | []
-  labels?: LabelResponse[] | []
+  subtasks?: SubtaskResponse[]
+  labels?: LabelResponse[]
   // recurring?: RecurringTask,
 }

@@ -4,7 +4,7 @@ import { SelectSingleEventHandler } from 'react-day-picker'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Calendar as CalendarIcon } from 'lucide-react'
-import { formatToEEEDDMMM } from '@/lib/util/format'
+import { format } from 'util'
 
 import { cn } from '@/lib/util/cn'
 
@@ -33,10 +33,14 @@ export function DatePicker({ selected, placeholder, onSelect }: DatePickerProps)
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {selected ? <span>{formatToEEEDDMMM(selected)}</span> : <span>{placeholder || 'Pick a date'}</span>}
+          {selected ? (
+            <span>{format(new Date(selected), 'EEE, dd MMM')}</span>
+          ) : (
+            <span>{placeholder || 'Pick a date'}</span>
+          )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-0 max-h-screen overflow-y-auto" align="start">
         <Calendar mode="single" selected={selected} onSelect={handleOnSelect} initialFocus />
       </PopoverContent>
     </Popover>

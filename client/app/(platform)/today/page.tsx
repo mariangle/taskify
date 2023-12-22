@@ -5,7 +5,7 @@ import { Card, CardHeader, CardContent, CardDescription } from '@/components/ui/
 
 import { format } from 'date-fns'
 
-import TaskForm from '../lists/_components/task-form'
+import TaskForm from '@/components/task/task-board-item'
 
 export default async function TodayPage() {
   const todayTasks = await TaskService.getTasks({ dueDate: format(new Date(), 'dd-MM-yyyy') })
@@ -21,15 +21,12 @@ export default async function TodayPage() {
           </div>
           <CardDescription>{todayTasks.length} tasks</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <ul>
-            <TaskForm lists={lists} labels={labels} isList />
-            {todayTasks.map((task) => (
-              <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
-            ))}
-          </ul>
-        </CardContent>
       </Card>
+      <ul>
+        {todayTasks.map((task) => (
+          <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
+        ))}
+      </ul>
     </div>
   )
 }

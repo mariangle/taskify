@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import KanbanColumn from './_components/kanban-column'
+import KanbanColumn from './_components/board-column'
 import { Card, CardHeader, CardContent, CardDescription } from '@/components/ui/card'
 
 import TaskService from '@/services/task-service'
@@ -8,7 +8,7 @@ import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
 
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
-import TaskForm from '../lists/_components/task-form'
+import TaskForm from '@/components/task/task-board-item'
 import FilterSummary from '@/components/filter/filter-summary'
 
 interface TasksPageProps {
@@ -26,7 +26,7 @@ async function TasksPage({ searchParams }: TasksPageProps) {
 
   const renderKanban = () => {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4s">
         <KanbanColumn tasks={incompleteTasks} color="bg-orange-500" status="Incomplete" lists={lists} labels={labels} />
         <KanbanColumn tasks={pendingTasks} color="bg-sky-500" status="Pending" lists={lists} labels={labels} />
         <KanbanColumn tasks={completedTasks} color="bg-emerald-500" status="Completed" lists={lists} labels={labels} />
@@ -46,7 +46,6 @@ async function TasksPage({ searchParams }: TasksPageProps) {
         </CardHeader>
         <CardContent className="space-y-2">
           <ul>
-            <TaskForm lists={lists} labels={labels} isList />
             {incompleteTasks.map((task) => (
               <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
             ))}

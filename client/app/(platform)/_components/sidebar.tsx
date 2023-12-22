@@ -14,7 +14,12 @@ export default function Sidebar() {
   // TODO: This might work as mobile menu as well?
 
   return (
-    <aside className={cn(`relative h-screen border-r block duration-500`, showSidebar ? 'w-44' : 'w-0 md:w-[68px]')}>
+    <aside
+      className={cn(
+        `relative h-screen border-r block duration-500 dark:bg-zinc-950`,
+        showSidebar ? 'w-44' : 'w-0 md:w-[68px]',
+      )}
+    >
       <div className={cn('h-full', showSidebar ? '' : 'hidden md:block')}>
         <div className="flex flex-col justify-between h-full">
           <SideNav />

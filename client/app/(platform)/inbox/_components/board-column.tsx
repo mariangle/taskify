@@ -1,7 +1,6 @@
 import { LabelResponse, ListResponse, TaskResponse } from '@/types'
 import { cn } from '@/lib/util/cn'
-import TaskForm from '../../lists/_components/task-form'
-import { Card, CardHeader } from '@/components/ui/card'
+import TaskBoardItem from '@/components/task/task-board-item'
 
 interface ColumnProps {
   tasks: TaskResponse[]
@@ -11,7 +10,7 @@ interface ColumnProps {
   color: string
 }
 
-const KanbanColumn = ({ tasks, status, color, lists, labels }: ColumnProps) => {
+export default function BoardColumn({ tasks, status, color, lists, labels }: ColumnProps) {
   return (
     <div className="space-y-4">
       <div className="flex-between">
@@ -24,23 +23,11 @@ const KanbanColumn = ({ tasks, status, color, lists, labels }: ColumnProps) => {
         </div>
       </div>
       <div className="space-y-2">
-        {status === 'Incomplete' && (
-          <Card>
-            <CardHeader className="p-0 px-4">
-              <TaskForm labels={labels} lists={lists} />
-            </CardHeader>
-          </Card>
-        )}
+        {status === 'Incomplete' && <span>task</span>}
         {tasks.map((task) => (
-          <Card key={task.id}>
-            <CardHeader className="p-0 px-4">
-              <TaskForm task={task} labels={labels} lists={lists} />
-            </CardHeader>
-          </Card>
+          <TaskBoardItem key={task.id} task={task} labels={labels} lists={lists} />
         ))}
       </div>
     </div>
   )
 }
-
-export default KanbanColumn

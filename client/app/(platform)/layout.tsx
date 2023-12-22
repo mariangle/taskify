@@ -28,7 +28,7 @@ export default async function Layout(props: PageProps) {
           <div className="hidden lg:block">
             <ListSidebar lists={lists} />
           </div>
-          <div className="flex flex-col flex-1 bg-zinc-100 dark:bg-background overflow-y-hidden">
+          <div className="flex flex-col flex-1 overflow-y-hidden bg-neutral-50 dark:bg-neutral-900">
             <Navbar />
             <div className="overflow-y-auto h-full p-4">{props.children}</div>
           </div>

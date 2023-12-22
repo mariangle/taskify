@@ -3,8 +3,6 @@ import * as React from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { ListResponse } from '@/types'
 import { Icons } from '@/components/icons'
-
-import { useClickOutside } from '@/hooks/use-click-outside'
 import ListForm from '../../app/(platform)/_components/list-form'
 
 interface ModalProps {
@@ -18,7 +16,6 @@ export default function ListModal({ list }: ModalProps) {
 
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
-  useClickOutside(dialogRef, () => setIsOpen(false))
 
   return (
     <>

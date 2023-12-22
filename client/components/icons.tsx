@@ -12,6 +12,7 @@ import {
   CreditCard,
   ArrowUpDown,
   HelpCircle,
+  Flag,
   Laptop,
   Loader2,
   LucideProps,
@@ -53,6 +54,7 @@ export type Icon = IconNode
 export const Icons = {
   dot: Dot,
   users: Users,
+  flag: Flag,
   calendar: Calendar,
   integration: Plug,
   ai: Bot,

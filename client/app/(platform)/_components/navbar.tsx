@@ -6,7 +6,7 @@ import { cn } from '@/lib/util/cn'
 import { Icons } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { MobileSidebar } from './mobile-sidebar'
-import ListSwitcher from '../lists/_components/list-switcher'
+import ListSwitcher from '@/components/list-switcher'
 import FilterOverlay from '@/components/filter/filter-overlay'
 
 const Navbar = () => {
