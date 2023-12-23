@@ -15,7 +15,7 @@ import AlertModal from '@/components/modals/alert-modal'
 import ListService from '@/services/list-service'
 import { ListFormValues, listFormSchema } from '@/lib/validations/list'
 import toast from 'react-hot-toast'
-import { useSignalStore } from '@/store/signal-store'
+import { useSignal } from '@/hooks/use-signal'
 
 interface FormProps {
   list?: ListResponse
@@ -37,7 +37,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const router = useRouter()
-  const { triggerSignal } = useSignalStore()
+  const { triggerSignal } = useSignal()
 
   const closeDialog = () => setIsOpen(false)
   const openDialog = () => setIsOpen(true)

@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { ListResponse } from '@/types'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import ListForm from '../../app/(platform)/_components/list-form'
 
 interface ModalProps {

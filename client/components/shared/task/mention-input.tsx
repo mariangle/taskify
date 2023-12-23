@@ -31,7 +31,7 @@ export default function MentionInput<T extends FieldValues>({
   const listId = form.getValues('listId' as Path<T>)
   const labelIds = form.getValues('labelIds' as Path<T>)
 
-  const [input, setInput] = React.useState(formatMentionInput({ name, labelIds, labels }))
+  const [input, setInput] = React.useState(formatMentionInput({ name, labelIds, listId, labels, lists }))
 
   const formattedLists = listId
     ? []
@@ -63,6 +63,7 @@ export default function MentionInput<T extends FieldValues>({
         className={cn('w-full font-semibold', small ? 'text-sm' : 'text-lg')}
         placeholder="Task Name"
         spellCheck={false}
+        autoComplete="off"
         {...props}
       >
         <Mention

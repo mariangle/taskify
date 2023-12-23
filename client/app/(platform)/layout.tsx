@@ -30,7 +30,7 @@ export default async function Layout(props: PageProps) {
           </div>
           <div className="flex flex-col flex-1 overflow-y-hidden bg-neutral-50 dark:bg-neutral-900">
             <Navbar />
-            <div className="overflow-y-auto h-full p-4">{props.children}</div>
+            <div className="overflow-y-auto h-full p-4 md:p-8">{props.children}</div>
           </div>
         </div>
       </div>

@@ -9,17 +9,22 @@ import { Separator } from '@/components/ui/seperator'
 import { ToggleTheme } from './toggle-theme'
 
 export default function Sidebar() {
-  const { showSidebar } = useLayoutStore()
+  const { showSidebar, toggleSidebar } = useLayoutStore()
 
-  // TODO: This might work as mobile menu as well?
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        toggleSidebar()
+      }
+    }
+
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [toggleSidebar])
 
   return (
-    <aside
-      className={cn(
-        `relative h-screen border-r block duration-500 dark:bg-zinc-950`,
-        showSidebar ? 'w-44' : 'w-0 md:w-[68px]',
-      )}
-    >
+    <aside className={cn(`relative h-screen border-r block duration-500`, showSidebar ? 'w-44' : 'w-0 md:w-[68px]')}>
       <div className={cn('h-full', showSidebar ? '' : 'hidden md:block')}>
         <div className="flex flex-col justify-between h-full">
           <SideNav />

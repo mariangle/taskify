@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { LabelResponse } from '@/types'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { revalidate } from '@/lib/_actions/revalidate-path'
 
 import TaskService from '@/services/task-service'

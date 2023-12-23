@@ -6,7 +6,7 @@ import { cn } from '@/lib/util/cn'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { priorities } from '@/lib/constants'
 import { LucideIcon } from 'lucide-react'
 
@@ -39,7 +39,7 @@ export default function SelectPriority<T extends FieldValues>({
   const priority = priorities.find((p) => p.label === value)
 
   return (
-    <Popover open={open} onOpenChange={setOpen} modal={true}>
+    <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <Button variant={value ? 'secondary' : 'outline'} size="sm" aria-expanded={open} className="w-fit">
           {value ? (

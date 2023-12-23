@@ -1,28 +1,18 @@
 'use client'
 
-import React from 'react'
+import * as React from 'react'
+
+import ListSwitcher from '@/components/shared/list-switcher'
+import FilterOverlay from '@/components/modals/filter-overlay'
+
 import { useLayoutStore } from '@/store/layout-store'
 import { cn } from '@/lib/util/cn'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { Button } from '@/components/ui/button'
 import { MobileSidebar } from './mobile-sidebar'
-import ListSwitcher from '@/components/list-switcher'
-import FilterOverlay from '@/components/filter/filter-overlay'
 
 const Navbar = () => {
-  const { showSidebar, toggleSidebar } = useLayoutStore()
-
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        toggleSidebar()
-      }
-    }
-
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [toggleSidebar])
+  const { showSidebar, toggleSidebar, showTask } = useLayoutStore()
 
   return (
     <header className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -41,6 +31,7 @@ const Navbar = () => {
           <div className="lg:hidden">
             <ListSwitcher />
           </div>
+          {JSON.stringify(showTask)}
         </div>
         <div className="flex-gap">
           <FilterOverlay />

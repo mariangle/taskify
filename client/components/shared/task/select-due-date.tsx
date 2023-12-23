@@ -7,31 +7,32 @@ import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form'
 import { Calendar } from '@/components/ui/calendar'
-import { Icons } from '@/components/icons'
-import { format } from 'date-fns'
+import { Icons } from '@/components/shared/icons'
+import { format, formatISO } from 'date-fns'
 
 interface SelectDueDateProps<T extends FieldValues> {
   form: UseFormReturn<T>
   register: Path<T>
-  defaultValue?: Date
+  defaultValue?: Date | string
 }
 
-export default function SelectDueDate<T extends FieldValues>({
-  form,
-  defaultValue,
-  register,
-  ...props
-}: SelectDueDateProps<T>) {
+export default function SelectDueDate<T extends FieldValues>({ form, defaultValue, register }: SelectDueDateProps<T>) {
+  // Convert defaultValue to Date if it's a string
+  const defaultDate = defaultValue
+    ? typeof defaultValue === 'string'
+      ? new Date(defaultValue)
+      : defaultValue
+    : undefined
+
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState(defaultValue)
+  const [value, setValue] = React.useState<Date | undefined>(defaultDate || undefined)
 
   const onSelect = (selectedDate: Date | undefined) => {
     if (selectedDate) {
       setValue(selectedDate)
+      setOpen(false)
+      form.setValue(register, formatISO(selectedDate) as PathValue<T, Path<T>>)
     }
-    setOpen(false)
-    console.log(selectedDate)
-    form.setValue(register, selectedDate?.toISOString() as PathValue<T, Path<T>>)
   }
 
   const onRemove = () => {

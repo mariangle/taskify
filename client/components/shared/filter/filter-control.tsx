@@ -4,7 +4,7 @@ import React from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { Button } from '@/components/ui/button'
 import LabelBadge from '@/components/ui/label-badge'
 import { Separator } from '@/components/ui/seperator'
@@ -105,7 +105,7 @@ export default function TaskFilter({ labels, close }: TaskFilterProps) {
         <div className="flex-gap-sm my-2">
           <FilterView name="list" label="List" icon={<Icons.menu className="w-4 h-4" />} />
           <FilterView name="table" label="Table" icon={<Icons.grid className="w-4 h-4" />} />
-          <FilterView name="kanban" label="Kanban" icon={<Icons.kanban className="w-4 h-4" />} />
+          <FilterView name="board" label="Board" icon={<Icons.board className="w-4 h-4" />} />
         </div>
         <Separator />
         <span className="pt-2 block text-sm font-medium">Status</span>
@@ -117,7 +117,7 @@ export default function TaskFilter({ labels, close }: TaskFilterProps) {
         </div>
         <Separator />
         <span className="pt-2 block text-sm font-medium">Label</span>
-        <div className="my-2">
+        <div className="my-2 flex-gap max-w-full flex-wrap">
           {labels.map((label) => (
             <Badge
               key={label.id}
@@ -137,7 +137,7 @@ export default function TaskFilter({ labels, close }: TaskFilterProps) {
         <div className="flex-gap mt-4">
           <Button
             variant={'secondary'}
-            className="w-full bg-primary/30 text-primary dark:bg-accent dark:text-foreground hover:text-background"
+            className="w-full bg-primary/30 text-primary dark:bg-accent dark:text-foreground hover:bg-primary hover:text-white"
             onClick={() => removeQueryString('clear')}
           >
             Reset

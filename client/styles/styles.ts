@@ -8,8 +8,9 @@ export const inputStyle = {
     margin: '0px',
   },
   input: {
-    padding: '12px 12px 0px 12px',
+    padding: '9px',
     outline: 'none',
+    margin: '0px 0px 0px 2px',
   },
   suggestions: {
     backgroundColor: 'transparent',

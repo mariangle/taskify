@@ -1,15 +1,14 @@
 import * as React from 'react'
 
-import KanbanColumn from './_components/board-column'
-import { Card, CardHeader, CardContent, CardDescription } from '@/components/ui/card'
+import BoardColumn from './_components/board-column'
 
 import TaskService from '@/services/task-service'
 import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
 
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
-import TaskForm from '@/components/task/task-board-item'
-import FilterSummary from '@/components/filter/filter-summary'
+import TaskItem from '@/components/shared/task/task-item'
+import FilterSummary from '@/components/shared/filter/filter-summary'
 
 interface TasksPageProps {
   searchParams: Partial<ExtendedSearchParamsOptions>
@@ -24,12 +23,12 @@ async function TasksPage({ searchParams }: TasksPageProps) {
   const pendingTasks = await TaskService.getTasks({ pending: true, unsorted: true, ...searchParams })
   const completedTasks = await TaskService.getTasks({ completed: true, unsorted: true, ...searchParams })
 
-  const renderKanban = () => {
+  const renderBoard = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4s">
-        <KanbanColumn tasks={incompleteTasks} color="bg-orange-500" status="Incomplete" lists={lists} labels={labels} />
-        <KanbanColumn tasks={pendingTasks} color="bg-sky-500" status="Pending" lists={lists} labels={labels} />
-        <KanbanColumn tasks={completedTasks} color="bg-emerald-500" status="Completed" lists={lists} labels={labels} />
+        <BoardColumn tasks={incompleteTasks} color="bg-orange-500" status="Incomplete" lists={lists} labels={labels} />
+        <BoardColumn tasks={pendingTasks} color="bg-sky-500" status="Pending" lists={lists} labels={labels} />
+        <BoardColumn tasks={completedTasks} color="bg-emerald-500" status="Completed" lists={lists} labels={labels} />
       </div>
     )
   }
@@ -37,32 +36,27 @@ async function TasksPage({ searchParams }: TasksPageProps) {
     const incompleteTasks = tasks.filter((t) => t.status !== 'Completed')
 
     return (
-      <Card>
-        <CardHeader className="pb-0">
+      <div className="space-y-4 mx-auto">
+        <div className="space-y-2">
           <div className="flex-gap">
             <h1 className="font-bold text-xl">Inbox</h1>
           </div>
-          <CardDescription>This is where your unsorted tasks reside.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <ul>
-            {incompleteTasks.map((task) => (
-              <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+          <p className="text-muted-foreground text-sm">This is where your unsorted tasks reside.</p>
+        </div>
+        <div className="space-y-2">
+          {incompleteTasks.map((task) => (
+            <TaskItem key={task.id} task={task} lists={lists} labels={labels} />
+          ))}
+          <TaskItem labels={labels} lists={lists} type="board" />
+        </div>
+      </div>
     )
   }
 
-  const renderTable = () => {
-    return 'table'
-  }
-
   return (
-    <div className="space-y-2">
+    <div>
       <FilterSummary labels={labels} />
-      {searchParams.view === 'kanban' ? renderKanban() : searchParams.view === 'table' ? renderTable() : renderList()}
+      {searchParams.view === 'board' ? renderBoard() : renderList()}
     </div>
   )
 }

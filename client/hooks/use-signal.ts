@@ -5,9 +5,9 @@ interface SignalStore {
   triggerSignal: () => void
 }
 
-// ! TEMPORARY solution to rerender client components on server updates
+// Solution to rerender client components across app that are subsribed to the signal dependency useEffect
 
-export const useSignalStore = create<SignalStore>((set) => ({
+export const useSignal = create<SignalStore>((set) => ({
   signal: false,
   triggerSignal: () => set((state) => ({ signal: !state.signal })),
 }))

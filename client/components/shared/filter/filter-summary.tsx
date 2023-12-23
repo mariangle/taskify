@@ -1,7 +1,7 @@
 'use client'
 import { Badge } from '@/components/ui/badge'
 import { FilterOption } from '@/lib/util/filter'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 
 import { queryParamsMapping } from '@/lib/util/filter'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

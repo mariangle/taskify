@@ -2,14 +2,14 @@
 
 import * as React from 'react'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { cn } from '@/lib/util/cn'
 import { Button } from '@/components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ListResponse } from '@/types'
 import ListService from '@/services/list-service'
-import { useSignalStore } from '@/store/signal-store'
+import { useSignal } from '@/hooks/use-signal'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 
 export default function ListSwitcher() {
@@ -17,7 +17,7 @@ export default function ListSwitcher() {
   const router = useRouter()
   const path = usePathname()
 
-  const { signal } = useSignalStore()
+  const { signal } = useSignal()
 
   const [open, setOpen] = React.useState(false)
   const [lists, setLists] = React.useState<ListResponse[]>()
@@ -27,8 +27,8 @@ export default function ListSwitcher() {
       const lists = await ListService.getLists()
       setLists(lists)
     }
-    getLists()
-  }, [signal, params.listId])
+    if (open) getLists()
+  }, [signal, params.listId, open])
 
   if (!path.includes('lists')) return null
 

@@ -1,12 +1,14 @@
 const listRegex = /@\[([^)]+)\]\(at:([^)]+)\)/g // @[Work](at:b35464f9-079f-481c-6b7e-08dbf3340e69)
 const labelRegex = /@\[([^)]+)\]\(hash:([^)]+)\)/g // @[Shopping](hash:46d7f7f9-0fff-45aa-b984-08dbedb5b996)
 
-import { LabelResponse } from '@/types'
+import { LabelResponse, ListResponse } from '@/types'
 
 interface FormatMentionInputProps {
   name: string
   labelIds: string[]
+  listId: string
   labels: LabelResponse[]
+  lists: ListResponse[]
 }
 
 /**
@@ -16,21 +18,26 @@ interface FormatMentionInputProps {
  * @returns {string | undefined} The formatted mention input, combining labels and task name.
  *                              If no labels are selected and task name is empty, returns undefined.
  */
-export const formatMentionInput = ({ name, labelIds, labels }: FormatMentionInputProps): string | undefined => {
+export const formatMentionInput = ({
+  name,
+  labelIds,
+  listId,
+  labels,
+  lists,
+}: FormatMentionInputProps): string | undefined => {
   // Filter the labels based on selected label IDs
   const selectedLabels = labels.filter((label) => labelIds?.includes(label.id))
+  const selectedList = lists.find((list) => list.id === listId)
 
   // Format the selected labels for mention input
   const formattedLabels = selectedLabels.map((label) => `@[${label.name}](hash:${label.id})`).join(' ')
+  const formattedList = selectedList ? `@[${selectedList.name}](at:${listId})` : ''
 
-  // Check if there are formatted labels, if yes, combine with task name; otherwise, return the task name
-  if (formattedLabels) {
-    return `${formattedLabels} ${name}`
-  } else if (name) {
-    return name
-  } else {
-    return undefined
-  }
+  const resultArray = [formattedLabels, formattedList, name].filter(Boolean)
+
+  const result = resultArray.length > 0 ? resultArray.join(' ') : undefined
+
+  return result
 }
 
 /**
@@ -40,12 +47,7 @@ export const formatMentionInput = ({ name, labelIds, labels }: FormatMentionInpu
  * @returns The extracted name after removing list and label content, trimmed for whitespace.
  */
 export const extractName = (input: string): string => {
-  const result = input.replace(listRegex, '').replace(labelRegex, '').trim()
-
-  // Use a regular expression to trim only leading spaces
-  const trimmedResult = result.trimStart()
-
-  return result
+  return input.replace(listRegex, '').replace(labelRegex, '').trim()
 }
 
 /**

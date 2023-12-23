@@ -9,8 +9,8 @@ export const config = {
     description: 'Collaborate, manage projects, and reach new productivity peaks',
     icons: [
       {
-        url: '/logo.svg',
-        href: '/logo.svg',
+        url: '/vercel.svg',
+        href: '/vercel.svg',
       },
     ],
   },

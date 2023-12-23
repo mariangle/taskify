@@ -3,10 +3,10 @@ import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { cn } from '@/lib/util/cn'
 import { buttonVariants } from '@/components/ui/button'
-import SearchMenu from '@/components/search-menu'
+import SearchMenu from '@/app/(platform)/_components/search-menu'
 import { config } from '@/lib/config'
 import UserNav from './user-nav'
 import { useLayoutStore } from '@/store/layout-store'
@@ -23,9 +23,9 @@ export function SideNav() {
         <UserNav />
       </div>
       <div className="px-3">
-        <Button variant={'ghost'} className="flex justify-start px-2 w-full" onClick={() => toggleTask()}>
+        <Button variant={'ghost'} className="flex justify-start px-2 w-full" onClick={toggleTask}>
           <div className="bg-primary rounded-full p-1 ml-[2px]">
-            <Icons.add className={cn('h-3 w-3 text-background')} />
+            <Icons.add className="h-3 w-3 text-white" />
           </div>
           <span className={cn('ml-2 block text-primary', !showSidebar && 'md:hidden')}>Add task</span>
         </Button>

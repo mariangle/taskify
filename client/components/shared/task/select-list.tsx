@@ -1,12 +1,13 @@
 'use client'
 
 import * as React from 'react'
-import { Icons } from '@/components/icons'
 
-import { cn } from '@/lib/util/cn'
-import { Button } from '@/components/ui/button'
+import { Icons } from '@/components/shared/icons'
 import { Command, CommandGroup, CommandItem } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
+
+import { cn } from '@/lib/util/cn'
 import { ListResponse } from '@/types'
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form'
 
@@ -14,7 +15,6 @@ interface ListComboboxProps<T extends FieldValues> {
   form: UseFormReturn<T>
   register: Path<T>
   lists: ListResponse[]
-  close?: () => void
   defaultValue?: string
 }
 
@@ -23,10 +23,11 @@ export default function SelectList<T extends FieldValues>({
   defaultValue,
   register,
   lists,
-  close,
 }: ListComboboxProps<T>) {
+  const defaultListValue = lists.find((l) => l.id === defaultValue)?.name
+
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState(defaultValue)
+  const [value, setValue] = React.useState(defaultListValue)
 
   const onSelect = (list?: ListResponse) => {
     if (list) {
@@ -41,7 +42,7 @@ export default function SelectList<T extends FieldValues>({
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen} modal={true}>
+    <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <Button variant="ghost" size={'sm'} role="combobox" aria-expanded={open} className="w-fit justify-between">
           {value ? value : 'Inbox'}

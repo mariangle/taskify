@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 
 import { cn } from '@/lib/util/cn'
 import { Button } from '@/components/ui/button'

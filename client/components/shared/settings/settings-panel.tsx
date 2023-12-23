@@ -5,9 +5,12 @@ import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/seperator'
 import { Cog, UserCircle, Bell, Tags, Palette, Heart, LucideIcon } from 'lucide-react'
-import { AccountForm } from '@/components/settings/account-form'
-import { AppearanceForm } from '@/components/settings/appearance-form'
-import LabelForm from '@/components/settings/label-form'
+import { AccountForm } from '@/components/shared/settings/account-form'
+import { AppearanceForm } from '@/components/shared/settings/appearance-form'
+import LabelForm from '@/components/shared/settings/label-form'
+import { LabelResponse } from '@/types'
+
+import LabelTab from './label-tab'
 
 interface Tab {
   id: string
@@ -54,7 +57,7 @@ type FormComponents = {
 
 const formComponents: FormComponents = {
   account: AccountForm,
-  labels: LabelForm,
+  labels: LabelTab,
   appearance: AppearanceForm, // TODO: Maybe just put this into preferences form
 }
 
@@ -65,11 +68,10 @@ export default function SettingsPanel() {
 
   return (
     <div className="flex w-full">
-      <div className=" bg-white dark:bg-zinc-900 border-r">
-        <div className="py-4 px-6">
+      <div className="bg-background border-r">
+        <div className="pt-4 pb-2 px-6">
           <span className="w-full font-semibold">Settings</span>
         </div>
-        <Separator />
         <ul className="p-2">
           {settingsTabs.map((item) => (
             <li key={item.id}>
@@ -85,7 +87,10 @@ export default function SettingsPanel() {
           ))}
         </ul>
       </div>
-      <div className="bg-background p-4 w-full">{FormComponent && <FormComponent />}</div>
+      <div className="bg-background w-full">
+        <div className="border-b p-4 w-full text-sm font-semibold">{tab.label}</div>
+        <div className="p-4">{FormComponent && <FormComponent />}</div>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { SubtaskResponse, TaskResponse } from '@/types'
+import { cn } from '@/lib/util/cn'
 import { Checkbox } from '@/components/ui/checkbox'
 import { handleError } from '@/lib/util'
 import toast from 'react-hot-toast'
@@ -62,5 +63,21 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
     }
   }
 
-  return <Checkbox checked={isCompleted} onCheckedChange={onToggleStatus} disabled={!task && !subtask} />
+  const className =
+    task?.priority === 'Low'
+      ? 'border-sky-500 bg-sky-500/10 mt-1'
+      : task?.priority === 'Medium'
+      ? 'border-yellow-500 bg-yellow-500/10 mt-1'
+      : task?.priority === 'High'
+      ? 'border-red-500 bg-red-500/10 mt-1'
+      : 'mt-1'
+
+  return (
+    <Checkbox
+      checked={isCompleted}
+      onCheckedChange={onToggleStatus}
+      disabled={!task && !subtask}
+      className={className}
+    />
+  )
 }

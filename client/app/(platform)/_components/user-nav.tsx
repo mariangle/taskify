@@ -14,7 +14,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import React from 'react'
 
 export default function UserNav() {

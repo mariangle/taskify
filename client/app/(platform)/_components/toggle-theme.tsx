@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/shared/icons'
 import { useTheme } from 'next-themes'
 import { useMounted } from '@/hooks/use-mounted'
 import { useLayoutStore } from '@/store/layout-store'

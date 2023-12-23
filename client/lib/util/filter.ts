@@ -25,7 +25,7 @@ export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchP
 }
 
 export interface ExtendedSearchParamsOptions extends SearchParamsOptions {
-  view?: 'kanban' | 'table' | 'list'
+  view?: 'board' | 'table' | 'list'
   clear: string
   status: 'incomplete' | 'pending' | 'completed'
 }

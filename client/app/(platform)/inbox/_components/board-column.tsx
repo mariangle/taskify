@@ -1,6 +1,6 @@
 import { LabelResponse, ListResponse, TaskResponse } from '@/types'
 import { cn } from '@/lib/util/cn'
-import TaskBoardItem from '@/components/task/task-board-item'
+import TaskItem from '@/components/shared/task/task-item'
 
 interface ColumnProps {
   tasks: TaskResponse[]
@@ -23,10 +23,10 @@ export default function BoardColumn({ tasks, status, color, lists, labels }: Col
         </div>
       </div>
       <div className="space-y-2">
-        {status === 'Incomplete' && <span>task</span>}
         {tasks.map((task) => (
-          <TaskBoardItem key={task.id} task={task} labels={labels} lists={lists} />
+          <TaskItem key={task.id} task={task} labels={labels} lists={lists} type="board" />
         ))}
+        {status === 'Incomplete' && <TaskItem labels={labels} lists={lists} type="board" />}
       </div>
     </div>
   )

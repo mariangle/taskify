@@ -1,8 +1,6 @@
-import { Card, CardHeader, CardContent } from '@/components/ui/card'
-
 import ListModal from '@/components/modals/list-modal'
 import ListService from '@/services/list-service'
-import TaskForm from '@/components/task/task-board-item'
+import TaskItem from '@/components/shared/task/task-item'
 
 import LabelService from '@/services/label-service'
 import TaskService from '@/services/task-service'
@@ -24,21 +22,21 @@ async function ListPage({ params, searchParams }: PageProps) {
   if (!list) return null
 
   return (
-    <Card className="w-full">
-      <CardHeader className="pb-0">
+    <>
+      <div className="space-y-2">
         <div className="flex-gap">
           <h1 className="font-bold text-xl">{list.name}</h1>
           <ListModal list={list} />
         </div>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <ul>
-          {tasks.map((task) => (
-            <TaskForm key={task.id} task={task} lists={lists} labels={labels} />
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+        <p className="text-muted-foreground text-sm">This is where your unsorted tasks reside.</p>
+      </div>
+      <ul className="space-y-2">
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} lists={lists} labels={labels} />
+        ))}
+        <TaskItem labels={labels} lists={lists} />
+      </ul>
+    </>
   )
 }
 export default ListPage

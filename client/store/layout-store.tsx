@@ -1,25 +1,25 @@
 import { create } from 'zustand'
 
-interface LayoutStore {
+interface InterfaceStore {
   showSidebar: boolean
   showSettings: boolean
   showTask: boolean
   toggleSidebar: () => void
   toggleSettings: () => void
   toggleTask: () => void
-  openTask: (taskId: string) => void
   closeTask: () => void
-  closePopovers: () => void
+  setTask: (open: boolean) => void
+  setSettings: (open: boolean) => void
 }
 
-export const useLayoutStore = create<LayoutStore>((set) => ({
+export const useLayoutStore = create<InterfaceStore>((set) => ({
   showSidebar: true,
   showSettings: false,
   showTask: false,
   toggleSidebar: () => set((state) => ({ showSidebar: !state.showSidebar })),
   toggleSettings: () => set((state) => ({ showSettings: !state.showSettings })),
   toggleTask: () => set((state) => ({ showTask: !state.showTask })),
-  openTask: () => {},
   closeTask: () => set(() => ({ showTask: false })),
-  closePopovers: () => set(() => ({})),
+  setTask: (open: boolean) => set(() => ({ showTask: open })),
+  setSettings: (open: boolean) => set(() => ({ showSettings: open })),
 }))

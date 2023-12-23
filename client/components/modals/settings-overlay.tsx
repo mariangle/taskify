@@ -1,25 +1,45 @@
 'use client'
 
 import * as React from 'react'
+
 import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Drawer, DrawerContent } from '@/components/ui/drawer'
 
 import { useLayoutStore } from '@/store/layout-store'
+import { useMediaQuery } from '@/hooks/use-media-query'
 
-import SettingsPanel from '@/components/settings/settings-panel'
+import SettingsPanel from '@/components/shared/settings/settings-panel'
 
-export default function SettingsModal() {
-  const { showSettings, toggleSettings } = useLayoutStore()
+export default function SettingsOverlay() {
+  const [isOpen, setOpen] = React.useState(false)
+  const { showSettings, toggleSettings, setSettings } = useLayoutStore()
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
-  // ! Ideally want a drawer for mobile but dialog cannot be wrapped in outer div
-  // TODO: Make a custom overlay which takes in children as props and displays mobile and desktop overlays
-
-  return (
-    <>
+  if (isDesktop) {
+    return (
       <Dialog open={showSettings} onOpenChange={toggleSettings}>
-        <DialogContent className="max-w-screen-md h-fit overflow-y-auto max-h-screen">
+        <DialogContent className="max-h-screen overflow-y-auto">
           <SettingsPanel />
         </DialogContent>
       </Dialog>
-    </>
+    )
+  }
+
+  // A workaround since onOpenChange closes showSettings automatically on open
+  const onOpenChange = () => {
+    setOpen(!isOpen)
+    if (isOpen) {
+      setSettings(false)
+    }
+  }
+
+  return (
+    <Drawer open={showSettings} onOpenChange={onOpenChange}>
+      <DrawerContent>
+        <div className="max-h-screen overflow-y-auto">
+          <SettingsPanel />
+        </div>
+      </DrawerContent>
+    </Drawer>
   )
 }
