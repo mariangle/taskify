@@ -4,7 +4,6 @@ import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import { useMounted } from '@/hooks/use-mounted'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 
 interface AlertModalProps {
   title?: string

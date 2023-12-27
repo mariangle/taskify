@@ -1,16 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
 import SettingsOverlay from '@/components/modals/settings-overlay'
 import TaskOverlay from '@/components/modals/task-overlay'
 
-export default function OverlayProvider() {
-  const [isMounted, setIsMounted] = useState<boolean>(false)
+import { useMounted } from '@/hooks/use-mounted'
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+export default function OverlayProvider() {
+  const isMounted = useMounted()
 
   if (!isMounted) return null
 

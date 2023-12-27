@@ -9,24 +9,24 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    title: 'Adaptive Planning',
-    description: 'Dynamic adjustments to priorities and deadlines.',
+    title: 'Natural Language Processing (NLP)',
+    description: 'Convert text-based task inputs into structured data for seamless interaction.',
+    icon: <Icons.brain className="w-4 h-4" />,
+  },
+  {
+    title: 'Artificial Intelligence (AI) Prioritization',
+    description: 'Leverage AI algorithms for intelligent task prioritization based on user behavior.',
+    icon: <Icons.ai className="w-4 h-4" />,
+  },
+  {
+    title: 'Voice Commands with Speech Recognition',
+    description: 'Add tasks hands-free by speaking, powered by advanced speech recognition technology.',
+    icon: <Icons.mic className="w-4 h-4" />,
+  },
+  {
+    title: 'Automated Smart Scheduling',
+    description: 'Enable the app to dynamically schedule tasks based on habits and priorities.',
     icon: <Icons.calendar className="w-4 h-4" />,
-  },
-  {
-    title: 'Collaborative',
-    description: 'Boost productivity with collaborative features',
-    icon: <Icons.users className="w-4 h-4" />,
-  },
-  {
-    title: 'Highly Customizable',
-    description: 'Tailor the app to your unique needs',
-    icon: <Icons.appearance className="w-4 h-4" />,
-  },
-  {
-    title: 'External Integrations',
-    description: 'Connect and synchronize with your favorite tools and platforms',
-    icon: <Icons.integration className="w-4 h-4" />,
   },
 ]
 
@@ -34,7 +34,7 @@ export default function Features() {
   return (
     <div className="grid gap-4 lg:grid-cols-4 sm:grid-cols-2 mt-12">
       {features.map(({ title, description, icon }) => (
-        <Card key={title}>
+        <Card key={title} className="border shadow-sm">
           <CardHeader className="space-y-2">
             <div className="flex items-center">
               <div className="p-2 rounded-full w-8 h-8 mr-3 bg-emerald-500/10 text-emerald-500">{icon}</div>

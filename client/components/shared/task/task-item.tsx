@@ -12,15 +12,17 @@ import TaskForm from '@/components/shared/task/task-form'
 import TaskOptionsDropdown from './task-options-dropdown'
 
 import { LabelResponse, ListResponse, TaskResponse } from '@/types'
+import { formatDistance } from 'date-fns'
 
 interface TaskItemProps {
   task?: TaskResponse
   lists: ListResponse[]
   labels: LabelResponse[]
   type?: 'list' | 'board'
+  date?: string
 }
 
-const TaskItem = ({ task, lists, type = 'list', labels }: TaskItemProps) => {
+const TaskItem = ({ task, lists, type = 'list', labels, date }: TaskItemProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
 
   const open = () => setIsOpen(true)
@@ -31,7 +33,7 @@ const TaskItem = ({ task, lists, type = 'list', labels }: TaskItemProps) => {
   if (isOpen) {
     return (
       <BoardContainer>
-        <TaskForm lists={lists} task={task} labels={labels} close={close} small />
+        <TaskForm lists={lists} task={task} labels={labels} close={close} small initialValues={{ dueDate: date }} />
       </BoardContainer>
     )
   }
@@ -69,13 +71,18 @@ const TaskItem = ({ task, lists, type = 'list', labels }: TaskItemProps) => {
               {task?.note}
             </p>
           )}
+          <div className="flex-gap items-center text-xs flex-wrap max-w-full">
+            {task?.dueDate && (
+              <span className="flex-gap-sm">
+                <Icons.calendar className="w-3 h-3" />
+                {formatDistance(new Date(task.dueDate), new Date(), { addSuffix: true })}
+              </span>
+            )}
+            <div className="flex-gap items-center text-xs flex-wrap max-w-full">
+              {task?.labels && task.labels.map((label) => <LabelBadge key={label.id} label={label} taskId={task.id} />)}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex-gap items-center text-xs flex-wrap max-w-full">
-        {task?.labels && task.labels.map((label) => <LabelBadge key={label.id} label={label} taskId={task.id} />)}
-      </div>
-      <div className="flex-gap items-center text-xs flex-wrap max-w-full">
-        {task?.labels && task.labels.map((label) => <LabelBadge key={label.id} label={label} taskId={task.id} />)}
       </div>
     </TaskContainer>
   )

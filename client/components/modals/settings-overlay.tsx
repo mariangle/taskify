@@ -15,6 +15,10 @@ export default function SettingsOverlay() {
   const { showSettings, toggleSettings, setSettings } = useLayoutStore()
   const isDesktop = useMediaQuery('(min-width: 768px)')
 
+  React.useEffect(() => {
+    showSettings ? setOpen(true) : setOpen(false)
+  }, [showSettings])
+
   if (isDesktop) {
     return (
       <Dialog open={showSettings} onOpenChange={toggleSettings}>
@@ -25,16 +29,16 @@ export default function SettingsOverlay() {
     )
   }
 
-  // A workaround since onOpenChange closes showSettings automatically on open
+  // A workaround to manage drawer state since it has different behavior than the Dialog
   const onOpenChange = () => {
     setOpen(!isOpen)
-    if (isOpen) {
+    if (!isOpen) {
       setSettings(false)
     }
   }
 
   return (
-    <Drawer open={showSettings} onOpenChange={onOpenChange}>
+    <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent>
         <div className="max-h-screen overflow-y-auto">
           <SettingsPanel />

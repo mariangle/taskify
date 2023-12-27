@@ -14,12 +14,14 @@ interface SelectDueDateProps<T extends FieldValues> {
   form: UseFormReturn<T>
   register: Path<T>
   defaultValue?: string
+  small?: boolean
 }
 
 export default function SelectPriority<T extends FieldValues>({
   form,
   defaultValue,
   register,
+  small = false,
   ...props
 }: SelectDueDateProps<T>) {
   const [open, setOpen] = React.useState(false)
@@ -41,17 +43,17 @@ export default function SelectPriority<T extends FieldValues>({
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
-        <Button variant={value ? 'secondary' : 'outline'} size="sm" aria-expanded={open} className="w-fit">
+        <Button variant={'outline'} size="sm" aria-expanded={open} className="w-fit gap-2">
           {value ? (
             <>
-              {priority?.icon && <priority.icon className="w-4 h-4 mr-1" />}
+              {priority?.icon && <priority.icon className="w-4 h-4" />}
               {value}
-              <Icons.close className="w-4 h-4 ml-2" onClick={onRemove} />
+              <Icons.close className="w-4 h-4" onClick={onRemove} />
             </>
           ) : (
             <>
-              <Icons.flag className="w-4 h-4 mr-1" />
-              Priority
+              <Icons.flag className="w-4 h-4" />
+              {!small && <span>Priority</span>}
             </>
           )}
         </Button>

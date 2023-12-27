@@ -24,7 +24,12 @@ export default function Sidebar() {
   }, [toggleSidebar])
 
   return (
-    <aside className={cn(`relative h-screen border-r block duration-500`, showSidebar ? 'w-44' : 'w-0 md:w-[68px]')}>
+    <aside
+      className={cn(
+        `relative h-screen border-r duration-500 hidden md:block flex-shrink-0`,
+        showSidebar ? 'w-44' : 'w-0 md:w-[68px]',
+      )}
+    >
       <div className={cn('h-full', showSidebar ? '' : 'hidden md:block')}>
         <div className="flex flex-col justify-between h-full">
           <SideNav />

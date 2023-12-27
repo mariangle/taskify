@@ -56,7 +56,7 @@ export default function TaskOverlay() {
     )
   }
 
-  // A workaround to manage open state and tasks
+  // A workaround to manage drawer state since it has different behavior than the Dialog
   const onOpenChange = () => {
     setOpen(!isOpen)
     if (!isOpen) {

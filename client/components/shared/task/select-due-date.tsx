@@ -14,9 +14,15 @@ interface SelectDueDateProps<T extends FieldValues> {
   form: UseFormReturn<T>
   register: Path<T>
   defaultValue?: Date | string
+  small?: boolean
 }
 
-export default function SelectDueDate<T extends FieldValues>({ form, defaultValue, register }: SelectDueDateProps<T>) {
+export default function SelectDueDate<T extends FieldValues>({
+  form,
+  defaultValue,
+  register,
+  small = false,
+}: SelectDueDateProps<T>) {
   // Convert defaultValue to Date if it's a string
   const defaultDate = defaultValue
     ? typeof defaultValue === 'string'
@@ -43,23 +49,25 @@ export default function SelectDueDate<T extends FieldValues>({ form, defaultValu
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
-        {value ? (
-          <Button variant={'secondary'} size={'sm'} className={cn('w-fit justify-start')}>
-            <Icons.calendar className="mr-2 h-4 w-4" />
-            <span className="flex-gap">
-              {format(value, 'dd-MM-yyyy')}
-              <Icons.close className="h-4 w-4" onClick={onRemove} />
-            </span>
-          </Button>
-        ) : (
-          <Button variant={'outline'} size={'sm'} className={cn('w-fit justify-start')}>
-            <Icons.calendar className="mr-2 h-4 w-4" />
-            <span>Schedule</span>
-          </Button>
-        )}
+        <Button variant={'outline'} size={'sm'} className={cn('w-fit justify-start gap-2')}>
+          {value ? (
+            <>
+              <Icons.calendar className="h-4 w-4" />
+              <span className="flex-gap">
+                {format(value, 'dd-MM-yyyy')}
+                <Icons.close className="h-4 w-4" onClick={onRemove} />
+              </span>
+            </>
+          ) : (
+            <>
+              <Icons.calendar className="h-4 w-4" />
+              {!small && <span>Schedule</span>}
+            </>
+          )}
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0 w-full" align="start">
-        <Calendar mode="single" selected={value} onSelect={onSelect} initialFocus />
+        <Calendar mode="single" selected={value} onSelect={onSelect} initialFocus className="overflow-y-auto" />
       </PopoverContent>
     </Popover>
   )

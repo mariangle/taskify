@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import ListService from '@/services/list-service'
 
 import OverlayProvider from '@/components/providers/overlay-provider'
+import ThemeProvider from '@/components/providers/theme-provider'
 
 interface PageProps {
   children: React.ReactNode
@@ -20,7 +21,7 @@ export default async function Layout(props: PageProps) {
   const lists = await ListService.getLists()
 
   return (
-    <>
+    <ThemeProvider>
       <OverlayProvider />
       <div className="flex h-screen overflow-y-hidden overflow-x-hidden">
         <Sidebar />
@@ -30,10 +31,10 @@ export default async function Layout(props: PageProps) {
           </div>
           <div className="flex flex-col flex-1 overflow-y-hidden bg-neutral-50 dark:bg-neutral-900">
             <Navbar />
-            <div className="overflow-y-auto h-full p-4 md:p-8">{props.children}</div>
+            <div className="overflow-y-auto overflow-x-auto h-full p-4 md:p-8">{props.children}</div>
           </div>
         </div>
       </div>
-    </>
+    </ThemeProvider>
   )
 }

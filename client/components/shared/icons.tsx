@@ -46,6 +46,8 @@ import {
   SlidersHorizontal,
   ListChecks,
   Dot,
+  Brain,
+  Mic,
 } from 'lucide-react'
 
 import type { IconNode } from 'lucide-react'
@@ -53,6 +55,8 @@ import type { IconNode } from 'lucide-react'
 export type Icon = IconNode
 
 export const Icons = {
+  mic: Mic,
+  brain: Brain,
   dot: Dot,
   users: Users,
   flag: Flag,

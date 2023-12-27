@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useLayoutStore } from '@/store/layout-store'
 import { useParams, usePathname, useRouter } from 'next/navigation'
+import { add } from 'date-fns'
 
 import MentionsInput from '@/components/shared/task/mention-input'
 import SelectList from '@/components/shared/task/select-list'
@@ -30,6 +31,9 @@ interface TaskFormProps {
   labels: LabelResponse[]
   close?: () => void
   small?: boolean
+  initialValues?: {
+    dueDate?: string
+  }
 }
 
 export const taskFormSchema = z.object({
@@ -43,17 +47,33 @@ export const taskFormSchema = z.object({
 
 export type TaskFormValues = z.infer<typeof taskFormSchema>
 
-export default function TaskForm({ task, lists, labels, small = false, close }: TaskFormProps) {
+export default function TaskForm({ task, lists, labels, small = false, close, initialValues }: TaskFormProps) {
   const { closeTask } = useLayoutStore()
 
   const params = useParams<{ listId: string }>()
   const path = usePathname()
   const router = useRouter()
 
+  function parseDateString(dateString: string) {
+    const parts = dateString.split('-')
+    // Note: Months are zero-based in JavaScript Date objects, so we subtract 1
+    const year = parseInt(parts[2], 10)
+    const month = parseInt(parts[1], 10) - 1
+    const day = parseInt(parts[0], 10)
+
+    return new Date(year, month, day)
+  }
+
   const defaultValues: Partial<TaskFormValues> = {
     name: task?.name || undefined,
     note: task?.note || undefined,
-    dueDate: task?.dueDate ? new Date(task.dueDate) : path === '/today' ? new Date() : undefined,
+    dueDate: task?.dueDate
+      ? new Date(task.dueDate)
+      : path === '/today'
+      ? new Date()
+      : initialValues?.dueDate
+      ? parseDateString(initialValues.dueDate)
+      : undefined,
     priority: task?.priority || undefined,
     listId: task?.listId || params.listId || undefined,
     labelIds: task?.labels?.filter((label) => label.id)?.map((label) => label.id) || undefined,
@@ -65,6 +85,9 @@ export default function TaskForm({ task, lists, labels, small = false, close }: 
   })
 
   const onSubmit = async (data: TaskFormValues) => {
+    console.log('form value', data.dueDate)
+    console.log('default value from form', defaultValues.dueDate)
+
     try {
       if (task) {
         await TaskService.updateTask(task.id, { id: task.id, ...data })
@@ -79,7 +102,13 @@ export default function TaskForm({ task, lists, labels, small = false, close }: 
 
         toast.success('Task updated.')
       } else {
-        const createdTask = await TaskService.createTask(data)
+        // Adding date to default value since it goes to previous day
+        let realDate = data.dueDate ?? undefined
+        if (initialValues?.dueDate) {
+          realDate = add(parseDateString(initialValues.dueDate), { days: 1 })
+        }
+
+        const createdTask = await TaskService.createTask({ ...data, dueDate: realDate })
 
         if (data.labelIds?.length) {
           for (const labelId of data.labelIds) await TaskService.addLabel({ taskId: createdTask.id, labelId })
@@ -111,8 +140,8 @@ export default function TaskForm({ task, lists, labels, small = false, close }: 
           <Input transparent {...form.register('note')} placeholder="Description" className="pt-0" autoComplete="off" />
         </div>
         <div className="flex-gap p-3 pt-0 flex-wrap max-w-full">
-          <SelectDueDate form={form} register="dueDate" defaultValue={defaultValues.dueDate} />
-          <SelectPriority form={form} register="priority" defaultValue={defaultValues.priority} />
+          <SelectDueDate form={form} register="dueDate" defaultValue={defaultValues.dueDate} small={small} />
+          <SelectPriority form={form} register="priority" defaultValue={defaultValues.priority} small={small} />
         </div>
         <Separator />
         <div className="flex-between p-3">

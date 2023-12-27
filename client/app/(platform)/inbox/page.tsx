@@ -19,11 +19,11 @@ async function TasksPage({ searchParams }: TasksPageProps) {
   const labels = await LabelService.getLabels()
   const lists = await ListService.getLists()
 
-  const incompleteTasks = await TaskService.getTasks({ incomplete: true, unsorted: true, ...searchParams })
-  const pendingTasks = await TaskService.getTasks({ pending: true, unsorted: true, ...searchParams })
-  const completedTasks = await TaskService.getTasks({ completed: true, unsorted: true, ...searchParams })
+  const renderBoard = async () => {
+    const incompleteTasks = await TaskService.getTasks({ incomplete: true, unsorted: true, ...searchParams })
+    const pendingTasks = await TaskService.getTasks({ pending: true, unsorted: true, ...searchParams })
+    const completedTasks = await TaskService.getTasks({ completed: true, unsorted: true, ...searchParams })
 
-  const renderBoard = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4s">
         <BoardColumn tasks={incompleteTasks} color="bg-orange-500" status="Incomplete" lists={lists} labels={labels} />
