@@ -4,10 +4,7 @@ import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/shared/icons'
-import { buttonVariants } from '@/components/ui/button'
 
-import { cn } from '@/lib/util/cn'
-import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export default function WeekNavigation() {
@@ -17,8 +14,6 @@ export default function WeekNavigation() {
 
   const offset = parseInt(searchParams.get('offset') || '0')
 
-  const OFFSET_STEP = 1
-
   const createQueryString = React.useCallback(
     (name: string, value: 'prev' | 'next') => {
       const params = new URLSearchParams(searchParams)
@@ -26,11 +21,11 @@ export default function WeekNavigation() {
       let newOffset
 
       if (value === 'prev') {
-        newOffset = offset - OFFSET_STEP
+        newOffset = offset - 1
       }
 
       if (value === 'next') {
-        newOffset = offset + OFFSET_STEP
+        newOffset = offset + 1
       }
 
       params.set(name, (newOffset ?? 0).toString())
@@ -41,7 +36,7 @@ export default function WeekNavigation() {
   )
 
   return (
-    <div className="flex-gap fixed top-18 right-2">
+    <div className="flex-gap-sm fixed top-18 right-2">
       <Button
         variant={'outline'}
         size={'icon'}

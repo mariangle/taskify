@@ -1,4 +1,4 @@
-import { Inbox, GanttChartSquare, CalendarClock, CalendarDays } from 'lucide-react'
+import { Inbox, CalendarClock, CalendarDays, Tag } from 'lucide-react'
 
 export const config = {
   metadata: {
@@ -14,36 +14,19 @@ export const config = {
       },
     ],
   },
-  settings: [
-    {
-      title: 'Account',
-      items: [
-        {
-          title: 'Introduction',
-          href: '/docs',
-          items: [],
-        },
-        {
-          title: 'Installation',
-          href: '/docs/installation',
-          items: [],
-        },
-      ],
-    },
-  ],
   marketing: {
     links: [
       {
-        label: 'Features',
-        href: '',
+        title: 'Features',
+        href: '/docs/features',
       },
       {
-        label: 'Pricing',
-        href: '',
+        title: 'Pricing',
+        href: '/docs/primitives/hover-card',
       },
       {
-        label: 'Docs',
-        href: '',
+        title: 'Docs',
+        href: '/docs/getting-started',
       },
     ],
   },
@@ -65,9 +48,9 @@ export const config = {
         href: '/upcoming',
       },
       {
-        label: 'Lists',
-        icon: GanttChartSquare,
-        href: '/lists',
+        label: 'Labels',
+        icon: Tag,
+        href: '/labels',
       },
     ],
   },

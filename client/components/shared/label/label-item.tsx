@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/shared/icons'
+import { ListContainer, BoardContainer } from '@/components/ui/container'
 
 import LabelForm from '@/components/shared/settings/label-form'
 import LabelBadge from '@/components/ui/label-badge'
@@ -22,7 +23,11 @@ export default function LabelItem({ label }: LabelItemProps) {
   const close = () => setIsOpen(false)
 
   if (isOpen) {
-    return <LabelForm close={close} label={label} />
+    return (
+      <BoardContainer className="p-4">
+        <LabelForm close={close} label={label} />
+      </BoardContainer>
+    )
   }
 
   if (!label) {
@@ -41,7 +46,7 @@ export default function LabelItem({ label }: LabelItemProps) {
   }
 
   return (
-    <div className="group">
+    <ListContainer>
       <div className="flex-between">
         <div onClick={open}>
           <LabelBadge label={label} noBorder />
@@ -50,6 +55,6 @@ export default function LabelItem({ label }: LabelItemProps) {
           <LabelActionsdropDown label={label} setOpen={open} />
         </div>
       </div>
-    </div>
+    </ListContainer>
   )
 }

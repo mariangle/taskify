@@ -9,24 +9,24 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    title: 'Natural Language Processing (NLP)',
+    title: 'Natural Language Processing',
     description: 'Convert text-based task inputs into structured data for seamless interaction.',
-    icon: <Icons.brain className="w-4 h-4" />,
+    icon: <Icons.brain className="w-4 h-4 text-emerald-500/50" />,
   },
   {
-    title: 'Artificial Intelligence (AI) Prioritization',
+    title: 'AI Assistant',
     description: 'Leverage AI algorithms for intelligent task prioritization based on user behavior.',
-    icon: <Icons.ai className="w-4 h-4" />,
+    icon: <Icons.ai className="w-4 h-4 text-emerald-500/50" />,
   },
   {
-    title: 'Voice Commands with Speech Recognition',
+    title: 'Speech Recognition',
     description: 'Add tasks hands-free by speaking, powered by advanced speech recognition technology.',
-    icon: <Icons.mic className="w-4 h-4" />,
+    icon: <Icons.mic className="w-4 h-4 text-emerald-500/50" />,
   },
   {
     title: 'Automated Smart Scheduling',
     description: 'Enable the app to dynamically schedule tasks based on habits and priorities.',
-    icon: <Icons.calendar className="w-4 h-4" />,
+    icon: <Icons.calendar className="w-4 h-4 text-emerald-500/50" />,
   },
 ]
 
@@ -37,7 +37,7 @@ export default function Features() {
         <Card key={title} className="border shadow-sm">
           <CardHeader className="space-y-2">
             <div className="flex items-center">
-              <div className="p-2 rounded-full w-8 h-8 mr-3 bg-emerald-500/10 text-emerald-500">{icon}</div>
+              <div className="p-2 rounded-full w-8 h-8 mr-3 bg-emerald-500/10">{icon}</div>
               <h4 className="text-sm font-semibold">{title}</h4>
             </div>
             <CardDescription className="m-0 ml-0 pl-0">{description}</CardDescription>

@@ -1,11 +1,14 @@
 import TaskService from '@/services/task-service'
 import LabelService from '@/services/label-service'
 import ListService from '@/services/list-service'
+import TaskItem from '@/components/shared/task/task-item'
+import { LoadingBoardPage } from '@/components/ui/loading'
 
 import WeekNavigation from './_components/week-navigation'
-import CalendarColumn from './_components/calendar-column'
 
 import { startOfWeek, addWeeks, format, getDay, addDays, startOfMonth, isToday, isTomorrow } from 'date-fns'
+import { TaskResponse } from '@/types'
+import React from 'react'
 
 interface UpcomingPageProps {
   searchParams: {
@@ -24,12 +27,10 @@ export default async function UpcomingPage({ searchParams }: UpcomingPageProps) 
     Array.from({ length: 7 }, async (_, index) => {
       const day = addDays(startDate, index)
       const formattedDate = format(day, 'dd-MM-yyyy')
-      const displayDate = getDisplayDate(day)
 
-      // Fetch tasks specifically for this day
       const tasks = await TaskService.getTasks({ dueDate: formattedDate })
 
-      return { day, formattedDate, displayDate, tasks }
+      return { day, formattedDate, tasks }
     }),
   )
 
@@ -39,31 +40,52 @@ export default async function UpcomingPage({ searchParams }: UpcomingPageProps) 
   return (
     <div className="space-y-4 w-full">
       <div className="flex-gap">
-        <span className="font-bold text-lg ">{currentMonth}</span>
+        <h1 className="font-bold text-lg">{currentMonth}</h1>
         <WeekNavigation />
       </div>
       <div className="flex gap-4 sm:max-w-xs">
-        {days.map((dayData, index) => (
-          <div key={index} className="min-w-[250px] space-y-4">
-            <div id={dayData.formattedDate} className="text-sm">
-              {dayData.displayDate}
+        <React.Suspense fallback="LOADING">
+          {days.map((dayData, index) => (
+            <div key={index} className="min-w-[250px] space-y-4">
+              <ColumnHeader dayData={dayData} />
+              <div className="space-y-2">
+                {dayData.tasks.map((task) => (
+                  <TaskItem key={task.id} task={task} labels={labels} lists={lists} type="board" />
+                ))}
+                <TaskItem lists={lists} labels={labels} date={dayData.formattedDate} />
+              </div>
             </div>
-            <div className="">
-              <CalendarColumn tasks={dayData.tasks} lists={lists} labels={labels} date={dayData.formattedDate} />
-            </div>
-          </div>
-        ))}
+          ))}
+        </React.Suspense>
       </div>
     </div>
   )
 }
-
-function getDisplayDate(day: Date): string {
-  if (isToday(day)) {
-    return 'Today - ' + format(day, 'dd MMM')
-  } else if (isTomorrow(day)) {
-    return 'Tomorrow - ' + format(day, 'dd MMM')
-  } else {
-    return format(day, 'EEEE - dd MMM') // Display day name and date for other days
+const ColumnHeader = ({
+  dayData,
+}: {
+  dayData: {
+    day: Date
+    formattedDate: string
+    tasks: TaskResponse[]
   }
+}) => {
+  const getDisplayDate = (day: Date): string => {
+    if (isToday(day)) {
+      return 'Today'
+    } else if (isTomorrow(day)) {
+      return 'Tomorrow'
+    } else {
+      return format(day, 'EEEE')
+    }
+  }
+
+  return (
+    <div id={dayData.formattedDate}>
+      <h3 className="text-sm font-bold">
+        {getDisplayDate(dayData.day)}
+        <span className="text-xs text-muted-foreground font-normal ml-2">{format(dayData.day, 'dd MMM')}</span>
+      </h3>
+    </div>
+  )
 }

@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 
-import ListSwitcher from '@/components/shared/list-switcher'
 import FilterOverlay from '@/components/modals/filter-overlay'
 
 import { useLayoutStore } from '@/store/layout-store'
@@ -10,16 +9,17 @@ import { cn } from '@/lib/util/cn'
 import { Icons } from '@/components/shared/icons'
 import { Button } from '@/components/ui/button'
 import { MobileSidebar } from './mobile-sidebar'
+import { ListResponse } from '@/types'
 
-const Navbar = () => {
+const Navbar = ({ lists }: { lists: ListResponse[] }) => {
   const { showSidebar, toggleSidebar } = useLayoutStore()
 
   return (
-    <header className="sticky top-0 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 border-b bg-background">
       <div className="flex h-14 items-center justify-between px-2">
         <div className="flex-gap">
           <div className="block md:!hidden">
-            <MobileSidebar />
+            <MobileSidebar lists={lists} />
           </div>
           <div className="md:!block hidden">
             <Button variant={'outline'} size={'icon'} onClick={toggleSidebar}>
@@ -27,9 +27,6 @@ const Navbar = () => {
                 className={cn('w-4 h-4 transition duration-300', showSidebar ? 'rotate-180 transform' : '')}
               />
             </Button>
-          </div>
-          <div className="lg:hidden">
-            <ListSwitcher />
           </div>
         </div>
         <div className="flex-gap">

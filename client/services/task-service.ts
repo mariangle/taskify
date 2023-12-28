@@ -20,7 +20,7 @@ const TaskService = {
     }
   },
   // Define default value for the entire argument using Partial
-  getTasks: async (params: Partial<SearchParamsOptions> = {}): Promise<TaskResponse[] | []> => {
+  getTasks: async (params: Partial<SearchParamsOptions> = {}): Promise<TaskResponse[]> => {
     try {
       const queryParams: { [key: string]: string | boolean } = {}
 

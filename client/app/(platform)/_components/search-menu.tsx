@@ -37,17 +37,13 @@ export default function SearchMenu({ ...props }) {
   return (
     <>
       <Button
-        variant="ghost"
-        className={cn(
-          'w-full group relative flex h-12 justify-start rounded-none border-r-2 border-transparent text-muted-foreground',
-        )}
+        variant="tertiary"
+        size={'sm'}
         onClick={() => setOpen(true)}
         {...props}
+        className={cn('', !showSidebar && 'md:hidden')}
       >
-        <span className="inline-flex ml-2">
-          <Icons.search className="w-4 h-4" />
-        </span>
-        {<span className={cn('ml-2 block', !showSidebar && 'md:hidden')}>Search</span>}
+        <Icons.search className="w-4 h-4" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Search..." />

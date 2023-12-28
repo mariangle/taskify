@@ -3,14 +3,9 @@
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/seperator'
-import { Cog, UserCircle, Bell, Tags, Palette, Heart, LucideIcon } from 'lucide-react'
+import { Cog, UserCircle, Bell, Heart, LucideIcon } from 'lucide-react'
 import { AccountForm } from '@/components/shared/settings/account-form'
 import { AppearanceForm } from '@/components/shared/settings/appearance-form'
-import LabelForm from '@/components/shared/settings/label-form'
-import { LabelResponse } from '@/types'
-
-import LabelTab from './label-tab'
 
 interface Tab {
   id: string
@@ -30,16 +25,6 @@ const settingsTabs: Tab[] = [
     icon: Cog,
   },
   {
-    id: 'labels',
-    label: 'Labels',
-    icon: Tags,
-  },
-  {
-    id: 'appearance',
-    label: 'Appearance',
-    icon: Palette,
-  },
-  {
     id: 'reminders',
     label: 'Reminders',
     icon: Bell,
@@ -57,8 +42,7 @@ type FormComponents = {
 
 const formComponents: FormComponents = {
   account: AccountForm,
-  labels: LabelTab,
-  appearance: AppearanceForm, // TODO: Maybe just put this into preferences form
+  preferences: AppearanceForm,
 }
 
 export default function SettingsPanel() {

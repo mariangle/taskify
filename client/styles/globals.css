@@ -12,15 +12,17 @@ body {
 @layer base {
   :root {
     --background: 0 0% 100%;
+    --background-secondary: 220 43% 98%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 142.1 76.2% 36.3%;
+    --primary: 238 50% 56%;
     --primary-foreground: 355.7 100% 97.3%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
+    --tertiary: 233 19% 98%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
     --accent: 0 0% 96.1%;
@@ -34,25 +36,27 @@ body {
   }
 
   .dark {
-    --background: 0, 0%, 12%;
+    --background: 234 17% 10%;
+    --background-secondary: 234 17% 12%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 12%;
+    --popover: 234 17% 15%;
     --popover-foreground: 0 0% 98%;
-    --primary: 142.1 76.2% 36.3%;
+    --primary: 238 50% 56%;
     --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 0 0% 14.9%;
+    --secondary: 23, 17% 6%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
+    --tertiary: 233 19% 19%;
+    --muted: 234 17% 18%;
+    --muted-foreground: 237 9% 65%;
+    --accent: 234 17% 18%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 40.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 18%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 83.1%;
+    --border: 234 17% 18%;
+    --input: 234 17% 18%;
+    --ring: 234 17% 18%;
   }
 }
 
@@ -61,34 +65,25 @@ body {
     @apply border-border;
   }
 
-  .heading {
-    @apply text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1] text-slate-900;
-  }
-  .subheading {
-    @apply text-4xl font-bold tracking-tight text-slate-900;
-  }
-
   body {
     @apply bg-background text-foreground;
   }
-  .purple-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF1CF7] to-[#b249f8];
+
+  .heading {
+    @apply text-3xl font-semibold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1];
+  }
+  .subheading {
+    @apply text-4xl font-bold tracking-tight;
   }
 
-  .blue-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-tr from-[#5EA2EF] to-[#0072F5];
+  .horizontal-gradient {
+    @apply bg-gradient-to-r dark:from-gray-50 dark:via-gray-200 dark:to-gray-300 from-gray-800 via-gray-500 to-gray-800 bg-clip-text  text-transparent;
   }
 
-  .green-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-t from-emerald-400 to-emerald-500;
+  .vertical-gradient {
+    @apply bg-gradient-to-t dark:from-gray-50 dark:via-gray-200 dark:to-gray-300 from-gray-800 via-gray-500 to-gray-800 bg-clip-text  text-transparent;
   }
 
-  .orange-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FF705B] to-[#FFB457];
-  }
-  .input-transparent {
-    @apply border-none bg-transparent focus-visible:ring-0 focus-visible:ring-opacity-0 focus-visible:ring-offset-0;
-  }
   .flex-between {
     @apply flex justify-between items-center;
   }
@@ -100,5 +95,8 @@ body {
   }
   .flex-center {
     @apply flex items-center justify-center;
+  }
+  .glassmorphism {
+    @apply border shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.1)] bg-[hsl(var(--background-secondary))]/50 backdrop-blur-sm dark:shadow-[inset_10px_-50px_94px_0_rgb(0,0,0,0.4)];
   }
 }

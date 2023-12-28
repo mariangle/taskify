@@ -10,6 +10,8 @@ import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 import TaskItem from '@/components/shared/task/task-item'
 import FilterSummary from '@/components/shared/filter/filter-summary'
 
+import { PageList, PageHeading, TaskList } from '@/components/ui/page'
+
 interface TasksPageProps {
   searchParams: Partial<ExtendedSearchParamsOptions>
 }
@@ -25,7 +27,7 @@ async function TasksPage({ searchParams }: TasksPageProps) {
     const completedTasks = await TaskService.getTasks({ completed: true, unsorted: true, ...searchParams })
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4s">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <BoardColumn tasks={incompleteTasks} color="bg-orange-500" status="Incomplete" lists={lists} labels={labels} />
         <BoardColumn tasks={pendingTasks} color="bg-sky-500" status="Pending" lists={lists} labels={labels} />
         <BoardColumn tasks={completedTasks} color="bg-emerald-500" status="Completed" lists={lists} labels={labels} />
@@ -36,20 +38,10 @@ async function TasksPage({ searchParams }: TasksPageProps) {
     const incompleteTasks = tasks.filter((t) => t.status !== 'Completed')
 
     return (
-      <div className="space-y-4 mx-auto">
-        <div className="space-y-2">
-          <div className="flex-gap">
-            <h1 className="font-bold text-xl">Inbox</h1>
-          </div>
-          <p className="text-muted-foreground text-sm">This is where your unsorted tasks reside.</p>
-        </div>
-        <div className="space-y-2">
-          {incompleteTasks.map((task) => (
-            <TaskItem key={task.id} task={task} lists={lists} labels={labels} />
-          ))}
-          <TaskItem labels={labels} lists={lists} type="board" />
-        </div>
-      </div>
+      <PageList>
+        <PageHeading items={incompleteTasks}>Inbox</PageHeading>
+        <TaskList tasks={incompleteTasks} labels={labels} lists={lists} />
+      </PageList>
     )
   }
 

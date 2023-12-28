@@ -1,14 +1,13 @@
 'use client'
 
 import React from 'react'
-import { SideNav } from './side-nav'
+import SideNav from './side-nav'
 import { useLayoutStore } from '@/store/layout-store'
 
 import { cn } from '@/lib/util/cn'
-import { Separator } from '@/components/ui/seperator'
-import { ToggleTheme } from './toggle-theme'
+import { ListResponse } from '@/types'
 
-export default function Sidebar() {
+export default function Sidebar({ lists }: { lists: ListResponse[] }) {
   const { showSidebar, toggleSidebar } = useLayoutStore()
 
   React.useEffect(() => {
@@ -26,20 +25,12 @@ export default function Sidebar() {
   return (
     <aside
       className={cn(
-        `relative h-screen border-r duration-500 hidden md:block flex-shrink-0`,
-        showSidebar ? 'w-44' : 'w-0 md:w-[68px]',
+        `relative h-screen border-r border-border duration-500 hidden md:block flex-shrink-0 bg-background`,
+        showSidebar ? 'w-56' : 'w-0 md:w-16',
       )}
     >
       <div className={cn('h-full', showSidebar ? '' : 'hidden md:block')}>
-        <div className="flex flex-col justify-between h-full">
-          <SideNav />
-          <div className="w-full space-y-4 p-3">
-            <Separator />
-            <div className="space-y-2">
-              <ToggleTheme />
-            </div>
-          </div>
-        </div>
+        <SideNav lists={lists} />
       </div>
     </aside>
   )

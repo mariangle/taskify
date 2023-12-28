@@ -45,10 +45,10 @@ export default function UserNav() {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <div className="h-full flex-gap w-full justify-start ml-1">
+        <div className="h-full flex-gap w-full justify-start">
           <Button
             variant={'ghost'}
-            className={cn('flex px-2 mx-2 rounded-full', showSidebar && 'hover:bg-muted rounded-sm')}
+            className={cn('flex px-2 rounded-full', showSidebar && 'hover:bg-muted rounded-sm')}
           >
             <div className="ring-2 ring-primary rounded-full p-[1px]">
               <div className="rounded-full bg-muted border">
