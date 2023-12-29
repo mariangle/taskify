@@ -1,13 +1,10 @@
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
+import { api } from '@/lib/api'
 import { LabelEntry, LabelResponse } from '@/types'
 import { requestOptions } from '@/lib/util'
 import { agent } from '@/lib/agent'
 
-const api = axios.create({
-  baseURL: 'https://localhost:7232/api',
-})
-
-const LabelService = {
+export const LabelService = {
   createLabel: async (label: LabelEntry): Promise<LabelResponse> => {
     try {
       const response: AxiosResponse = await api.post('/labels', label, requestOptions)
@@ -65,5 +62,3 @@ const LabelService = {
     }
   },
 }
-
-export default LabelService

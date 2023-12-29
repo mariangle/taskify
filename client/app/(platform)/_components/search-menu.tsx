@@ -20,7 +20,7 @@ import { useLayoutStore } from '@/store/layout-store'
 
 export default function SearchMenu({ ...props }) {
   const [open, setOpen] = React.useState(false)
-  const { showSidebar } = useLayoutStore()
+  const { showLeftSidebar } = useLayoutStore()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -41,7 +41,7 @@ export default function SearchMenu({ ...props }) {
         size={'sm'}
         onClick={() => setOpen(true)}
         {...props}
-        className={cn('', !showSidebar && 'md:hidden')}
+        className={cn('', !showLeftSidebar && 'md:hidden')}
       >
         <Icons.search className="w-4 h-4" />
       </Button>

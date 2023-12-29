@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { Icons } from '../icons'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
@@ -38,7 +38,6 @@ const navbarItems = [
 
 type AppearanceFormValues = z.infer<typeof appearanceFormSchema>
 
-// This can come from your database or API.
 const defaultValues: Partial<AppearanceFormValues> = {
   theme: 'light',
   navbarItems: ['filter'],
@@ -114,7 +113,7 @@ export function AppearanceForm() {
                     <option value="system">System</option>
                   </select>
                 </FormControl>
-                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
+                <Icons.chevronDown className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               </div>
               <FormDescription>Set the font you want to use in the dashboard.</FormDescription>
               <FormMessage />

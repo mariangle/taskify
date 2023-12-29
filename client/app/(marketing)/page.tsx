@@ -1,5 +1,7 @@
 import Features from './_components/features'
 
+import { SparklesIcon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -12,7 +14,10 @@ export default function Home() {
           <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-emerald-200 dark:from-emerald-950 to-orange-200 dark:to-orange-900 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"></div>
         </div>
         <div className="space-y-4">
-          <Badge variant={'secondary'}>v1.0</Badge>
+          <Badge variant={'secondary'} className="flex-gap py-1.5 px-3">
+            <SparklesIcon className="w-4 h-4" />
+            New features
+          </Badge>
           <h1 className="heading vertical-gradient">Elevate your productivity</h1>
         </div>
         <div className="my-4">

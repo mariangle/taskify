@@ -8,7 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Button } from '@/components/ui/button'
 
 import { cn } from '@/lib/util/cn'
-import { ListResponse } from '@/types'
+import type { ListResponse } from '@/types'
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form'
 
 interface ListComboboxProps<T extends FieldValues> {

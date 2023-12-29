@@ -1,9 +1,19 @@
 'use client'
 import * as React from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTitle } from '@/components/ui/dialog'
-import { ListResponse } from '@/types'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Icons } from '@/components/shared/icons'
-import ListForm from '../../app/(platform)/_components/list-form'
+
+import type { ListResponse } from '@/types'
+import ListForm from '@/components/shared/list/list-form'
+import { cn } from '@/lib/util/cn'
+import { buttonVariants } from '@/components/ui/button'
 
 interface ModalProps {
   list?: ListResponse
@@ -19,10 +29,12 @@ export default function ListModal({ list }: ModalProps) {
 
   return (
     <>
-      <button className="rounded-full p-1 hover:bg-accent" onClick={open}>
-        {icon}
-      </button>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          <div className={cn(buttonVariants({ size: 'icon', variant: 'ghost' }), 'w-5 h-5 rounded-full')}>
+            <Icons.more className="w-5 h-5 p-1" />
+          </div>
+        </DialogTrigger>
         <DialogContent ref={dialogRef} className="p-6">
           <DialogHeader>
             <DialogTitle>{list ? `Edit ${list.name}` : 'Create list'}</DialogTitle>

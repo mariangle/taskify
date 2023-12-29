@@ -7,9 +7,10 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { useLayoutStore } from '@/store/layout-store'
 
 export default function Chat() {
-  const [open, setOpen] = React.useState(false)
+  const { showChatOverlay, toggleChatOverlay } = useLayoutStore()
 
   const [messages, setMessages] = React.useState([
     {
@@ -28,19 +29,39 @@ export default function Chat() {
   const [input, setInput] = React.useState('')
   const inputLength = input.trim().length
 
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === 'c' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        toggleChatOverlay()
+      }
+    }
+
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [toggleChatOverlay])
+
   return (
-    <>
+    <div
+      className={cn(
+        'hidden right-4 bottom-4 glassmorphism rounded-lg fixed duration-300 transition z-50',
+        showChatOverlay && 'block',
+      )}
+    >
       <Card className="w-full">
-        <CardHeader className="flex flex-row items-center">
+        <CardHeader className="flex flex-row justify-between items-start">
           <div className="flex items-center space-x-4">
             <Avatar>
               <AvatarFallback>AI</AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-sm font-medium leading-none">Your Agent</p>
-              <p className="text-sm text-muted-foreground">.taskify</p>
+              <p className="text-sm font-medium leading-none">Kirk</p>
+              <p className="text-sm text-muted-foreground">AI Assistant</p>
             </div>
           </div>
+          <Button onClick={toggleChatOverlay} variant={'secondary'} size={'icon'} className="rounded-full h-6 w-6">
+            <Icons.close className="w-4 h-4" />
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4 h-[300px] overflow-y-scroll">
@@ -88,6 +109,6 @@ export default function Chat() {
           </form>
         </CardFooter>
       </Card>
-    </>
+    </div>
   )
 }

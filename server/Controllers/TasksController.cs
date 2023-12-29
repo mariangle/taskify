@@ -232,7 +232,7 @@ namespace server.Controllers
 
             if (!IsAuthorized(id))
             {
-                return Unauthorized();
+                return Unauthorized("You are not authorized to delete this task.");
             }
 
             try

@@ -1,25 +1,33 @@
 import { create } from 'zustand'
 
 interface InterfaceStore {
-  showSidebar: boolean
-  showSettings: boolean
-  showTask: boolean
-  toggleSidebar: () => void
-  toggleSettings: () => void
-  toggleTask: () => void
-  closeTask: () => void
-  setTask: (open: boolean) => void
-  setSettings: (open: boolean) => void
+  showLeftSidebar: boolean
+  showRightSidebar: boolean
+  showSettingsOverlay: boolean
+  showTaskOverlay: boolean
+  showChatOverlay: boolean
+  toggleLeftSidebar: () => void
+  toggleRightSidebar: () => void
+  toggleSettingsOverlay: () => void
+  toggleTaskOverlay: () => void
+  toggleChatOverlay: () => void
+  closeTaskOverlay: () => void
+  setTaskOverlay: (open: boolean) => void
+  setSettingsOverlay: (open: boolean) => void
 }
 
 export const useLayoutStore = create<InterfaceStore>((set) => ({
-  showSidebar: true,
-  showSettings: false,
-  showTask: false,
-  toggleSidebar: () => set((state) => ({ showSidebar: !state.showSidebar })),
-  toggleSettings: () => set((state) => ({ showSettings: !state.showSettings })),
-  toggleTask: () => set((state) => ({ showTask: !state.showTask })),
-  closeTask: () => set(() => ({ showTask: false })),
-  setTask: (open: boolean) => set(() => ({ showTask: open })),
-  setSettings: (open: boolean) => set(() => ({ showSettings: open })),
+  showLeftSidebar: true,
+  showRightSidebar: false,
+  showSettingsOverlay: false,
+  showTaskOverlay: false,
+  showChatOverlay: false,
+  toggleChatOverlay: () => set((state) => ({ showChatOverlay: !state.showChatOverlay })),
+  toggleLeftSidebar: () => set((state) => ({ showLeftSidebar: !state.showLeftSidebar })),
+  toggleRightSidebar: () => set((state) => ({ showRightSidebar: !state.showRightSidebar })),
+  toggleSettingsOverlay: () => set((state) => ({ showSettingsOverlay: !state.showSettingsOverlay })),
+  toggleTaskOverlay: () => set((state) => ({ showTaskOverlay: !state.showTaskOverlay })),
+  closeTaskOverlay: () => set(() => ({ showTaskOverlay: false })),
+  setTaskOverlay: (open: boolean) => set(() => ({ showTaskOverlay: open })),
+  setSettingsOverlay: (open: boolean) => set(() => ({ showSettingsOverlay: open })),
 }))

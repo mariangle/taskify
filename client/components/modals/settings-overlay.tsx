@@ -12,17 +12,17 @@ import SettingsPanel from '@/components/shared/settings/settings-panel'
 
 export default function SettingsOverlay() {
   const [isOpen, setOpen] = React.useState(false)
-  const { showSettings, toggleSettings, setSettings } = useLayoutStore()
+  const { showSettingsOverlay, toggleSettingsOverlay, setSettingsOverlay } = useLayoutStore()
   const isDesktop = useMediaQuery('(min-width: 768px)')
 
   React.useEffect(() => {
-    showSettings ? setOpen(true) : setOpen(false)
-  }, [showSettings])
+    showSettingsOverlay ? setOpen(true) : setOpen(false)
+  }, [showSettingsOverlay])
 
   if (isDesktop) {
     return (
-      <Dialog open={showSettings} onOpenChange={toggleSettings}>
-        <DialogContent className="max-h-screen overflow-y-auto">
+      <Dialog open={showSettingsOverlay} onOpenChange={toggleSettingsOverlay}>
+        <DialogContent className="overflow-y-auto h-full max-h-[700px]">
           <SettingsPanel />
         </DialogContent>
       </Dialog>
@@ -33,7 +33,7 @@ export default function SettingsOverlay() {
   const onOpenChange = () => {
     setOpen(!isOpen)
     if (!isOpen) {
-      setSettings(false)
+      setSettingsOverlay(false)
     }
   }
 

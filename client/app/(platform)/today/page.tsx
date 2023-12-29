@@ -1,20 +1,33 @@
-import TaskService from '@/services/task-service'
-import LabelService from '@/services/label-service'
-import ListService from '@/services/list-service'
+import { TaskService } from '@/services/task-service'
+import { LabelService } from '@/services/label-service'
+import { ListService } from '@/services/list-service'
 
 import { format } from 'date-fns'
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 
-import { PageList, PageHeading, TaskList } from '@/components/ui/page'
+import PageWithViews from '@/components/shared/page-with-views'
 
-export default async function Today() {
-  const tasks = await TaskService.getTasks({ dueDate: format(new Date(), 'dd-MM-yyyy') })
+interface PageProps {
+  searchParams: Partial<ExtendedSearchParamsOptions>
+}
+
+export default async function Today({ searchParams }: PageProps) {
+  const tasks = await TaskService.getTasks({
+    ...searchParams,
+    dueDate: format(new Date(), 'dd-MM-yyyy'),
+    incomplete: searchParams.incomplete ?? true,
+  })
   const labels = await LabelService.getLabels()
   const lists = await ListService.getLists()
 
   return (
-    <PageList>
-      <PageHeading items={tasks}>Today</PageHeading>
-      <TaskList tasks={tasks} labels={labels} lists={lists} />
-    </PageList>
+    <PageWithViews
+      searchParams={searchParams}
+      tasks={tasks}
+      labels={labels}
+      lists={lists}
+      heading="Inbox"
+      options={{ board: { dueDate: format(new Date(), 'dd-MM-yyyy') } }}
+    />
   )
 }

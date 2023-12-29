@@ -18,11 +18,11 @@ export const config = {
     links: [
       {
         title: 'Features',
-        href: '/docs/features',
+        href: '/features',
       },
       {
         title: 'Pricing',
-        href: '/docs/primitives/hover-card',
+        href: '/pricing',
       },
       {
         title: 'Docs',

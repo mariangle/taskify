@@ -4,7 +4,7 @@ import * as z from 'zod'
 import * as React from 'react'
 import toast from 'react-hot-toast'
 
-import { LabelResponse, ListResponse, TaskResponse } from '@/types'
+import type { LabelResponse, ListResponse, TaskResponse } from '@/types'
 import { handleError } from '@/lib/util'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/shared/icons'
 
-import TaskService from '@/services/task-service'
+import { TaskService } from '@/services/task-service'
 
 interface TaskFormProps {
   task?: TaskResponse
@@ -48,7 +48,7 @@ export const taskFormSchema = z.object({
 export type TaskFormValues = z.infer<typeof taskFormSchema>
 
 export default function TaskForm({ task, lists, labels, small = false, close, initialValues }: TaskFormProps) {
-  const { closeTask } = useLayoutStore()
+  const { closeTaskOverlay } = useLayoutStore()
 
   const params = useParams<{ listId: string }>()
   const path = usePathname()
@@ -85,9 +85,6 @@ export default function TaskForm({ task, lists, labels, small = false, close, in
   })
 
   const onSubmit = async (data: TaskFormValues) => {
-    console.log('form value', data.dueDate)
-    console.log('default value from form', defaultValues.dueDate)
-
     try {
       if (task) {
         await TaskService.updateTask(task.id, { id: task.id, ...data })
@@ -117,7 +114,7 @@ export default function TaskForm({ task, lists, labels, small = false, close, in
       }
       router.refresh()
       close && close()
-      closeTask()
+      closeTaskOverlay()
     } catch (err) {
       handleError(err)
     }
@@ -129,7 +126,7 @@ export default function TaskForm({ task, lists, labels, small = false, close, in
 
   const onCancel = () => {
     close && close()
-    closeTask()
+    closeTaskOverlay()
   }
 
   return (
@@ -152,7 +149,7 @@ export default function TaskForm({ task, lists, labels, small = false, close, in
             <Button variant={'secondary'} size={'sm'} onClick={onCancel} type="button">
               {small ? <Icons.close className="w-4 h-4" /> : 'Cancel'}
             </Button>
-            <Button variant={'theme'} size={'sm'} disabled={!watchName}>
+            <Button size={'sm'} disabled={!watchName}>
               {small ? <Icons.send className="w-4 h-4" /> : task ? 'Save changes' : 'Create task'}
             </Button>
           </div>

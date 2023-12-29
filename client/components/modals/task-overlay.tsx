@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-import { LabelResponse, ListResponse } from '@/types'
+import type { LabelResponse, ListResponse } from '@/types'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Drawer, DrawerContent } from '@/components/ui/drawer'
 
-import ListService from '@/services/list-service'
-import LabelService from '@/services/label-service'
+import { ListService } from '@/services/list-service'
+import { LabelService } from '@/services/label-service'
 import TaskForm from '@/components/shared/task/task-form'
 
 import { useLayoutStore } from '@/store/layout-store'
@@ -17,12 +17,12 @@ export default function TaskOverlay() {
   const [lists, setLists] = React.useState<ListResponse[]>([])
   const [labels, setLabels] = React.useState<LabelResponse[]>([])
   const { signal } = useSignal()
-  const { showTask, toggleTask, setTask } = useLayoutStore()
+  const { showTaskOverlay, toggleTaskOverlay, setTaskOverlay } = useLayoutStore()
   const isDesktop = useMediaQuery('(min-width: 768px)')
 
   React.useEffect(() => {
-    showTask ? setOpen(true) : setOpen(false)
-  }, [showTask])
+    showTaskOverlay ? setOpen(true) : setOpen(false)
+  }, [showTaskOverlay])
 
   React.useEffect(() => {
     const subscribe = async () => {
@@ -31,24 +31,24 @@ export default function TaskOverlay() {
       setLists(lists)
       setLabels(labels)
     }
-    if (showTask) subscribe()
-  }, [signal, showTask])
+    if (showTaskOverlay) subscribe()
+  }, [signal, showTaskOverlay])
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'q' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        toggleTask()
+        toggleTaskOverlay()
       }
     }
 
     document.addEventListener('keydown', down)
     return () => document.removeEventListener('keydown', down)
-  }, [toggleTask])
+  }, [toggleTaskOverlay])
 
   if (isDesktop) {
     return (
-      <Dialog open={showTask} onOpenChange={toggleTask} modal>
+      <Dialog open={showTaskOverlay} onOpenChange={toggleTaskOverlay} modal>
         <DialogContent className="max-w-xl h-fit overflow-y-auto max-h-screen">
           <TaskForm lists={lists} labels={labels} />
         </DialogContent>
@@ -60,12 +60,12 @@ export default function TaskOverlay() {
   const onOpenChange = () => {
     setOpen(!isOpen)
     if (!isOpen) {
-      setTask(false)
+      setTaskOverlay(false)
     }
   }
 
   return (
-    <Drawer open={showTask} onOpenChange={onOpenChange}>
+    <Drawer open={showTaskOverlay} onOpenChange={onOpenChange}>
       <DrawerContent>
         <div className="max-h-screen overflow-y-auto">
           <TaskForm lists={lists} labels={labels} />

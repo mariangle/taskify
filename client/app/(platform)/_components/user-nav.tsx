@@ -18,7 +18,7 @@ import { Icons } from '@/components/shared/icons'
 import React from 'react'
 
 export default function UserNav() {
-  const { showSidebar, toggleSettings } = useLayoutStore()
+  const { showLeftSidebar, toggleSettingsOverlay } = useLayoutStore()
   const [isOpen, setIsOpen] = React.useState(false)
 
   const dropdownItems = [
@@ -48,14 +48,14 @@ export default function UserNav() {
         <div className="h-full flex-gap w-full justify-start">
           <Button
             variant={'ghost'}
-            className={cn('flex px-2 rounded-full', showSidebar && 'hover:bg-muted rounded-sm')}
+            className={cn('flex px-2 rounded-full', showLeftSidebar && 'hover:bg-muted rounded-sm')}
           >
             <div className="ring-2 ring-primary rounded-full p-[1px]">
               <div className="rounded-full bg-muted border">
                 <Icons.user className="w-5 h-5 p-1" />
               </div>
             </div>
-            <div className={cn('flex-gap', !showSidebar && 'md:hidden')}>
+            <div className={cn('flex-gap', !showLeftSidebar && 'md:hidden')}>
               <span className="ml-3">Maria</span>
               <Icons.chevronDown className="w-3 h-3 transition duration-200" />
             </div>
@@ -77,7 +77,7 @@ export default function UserNav() {
           ))}
           <Button
             onClick={() => {
-              toggleSettings()
+              toggleSettingsOverlay()
               setIsOpen(false)
             }}
             variant={'ghost'}

@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-import { SubtaskResponse, TaskResponse } from '@/types'
+import type { SubtaskResponse, TaskResponse } from '@/types'
 import { cn } from '@/lib/util/cn'
 import { Checkbox } from '@/components/ui/checkbox'
 import { handleError } from '@/lib/util'
 import toast from 'react-hot-toast'
 
-import TaskService from '@/services/task-service'
-import SubtaskService from '@/services/subtask-service'
+import { TaskService } from '@/services/task-service'
+import { SubtaskService } from '@/services/subtask-service'
 import { useRouter } from 'next/navigation'
 
 interface StatusCheckboxProps {
@@ -23,7 +23,7 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
     setIsCompleted(task?.status === 'Completed' || subtask?.isCompleted || false)
   }, [task, subtask])
 
-  if (!task && !subtask) return <Checkbox disabled />
+  if (!task && !subtask) return <Checkbox disabled className="hover:cursor-default" />
 
   const onToggleStatus = async () => {
     try {
@@ -65,19 +65,12 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
 
   const className =
     task?.priority === 'Low'
-      ? 'border-sky-500 bg-sky-500/10 mt-1'
+      ? 'border-sky-500 bg-sky-500/10'
       : task?.priority === 'Medium'
-      ? 'border-yellow-500 bg-yellow-500/10 mt-1'
+      ? 'border-yellow-500 bg-yellow-500/10'
       : task?.priority === 'High'
-      ? 'border-red-500 bg-red-500/10 mt-1'
-      : 'mt-1'
+      ? 'border-red-500 bg-red-500/10'
+      : ''
 
-  return (
-    <Checkbox
-      checked={isCompleted}
-      onCheckedChange={onToggleStatus}
-      disabled={!task && !subtask}
-      className={className}
-    />
-  )
+  return <Checkbox checked={isCompleted} onCheckedChange={onToggleStatus} className={className} />
 }

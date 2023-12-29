@@ -1,13 +1,10 @@
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
+import { api } from '@/lib/api'
 import { ListEntry, ListResponse } from '@/types'
 import { requestOptions } from '@/lib/util'
 import { agent } from '@/lib/agent'
 
-const api = axios.create({
-  baseURL: 'https://localhost:7232/api',
-})
-
-const ListService = {
+export const ListService = {
   createList: async (list: ListEntry): Promise<ListResponse> => {
     try {
       const response: AxiosResponse = await api.post('/lists', list, requestOptions)
@@ -57,5 +54,3 @@ const ListService = {
     }
   },
 }
-
-export default ListService

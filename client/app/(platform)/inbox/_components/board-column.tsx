@@ -1,4 +1,4 @@
-import { LabelResponse, ListResponse, TaskResponse } from '@/types'
+import type { LabelResponse, ListResponse, TaskResponse } from '@/types'
 import { cn } from '@/lib/util/cn'
 import TaskItem from '@/components/shared/task/task-item'
 

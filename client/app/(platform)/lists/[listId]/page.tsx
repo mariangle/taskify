@@ -1,31 +1,34 @@
-import ListService from '@/services/list-service'
+import { ListService } from '@/services/list-service'
 
-import LabelService from '@/services/label-service'
-import TaskService from '@/services/task-service'
+import { LabelService } from '@/services/label-service'
+import { TaskService } from '@/services/task-service'
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 
-import { PageList, PageHeading, TaskList } from '@/components/ui/page'
+import PageWithViews from '@/components/shared/page-with-views'
 
 interface PageProps {
   params: { listId: string }
   searchParams: Partial<ExtendedSearchParamsOptions>
 }
 
-async function ListPage({ params, searchParams }: PageProps) {
+export default async function List({ params, searchParams }: PageProps) {
   const [list, lists, labels, tasks] = await Promise.all([
     ListService.getList(params.listId),
     ListService.getLists(),
     LabelService.getLabels(),
-    TaskService.getTasks({ listId: params.listId, ...searchParams }),
+    TaskService.getTasks({ ...searchParams, listId: params.listId, incomplete: searchParams.incomplete ?? true }),
   ])
 
   if (!list) return null
 
   return (
-    <PageList>
-      <PageHeading items={tasks}>{list.name}</PageHeading>
-      <TaskList tasks={tasks} labels={labels} lists={lists} />
-    </PageList>
+    <PageWithViews
+      searchParams={searchParams}
+      tasks={tasks}
+      labels={labels}
+      lists={lists}
+      heading="Inbox"
+      options={{ board: { listId: list.id } }}
+    />
   )
 }
-export default ListPage

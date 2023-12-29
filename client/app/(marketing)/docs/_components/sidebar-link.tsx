@@ -14,7 +14,6 @@ interface SidebarLinkProps {
 
 export default function SidebarLink({ link }: SidebarLinkProps) {
   const path = usePathname()
-
   const isActive = path === link.href
 
   return (

@@ -1,12 +1,9 @@
-import axios, { AxiosResponse } from 'axios'
-import { SubtaskEntry } from '@/types'
+import { AxiosResponse } from 'axios'
+import { api } from '@/lib/api'
+import { SubtaskEntry, SubtaskResponse } from '@/types'
 import { requestOptions } from '@/lib/util'
 
-const api = axios.create({
-  baseURL: 'https://localhost:7232/api',
-})
-
-const SubtaskService = {
+export const SubtaskService = {
   createSubtask: async (taskId: string, subtask: SubtaskEntry): Promise<void> => {
     try {
       const response: AxiosResponse = await api.post(`/tasks/${taskId}/subtask`, subtask, requestOptions)
@@ -15,7 +12,7 @@ const SubtaskService = {
       throw err
     }
   },
-  updateSubtask: async (subtaskId: string, subtask: SubtaskEntry): Promise<void> => {
+  updateSubtask: async (subtaskId: string, subtask: SubtaskResponse): Promise<void> => {
     try {
       const response: AxiosResponse = await api.put(`/subtasks/${subtaskId}`, subtask, requestOptions)
       return response.data
@@ -32,5 +29,3 @@ const SubtaskService = {
     }
   },
 }
-
-export default SubtaskService

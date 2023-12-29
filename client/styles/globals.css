@@ -10,6 +10,83 @@ body {
 }
 
 @layer base {
+  /*
+  html[data-theme='light'] {
+    --background: 0 0% 100%;
+    --background-secondary: 220 43% 98%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 238 50% 56%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --tertiary: 233 19% 98%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.75rem;
+  }
+
+  html[data-theme='dark'] {
+    --background: 0 0% 3.9%;
+    --background-secondary: 0 0% 5.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --tertiary: 0 0% 19%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --radius: 0.75rem;
+  }
+
+  html[data-theme='midnight'] {
+    --background: 234 17% 10%;
+    --background-secondary: 234 17% 12%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 234 17% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 238 50% 56%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 234 17% 17%;
+    --secondary-foreground: 0 0% 98%;
+    --tertiary: 233 19% 19%;
+    --muted: 234 17% 24%;
+    --muted-foreground: 237 9% 65%;
+    --accent: 234 17% 18%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 55.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 234 17% 18%;
+    --input: 234 17% 23%;
+    --ring: 234 17% 18%;
+    --radius: 0.75rem;
+  }
+  */
+
   :root {
     --background: 0 0% 100%;
     --background-secondary: 220 43% 98%;
@@ -41,22 +118,47 @@ body {
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
-    --popover: 234 17% 15%;
+    --popover: 234 17% 12%;
     --popover-foreground: 0 0% 98%;
     --primary: 238 50% 56%;
     --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 23, 17% 6%;
+    --secondary: 234 17% 17%;
     --secondary-foreground: 0 0% 98%;
     --tertiary: 233 19% 19%;
-    --muted: 234 17% 18%;
+    --muted: 234 17% 24%;
     --muted-foreground: 237 9% 65%;
     --accent: 234 17% 18%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 40.6%;
+    --destructive: 0 62.8% 55.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 234 17% 18%;
-    --input: 234 17% 18%;
+    --input: 234 17% 23%;
     --ring: 234 17% 18%;
+  }
+
+  .midnight {
+    --background: 234 17% 10%;
+    --background-secondary: 234 17% 12%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 234 17% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 238 50% 56%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 234 17% 17%;
+    --secondary-foreground: 0 0% 98%;
+    --tertiary: 233 19% 19%;
+    --muted: 234 17% 24%;
+    --muted-foreground: 237 9% 65%;
+    --accent: 234 17% 18%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 55.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 234 17% 18%;
+    --input: 234 17% 23%;
+    --ring: 234 17% 18%;
+    --radius: 0.75rem;
   }
 }
 
@@ -77,11 +179,11 @@ body {
   }
 
   .horizontal-gradient {
-    @apply bg-gradient-to-r dark:from-gray-50 dark:via-gray-200 dark:to-gray-300 from-gray-800 via-gray-500 to-gray-800 bg-clip-text  text-transparent;
+    @apply bg-gradient-to-r dark:from-gray-50 dark:via-gray-200 dark:to-gray-300 from-gray-800 via-gray-500 to-gray-800 bg-clip-text text-transparent;
   }
 
   .vertical-gradient {
-    @apply bg-gradient-to-t dark:from-gray-50 dark:via-gray-200 dark:to-gray-300 from-gray-800 via-gray-500 to-gray-800 bg-clip-text  text-transparent;
+    @apply bg-gradient-to-t dark:from-white dark:via-gray-200 dark:to-white from-gray-800 via-gray-500 to-gray-800 bg-clip-text text-transparent;
   }
 
   .flex-between {

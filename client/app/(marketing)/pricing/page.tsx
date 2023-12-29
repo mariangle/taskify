@@ -59,9 +59,7 @@ export default function Pricing() {
 const Feature = ({ locked = false, feature }: { locked?: boolean; feature: string }) => {
   return (
     <li className="flex-gap">
-      <div className={cn('w-5 h-5 bg-purple-500/10 rounded-full flex-center', locked && 'bg-gray-100')}>
-        <Icons.check className={cn('w-3 h-3 text-purple-500/50', locked && 'text-gray-400')} />
-      </div>
+      <Icons.check className={cn('w-3 h-3 text-purple-500/60', locked && 'text-gray-400')} />
       <span>{feature}</span>
     </li>
   )

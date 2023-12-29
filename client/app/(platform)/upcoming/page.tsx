@@ -1,19 +1,18 @@
-import TaskService from '@/services/task-service'
-import LabelService from '@/services/label-service'
-import ListService from '@/services/list-service'
+import { TaskService } from '@/services/task-service'
+import { LabelService } from '@/services/label-service'
+import { ListService } from '@/services/list-service'
 import TaskItem from '@/components/shared/task/task-item'
-import { LoadingBoardPage } from '@/components/ui/loading'
 
-import WeekNavigation from './_components/week-navigation'
+import FilterWeek from '@/components/shared/filter-week'
 
 import { startOfWeek, addWeeks, format, getDay, addDays, startOfMonth, isToday, isTomorrow } from 'date-fns'
-import { TaskResponse } from '@/types'
-import React from 'react'
+import type { TaskResponse } from '@/types'
+import { PageHeading } from '@/components/ui/page'
+
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 
 interface UpcomingPageProps {
-  searchParams: {
-    offset: number
-  }
+  searchParams: Partial<ExtendedSearchParamsOptions>
 }
 
 export default async function UpcomingPage({ searchParams }: UpcomingPageProps) {
@@ -28,7 +27,7 @@ export default async function UpcomingPage({ searchParams }: UpcomingPageProps) 
       const day = addDays(startDate, index)
       const formattedDate = format(day, 'dd-MM-yyyy')
 
-      const tasks = await TaskService.getTasks({ dueDate: formattedDate })
+      const tasks = await TaskService.getTasks({ ...searchParams, dueDate: formattedDate })
 
       return { day, formattedDate, tasks }
     }),
@@ -40,23 +39,21 @@ export default async function UpcomingPage({ searchParams }: UpcomingPageProps) 
   return (
     <div className="space-y-4 w-full">
       <div className="flex-gap">
-        <h1 className="font-bold text-lg">{currentMonth}</h1>
-        <WeekNavigation />
+        <PageHeading>{currentMonth}</PageHeading>
+        <FilterWeek />
       </div>
       <div className="flex gap-4 sm:max-w-xs">
-        <React.Suspense fallback="LOADING">
-          {days.map((dayData, index) => (
-            <div key={index} className="min-w-[250px] space-y-4">
-              <ColumnHeader dayData={dayData} />
-              <div className="space-y-2">
-                {dayData.tasks.map((task) => (
-                  <TaskItem key={task.id} task={task} labels={labels} lists={lists} type="board" />
-                ))}
-                <TaskItem lists={lists} labels={labels} date={dayData.formattedDate} />
-              </div>
+        {days.map((dayData, index) => (
+          <div key={index} className="min-w-[250px] space-y-4">
+            <ColumnHeader dayData={dayData} />
+            <div className="space-y-2">
+              {dayData.tasks.map((task) => (
+                <TaskItem key={task.id} task={task} labels={labels} lists={lists} type="board" />
+              ))}
+              <TaskItem lists={lists} labels={labels} date={dayData.formattedDate} />
             </div>
-          ))}
-        </React.Suspense>
+          </div>
+        ))}
       </div>
     </div>
   )

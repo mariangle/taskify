@@ -8,6 +8,7 @@ export interface SearchParamsOptions {
   pending?: boolean
   completed?: boolean
   view?: string
+  offset: number
   dueDate?: string
 }
 
@@ -21,12 +22,12 @@ export const queryParamsMapping: Record<keyof SearchParamsOptions, keyof SearchP
   incomplete: 'incomplete',
   completed: 'completed',
   view: 'view',
+  offset: 'offset',
   dueDate: 'dueDate',
 }
 
 export interface ExtendedSearchParamsOptions extends SearchParamsOptions {
   view?: 'board' | 'table' | 'list'
-  clear: string
   status: 'incomplete' | 'pending' | 'completed'
 }
 

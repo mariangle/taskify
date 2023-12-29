@@ -1,17 +1,41 @@
 import TaskItem from '../shared/task/task-item'
 import LabelItem from '../shared/label/label-item'
 
+import { cn } from '@/lib/util/cn'
+
 import type { LabelResponse, ListResponse, TaskResponse } from '@/types'
 
 export const PageList = ({ children }: { children: React.ReactNode }) => {
   return <div className="w-full max-w-screen-md mx-auto">{children}</div>
 }
 
-export const PageHeading = ({ children, items }: { children: React.ReactNode; items?: any[] }) => {
+export const PageBoard = ({ children }: { children: React.ReactNode }) => {
+  return <div className="w-full max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">{children}</div>
+}
+
+export const PageTable = ({ children }: { children: React.ReactNode }) => {
+  return <div className="w-full max-w-screen-lg mx-auto">{children}</div>
+}
+
+export const PageHeading = ({
+  children,
+  items,
+  color,
+  level = 'h1',
+  className,
+}: {
+  children: React.ReactNode
+  items?: any[]
+  color?: string
+  level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  className?: string
+}) => {
+  const HeadingTag = level
+
   return (
     <div className="flex-gap">
-      <h1 className="font-bold text-xl">{children}</h1>
-
+      {color && <span className={cn('flex items-center justify-center h-2 w-2 rounded-full', color)} />}
+      <HeadingTag className={cn('font-bold text-xl', className)}>{children}</HeadingTag>
       {items && <p className="text-muted-foreground text-xs">({items.length})</p>}
     </div>
   )

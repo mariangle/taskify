@@ -1,8 +1,9 @@
 'use client'
 
 import * as React from 'react'
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Modal } from '@/components/ui/modal'
 import { useMounted } from '@/hooks/use-mounted'
 
 interface AlertModalProps {
@@ -21,20 +22,32 @@ const AlertModal: React.FC<AlertModalProps> = ({ title, description, isOpen, onC
     return null
   }
 
+  const onChange = (open: boolean) => {
+    if (!open) {
+      onClose()
+    }
+  }
+
   const modalTitle = title ? title : 'Are you sure?'
   const modalDescription = description ? description : 'This action cannot be undone.'
 
   return (
-    <Modal title={modalTitle} description={modalDescription} isOpen={isOpen} onClose={onClose}>
-      <div className="space-x-2 flex items-center justify-end w-full">
-        <Button disabled={loading} variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button disabled={loading} variant="default" onClick={onConfirm}>
-          Continue
-        </Button>
-      </div>
-    </Modal>
+    <Dialog open={isOpen} onOpenChange={onChange}>
+      <DialogContent className="p-6">
+        <DialogHeader>
+          <DialogTitle>{modalTitle}</DialogTitle>
+          <DialogDescription>{modalDescription}</DialogDescription>
+        </DialogHeader>
+        <div className="space-x-2 flex items-center justify-end w-full">
+          <Button disabled={loading} variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button disabled={loading} variant="destructive" onClick={onConfirm}>
+            Continue
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

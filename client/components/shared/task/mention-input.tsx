@@ -3,7 +3,7 @@ import React from 'react'
 import { cn } from '@/lib/util/cn'
 import { MentionsInput as ReactMentionInput, Mention } from 'react-mentions'
 import { inputStyle } from '@/styles/styles'
-import { ListResponse, LabelResponse, TaskResponse } from '@/types'
+import type { ListResponse, LabelResponse, TaskResponse } from '@/types'
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form'
 import { extractName, extractLabelIds, extractListId, formatMentionInput } from '@/lib/util/mention-processor'
 

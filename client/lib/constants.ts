@@ -1,5 +1,4 @@
-import { HiArrowSmDown, HiArrowSmUp, HiArrowSmRight } from 'react-icons/hi'
-
+import { ArrowDown, ArrowLeft, ArrowUp } from 'lucide-react'
 export type Mode = {
   label: string
   value: string
@@ -34,7 +33,7 @@ export const statuses = [
 ]
 
 export const priorities = [
-  { id: 1, value: 'Low', label: 'Low', icon: HiArrowSmDown },
-  { id: 2, value: 'Medium', label: 'Medium', icon: HiArrowSmRight },
-  { id: 3, value: 'High', label: 'High', icon: HiArrowSmUp },
+  { id: 1, value: 'Low', label: 'Low', icon: ArrowDown },
+  { id: 2, value: 'Medium', label: 'Medium', icon: ArrowLeft },
+  { id: 3, value: 'High', label: 'High', icon: ArrowUp },
 ]

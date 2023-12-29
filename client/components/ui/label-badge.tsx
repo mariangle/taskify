@@ -2,11 +2,11 @@
 import React from 'react'
 
 import { Badge } from '@/components/ui/badge'
-import { LabelResponse } from '@/types'
+import type { LabelResponse } from '@/types'
 import { Icons } from '@/components/shared/icons'
 import { revalidate } from '@/lib/_actions/revalidate-path'
 
-import TaskService from '@/services/task-service'
+import { TaskService } from '@/services/task-service'
 import { handleError } from '@/lib/util'
 import { usePathname } from 'next/navigation'
 

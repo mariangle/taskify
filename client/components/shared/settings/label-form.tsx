@@ -1,20 +1,20 @@
 'use client'
 
 import * as React from 'react'
+import * as z from 'zod'
 import toast from 'react-hot-toast'
 
-import FormInput from '@/components/common/form-input'
-import { Form } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/shared/icons'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LabelResponse } from '@/types/label'
+import type { LabelResponse } from '@/types/label'
 import { useRouter } from 'next/navigation'
 import { handleError } from '@/lib/util'
-import { LabelSchemaType, LabelSchema } from '@/lib/validations/label'
-import LabelService from '@/services/label-service'
+import { LabelService } from '@/services/label-service'
 import { useSignal } from '@/hooks/use-signal'
 
 interface FormProps {
@@ -22,13 +22,20 @@ interface FormProps {
   close?: () => void
 }
 
+export const labelFormSchema = z.object({
+  name: z.string().min(2),
+  color: z.string().min(2),
+})
+
+export type LabelFormValues = z.infer<typeof labelFormSchema>
+
 export default function LabelForm({ label, close }: FormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const { triggerSignal } = useSignal()
 
-  const form = useForm<LabelSchemaType>({
-    resolver: zodResolver(LabelSchema),
+  const form = useForm<LabelFormValues>({
+    resolver: zodResolver(labelFormSchema),
     defaultValues: {
       ...label,
       color: label?.color || '#ffffff',
@@ -36,7 +43,7 @@ export default function LabelForm({ label, close }: FormProps) {
     },
   })
 
-  const onSubmit = async (data: LabelSchemaType) => {
+  const onSubmit = async (data: LabelFormValues) => {
     try {
       setIsLoading(true)
       if (label) {
@@ -63,14 +70,38 @@ export default function LabelForm({ label, close }: FormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex-gap w-full">
-          <FormInput form={form} name="color" type="color" className="aspect-square rounded-full" />
-          <FormInput form={form} name="name" fullWidth />
+          <FormField
+            control={form.control}
+            name="color"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Color</FormLabel>
+                <FormControl>
+                  <Input type="color" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Eg. Shopping" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <div className="flex-gap justify-end mt-2">
-          <Button type="button" onClick={onCancel} disabled={isLoading}>
+          <Button type="button" variant={'secondary'} onClick={onCancel} disabled={isLoading}>
             <Icons.close className="w-4 h-4" />
           </Button>
-          <Button type="submit" variant={'default'} disabled={isLoading} loading={isLoading}>
+          <Button type="submit" disabled={isLoading} loading={isLoading}>
             {label ? 'Save' : 'Add'}
           </Button>
         </div>

@@ -8,9 +8,9 @@ import { ListContainer, BoardContainer } from '@/components/ui/container'
 
 import LabelForm from '@/components/shared/settings/label-form'
 import LabelBadge from '@/components/ui/label-badge'
-import LabelActionsdropDown from '@/components/shared/label/label-actions-dropdown'
+import LabelActions from '@/components/shared/label/label-actions'
 
-import { LabelResponse } from '@/types'
+import type { LabelResponse } from '@/types'
 
 interface LabelItemProps {
   label?: LabelResponse
@@ -52,7 +52,7 @@ export default function LabelItem({ label }: LabelItemProps) {
           <LabelBadge label={label} noBorder />
         </div>
         <div className="opacity-0 group-hover:opacity-100">
-          <LabelActionsdropDown label={label} setOpen={open} />
+          <LabelActions label={label} setOpen={open} />
         </div>
       </div>
     </ListContainer>

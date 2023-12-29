@@ -10,7 +10,7 @@ interface TaskLabelRelation {
   taskId: string
 }
 
-const TaskService = {
+export const TaskService = {
   createTask: async (task: TaskEntry) => {
     try {
       const response: AxiosResponse<TaskResponse> = await api.post('/tasks', task, requestOptions)
@@ -22,7 +22,7 @@ const TaskService = {
   // Define default value for the entire argument using Partial
   getTasks: async (params: Partial<SearchParamsOptions> = {}): Promise<TaskResponse[]> => {
     try {
-      const queryParams: { [key: string]: string | boolean } = {}
+      const queryParams: { [key: string]: string | boolean | number } = {}
 
       // Loop through each [param, queryParam] pair in the queryParamsMapping object
       for (const [param, queryParam] of Object.entries(queryParamsMapping)) {
@@ -89,5 +89,3 @@ const TaskService = {
     }
   },
 }
-
-export default TaskService

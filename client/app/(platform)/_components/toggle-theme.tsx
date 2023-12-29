@@ -1,16 +1,18 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/shared/icons'
+
 import { useTheme } from 'next-themes'
 import { useMounted } from '@/hooks/use-mounted'
 import { useLayoutStore } from '@/store/layout-store'
 
 export function ToggleTheme() {
-  const { showSidebar } = useLayoutStore()
+  const { showLeftSidebar } = useLayoutStore()
   const { setTheme, theme } = useTheme()
   const isMounted = useMounted()
 
-  if (!isMounted) return null
+  if (!isMounted) return <Skeleton className="w-full h-10" />
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
@@ -41,5 +43,5 @@ export function ToggleTheme() {
     )
   }
 
-  return showSidebar ? renderTabs() : renderButton()
+  return showLeftSidebar ? renderTabs() : renderButton()
 }

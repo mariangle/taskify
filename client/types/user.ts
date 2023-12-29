@@ -1,4 +1,4 @@
-import { TaskResponse } from '.'
+import type { TaskResponse } from '.'
 
 export type UserEntry = {
   email: string
