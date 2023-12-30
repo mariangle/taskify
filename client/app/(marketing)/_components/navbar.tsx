@@ -9,7 +9,7 @@ import { cn } from '@/lib/util/cn'
 import { config } from '@/lib/config'
 
 export default async function Navbar() {
-  const isAuthenticated = await authenticate()
+  const { isAuthenticated } = await authenticate()
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b bg-background/50 backdrop-blur-lg">
@@ -17,7 +17,7 @@ export default async function Navbar() {
         <Link href="/" aria-current="page" className="font-bold flex-1">
           .taskify
         </Link>
-        <ul className="flex-gap flex-1 flex-center">
+        <ul className="flex-gap gap-6 flex-1 flex-center">
           {config.marketing.links.map((link) => (
             <NavbarLink key={link.href} link={link} />
           ))}

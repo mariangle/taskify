@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
 
 import { cn } from '@/lib/util/cn'

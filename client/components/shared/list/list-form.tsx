@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 
 import AlertModal from '@/components/modals/alert-modal'
 
@@ -103,7 +103,7 @@ const ListForm = ({ list, onClose }: FormProps) => {
             )}
           </div>
           <div className="flex-gap">
-            <Button variant={'ghost'} onClick={onClose} type="button">
+            <Button variant={'secondary'} onClick={onClose} type="button">
               Cancel
             </Button>
             <Button type="submit" variant={'default'}>

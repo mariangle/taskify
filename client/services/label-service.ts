@@ -34,16 +34,6 @@ export const LabelService = {
       return null
     }
   },
-  getTaskLabels: async ({ taskId }: { taskId: string }): Promise<LabelResponse[] | null> => {
-    try {
-      const response: AxiosResponse = await api.get(`/tasks/${taskId}/labels`, {
-        httpsAgent: agent,
-      })
-      return response.data
-    } catch (error) {
-      return null
-    }
-  },
   updateLabel: async (labelId: string, updatedLabel: LabelEntry): Promise<LabelResponse> => {
     try {
       const response: AxiosResponse = await api.put(`/labels/${labelId}`, updatedLabel, requestOptions)

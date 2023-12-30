@@ -11,6 +11,7 @@ export const useFilter = () => {
   const view = (searchParams.get('view') as ExtendedSearchParamsOptions['view']) ?? 'list'
   const incomplete = searchParams.get('incomplete') ?? false
   const labelId = searchParams.get('labelId')
+  const overdue = searchParams.get('overdue') ?? false
 
   const createQueryString = (name: FilterOption, value: string | 'prev' | 'next') => {
     const params = new URLSearchParams(searchParams)
@@ -47,5 +48,6 @@ export const useFilter = () => {
     offset,
     incomplete,
     labelId,
+    overdue,
   }
 }

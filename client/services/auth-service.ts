@@ -1,33 +1,47 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { UserResponse } from '@/types';
-import { setToken as setServerToken } from '@/lib/_actions/set-token';
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import { UserResponse } from '@/types'
+import { setToken as setServerToken } from '@/lib/_actions/set-token'
+import { requestOptions } from '@/lib/util'
+import { agent } from '@/lib/agent'
 
 class AuthService {
-  private api: AxiosInstance;
+  private api: AxiosInstance
 
   constructor() {
     this.api = axios.create({
       baseURL: 'https://localhost:7232/api',
-    });
+    })
   }
 
   async login(email: string, password: string): Promise<void> {
     try {
-      const response: AxiosResponse = await this.api.post('/login', { email, password });
+      const response: AxiosResponse = await this.api.post('/login', { email, password })
       await setServerToken(response.data)
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
   async register(email: string, name: string, password: string): Promise<UserResponse> {
     try {
-      const response: AxiosResponse = await this.api.post('/register', { email, name, password });
-      return response.data;
+      const response: AxiosResponse = await this.api.post('/register', { email, name, password })
+      return response.data
     } catch (error) {
-      throw error;
+      throw error
+    }
+  }
+
+  async getCurrentUser(): Promise<UserResponse> {
+    try {
+      const response: AxiosResponse = await this.api.get('/current-user', {
+        ...requestOptions,
+        httpsAgent: agent,
+      })
+      return response.data
+    } catch (error) {
+      throw error
     }
   }
 }
 
-export default AuthService;
+export default AuthService

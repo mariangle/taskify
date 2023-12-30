@@ -3,7 +3,7 @@
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { ListContainer, BoardContainer } from '@/components/ui/container'
 
 import LabelForm from '@/components/shared/settings/label-form'

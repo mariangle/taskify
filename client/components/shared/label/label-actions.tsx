@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import AlertModal from '@/components/modals/alert-modal'
 
 import type { LabelResponse } from '@/types'
@@ -63,8 +63,8 @@ export default function LabelActions({ label, setOpen }: LabelActionsProps) {
       />
       <DropdownMenu modal>
         <DropdownMenuTrigger asChild>
-          <Button size={'icon'} variant={'ghost'} className="w-5 h-5 rounded-full">
-            <Icons.more className="w-5 h-5 p-1" />
+          <Button size={'icon'} variant={'ghost'} className="rounded-full">
+            <Icons.more className="w-3 h-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent onSelect={(e) => e.preventDefault()}>

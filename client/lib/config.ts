@@ -33,21 +33,25 @@ export const config = {
   platform: {
     links: [
       {
+        id: 'inbox',
         label: 'Inbox',
         icon: Inbox,
         href: '/inbox',
       },
       {
+        id: 'today',
         label: 'Today',
         icon: CalendarDays,
         href: '/today',
       },
       {
+        id: 'upcoming',
         label: 'Upcoming',
         icon: CalendarClock,
         href: '/upcoming',
       },
       {
+        id: 'labels',
         label: 'Labels',
         icon: Tag,
         href: '/labels',

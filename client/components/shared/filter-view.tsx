@@ -1,7 +1,7 @@
 'use client'
 
 import { Separator } from '@/components/ui/seperator'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { useFilter } from '@/hooks/use-filter'
 import { cn } from '@/lib/util/cn'

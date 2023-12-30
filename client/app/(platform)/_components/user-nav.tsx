@@ -1,9 +1,6 @@
-import { deleteToken } from '@/lib/_actions/logout'
-import { Button } from '@/components/ui/button'
-import { revalidate } from '@/lib/_actions/revalidate-path'
-import { useLayoutStore } from '@/store/layout-store'
-import { cn } from '@/lib/util/cn'
+import * as React from 'react'
 import Link from 'next/link'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +11,17 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Icons } from '@/components/shared/icons'
-import React from 'react'
+import { Icons } from '@/components/ui/icons'
+import { Button } from '@/components/ui/button'
 
-export default function UserNav() {
+import { deleteToken } from '@/lib/_actions/logout'
+import { revalidate } from '@/lib/_actions/revalidate-path'
+import { useLayoutStore } from '@/store/layout-store'
+import { cn } from '@/lib/util/cn'
+
+import type { UserResponse } from '@/types'
+
+export default function UserNav({ user }: { user: UserResponse }) {
   const { showLeftSidebar, toggleSettingsOverlay } = useLayoutStore()
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -56,14 +60,14 @@ export default function UserNav() {
               </div>
             </div>
             <div className={cn('flex-gap', !showLeftSidebar && 'md:hidden')}>
-              <span className="ml-3">Maria</span>
+              <span className="ml-3">{user.name}</span>
               <Icons.chevronDown className="w-3 h-3 transition duration-200" />
             </div>
           </Button>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {dropdownItems.map((item) => (
@@ -75,17 +79,15 @@ export default function UserNav() {
               </DropdownMenuItem>
             </Link>
           ))}
-          <Button
+          <DropdownMenuItem
             onClick={() => {
               toggleSettingsOverlay()
               setIsOpen(false)
             }}
-            variant={'ghost'}
-            className="w-full px-2 py-0 justify-start"
           >
             <Icons.settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
-          </Button>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

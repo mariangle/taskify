@@ -4,7 +4,7 @@ export const BoardContainer: React.FC<React.HTMLProps<HTMLDivElement>> = ({ chil
   return (
     <div
       className={cn(
-        'list-none border bg-background-secondary rounded-md shadow-lg hover:border-primary/50 hover:shadow-xl transition-all duration-100',
+        'list-none border bg-background-secondary rounded-md shadow-lg hover:border-primary/50 hover:shadow-xl',
         className,
       )}
       {...props}
@@ -19,5 +19,5 @@ export const ListContainer = ({ children, className }: { children: React.ReactNo
 }
 
 export const SubtaskContainer = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={cn('border-t py-2 group/subtask', className)}>{children}</div>
+  return <div className={cn('border-t group/subtask', className)}>{children}</div>
 }

@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 
 import { cn } from '@/lib/util/cn'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -31,6 +31,7 @@ export default function Chat() {
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
+      return
       if (e.key === 'c' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
         toggleChatOverlay()

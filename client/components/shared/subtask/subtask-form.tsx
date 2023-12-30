@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { revalidate } from '@/lib/_actions/revalidate-path'
 
 import { Form } from '@/components/ui/form'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
@@ -82,8 +82,14 @@ const SubtaskForm = ({ subtask, task, close, closeNewSubtask }: SubtaskFormProps
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
         <div className="flex-gap">
-          <StatusCheckbox subtask={subtask} />
-          <Input transparent {...form.register('name')} placeholder="Add subtask" className="w-fit px-0 py-0 text-xs" />
+          <StatusCheckbox disabled className="border-primary bg-primary/10" />
+          <Input
+            transparent
+            autoFocus
+            {...form.register('name')}
+            placeholder="Subtask Name"
+            className="w-full px-0 py-0 text-xs font-semibold"
+          />
         </div>
         <div className="flex-gap justify-end">
           <Button type="button" variant={'secondary'} size={'sm'} onClick={onClose}>

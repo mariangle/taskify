@@ -43,10 +43,6 @@ export const Timer = () => {
     setTimer(selectedDuration ?? 0)
   }
 
-  const calculateCircleProgress = (): number => {
-    return 100 - (timer / countdownDuration) * 100
-  }
-
   const formatTime = (seconds: number): string => {
     if (isNaN(seconds) || seconds < 0) {
       return '00:00:00'
@@ -75,30 +71,8 @@ export const Timer = () => {
   )
 
   return (
-    <div className="rounded-md mt-3 border p-4 text-center w-[275px] bg-background-secondary relative">
-      <svg
-        className="absolute inset-0 rounded-full"
-        style={{
-          transformOrigin: 'center',
-          transition: 'stroke-dashoffset 1s linear',
-        }}
-        width="20px"
-        height="20px"
-      >
-        <circle
-          cx="50%"
-          cy="50%"
-          r="48%"
-          fill="transparent"
-          stroke="#fdd835" // Change this to your desired color
-          strokeWidth="8%"
-          strokeDasharray="100%"
-          strokeDashoffset={calculateCircleProgress() + '%'}
-        />
-      </svg>
-      <div className="text-2xl horizontal-gradient font-bold font-mono" style={{ color: '#fdd835' }}>
-        {formatTime(timer)}
-      </div>
+    <div className="rounded-md border p-4 text-center w-[275px] bg-background-secondary relative">
+      <div className="text-2xl horizontal-gradient font-bold">{formatTime(timer)}</div>
       <div className="flex-center space-x-2 mt-2">
         <Button onClick={resetTimer} variant="secondary" size="icon" className="rounded-full">
           <RefreshCw size={16} />

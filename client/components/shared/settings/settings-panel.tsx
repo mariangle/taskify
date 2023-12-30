@@ -3,9 +3,10 @@
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Cog, UserCircle, Bell, Heart, LucideIcon } from 'lucide-react'
+import { Cog, UserCircle, Bell, Heart, LucideIcon, PanelLeft, Palette, Sparkles } from 'lucide-react'
 import { AccountForm } from '@/components/shared/settings/account-form'
-import { AppearanceForm } from '@/components/shared/settings/appearance-form'
+import { PreferencesForm } from '@/components/shared/settings/preferences-form'
+import { LayoutForm } from './layout-form'
 
 interface Tab {
   id: string
@@ -34,6 +35,21 @@ const settingsTabs: Tab[] = [
     label: 'Preferences',
     icon: Heart,
   },
+  {
+    id: 'layout',
+    label: 'Layout',
+    icon: PanelLeft,
+  },
+  {
+    id: 'productivity',
+    label: 'Productivity',
+    icon: Sparkles,
+  },
+  {
+    id: 'appearance',
+    label: 'Appearance',
+    icon: Palette,
+  },
 ]
 
 type FormComponents = {
@@ -42,7 +58,8 @@ type FormComponents = {
 
 const formComponents: FormComponents = {
   account: AccountForm,
-  preferences: AppearanceForm,
+  preferences: PreferencesForm,
+  layout: LayoutForm,
 }
 
 export default function SettingsPanel() {
@@ -56,7 +73,7 @@ export default function SettingsPanel() {
         <div className="pt-4 pb-2 px-6">
           <span className="w-full font-semibold">Settings</span>
         </div>
-        <ul className="p-2">
+        <ul className="p-2 space-y-1">
           {settingsTabs.map((item) => (
             <li key={item.id}>
               <Button

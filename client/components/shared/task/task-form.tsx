@@ -13,15 +13,15 @@ import { useParams, usePathname, useRouter } from 'next/navigation'
 import { add } from 'date-fns'
 
 import MentionsInput from '@/components/shared/task/mention-input'
-import SelectList from '@/components/shared/task/select-list'
-import SelectPriority from '@/components/shared/task/select-priority'
-import SelectDueDate from '@/components/shared/task/select-due-date'
+import { ListPicker } from '@/components/shared/task/list-picker'
+import { PriorityPicker } from '@/components/shared/task/priority-picker'
+import { DatePicker } from '@/components/shared/task/date-picker'
 
 import { Form } from '@/components/ui/form'
 import { Separator } from '@/components/ui/seperator'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 
 import { TaskService } from '@/services/task-service'
 
@@ -68,7 +68,7 @@ export default function TaskForm({ task, lists, labels, small = false, close, in
     name: task?.name || undefined,
     note: task?.note || undefined,
     dueDate: task?.dueDate
-      ? new Date(task.dueDate)
+      ? task.dueDate
       : path === '/today'
       ? new Date()
       : initialValues?.dueDate
@@ -137,13 +137,29 @@ export default function TaskForm({ task, lists, labels, small = false, close, in
           <Input transparent {...form.register('note')} placeholder="Description" className="pt-0" autoComplete="off" />
         </div>
         <div className="flex-gap p-3 pt-0 flex-wrap max-w-full">
-          <SelectDueDate form={form} register="dueDate" defaultValue={defaultValues.dueDate} small={small} />
-          <SelectPriority form={form} register="priority" defaultValue={defaultValues.priority} small={small} />
+          <DatePicker
+            variant={{
+              type: 'form',
+              form,
+              register: 'dueDate',
+            }}
+            defaultValue={defaultValues.dueDate}
+            small={small}
+          />
+          <PriorityPicker
+            variant={{
+              type: 'form',
+              form,
+              register: 'priority',
+            }}
+            defaultValue={defaultValues.priority}
+            small={small}
+          />
         </div>
         <Separator />
         <div className="flex-between p-3">
           <div>
-            <SelectList lists={lists} form={form} register={'listId'} defaultValue={defaultValues.listId} />
+            <ListPicker lists={lists} form={form} register={'listId'} defaultValue={defaultValues.listId} />
           </div>
           <div className="flex-gap">
             <Button variant={'secondary'} size={'sm'} onClick={onCancel} type="button">

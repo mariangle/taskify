@@ -1,10 +1,10 @@
 'use client'
 
-import React from 'react'
+import * as React from 'react'
 
 import { Separator } from '@/components/ui/seperator'
 import { Badge } from '@/components/ui/badge'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -14,8 +14,7 @@ import LabelBadge from '@/components/ui/label-badge'
 
 import { cn } from '@/lib/util/cn'
 import type { LabelResponse } from '@/types'
-import { ExtendedSearchParamsOptions, FilterOption, queryParamsMapping } from '@/lib/util/filter'
-import { useSearchParams } from 'next/navigation'
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
 import { useFilter } from '@/hooks/use-filter'
 
 interface FilterPanelProps {
@@ -24,26 +23,7 @@ interface FilterPanelProps {
 }
 
 export default function FilterPanel({ labels, close }: FilterPanelProps) {
-  const { createQueryString, removeQueryString, view, incomplete, labelId } = useFilter()
-
-  const FilterOption = ({ name, label }: { name: FilterOption; label: string }) => {
-    const { [name]: value } = Object.fromEntries(useSearchParams())
-    const isFilterApplied = name in queryParamsMapping ? (name === 'labelId' ? !!value : !!value) : false
-
-    return (
-      <Badge
-        variant={'outline'}
-        onClick={() => (isFilterApplied ? removeQueryString(name) : createQueryString(name, 'true'))}
-        className={cn(
-          'rounded-sm bg-transparent p-2 cursor-pointer flex-gap',
-          isFilterApplied && 'bg-primary/10 border-primary text-primary dark:text-foreground',
-        )}
-      >
-        {label}
-        {isFilterApplied && <Icons.close className="w-4 h-4 hover:cursor-pointer" />}
-      </Badge>
-    )
-  }
+  const { createQueryString, removeQueryString, view, incomplete, labelId, overdue } = useFilter()
 
   const FilterView = ({
     name,
@@ -70,7 +50,7 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
   // TODO: Store urlParams so they don't reset when navigating
 
   return (
-    <>
+    <div className="w-full">
       <span className="block text-sm font-bold">View</span>
       <div className="my-4 bg-input rounded-md gap-1 p-1 grid grid-cols-3">
         <FilterView name="list" label="List" icon={<Icons.menu className="w-4 h-4 mb-1" />} />
@@ -80,9 +60,9 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
       {view !== 'board' && (
         <div className="flex-gap mb-4 w-full">
           <Checkbox checked className="cursor-default" />
-          <Label htmlFor="toggle-tasks">Completed tasks</Label>
+          <Label htmlFor="completed-tasks">Completed tasks</Label>
           <Switch
-            id="toggle-tasks"
+            id="completed-tasks"
             className="ml-auto"
             checked={!!incomplete}
             onCheckedChange={() => {
@@ -91,12 +71,17 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
           />
         </div>
       )}
-      <Separator />
-      <span className="pt-4 block text-sm font-bold">Status</span>
-      <div className="flex-gap flex-wrap my-4">
-        <FilterOption name="pending" label="Pending" />
-        <FilterOption name="completed" label="Completed" />
-        <FilterOption name="overdue" label="Overdue" />
+      <div className="flex-gap mb-4 w-full">
+        <Checkbox checked className="cursor-default" />
+        <Label htmlFor="overdue-tasks">Overdue tasks</Label>
+        <Switch
+          id="overdue-tasks"
+          className="ml-auto"
+          checked={!overdue}
+          onCheckedChange={() => {
+            overdue ? removeQueryString('overdue') : createQueryString('overdue', 'false')
+          }}
+        />
       </div>
       <Separator />
       <span className="pt-4 block text-sm font-bold">Label</span>
@@ -116,7 +101,6 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
           </Badge>
         ))}
       </div>
-      <Separator />
       <div className="flex-gap mt-4">
         <Button
           variant={'secondary'}
@@ -129,6 +113,6 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
           Done
         </Button>
       </div>
-    </>
+    </div>
   )
 }

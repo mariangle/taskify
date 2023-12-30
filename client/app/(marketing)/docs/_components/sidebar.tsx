@@ -1,5 +1,7 @@
 import SidebarLink from './sidebar-link'
 
+// ? Move this to config
+
 const docsSidebar = [
   {
     heading: 'Overview',

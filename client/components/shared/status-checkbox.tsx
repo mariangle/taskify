@@ -13,9 +13,11 @@ import { useRouter } from 'next/navigation'
 interface StatusCheckboxProps {
   task?: TaskResponse
   subtask?: SubtaskResponse
+  className?: string
+  disabled?: boolean
 }
 
-export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
+export default function StatusCheckbox({ task, subtask, className, disabled }: StatusCheckboxProps) {
   const [isCompleted, setIsCompleted] = React.useState(task?.status === 'Completed' || subtask?.isCompleted || false)
   const router = useRouter()
 
@@ -23,7 +25,7 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
     setIsCompleted(task?.status === 'Completed' || subtask?.isCompleted || false)
   }, [task, subtask])
 
-  if (!task && !subtask) return <Checkbox disabled className="hover:cursor-default" />
+  if (!task && !subtask) return <Checkbox className={className} disabled={disabled} />
 
   const onToggleStatus = async () => {
     try {
@@ -42,7 +44,7 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
         const hasIncompleteSubtasks = task.subtasks?.some((subtask) => !subtask.isCompleted)
 
         if (!isCompleted && hasIncompleteSubtasks) {
-          throw new Error('Complete all subtasks to mark as done.')
+          throw new Error('You have unfinished subtasks.')
         }
 
         const updatedTask = { ...task, status: updatedStatus ? 'Completed' : 'Incomplete' }
@@ -63,7 +65,7 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
     }
   }
 
-  const className =
+  const priorityClassnames =
     task?.priority === 'Low'
       ? 'border-sky-500 bg-sky-500/10'
       : task?.priority === 'Medium'
@@ -72,5 +74,5 @@ export default function StatusCheckbox({ task, subtask }: StatusCheckboxProps) {
       ? 'border-red-500 bg-red-500/10'
       : ''
 
-  return <Checkbox checked={isCompleted} onCheckedChange={onToggleStatus} className={className} />
+  return <Checkbox checked={isCompleted} onCheckedChange={onToggleStatus} className={priorityClassnames} />
 }

@@ -2,13 +2,14 @@
 import React from 'react'
 
 import { Badge } from '@/components/ui/badge'
-import type { LabelResponse } from '@/types'
-import { Icons } from '@/components/shared/icons'
-import { revalidate } from '@/lib/_actions/revalidate-path'
+import { Icons } from '@/components/ui/icons'
 
+import { revalidate } from '@/lib/_actions/revalidate-path'
 import { TaskService } from '@/services/task-service'
 import { handleError } from '@/lib/util'
 import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/util/cn'
+import type { LabelResponse } from '@/types'
 
 interface LabelBadgeProps {
   label: LabelResponse
@@ -19,14 +20,6 @@ interface LabelBadgeProps {
 export default function LabelBadge({ label, noBorder, taskId }: LabelBadgeProps) {
   const [isLoading, setIsLoading] = React.useState(false)
   const path = usePathname()
-
-  if (noBorder)
-    return (
-      <div className="flex-gap">
-        <div className="h-2 w-2 rounded-full border" style={{ backgroundColor: label.color }} />
-        {label.name}
-      </div>
-    )
 
   const onRemove = async (taskId: string) => {
     setIsLoading(true)
@@ -40,9 +33,17 @@ export default function LabelBadge({ label, noBorder, taskId }: LabelBadgeProps)
     }
   }
 
+  if (noBorder)
+    return (
+      <div className="flex-gap">
+        <LabelColor color={label.color} />
+        {label.name}
+      </div>
+    )
+
   return (
     <Badge key={label.id} variant={'outline'} className="flex-gap">
-      <div className="h-2 w-2 rounded-full border" style={{ backgroundColor: label.color }} />
+      <LabelColor color={label.color} />
       {label.name}
       {taskId && !isLoading && (
         <Icons.close className="w-2 h-2 hover:cursor-pointer" onClick={() => onRemove(taskId)} />
@@ -50,3 +51,7 @@ export default function LabelBadge({ label, noBorder, taskId }: LabelBadgeProps)
     </Badge>
   )
 }
+
+export const LabelColor = ({ color, className }: { color: string; className?: string }) => (
+  <div className={cn('h-2 w-2 rounded-full border', className)} style={{ backgroundColor: color }} />
+)

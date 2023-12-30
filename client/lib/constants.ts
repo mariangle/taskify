@@ -1,4 +1,18 @@
-import { ArrowDown, ArrowLeft, ArrowUp } from 'lucide-react'
+import {
+  ArrowDown,
+  ArrowUp,
+  Calendar,
+  CalendarClock,
+  CalendarDays,
+  Clipboard,
+  Inbox,
+  Menu,
+  Tags,
+  Timer,
+  LucideIcon,
+  ArrowRight,
+} from 'lucide-react'
+
 export type Mode = {
   label: string
   value: string
@@ -32,8 +46,52 @@ export const statuses = [
   },
 ]
 
-export const priorities = [
-  { id: 1, value: 'Low', label: 'Low', icon: ArrowDown },
-  { id: 2, value: 'Medium', label: 'Medium', icon: ArrowLeft },
-  { id: 3, value: 'High', label: 'High', icon: ArrowUp },
-]
+export const sidebarItems = [
+  {
+    id: 'inbox',
+    label: 'Inbox',
+    icon: Inbox,
+  },
+  {
+    id: 'today',
+    label: 'Today',
+    icon: CalendarDays,
+  },
+  {
+    id: 'upcoming',
+    label: 'Upcoming',
+    icon: CalendarClock,
+  },
+  {
+    id: 'labels',
+    label: 'Labels',
+    icon: Tags,
+  },
+  {
+    id: 'lists',
+    label: 'Lists',
+    icon: Menu,
+  },
+] as const
+
+export type SidebarItem = (typeof sidebarItems)[number]['id']
+
+export const widgetItems = [
+  {
+    id: 'calendar',
+    label: 'Calendar',
+    icon: Calendar,
+  },
+  {
+    id: 'timer',
+    label: 'Timer',
+    icon: Timer,
+  },
+  {
+    id: 'notes',
+    label: 'Notes',
+    icon: Clipboard,
+  },
+] as const
+
+export type WidgetItem = (typeof widgetItems)[number]['id']

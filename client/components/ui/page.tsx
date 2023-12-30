@@ -56,19 +56,21 @@ export const TaskList = ({
   tasks,
   lists,
   labels,
-  type,
+  type = 'list',
+  expandable = true,
 }: {
   tasks: TaskResponse[]
   lists: ListResponse[]
   labels: LabelResponse[]
   type?: 'board' | 'list'
+  expandable?: boolean
 }) => {
   return (
-    <div className="space-y-2">
+    <div className={type === 'list' ? 'space-y-2' : 'space-y-4'}>
       {tasks.map((task) => (
         <TaskItem key={task.id} task={task} lists={lists} labels={labels} type={type} />
       ))}
-      <TaskItem labels={labels} lists={lists} type={type} />
+      {expandable && <TaskItem labels={labels} lists={lists} type={type} />}
     </div>
   )
 }

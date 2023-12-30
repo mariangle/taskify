@@ -1,4 +1,4 @@
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 
 export default function Footer() {
   return (

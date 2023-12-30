@@ -16,7 +16,9 @@ export default async function List({ params, searchParams }: PageProps) {
     ListService.getList(params.listId),
     ListService.getLists(),
     LabelService.getLabels(),
-    TaskService.getTasks({ ...searchParams, listId: params.listId, incomplete: searchParams.incomplete ?? true }),
+    TaskService.getTasks({
+      listId: params.listId,
+    }),
   ])
 
   if (!list) return null
@@ -27,7 +29,7 @@ export default async function List({ params, searchParams }: PageProps) {
       tasks={tasks}
       labels={labels}
       lists={lists}
-      heading="Inbox"
+      heading={list.name}
       options={{ board: { listId: list.id } }}
     />
   )

@@ -16,6 +16,7 @@ export default async function Today({ searchParams }: PageProps) {
     ...searchParams,
     dueDate: format(new Date(), 'dd-MM-yyyy'),
     incomplete: searchParams.incomplete ?? true,
+    overdue: searchParams.overdue ?? true,
   })
   const labels = await LabelService.getLabels()
   const lists = await ListService.getLists()
@@ -26,7 +27,7 @@ export default async function Today({ searchParams }: PageProps) {
       tasks={tasks}
       labels={labels}
       lists={lists}
-      heading="Inbox"
+      heading="Today"
       options={{ board: { dueDate: format(new Date(), 'dd-MM-yyyy') } }}
     />
   )

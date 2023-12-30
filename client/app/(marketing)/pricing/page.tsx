@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/seperator'
 import { Badge } from '@/components/ui/badge'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 
 import { cn } from '@/lib/util/cn'
 

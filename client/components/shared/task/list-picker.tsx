@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { Command, CommandGroup, CommandItem } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
@@ -11,19 +11,14 @@ import { cn } from '@/lib/util/cn'
 import type { ListResponse } from '@/types'
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form'
 
-interface ListComboboxProps<T extends FieldValues> {
+interface ListPickerProps<T extends FieldValues> {
   form: UseFormReturn<T>
   register: Path<T>
   lists: ListResponse[]
   defaultValue?: string
 }
 
-export default function SelectList<T extends FieldValues>({
-  form,
-  defaultValue,
-  register,
-  lists,
-}: ListComboboxProps<T>) {
+export function ListPicker<T extends FieldValues>({ form, defaultValue, register, lists }: ListPickerProps<T>) {
   const defaultListValue = lists.find((l) => l.id === defaultValue)?.name
 
   const [open, setOpen] = React.useState(false)

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
@@ -32,7 +32,13 @@ export default function FilterOverlay() {
     if (isOpen) subscribe()
   }, [signal, isOpen])
 
-  if (!isMounted) return null
+  if (!isMounted)
+    return (
+      <Button variant={'outline'} onClick={open} className="flex-gap">
+        <Icons.filter className="w-4 h-4" />
+        <span className="hidden md:block">Filter</span>
+      </Button>
+    )
 
   if (isDesktop) {
     return (
@@ -40,10 +46,10 @@ export default function FilterOverlay() {
         <DropdownMenuTrigger asChild>
           <Button variant={'outline'} onClick={open}>
             <Icons.filter className="w-4 h-4 mr-2" />
-            Filters
+            Filter
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="max-w-[275px] w-full p-4 overflow-y-auto">
+        <DropdownMenuContent className="w-[275px] p-4 overflow-y-auto">
           <FilterPanel labels={labels} close={close} />
         </DropdownMenuContent>
       </DropdownMenu>

@@ -73,13 +73,13 @@ export default function PageWithViews({ searchParams, tasks, labels, lists, head
           <PageHeading color="bg-sky-500" items={pendingTasks} level="h3" className="text-md">
             In Progress
           </PageHeading>
-          <TaskList tasks={pendingTasks} lists={lists} labels={labels} type="board" />
+          <TaskList tasks={pendingTasks} lists={lists} labels={labels} type="board" expandable={false} />
         </div>
         <div className="space-y-2">
           <PageHeading color="bg-emerald-500" items={completedTasks} level="h3" className="text-md">
             Completed
           </PageHeading>
-          <TaskList tasks={completedTasks} lists={lists} labels={labels} type="board" />
+          <TaskList tasks={completedTasks} lists={lists} labels={labels} type="board" expandable={false} />
         </div>
       </PageBoard>
     )

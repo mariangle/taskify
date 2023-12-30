@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import AlertModal from '@/components/modals/alert-modal'
 
 import type { SubtaskResponse } from '@/types'

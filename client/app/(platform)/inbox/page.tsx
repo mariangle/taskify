@@ -13,10 +13,9 @@ interface PageProps {
 }
 
 export default async function Inbox({ searchParams }: PageProps) {
+  // TODO: Fix filtering
   const tasks = await TaskService.getTasks({
-    ...searchParams,
     unsorted: true,
-    incomplete: searchParams.incomplete ?? true,
   })
   const labels = await LabelService.getLabels()
   const lists = await ListService.getLists()

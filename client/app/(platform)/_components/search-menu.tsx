@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 
 import { cn } from '@/lib/util/cn'
 import { Button } from '@/components/ui/button'
@@ -37,7 +37,7 @@ export default function SearchMenu({ ...props }) {
   return (
     <>
       <Button
-        variant="tertiary"
+        variant="secondary"
         size={'sm'}
         onClick={() => setOpen(true)}
         {...props}

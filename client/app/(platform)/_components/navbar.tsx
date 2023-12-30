@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { Icons } from '@/components/shared/icons'
+import { Icons } from '@/components/ui/icons'
 import { Button } from '@/components/ui/button'
 import { MobileSidebar } from './mobile-sidebar'
 
@@ -11,9 +11,9 @@ import FilterView from '@/components/shared/filter-view'
 
 import { useLayoutStore } from '@/store/layout-store'
 import { cn } from '@/lib/util/cn'
-import type { ListResponse } from '@/types'
+import type { ListResponse, UserResponse } from '@/types'
 
-const Navbar = ({ lists }: { lists: ListResponse[] }) => {
+const Navbar = ({ lists, user }: { lists: ListResponse[]; user: UserResponse }) => {
   const {
     showLeftSidebar,
     showRightSidebar,
@@ -28,10 +28,10 @@ const Navbar = ({ lists }: { lists: ListResponse[] }) => {
       <div className="flex h-12 items-center justify-between px-4">
         <div className="flex-gap">
           <div className="block md:!hidden">
-            <MobileSidebar lists={lists} />
+            <MobileSidebar lists={lists} user={user} />
           </div>
           <div className="md:!block hidden">
-            <Button variant={'outline'} size={'icon'} onClick={toggleLeftSidebar}>
+            <Button variant={'outline'} onClick={toggleLeftSidebar} className="w-10 p-2">
               <Icons.chevronRight
                 className={cn('w-3 h-3 transition duration-300', showLeftSidebar && 'rotate-180 transform')}
               />
@@ -42,15 +42,14 @@ const Navbar = ({ lists }: { lists: ListResponse[] }) => {
         <div className="flex-gap">
           <Button
             variant={'outline'}
-            size={'icon'}
             onClick={toggleChatOverlay}
-            className={cn(showChatOverlay && 'bg-primary/10 border-primary/30 transition')}
+            className={cn('w-10 p-2', showChatOverlay && 'bg-primary/10 border-primary/30 transition duration-300')}
           >
-            <Icons.ai className="w-5 h-5 duration-300" />
+            <Icons.ai className="w-4 h-4" />
           </Button>
           <FilterOverlay />
           <div className="lg:!block hidden">
-            <Button variant={'outline'} size={'icon'} onClick={toggleRightSidebar}>
+            <Button variant={'outline'} onClick={toggleRightSidebar} className="w-10 p-2">
               <Icons.chevronLeft
                 className={cn('w-3 h-3 transition duration-300', showRightSidebar && 'rotate-180 transform')}
               />

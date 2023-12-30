@@ -69,7 +69,7 @@ namespace server.Controllers
             {
                 // Filter tasks that are upcoming (due date is after today and task is not completed)
                 tasksQuery = tasksQuery
-                    .Where(task => task.DueDate > DateTime.Today && task.Status == Status.Incomplete)
+                    .Where(task => task.DueDate > DateTime.Now && task.Status == Status.Incomplete)
                     .OrderBy(task => task.DueDate);
             }
 
@@ -77,7 +77,7 @@ namespace server.Controllers
             {
                 // Filter tasks that are overdue (due date is before today and task is not completed)
                 tasksQuery = tasksQuery
-                    .Where(task => task.DueDate < DateTime.Today && task.Status == Status.Incomplete);
+                    .Where(task => task.DueDate < DateTime.Now && task.Status == Status.Incomplete);
             }
 
             if (incomplete == true)

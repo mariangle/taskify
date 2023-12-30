@@ -16,9 +16,9 @@ interface PageProps {
 }
 
 export default async function Layout(props: PageProps) {
-  const isAuthenticated = await authenticate()
+  const { isAuthenticated, user } = await authenticate()
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !user) {
     redirect('/login')
   }
 
@@ -28,10 +28,10 @@ export default async function Layout(props: PageProps) {
     <React.Suspense fallback={<LoadingScreen />}>
       <OverlayProvider />
       <div className="flex h-screen overflow-y-hidden overflow-x-hidden">
-        <LeftSidebar lists={lists} />
+        <LeftSidebar lists={lists} user={user} />
         <div className="flex flex-col flex-1 overflow-y-hidden bg-background">
-          <Navbar lists={lists} />
-          <div className="overflow-y-auto overflow-x-auto h-full p-4 md:p-8">{props.children}</div>
+          <Navbar lists={lists} user={user} />
+          <div className="overflow-y-auto overflow-x-auto h-full py-8 px-4 md:p-16 ">{props.children}</div>
         </div>
         <RightSidebar />
       </div>
