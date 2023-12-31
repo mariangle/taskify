@@ -1,14 +1,14 @@
-import { TaskService } from '@/services/task-service'
-import { LabelService } from '@/services/label-service'
-import { ListService } from '@/services/list-service'
+import { format } from 'date-fns';
 
-import { format } from 'date-fns'
-import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
+import { TaskService } from '@/services/task-service';
+import { LabelService } from '@/services/label-service';
+import { ListService } from '@/services/list-service';
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 
-import PageWithViews from '@/components/shared/page-with-views'
+import PageWithViews from '@/components/shared/page-with-views';
 
 interface PageProps {
-  searchParams: Partial<ExtendedSearchParamsOptions>
+  searchParams: Partial<ExtendedSearchParamsOptions>;
 }
 
 export default async function Today({ searchParams }: PageProps) {
@@ -17,9 +17,9 @@ export default async function Today({ searchParams }: PageProps) {
     dueDate: format(new Date(), 'dd-MM-yyyy'),
     incomplete: searchParams.incomplete ?? true,
     overdue: searchParams.overdue ?? true,
-  })
-  const labels = await LabelService.getLabels()
-  const lists = await ListService.getLists()
+  });
+  const labels = await LabelService.getLabels();
+  const lists = await ListService.getLists();
 
   return (
     <PageWithViews
@@ -30,5 +30,5 @@ export default async function Today({ searchParams }: PageProps) {
       heading="Today"
       options={{ board: { dueDate: format(new Date(), 'dd-MM-yyyy') } }}
     />
-  )
+  );
 }

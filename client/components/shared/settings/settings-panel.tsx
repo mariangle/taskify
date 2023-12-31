@@ -1,17 +1,26 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 
-import { Button } from '@/components/ui/button'
-import { Cog, UserCircle, Bell, Heart, LucideIcon, PanelLeft, Palette, Sparkles } from 'lucide-react'
-import { AccountForm } from '@/components/shared/settings/account-form'
-import { PreferencesForm } from '@/components/shared/settings/preferences-form'
-import { LayoutForm } from './layout-form'
+import {
+  Cog,
+  UserCircle,
+  Bell,
+  Heart,
+  LucideIcon,
+  PanelLeft,
+  Palette,
+  Sparkles,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AccountForm } from '@/components/shared/settings/account-form';
+import { PreferencesForm } from '@/components/shared/settings/preferences-form';
+import { LayoutForm } from './layout-form';
 
 interface Tab {
-  id: string
-  label: string
-  icon: LucideIcon
+  id: string;
+  label: string;
+  icon: LucideIcon;
 }
 
 const settingsTabs: Tab[] = [
@@ -50,22 +59,23 @@ const settingsTabs: Tab[] = [
     label: 'Appearance',
     icon: Palette,
   },
-]
+];
 
 type FormComponents = {
-  [key in Tab['id']]: React.ComponentType
-}
+  // eslint-disable-next-line no-unused-vars
+  [key in Tab['id']]: React.ComponentType;
+};
 
 const formComponents: FormComponents = {
   account: AccountForm,
   preferences: PreferencesForm,
   layout: LayoutForm,
-}
+};
 
 export default function SettingsPanel() {
-  const [tab, setTab] = React.useState<Tab>(settingsTabs[0])
+  const [tab, setTab] = React.useState<Tab>(settingsTabs[0]);
 
-  const FormComponent = formComponents[tab.id]
+  const FormComponent = formComponents[tab.id];
 
   return (
     <div className="flex w-full">
@@ -89,9 +99,11 @@ export default function SettingsPanel() {
         </ul>
       </div>
       <div className="bg-background w-full">
-        <div className="border-b p-4 w-full text-sm font-semibold">{tab.label}</div>
+        <div className="border-b p-4 w-full text-sm font-semibold">
+          {tab.label}
+        </div>
         <div className="p-4">{FormComponent && <FormComponent />}</div>
       </div>
     </div>
-  )
+  );
 }

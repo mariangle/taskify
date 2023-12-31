@@ -1,6 +1,15 @@
-import { cn } from '@/lib/util/cn'
+import * as React from 'react';
 
-export const BoardContainer: React.FC<React.HTMLProps<HTMLDivElement>> = ({ children, className, ...props }) => {
+import { cn } from '@/lib/util/cn';
+
+export function BoardContainer({
+  children,
+  className,
+  ...props
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div
       className={cn(
@@ -11,13 +20,27 @@ export const BoardContainer: React.FC<React.HTMLProps<HTMLDivElement>> = ({ chil
     >
       {children}
     </div>
-  )
+  );
 }
 
-export const ListContainer = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={cn('border-b py-2 group', className)}>{children}</div>
+export function ListContainer({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={cn('border-b py-2 group', className)}>{children}</div>;
 }
 
-export const SubtaskContainer = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={cn('border-t group/subtask', className)}>{children}</div>
+export function SubtaskContainer({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('border-t group/subtask', className)}>{children}</div>
+  );
 }

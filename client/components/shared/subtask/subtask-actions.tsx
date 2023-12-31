@@ -1,51 +1,53 @@
-import * as React from 'react'
+import * as React from 'react';
 
+import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/ui/icons'
-import AlertModal from '@/components/modals/alert-modal'
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Icons } from '@/components/ui/icons';
+import AlertModal from '@/components/modals/alert-modal';
 
-import type { SubtaskResponse } from '@/types'
-import { useMounted } from '@/hooks/use-mounted'
-import { useRouter } from 'next/navigation'
-
-import { SubtaskService } from '@/services/subtask-service'
-import { handleError } from '@/lib/util'
+import type { SubtaskResponse } from '@/types';
+import { useMounted } from '@/hooks/use-mounted';
+import { SubtaskService } from '@/services/subtask-service';
+import { handleError } from '@/lib/util';
 
 interface SubtaskActionsProps {
-  subtask: SubtaskResponse
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  subtask: SubtaskResponse;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SubtaskActions({ subtask, setOpen }: SubtaskActionsProps) {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false)
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+export default function SubtaskActions({
+  subtask,
+  setOpen,
+}: SubtaskActionsProps) {
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const isMounted = useMounted()
-  const router = useRouter()
+  const isMounted = useMounted();
+  const router = useRouter();
 
-  const onEdit = () => setOpen(true)
+  const onEdit = () => setOpen(true);
 
   const onDelete = async (labelId: string) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await SubtaskService.deleteSubtask(labelId)
+      await SubtaskService.deleteSubtask(labelId);
 
-      router.refresh()
+      router.refresh();
     } catch (err) {
-      handleError(err)
+      handleError(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
   return (
     <>
@@ -58,13 +60,13 @@ export default function SubtaskActions({ subtask, setOpen }: SubtaskActionsProps
       />
       <DropdownMenu modal>
         <DropdownMenuTrigger asChild>
-          <Button size={'icon'} variant={'ghost'} className="w-5 h-5 rounded-full">
-            <Icons.more className="w-5 h-5 p-1" />
+          <Button size="icon" variant="ghost" className="w-5 h-5 rounded-full">
+            <Icons.More className="w-5 h-5 p-1" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent onSelect={(e) => e.preventDefault()}>
           <DropdownMenuItem onClick={onEdit}>
-            <Icons.pencil className="mr-2 h-3 w-3 text-muted-foreground" />
+            <Icons.Pencil className="mr-2 h-3 w-3 text-muted-foreground" />
             Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -73,11 +75,11 @@ export default function SubtaskActions({ subtask, setOpen }: SubtaskActionsProps
             className="text-destructive"
             onSelect={(e) => e.preventDefault()}
           >
-            <Icons.trash className="mr-2 h-3 w-3" />
+            <Icons.Trash className="mr-2 h-3 w-3" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  )
+  );
 }

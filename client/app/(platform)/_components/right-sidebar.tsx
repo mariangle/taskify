@@ -1,34 +1,35 @@
-'use client'
-import * as React from 'react'
+'use client';
 
-import { Calendar } from '@/components/ui/calendar'
-import { useLayoutStore } from '@/store/layout-store'
-import { Timer } from '@/components/shared/timer'
+import * as React from 'react';
 
-import { cn } from '@/lib/util/cn'
-import type { TaskResponse } from '@/types'
-import { TaskService } from '@/services/task-service'
-import { useSignal } from '@/hooks/use-signal'
-import { useSettingsStore } from '@/store/settings-store'
-import { useMounted } from '@/hooks/use-mounted'
+import { Calendar } from '@/components/ui/calendar';
+import { useLayoutStore } from '@/store/layout-store';
+import { Timer } from '@/components/shared/timer';
+
+import { cn } from '@/lib/util/cn';
+import type { TaskResponse } from '@/types';
+import { TaskService } from '@/services/task-service';
+import { useSignal } from '@/hooks/use-signal';
+import { useSettingsStore } from '@/store/settings-store';
+import { useMounted } from '@/hooks/use-mounted';
 
 export default function RightSidebar() {
-  const { showRightSidebar } = useLayoutStore()
-  const { signal } = useSignal()
-  const isMounted = useMounted()
-  const [tasks, setTasks] = React.useState<TaskResponse[]>([])
-  const [date, setDate] = React.useState<Date | undefined>(new Date())
-  const { settings } = useSettingsStore()
+  const { showRightSidebar } = useLayoutStore();
+  const { signal } = useSignal();
+  const isMounted = useMounted();
+  const [tasks, setTasks] = React.useState<TaskResponse[]>([]);
+  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const { settings } = useSettingsStore();
 
   React.useEffect(() => {
     const subscribe = async () => {
-      const tasks = await TaskService.getTasks()
-      setTasks(tasks)
-    }
-    if (showRightSidebar) subscribe()
-  }, [signal, showRightSidebar])
+      const fetchedTasks = await TaskService.getTasks();
+      setTasks(fetchedTasks);
+    };
+    if (showRightSidebar) subscribe();
+  }, [signal, showRightSidebar]);
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
   return (
     <aside
@@ -39,7 +40,7 @@ export default function RightSidebar() {
     >
       <div className={cn('h-full', showRightSidebar ? '' : 'hidden md:block')}>
         <div className="h-full">
-          <div className="h-12 border-b"></div>
+          <div className="h-12 border-b" />
           <div className="p-3 space-y-3">
             {settings.widgets.includes('calendar') && (
               <Calendar
@@ -55,5 +56,5 @@ export default function RightSidebar() {
         </div>
       </div>
     </aside>
-  )
+  );
 }

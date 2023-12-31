@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 
-import { Icons } from '@/components/ui/icons'
+import { Icons } from '@/components/ui/icons';
 
-import { cn } from '@/lib/util/cn'
-import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/util/cn';
+import { Button } from '@/components/ui/button';
 import {
   CommandDialog,
   CommandEmpty,
@@ -15,35 +15,35 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from '@/components/ui/command'
-import { useLayoutStore } from '@/store/layout-store'
+} from '@/components/ui/command';
+import { useLayoutStore } from '@/store/layout-store';
 
 export default function SearchMenu({ ...props }) {
-  const [open, setOpen] = React.useState(false)
-  const { showLeftSidebar } = useLayoutStore()
+  const [open, setOpen] = React.useState(false);
+  const { showLeftSidebar } = useLayoutStore();
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen((open) => !open)
+        e.preventDefault();
+        setOpen((open) => !open);
       }
-    }
+    };
 
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [])
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, []);
 
   return (
     <>
       <Button
         variant="secondary"
-        size={'sm'}
+        size="sm"
         onClick={() => setOpen(true)}
         {...props}
         className={cn('', !showLeftSidebar && 'md:hidden')}
       >
-        <Icons.search className="w-4 h-4" />
+        <Icons.Search className="w-4 h-4" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Search..." />
@@ -51,17 +51,17 @@ export default function SearchMenu({ ...props }) {
           <CommandEmpty>Nothing found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
             <CommandItem>
-              <Icons.settings className="mr-2 h-4 w-4" />
+              <Icons.Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Icons.tags className="mr-2 h-4 w-4" />
+              <Icons.Tags className="mr-2 h-4 w-4" />
               <span>Labels</span>
               <CommandShortcut>⌘L</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Icons.lineChart className="mr-2 h-4 w-4" />
+              <Icons.LineChart className="mr-2 h-4 w-4" />
               <span>Analytics</span>
             </CommandItem>
           </CommandGroup>
@@ -69,5 +69,5 @@ export default function SearchMenu({ ...props }) {
         </CommandList>
       </CommandDialog>
     </>
-  )
+  );
 }

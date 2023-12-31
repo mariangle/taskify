@@ -1,24 +1,36 @@
-import type { Metadata } from 'next'
-import { inter } from '@/styles/fonts'
-import { config } from '@/lib/config'
-import '@/styles/globals.css'
+import * as React from 'react';
 
-import { ToastProvider } from '@/components/providers/toast-provider'
-import { ThemeProvider } from '@/components/providers/theme-provider'
+import type { Metadata } from 'next';
+import { inter } from '@/styles/fonts';
+import { config } from '@/lib/config';
+import '@/styles/globals.css';
 
-export const metadata: Metadata = config.metadata
+import { ToastProvider } from '@/components/providers/toast-provider';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+// eslint-disable-next-line prefer-destructuring
+export const metadata: Metadata = config.metadata;
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider defaultTheme="midnight" attribute="class" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          defaultTheme="midnight"
+          attribute="class"
+          enableSystem
+          disableTransitionOnChange
+        >
           <main>
-            {props.children}
+            {children}
             <ToastProvider />
           </main>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

@@ -1,9 +1,12 @@
-import { Skeleton } from '@/components/ui/skeleton'
-import { Icons } from '@/components/ui/icons'
-import { Separator } from '@/components/ui/seperator'
-import { BoardContainer } from '@/components/ui/container'
-import { PageList } from '@/components/ui/page'
-import { cn } from '@/lib/util/cn'
+import * as React from 'react';
+import _uniqueId from 'lodash/uniqueId';
+
+import { Skeleton } from '@/components/ui/skeleton';
+import { Icons } from '@/components/ui/icons';
+import { Separator } from '@/components/ui/seperator';
+import { BoardContainer } from '@/components/ui/container';
+import { PageList } from '@/components/ui/page';
+import { cn } from '@/lib/util/cn';
 
 export function LoadingListPage() {
   return (
@@ -35,7 +38,7 @@ export function LoadingListPage() {
         </div>
       </div>
     </PageList>
-  )
+  );
 }
 
 export function LoadingBoardPage({ columns = 3 }: { columns?: number }) {
@@ -46,8 +49,11 @@ export function LoadingBoardPage({ columns = 3 }: { columns?: number }) {
         <Skeleton className="h-8 w-[100px]" />
       </div>
       <div className={cn('flex gap-4 overflow-x-hidden')}>
-        {new Array(columns).fill(null).map((_, index) => (
-          <div key={index} className="col-span-1 space-y-4 min-w-[250px]">
+        {new Array(columns).fill(null).map(() => (
+          <div
+            key={_uniqueId('column_')}
+            className="col-span-1 space-y-4 min-w-[250px]"
+          >
             <Skeleton className="h-4 w-[100px]" />
             <div className="space-y-5">
               <BoardContainer className="flex-gap p-4">
@@ -71,7 +77,7 @@ export function LoadingBoardPage({ columns = 3 }: { columns?: number }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export function LoadingScreen() {
@@ -81,19 +87,20 @@ export function LoadingScreen() {
     'Loading Your Daily Plan...',
     'Celebrating Completed Tasks...',
     'Syncing Tasks with Ease...',
-  ]
+  ];
 
-  const randomMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
+  const randomMessage =
+    loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-opacity-75 z-50">
       <div className="flex-center flex-col space-y-2">
-        <Icons.spinner className="animate-spin h-8 w-8" />
+        <Icons.Spinner className="animate-spin h-8 w-8" />
         <span className="text-foreground text-lg font-bold">Hang tight!</span>
         <span className="text-muted-foreground">{randomMessage}</span>
       </div>
     </div>
-  )
+  );
 }
 
 export function LoadingSidebar() {
@@ -147,5 +154,5 @@ export function LoadingSidebar() {
       </div>
       <Skeleton className="h-10 w-full bg-muted" />
     </div>
-  )
+  );
 }

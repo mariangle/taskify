@@ -1,4 +1,4 @@
-import { Icons } from '@/components/ui/icons'
+import { Icons } from '@/components/ui/icons';
 
 export default function Footer() {
   return (
@@ -7,14 +7,17 @@ export default function Footer() {
         <div className="">
           <div className="font-semibold">.taskify</div>
           <div className="text-xs mt-2 text-muted-foreground">
-            This site is still a work in progress, you will see some broken things.
+            This site is still a work in progress, you will see some broken
+            things.
           </div>
         </div>
-        <div className="text-xs flex-center text-muted-foreground">© 2024 .taskify. All rights reserved.</div>
+        <div className="text-xs flex-center text-muted-foreground">
+          © 2024 .taskify. All rights reserved.
+        </div>
         <div className="flex-center justify-end">
-          <Icons.gitHub className="w-4 h-4" />
+          <Icons.GitHub className="w-4 h-4" />
         </div>
       </div>
     </footer>
-  )
+  );
 }

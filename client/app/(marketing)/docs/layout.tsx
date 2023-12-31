@@ -1,7 +1,9 @@
-import Sidebar from './_components/sidebar'
+import * as React from 'react';
+
+import Sidebar from './_components/sidebar';
 
 interface DocsLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function DocsLayout({ children }: DocsLayoutProps) {
@@ -10,5 +12,5 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
       <Sidebar />
       {children}
     </div>
-  )
+  );
 }

@@ -1,3 +1,31 @@
 {
-  "extends": ["next/babel", "next/core-web-vitals"]
+  "parser": "@typescript-eslint/parser",
+  "extends": ["next/core-web-vitals", "airbnb", "prettier"],
+  "rules": {
+    "no-shadow": "off",
+    "no-unused-expressions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "linebreak-style": ["error", "windows"],
+    "@typescript-eslint/consistent-type-imports": [
+      "off",
+      { "prefer": "type-imports" }
+    ],
+    "import/extensions": [
+      "off",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  }
 }

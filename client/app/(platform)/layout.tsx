@@ -1,28 +1,29 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import LeftSidebar from './_components/left-sidebar'
-import RightSidebar from './_components/right-sidebar'
-import Navbar from './_components/navbar'
-import { LoadingScreen } from '@/components/ui/loading'
+import { redirect } from 'next/navigation';
 
-import { authenticate } from '@/lib/_actions/authenticate'
-import { redirect } from 'next/navigation'
-import { ListService } from '@/services/list-service'
+import LeftSidebar from './_components/left-sidebar';
+import RightSidebar from './_components/right-sidebar';
+import Navbar from './_components/navbar';
+import { LoadingScreen } from '@/components/ui/loading';
 
-import OverlayProvider from '@/components/providers/overlay-provider'
+import { authenticate } from '@/lib/_actions/authenticate';
+import { ListService } from '@/services/list-service';
+
+import OverlayProvider from '@/components/providers/overlay-provider';
 
 interface PageProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default async function Layout(props: PageProps) {
-  const { isAuthenticated, user } = await authenticate()
+  const { isAuthenticated, user } = await authenticate();
 
   if (!isAuthenticated || !user) {
-    redirect('/login')
+    redirect('/login');
   }
 
-  const lists = await ListService.getLists()
+  const lists = await ListService.getLists();
 
   return (
     <React.Suspense fallback={<LoadingScreen />}>
@@ -31,10 +32,12 @@ export default async function Layout(props: PageProps) {
         <LeftSidebar lists={lists} user={user} />
         <div className="flex flex-col flex-1 overflow-y-hidden bg-background">
           <Navbar lists={lists} user={user} />
-          <div className="overflow-y-auto overflow-x-auto h-full py-8 px-4 md:p-16 ">{props.children}</div>
+          <div className="overflow-y-auto overflow-x-auto h-full py-8 px-4 md:p-16 ">
+            {props.children}
+          </div>
         </div>
         <RightSidebar />
       </div>
     </React.Suspense>
-  )
+  );
 }

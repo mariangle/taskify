@@ -1,12 +1,12 @@
-'use server'
+'use server';
 
-import { cookies } from 'next/headers'
+import { cookies } from 'next/headers';
 
 export async function setToken(accessToken: string): Promise<void> {
-    cookies().set({
-        name: 'access_token',
-        value: accessToken,
-        httpOnly: false,
-        path: '/',
-    })
+  cookies().set({
+    name: 'access_token',
+    value: accessToken,
+    httpOnly: false,
+    path: '/',
+  });
 }

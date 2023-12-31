@@ -1,6 +1,6 @@
-'use server'
- 
-import { revalidatePath } from 'next/cache'
+'use server';
+
+import { revalidatePath } from 'next/cache';
 
 type RevalidateConfig = {
   path: string;
@@ -8,5 +8,5 @@ type RevalidateConfig = {
 };
 
 export async function revalidate(config: RevalidateConfig) {
-  revalidatePath(config.path, config.type)
+  revalidatePath(config.path, config.type);
 }

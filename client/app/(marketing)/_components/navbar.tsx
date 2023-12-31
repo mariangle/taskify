@@ -1,15 +1,54 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
-import ThemeSwitcher from './theme-switcher'
-import NavbarLink from './navbar-link'
+import ThemeSwitcher from './theme-switcher';
+import NavbarLink from './navbar-link';
 
-import { buttonVariants } from '@/components/ui/button'
-import { authenticate } from '@/lib/_actions/authenticate'
-import { cn } from '@/lib/util/cn'
-import { config } from '@/lib/config'
+import { buttonVariants } from '@/components/ui/button';
+import { authenticate } from '@/lib/_actions/authenticate';
+import { cn } from '@/lib/util/cn';
+import { config } from '@/lib/config';
+
+function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
+  return (
+    <div className="flex-gap">
+      {isAuthenticated ? (
+        <div>
+          <Link
+            href="/inbox"
+            className={buttonVariants({ variant: 'outline', size: 'sm' })}
+          >
+            Dashboard
+          </Link>
+        </div>
+      ) : (
+        <>
+          <div className="hidden sm:flex">
+            <Link
+              href="/login"
+              className={buttonVariants({ variant: 'outline', size: 'sm' })}
+            >
+              Login
+            </Link>
+          </div>
+          <div>
+            <Link
+              href="/register"
+              className={cn(
+                buttonVariants({ variant: 'default', size: 'sm' }),
+                'shadow-md shadow-black/50 dark:shadow-white/50',
+              )}
+            >
+              Try for free
+            </Link>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default async function Navbar() {
-  const { isAuthenticated } = await authenticate()
+  const { isAuthenticated } = await authenticate();
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b bg-background/50 backdrop-blur-lg">
@@ -28,38 +67,5 @@ export default async function Navbar() {
         </div>
       </div>
     </nav>
-  )
-}
-
-function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
-  return (
-    <div className="flex-gap">
-      {isAuthenticated ? (
-        <div>
-          <Link href="/inbox" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-            Dashboard
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className="hidden sm:flex">
-            <Link href="/login" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-              Login
-            </Link>
-          </div>
-          <div>
-            <Link
-              href="/register"
-              className={cn(
-                buttonVariants({ variant: 'default', size: 'sm' }),
-                'shadow-md shadow-black/50 dark:shadow-white/50',
-              )}
-            >
-              Try for free
-            </Link>
-          </div>
-        </>
-      )}
-    </div>
-  )
+  );
 }

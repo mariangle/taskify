@@ -1,43 +1,48 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Icons } from '../../ui/icons'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import toast from 'react-hot-toast';
+import { useTheme } from 'next-themes';
 
-import { cn } from '@/lib/util/cn'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Checkbox } from '@/components/ui/checkbox'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import toast from 'react-hot-toast'
-import { useTheme } from 'next-themes'
-import { useSettingsStore } from '@/store/settings-store'
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useSettingsStore } from '@/store/settings-store';
 
 const preferencesFormSchema = z.object({
   theme: z.enum(['light', 'dark'], {
     required_error: 'Please select a theme.',
   }),
-})
+});
 
-type PreferencesFormValues = z.infer<typeof preferencesFormSchema>
+type PreferencesFormValues = z.infer<typeof preferencesFormSchema>;
 
 export function PreferencesForm() {
-  const { setTheme } = useTheme()
-  const { settings, setSettings } = useSettingsStore()
+  const { setTheme } = useTheme();
+  const { settings, setSettings } = useSettingsStore();
 
   const defaultValues: Partial<PreferencesFormValues> = {
     theme: settings.theme,
-  }
+  };
 
   const form = useForm<PreferencesFormValues>({
     resolver: zodResolver(preferencesFormSchema),
     defaultValues,
-  })
+  });
 
   function onSubmit(data: PreferencesFormValues) {
-    setSettings({ ...settings, theme: data.theme })
-    toast.success('Changes saved.')
+    setSettings({ ...settings, theme: data.theme });
+    toast.success('Changes saved.');
   }
 
   return (
@@ -49,7 +54,9 @@ export function PreferencesForm() {
           render={({ field }) => (
             <FormItem className="space-y-1">
               <FormLabel>Theme</FormLabel>
-              <FormDescription>Select the theme for the application.</FormDescription>
+              <FormDescription>
+                Select the theme for the application.
+              </FormDescription>
               <FormMessage />
               <RadioGroup
                 onValueChange={field.onChange}
@@ -62,6 +69,7 @@ export function PreferencesForm() {
                       <RadioGroupItem value="light" className="sr-only" />
                     </FormControl>
                     <div
+                      role="presentation"
                       className="items-center rounded-md border-2 border-muted p-1 hover:border-accent"
                       onClick={() => setTheme('light')}
                     >
@@ -80,7 +88,9 @@ export function PreferencesForm() {
                         </div>
                       </div>
                     </div>
-                    <span className="block w-full p-2 text-center font-normal">Light</span>
+                    <span className="block w-full p-2 text-center font-normal">
+                      Light
+                    </span>
                   </FormLabel>
                 </FormItem>
                 <FormItem>
@@ -89,6 +99,7 @@ export function PreferencesForm() {
                       <RadioGroupItem value="dark" className="sr-only" />
                     </FormControl>
                     <div
+                      role="presentation"
                       className="items-center rounded-md border-2 border-muted bg-popover p-1 hover:bg-accent hover:text-accent-foreground"
                       onClick={() => setTheme('dark')}
                     >
@@ -107,7 +118,9 @@ export function PreferencesForm() {
                         </div>
                       </div>
                     </div>
-                    <span className="block w-full p-2 text-center font-normal">Dark</span>
+                    <span className="block w-full p-2 text-center font-normal">
+                      Dark
+                    </span>
                   </FormLabel>
                 </FormItem>
               </RadioGroup>
@@ -117,5 +130,5 @@ export function PreferencesForm() {
         <Button type="submit">Update preferences</Button>
       </form>
     </Form>
-  )
+  );
 }

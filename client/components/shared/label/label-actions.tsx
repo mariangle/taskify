@@ -1,56 +1,55 @@
-import * as React from 'react'
-import toast from 'react-hot-toast'
+import * as React from 'react';
+import toast from 'react-hot-toast';
 
+import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/ui/icons'
-import AlertModal from '@/components/modals/alert-modal'
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Icons } from '@/components/ui/icons';
+import AlertModal from '@/components/modals/alert-modal';
 
-import type { LabelResponse } from '@/types'
-import { useMounted } from '@/hooks/use-mounted'
-import { useRouter } from 'next/navigation'
-
-import { LabelService } from '@/services/label-service'
-import { handleError } from '@/lib/util'
-import { useSignal } from '@/hooks/use-signal'
+import type { LabelResponse } from '@/types';
+import { useMounted } from '@/hooks/use-mounted';
+import { LabelService } from '@/services/label-service';
+import { handleError } from '@/lib/util';
+import { useSignal } from '@/hooks/use-signal';
 
 interface LabelActionsProps {
-  label: LabelResponse
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  label: LabelResponse;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function LabelActions({ label, setOpen }: LabelActionsProps) {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false)
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const isMounted = useMounted()
-  const router = useRouter()
-  const { triggerSignal } = useSignal()
+  const isMounted = useMounted();
+  const router = useRouter();
+  const { triggerSignal } = useSignal();
 
-  const onEdit = () => setOpen(true)
+  const onEdit = () => setOpen(true);
 
   const onDelete = async (labelId: string) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await LabelService.deleteLabel(labelId)
+      await LabelService.deleteLabel(labelId);
 
-      triggerSignal()
-      router.refresh()
-      toast.success('Label removed.')
+      triggerSignal();
+      router.refresh();
+      toast.success('Label removed.');
     } catch (err) {
-      handleError(err)
+      handleError(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
   return (
     <>
@@ -63,13 +62,13 @@ export default function LabelActions({ label, setOpen }: LabelActionsProps) {
       />
       <DropdownMenu modal>
         <DropdownMenuTrigger asChild>
-          <Button size={'icon'} variant={'ghost'} className="rounded-full">
-            <Icons.more className="w-3 h-3" />
+          <Button size="icon" variant="ghost" className="rounded-full">
+            <Icons.More className="w-3 h-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent onSelect={(e) => e.preventDefault()}>
           <DropdownMenuItem onClick={onEdit}>
-            <Icons.pencil className="mr-2 h-3 w-3 text-muted-foreground" />
+            <Icons.Pencil className="mr-2 h-3 w-3 text-muted-foreground" />
             Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -78,11 +77,11 @@ export default function LabelActions({ label, setOpen }: LabelActionsProps) {
             className="text-destructive"
             onSelect={(e) => e.preventDefault()}
           >
-            <Icons.trash className="mr-2 h-3 w-3" />
+            <Icons.Trash className="mr-2 h-3 w-3" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  )
+  );
 }

@@ -1,14 +1,20 @@
-'use client'
+'use client';
 
-import * as z from 'zod'
+import * as z from 'zod';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import toast from 'react-hot-toast'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const accountFormSchema = z.object({
   name: z
@@ -19,24 +25,25 @@ const accountFormSchema = z.object({
     .max(15, {
       message: 'Name must not be longer than 15 characters.',
     }),
-})
+});
 
-type AccountFormValues = z.infer<typeof accountFormSchema>
+type AccountFormValues = z.infer<typeof accountFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<AccountFormValues> = {
   // name: "Your name",
   // dob: new Date("2023-01-23"),
-}
+};
 
 export function AccountForm() {
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues,
-  })
+  });
 
   function onSubmit(data: AccountFormValues) {
-    toast('submitted')
+    // eslint-disable-next-line no-console
+    console.log(data);
   }
 
   return (
@@ -51,7 +58,9 @@ export function AccountForm() {
               <FormControl>
                 <Input placeholder="Your name" {...field} />
               </FormControl>
-              <FormDescription>This is the name that will be displayed.</FormDescription>
+              <FormDescription>
+                This is the name that will be displayed.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -59,5 +68,5 @@ export function AccountForm() {
         <Button type="submit">Update account</Button>
       </form>
     </Form>
-  )
+  );
 }

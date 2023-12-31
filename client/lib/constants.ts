@@ -1,6 +1,4 @@
 import {
-  ArrowDown,
-  ArrowUp,
   Calendar,
   CalendarClock,
   CalendarDays,
@@ -9,14 +7,12 @@ import {
   Menu,
   Tags,
   Timer,
-  LucideIcon,
-  ArrowRight,
-} from 'lucide-react'
+} from 'lucide-react';
 
 export type Mode = {
-  label: string
-  value: string
-}
+  label: string;
+  value: string;
+};
 
 export const modes: Mode[] = [
   {
@@ -31,7 +27,7 @@ export const modes: Mode[] = [
     label: 'Hold-to-talk',
     value: 'hold',
   },
-]
+];
 
 export const statuses = [
   {
@@ -44,7 +40,7 @@ export const statuses = [
     value: 'Completed',
     label: 'Complete',
   },
-]
+];
 
 export const sidebarItems = [
   {
@@ -72,9 +68,9 @@ export const sidebarItems = [
     label: 'Lists',
     icon: Menu,
   },
-] as const
+] as const;
 
-export type SidebarItem = (typeof sidebarItems)[number]['id']
+export type SidebarItem = (typeof sidebarItems)[number]['id'];
 
 export const widgetItems = [
   {
@@ -92,6 +88,6 @@ export const widgetItems = [
     label: 'Notes',
     icon: Clipboard,
   },
-] as const
+] as const;
 
-export type WidgetItem = (typeof widgetItems)[number]['id']
+export type WidgetItem = (typeof widgetItems)[number]['id'];

@@ -1,50 +1,51 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import type { LabelResponse, ListResponse } from '@/types'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { Drawer, DrawerContent } from '@/components/ui/drawer'
+import type { LabelResponse, ListResponse } from '@/types';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
 
-import { ListService } from '@/services/list-service'
-import { LabelService } from '@/services/label-service'
-import TaskForm from '@/components/shared/task/task-form'
+import { ListService } from '@/services/list-service';
+import { LabelService } from '@/services/label-service';
+import TaskForm from '@/components/shared/task/task-form';
 
-import { useLayoutStore } from '@/store/layout-store'
-import { useSignal } from '@/hooks/use-signal'
-import { useMediaQuery } from '@/hooks/use-media-query'
+import { useLayoutStore } from '@/store/layout-store';
+import { useSignal } from '@/hooks/use-signal';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 export default function TaskOverlay() {
-  const [isOpen, setOpen] = React.useState(false)
-  const [lists, setLists] = React.useState<ListResponse[]>([])
-  const [labels, setLabels] = React.useState<LabelResponse[]>([])
-  const { signal } = useSignal()
-  const { showTaskOverlay, toggleTaskOverlay, setTaskOverlay } = useLayoutStore()
-  const isDesktop = useMediaQuery('(min-width: 768px)')
+  const [isOpen, setOpen] = React.useState(false);
+  const [lists, setLists] = React.useState<ListResponse[]>([]);
+  const [labels, setLabels] = React.useState<LabelResponse[]>([]);
+  const { signal } = useSignal();
+  const { showTaskOverlay, toggleTaskOverlay, setTaskOverlay } =
+    useLayoutStore();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   React.useEffect(() => {
-    showTaskOverlay ? setOpen(true) : setOpen(false)
-  }, [showTaskOverlay])
+    showTaskOverlay ? setOpen(true) : setOpen(false);
+  }, [showTaskOverlay]);
 
   React.useEffect(() => {
     const subscribe = async () => {
-      const lists = await ListService.getLists()
-      const labels = await LabelService.getLabels()
-      setLists(lists)
-      setLabels(labels)
-    }
-    if (showTaskOverlay) subscribe()
-  }, [signal, showTaskOverlay])
+      const fetchedLists = await ListService.getLists();
+      const fetchedLabels = await LabelService.getLabels();
+      setLists(fetchedLists);
+      setLabels(fetchedLabels);
+    };
+    if (showTaskOverlay) subscribe();
+  }, [signal, showTaskOverlay]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'q' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        toggleTaskOverlay()
+        e.preventDefault();
+        toggleTaskOverlay();
       }
-    }
+    };
 
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [toggleTaskOverlay])
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, [toggleTaskOverlay]);
 
   if (isDesktop) {
     return (
@@ -53,16 +54,16 @@ export default function TaskOverlay() {
           <TaskForm lists={lists} labels={labels} />
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 
   // A workaround to manage drawer state since it has different behavior than the Dialog
   const onOpenChange = () => {
-    setOpen(!isOpen)
+    setOpen(!isOpen);
     if (!isOpen) {
-      setTaskOverlay(false)
+      setTaskOverlay(false);
     }
-  }
+  };
 
   return (
     <Drawer open={showTaskOverlay} onOpenChange={onOpenChange}>
@@ -72,5 +73,5 @@ export default function TaskOverlay() {
         </div>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }

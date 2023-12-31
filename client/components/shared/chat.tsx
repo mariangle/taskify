@@ -1,16 +1,23 @@
-'use client'
-import * as React from 'react'
-import { Icons } from '@/components/ui/icons'
+'use client';
 
-import { cn } from '@/lib/util/cn'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { useLayoutStore } from '@/store/layout-store'
+import * as React from 'react';
+import _uniqueId from 'lodash/uniqueId';
+import { Icons } from '@/components/ui/icons';
+
+import { cn } from '@/lib/util/cn';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { useLayoutStore } from '@/store/layout-store';
 
 export default function Chat() {
-  const { showChatOverlay, toggleChatOverlay } = useLayoutStore()
+  const { showChatOverlay, toggleChatOverlay } = useLayoutStore();
 
   const [messages, setMessages] = React.useState([
     {
@@ -25,22 +32,21 @@ export default function Chat() {
       role: 'agent',
       content: 'What seems to be the problem?',
     },
-  ])
-  const [input, setInput] = React.useState('')
-  const inputLength = input.trim().length
+  ]);
+  const [input, setInput] = React.useState('');
+  const inputLength = input.trim().length;
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      return
       if (e.key === 'c' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        toggleChatOverlay()
+        e.preventDefault();
+        toggleChatOverlay();
       }
-    }
+    };
 
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [toggleChatOverlay])
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, [toggleChatOverlay]);
 
   return (
     <div
@@ -60,18 +66,25 @@ export default function Chat() {
               <p className="text-sm text-muted-foreground">AI Assistant</p>
             </div>
           </div>
-          <Button onClick={toggleChatOverlay} variant={'secondary'} size={'icon'} className="rounded-full h-6 w-6">
-            <Icons.close className="w-4 h-4" />
+          <Button
+            onClick={toggleChatOverlay}
+            variant="secondary"
+            size="icon"
+            className="rounded-full h-6 w-6"
+          >
+            <Icons.Close className="w-4 h-4" />
           </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4 h-[300px] overflow-y-scroll">
-            {messages.map((message, index) => (
+            {messages.map((message) => (
               <div
-                key={index}
+                key={_uniqueId('message_')}
                 className={cn(
                   'flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm',
-                  message.role === 'user' ? 'ml-auto bg-primary text-primary-foreground' : 'bg-muted',
+                  message.role === 'user'
+                    ? 'ml-auto bg-primary text-primary-foreground'
+                    : 'bg-muted',
                 )}
               >
                 {message.content}
@@ -82,16 +95,16 @@ export default function Chat() {
         <CardFooter>
           <form
             onSubmit={(event) => {
-              event.preventDefault()
-              if (inputLength === 0) return
+              event.preventDefault();
+              if (inputLength === 0) return;
               setMessages([
                 ...messages,
                 {
                   role: 'user',
                   content: input,
                 },
-              ])
-              setInput('')
+              ]);
+              setInput('');
             }}
             className="flex w-full items-center space-x-2"
           >
@@ -104,12 +117,12 @@ export default function Chat() {
               onChange={(event) => setInput(event.target.value)}
             />
             <Button type="submit" size="icon" disabled={inputLength === 0}>
-              <Icons.send className="h-4 w-4" />
+              <Icons.Send className="h-4 w-4" />
               <span className="sr-only">Send</span>
             </Button>
           </form>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

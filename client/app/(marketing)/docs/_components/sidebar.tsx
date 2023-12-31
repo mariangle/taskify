@@ -1,4 +1,5 @@
-import SidebarLink from './sidebar-link'
+import _uniqueId from 'lodash/uniqueId';
+import SidebarLink from './sidebar-link';
 
 // ? Move this to config
 
@@ -29,23 +30,23 @@ const docsSidebar = [
     heading: 'Community',
     links: [{ text: 'Contributing', href: '/docs/contributing' }],
   },
-]
+];
 
 export default function Sidebar() {
   return (
     <aside className="md:top-20 md:sticky md:self-start p-2 md:w-64 md:max-h-screen overflow-y-auto">
-      {docsSidebar.map((section, index) => (
-        <ul key={index} className="mb-4 text-sm">
+      {docsSidebar.map((section) => (
+        <ul key={section.heading} className="mb-4 text-sm">
           <li>
             <h2 className="font-semibold mb-2">{section.heading}</h2>
             <ul className="">
-              {section.links.map((link, index) => (
-                <SidebarLink link={link} key={index} />
+              {section.links.map((link) => (
+                <SidebarLink link={link} key={_uniqueId('link_')} />
               ))}
             </ul>
           </li>
         </ul>
       ))}
     </aside>
-  )
+  );
 }

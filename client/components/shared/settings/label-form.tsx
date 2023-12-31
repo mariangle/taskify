@@ -1,38 +1,45 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import * as z from 'zod'
-import toast from 'react-hot-toast'
+import * as React from 'react';
+import * as z from 'zod';
+import toast from 'react-hot-toast';
 
-import { Input } from '@/components/ui/input'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/ui/icons'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Icons } from '@/components/ui/icons';
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import type { LabelResponse } from '@/types/label'
-import { useRouter } from 'next/navigation'
-import { handleError } from '@/lib/util'
-import { LabelService } from '@/services/label-service'
-import { useSignal } from '@/hooks/use-signal'
+import type { LabelResponse } from '@/types/label';
+import { handleError } from '@/lib/util';
+import { LabelService } from '@/services/label-service';
+import { useSignal } from '@/hooks/use-signal';
 
 interface FormProps {
-  label?: LabelResponse
-  close?: () => void
+  label?: LabelResponse;
+  close?: () => void;
 }
 
 export const labelFormSchema = z.object({
   name: z.string().min(2),
   color: z.string().min(2),
-})
+});
 
-export type LabelFormValues = z.infer<typeof labelFormSchema>
+export type LabelFormValues = z.infer<typeof labelFormSchema>;
 
 export default function LabelForm({ label, close }: FormProps) {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const { triggerSignal } = useSignal()
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { triggerSignal } = useSignal();
 
   const form = useForm<LabelFormValues>({
     resolver: zodResolver(labelFormSchema),
@@ -41,30 +48,30 @@ export default function LabelForm({ label, close }: FormProps) {
       color: label?.color || '#ffffff',
       name: label?.name || '',
     },
-  })
+  });
 
   const onSubmit = async (data: LabelFormValues) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       if (label) {
-        await LabelService.updateLabel(label.id, { ...data, id: label.id })
-        toast.success('Changes saved.')
+        await LabelService.updateLabel(label.id, { ...data, id: label.id });
+        toast.success('Changes saved.');
       } else {
-        await LabelService.createLabel(data)
-        toast.success('Label created!')
+        await LabelService.createLabel(data);
+        toast.success('Label created!');
       }
-      triggerSignal()
-      router.refresh()
-      close && close()
+      triggerSignal();
+      router.refresh();
+      close && close();
     } catch (error) {
-      handleError(error)
+      handleError(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
   const onCancel = () => {
-    close && close()
-  }
+    close && close();
+  };
 
   return (
     <Form {...form}>
@@ -90,7 +97,11 @@ export default function LabelForm({ label, close }: FormProps) {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Eg. Shopping" type="password" {...field} />
+                  <Input
+                    placeholder="Eg. Shopping"
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,8 +109,13 @@ export default function LabelForm({ label, close }: FormProps) {
           />
         </div>
         <div className="flex-gap justify-end mt-2">
-          <Button type="button" variant={'secondary'} onClick={onCancel} disabled={isLoading}>
-            <Icons.close className="w-4 h-4" />
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
+            <Icons.Close className="w-4 h-4" />
           </Button>
           <Button type="submit" disabled={isLoading} loading={isLoading}>
             {label ? 'Save' : 'Add'}
@@ -107,5 +123,5 @@ export default function LabelForm({ label, close }: FormProps) {
         </div>
       </form>
     </Form>
-  )
+  );
 }
