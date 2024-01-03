@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 function Drawer({
   shouldScaleBackground = true,

@@ -1,34 +1,22 @@
 import { format } from 'date-fns';
 
-import { TaskService } from '@/services/task-service';
-import { LabelService } from '@/services/label-service';
-import { ListService } from '@/services/list-service';
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 
-import PageWithViews from '@/components/shared/page-with-views';
+import PageWithViews from '@/components/page-with-views';
 
 interface PageProps {
   searchParams: Partial<ExtendedSearchParamsOptions>;
 }
 
 export default async function Today({ searchParams }: PageProps) {
-  const tasks = await TaskService.getTasks({
-    ...searchParams,
-    dueDate: format(new Date(), 'dd-MM-yyyy'),
-    incomplete: searchParams.incomplete ?? true,
-    overdue: searchParams.overdue ?? true,
-  });
-  const labels = await LabelService.getLabels();
-  const lists = await ListService.getLists();
-
   return (
     <PageWithViews
       searchParams={searchParams}
-      tasks={tasks}
-      labels={labels}
-      lists={lists}
-      heading="Today"
-      options={{ board: { dueDate: format(new Date(), 'dd-MM-yyyy') } }}
+      content={{
+        title: 'Today',
+        list: { description: 'Your tasks for today.' },
+      }}
+      options={{ dueDate: format(new Date(), 'dd-MM-yyyy') }}
     />
   );
 }

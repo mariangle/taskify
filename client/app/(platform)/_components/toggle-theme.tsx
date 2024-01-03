@@ -14,16 +14,11 @@ export function ToggleTheme() {
   };
 
   const renderButton = () => (
-    <Button
-      size="icon"
-      className="w-full flex-center"
-      variant="outline"
-      onClick={toggleTheme}
-    >
+    <Button variant="outline" onClick={toggleTheme} className="w-10 p-2">
       {resolvedTheme === 'light' ? (
-        <Icons.Sun className="w-4 h-4" />
+        <Icons.Sun className="w-3 h-3" />
       ) : (
-        <Icons.Moon className="w-4 h-4" />
+        <Icons.Moon className="w-3 h-3" />
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>

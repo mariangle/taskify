@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/seperator';
 import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 import { useFilter } from '@/hooks/use-filter';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 export default function FilterView() {
   const { view, pathname, createQueryString } = useFilter();

@@ -3,6 +3,7 @@
   "extends": ["next/core-web-vitals", "airbnb", "prettier"],
   "rules": {
     "no-shadow": "off",
+    "no-unused-vars": "warn",
     "no-unused-expressions": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "react/require-default-props": "off",

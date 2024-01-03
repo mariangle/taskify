@@ -90,13 +90,11 @@ export default function StatusCheckbox({
     High: 'border-red-500 bg-red-500/10',
   };
 
-  const priority = task?.priority || '';
-
   return (
     <Checkbox
       checked={isCompleted}
       onCheckedChange={onToggleStatus}
-      className={priorityClassnames[priority]}
+      className={priorityClassnames[task?.priority || '']}
     />
   );
 }

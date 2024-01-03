@@ -1,27 +1,33 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 
-import SideNav from './side-nav'
+import SideNav from './side-nav';
 
-import { cn } from '@/lib/util/cn'
-import type { ListResponse, UserResponse } from '@/types'
-import { useLayoutStore } from '@/store/layout-store'
+import { cn } from '@/lib/util/tw-merge';
+import type { ListResponse, UserResponse } from '@/types';
+import { useLayoutStore } from '@/store/layout-store';
 
-export default function LeftSidebar({ lists, user }: { lists: ListResponse[]; user: UserResponse }) {
-  const { showLeftSidebar, toggleLeftSidebar } = useLayoutStore()
+export default function LeftSidebar({
+  lists,
+  user,
+}: {
+  lists: ListResponse[];
+  user: UserResponse;
+}) {
+  const { showLeftSidebar, toggleLeftSidebar } = useLayoutStore();
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        toggleLeftSidebar()
+        e.preventDefault();
+        toggleLeftSidebar();
       }
-    }
+    };
 
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [toggleLeftSidebar])
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, [toggleLeftSidebar]);
 
   return (
     <aside
@@ -34,5 +40,5 @@ export default function LeftSidebar({ lists, user }: { lists: ListResponse[]; us
         <SideNav lists={lists} user={user} />
       </div>
     </aside>
-  )
+  );
 }

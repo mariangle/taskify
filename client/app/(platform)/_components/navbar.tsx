@@ -10,7 +10,7 @@ import FilterOverlay from '@/components/modals/filter-overlay';
 import FilterView from '@/components/shared/filter-view';
 
 import { useLayoutStore } from '@/store/layout-store';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import type { ListResponse, UserResponse } from '@/types';
 
 export default function Navbar({
@@ -50,7 +50,6 @@ export default function Navbar({
               />
             </Button>
           </div>
-          <FilterView />
         </div>
         <div className="flex-gap">
           <Button

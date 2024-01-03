@@ -4,7 +4,7 @@ import * as React from 'react';
 import _uniqueId from 'lodash/uniqueId';
 import { Icons } from '@/components/ui/icons';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {

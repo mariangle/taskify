@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { Icons } from '@/components/ui/icons';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { Button } from '@/components/ui/button';
 import {
   CommandDialog,
@@ -54,11 +54,6 @@ export default function SearchMenu({ ...props }) {
               <Icons.Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <Icons.Tags className="mr-2 h-4 w-4" />
-              <span>Labels</span>
-              <CommandShortcut>⌘L</CommandShortcut>
             </CommandItem>
             <CommandItem>
               <Icons.LineChart className="mr-2 h-4 w-4" />

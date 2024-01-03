@@ -32,8 +32,8 @@ interface TaskActionsProps {
   task: TaskResponse;
   lists: ListResponse[];
   labels: LabelResponse[];
-  setOpen: () => void;
-  openSubtasks: () => void;
+  setOpen?: () => void;
+  openSubtasks?: () => void;
 }
 
 export default function TaskActions({
@@ -50,9 +50,19 @@ export default function TaskActions({
   const isMounted = useMounted();
   const router = useRouter();
 
-  const onEdit = () => setOpen();
+  const onEdit = () => {
+    if (setOpen) setOpen();
+    else {
+      router.push(`/tasks/${task.id}`);
+    }
+  };
 
-  const onOpenSubtasks = () => openSubtasks();
+  const onOpenSubtasks = () => {
+    if (openSubtasks) openSubtasks();
+    else {
+      router.push(`/tasks/${task.id}`);
+    }
+  };
 
   const onDelete = async (taskId: string) => {
     setIsLoading(true);
@@ -150,7 +160,10 @@ export default function TaskActions({
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   {labels.map((label) => (
-                    <DropdownMenuItem onSelect={() => onSelectLabel(label.id)}>
+                    <DropdownMenuItem
+                      onSelect={() => onSelectLabel(label.id)}
+                      key={label.id}
+                    >
                       <LabelColor color={label.color} className="mr-2" />
                       {label.name}
                       {isLabelApplied(label.id) && (
@@ -188,7 +201,10 @@ export default function TaskActions({
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   {lists.map((list) => (
-                    <DropdownMenuItem onSelect={() => onMoveTo(list)}>
+                    <DropdownMenuItem
+                      onSelect={() => onMoveTo(list)}
+                      key={list.id}
+                    >
                       <span>{list.name}</span>
                     </DropdownMenuItem>
                   ))}

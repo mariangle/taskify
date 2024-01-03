@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { deleteToken } from '@/lib/_actions/logout';
 import { revalidate } from '@/lib/_actions/revalidate-path';
 import { useLayoutStore } from '@/store/layout-store';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 import type { UserResponse } from '@/types';
 

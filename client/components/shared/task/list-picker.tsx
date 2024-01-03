@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import type { ListResponse } from '@/types';
 
 interface ListPickerProps<T extends FieldValues> {

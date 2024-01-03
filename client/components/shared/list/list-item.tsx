@@ -1,13 +1,17 @@
+import * as React from 'react';
+
 import { usePathname, useRouter } from 'next/navigation';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 
 import ListModal from '@/components/modals/list-modal';
 
 import type { ListResponse } from '@/types';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
+import { useFilter } from '@/hooks/use-filter';
 
 export default function ListItem({ list }: { list?: ListResponse }) {
+  const { persistQueryString } = useFilter();
   const router = useRouter();
   const path = usePathname();
 
@@ -21,16 +25,19 @@ export default function ListItem({ list }: { list?: ListResponse }) {
     );
   }
 
+  const persistRouterPush = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push(`${href}?${persistQueryString()}`);
+  };
+
   return (
     <Button
+      variant="ghost"
       className={cn(
-        buttonVariants({ variant: 'ghost' }),
         'ml-auto flex justify-start px-2 w-full text-muted-foreground dark:text-muted-foreground dark:hover:bg-accent bg-transparent dark:bg-transparent group',
         path === `/lists/${list.id}` && 'bg-primary/20 dark:bg-primary/20',
       )}
-      onClick={() => {
-        router.push(`/lists/${list.id}`);
-      }}
+      onClick={(e) => persistRouterPush(`/lists/${list.id}`, e)}
     >
       <div className="rounded-full bg-primary/10 p-1">
         <span className="h-4 w-4 block text-center text-xs text-foreground">
@@ -40,7 +47,7 @@ export default function ListItem({ list }: { list?: ListResponse }) {
       <span className={cn('ml-2')}>{list.name}</span>
       <div
         role="presentation"
-        className="group-hover:block hidden ml-auto"
+        className={cn('group-hover:block hidden ml-auto')}
         onClick={(e) => {
           e.stopPropagation();
         }}

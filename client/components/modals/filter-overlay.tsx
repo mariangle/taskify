@@ -38,7 +38,7 @@ export default function FilterOverlay() {
 
   if (!isMounted)
     return (
-      <Button variant="outline" onClick={open} className="flex-gap">
+      <Button variant="outline" className="flex-gap">
         <Icons.Filter className="w-4 h-4" />
         <span className="hidden md:block">Filter</span>
       </Button>

@@ -9,7 +9,7 @@ import { Icons } from '@/components/ui/icons';
 import { revalidate } from '@/lib/_actions/revalidate-path';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import type { LabelResponse } from '@/types';
 
 interface LabelBadgeProps {

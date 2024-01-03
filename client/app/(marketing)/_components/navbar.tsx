@@ -5,7 +5,7 @@ import NavbarLink from './navbar-link';
 
 import { buttonVariants } from '@/components/ui/button';
 import { authenticate } from '@/lib/_actions/authenticate';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { config } from '@/lib/config';
 
 function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {

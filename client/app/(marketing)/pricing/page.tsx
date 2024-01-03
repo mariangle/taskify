@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/seperator';
 import { Badge } from '@/components/ui/badge';
 import { Icons } from '@/components/ui/icons';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 function Feature({
   locked = false,

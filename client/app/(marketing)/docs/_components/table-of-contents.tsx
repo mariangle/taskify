@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { kebabCase } from 'lodash';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 export default function TableOfContents() {
   const [headings, setHeadings] = React.useState<string[]>([]);

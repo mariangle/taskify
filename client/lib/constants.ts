@@ -79,11 +79,6 @@ export const widgetItems = [
     icon: Calendar,
   },
   {
-    id: 'timer',
-    label: 'Timer',
-    icon: Timer,
-  },
-  {
     id: 'notes',
     label: 'Notes',
     icon: Clipboard,
@@ -91,3 +86,18 @@ export const widgetItems = [
 ] as const;
 
 export type WidgetItem = (typeof widgetItems)[number]['id'];
+
+export const statusColumns = [
+  {
+    status: 'New',
+    color: 'bg-yellow-500',
+  },
+  {
+    status: 'In Progress',
+    color: 'bg-yellow-500',
+  },
+  {
+    status: 'Completed',
+    color: 'bg-yellow-500',
+  },
+];

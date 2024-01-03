@@ -1,33 +1,22 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { TaskService } from '@/services/task-service'
-import { LabelService } from '@/services/label-service'
-import { ListService } from '@/services/list-service'
+import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 
-import { ExtendedSearchParamsOptions } from '@/lib/util/filter'
-
-import PageWithViews from '@/components/shared/page-with-views'
+import PageWithViews from '@/components/page-with-views';
 
 interface PageProps {
-  searchParams: Partial<ExtendedSearchParamsOptions>
+  searchParams: Partial<ExtendedSearchParamsOptions>;
 }
 
-export default async function Inbox({ searchParams }: PageProps) {
-  // TODO: Fix filtering
-  const tasks = await TaskService.getTasks({
-    unsorted: true,
-  })
-  const labels = await LabelService.getLabels()
-  const lists = await ListService.getLists()
-
+export default function Inbox({ searchParams }: PageProps) {
   return (
     <PageWithViews
       searchParams={searchParams}
-      tasks={tasks}
-      labels={labels}
-      lists={lists}
-      heading="Inbox"
-      options={{ board: { unsorted: true } }}
+      content={{
+        title: 'Inbox',
+        list: { description: 'This is where your unsorted tasks reside.' },
+      }}
+      options={{ unsorted: true }}
     />
-  )
+  );
 }

@@ -1,12 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 
 import { usePathname } from 'next/navigation';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
-import { LoadingSidebar } from '@/components/ui/loading';
 import { ToggleTheme } from './toggle-theme';
 import { Separator } from '@/components/ui/seperator';
 import {
@@ -16,11 +14,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
+import RetainQueryLink from '@/components/retain-query-link';
 import UserNav from './user-nav';
 import SearchMenu from './search-menu';
 import ListItem from '@/components/shared/list/list-item';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { config } from '@/lib/config';
 import { useLayoutStore } from '@/store/layout-store';
 import { useSettingsStore } from '@/store/settings-store';
@@ -50,8 +49,6 @@ export default function SideNav({
       setSettings({ ...settings, sidebar: dS, widgets: dW });
   }, [settings, setSettings]);
 
-  if (!isMounted) return <LoadingSidebar />;
-
   return (
     <nav className="px-3 pb-3 min-h-full flex flex-col justify-between">
       <div>
@@ -75,9 +72,8 @@ export default function SideNav({
         <div className="space-y-1 mt-2">
           {config.platform.links.map(
             (item) =>
-              // Check if the link's id is included in settings.sidebar
               settings.sidebar.includes(item.id as SidebarItem) && (
-                <Link
+                <RetainQueryLink
                   key={item.href}
                   href={item.href}
                   className={cn(
@@ -95,7 +91,7 @@ export default function SideNav({
                   <span className={cn('ml-2', !showLeftSidebar && 'md:hidden')}>
                     {item.label}
                   </span>
-                </Link>
+                </RetainQueryLink>
               ),
           )}
         </div>

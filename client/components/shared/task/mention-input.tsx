@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MentionsInput as ReactMentionInput, Mention } from 'react-mentions';
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { inputStyle } from '@/styles/styles';
 import type { ListResponse, LabelResponse, TaskResponse } from '@/types';
 import {

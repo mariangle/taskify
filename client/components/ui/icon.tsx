@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 interface IconProps {
   icon: React.ReactNode;

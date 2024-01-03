@@ -1,30 +1,35 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/util/cn'
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/util/tw-merge';
 
 interface NavbarLinkProps {
   link: {
-    title: string
-    href: string
-  }
+    title: string;
+    href: string;
+  };
 }
 
 export default function NavbarLink({ link }: NavbarLinkProps) {
-  const path = usePathname()
-  const isActive = path === link.href || (link.href === '/docs/getting-started' && path.includes('docs'))
+  const path = usePathname();
+  const isActive =
+    path === link.href ||
+    (link.href === '/docs/getting-started' && path.includes('docs'));
 
   return (
     <li key={link.href}>
       <Link
         href={link.href}
         aria-current="page"
-        className={cn('text-sm text-muted-foreground hover:text-foreground', isActive && 'text-foreground')}
+        className={cn(
+          'text-sm text-muted-foreground hover:text-foreground',
+          isActive && 'text-foreground',
+        )}
       >
         {link.title}
       </Link>
     </li>
-  )
+  );
 }

@@ -15,7 +15,7 @@ import {
 import { TaskResponse } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 type Priority = { value: string; color: string };
 

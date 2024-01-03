@@ -2,7 +2,7 @@ import SubtaskItem from '@/components/shared/subtask/subtask-item';
 import { Progress } from '@/components/ui/progress';
 
 import { SubtaskResponse, TaskResponse } from '@/types';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 interface SubtaskListProps {
   task: TaskResponse;

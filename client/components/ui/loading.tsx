@@ -6,7 +6,7 @@ import { Icons } from '@/components/ui/icons';
 import { Separator } from '@/components/ui/seperator';
 import { BoardContainer } from '@/components/ui/container';
 import { PageList } from '@/components/ui/page';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 export function LoadingListPage() {
   return (

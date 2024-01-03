@@ -14,7 +14,7 @@ import TaskActions from '@/components/shared/task/task-actions';
 import { DatePicker } from './date-picker';
 
 import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 interface TaskItemProps {
   task?: TaskResponse;

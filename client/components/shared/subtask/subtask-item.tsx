@@ -8,7 +8,7 @@ import StatusCheckbox from '@/components/shared/status-checkbox';
 import SubtaskForm from '@/components/shared/subtask/subtask-form';
 
 import type { SubtaskResponse, TaskResponse } from '@/types';
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 interface SubtaskItemProps {
   subtask?: SubtaskResponse;

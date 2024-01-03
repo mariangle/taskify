@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Link from 'next/link';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { buttonVariants } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 

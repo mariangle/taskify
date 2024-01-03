@@ -3,7 +3,7 @@ import * as React from 'react';
 import TaskItem from '../shared/task/task-item';
 import LabelItem from '../shared/label/label-item';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 
 import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
 
@@ -52,10 +52,14 @@ export function PageHeading({
         {children}
       </HeadingTag>
       {items && (
-        <p className="text-muted-foreground text-xs">({items.length})</p>
+        <span className="text-muted-foreground text-xs">({items.length})</span>
       )}
     </div>
   );
+}
+
+export function PageDescription({ children }: { children: React.ReactNode }) {
+  return <p className="text-sm pt-2 text-muted-foreground">{children}</p>;
 }
 
 export function LabelList({ labels }: { labels: LabelResponse[] }) {

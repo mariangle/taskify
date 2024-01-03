@@ -12,7 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import LabelBadge from '@/components/ui/label-badge';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import type { LabelResponse } from '@/types';
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 import { useFilter } from '@/hooks/use-filter';
@@ -23,14 +23,8 @@ interface FilterPanelProps {
 }
 
 export default function FilterPanel({ labels, close }: FilterPanelProps) {
-  const {
-    createQueryString,
-    removeQueryString,
-    view,
-    incomplete,
-    labelId,
-    overdue,
-  } = useFilter();
+  const { createQueryString, removeQueryString, view, labelId, completed } =
+    useFilter();
 
   const FilterView = React.memo(
     ({
@@ -55,8 +49,6 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
       </Button>
     ),
   );
-
-  // TODO: Store urlParams so they don't reset when navigating
 
   return (
     <div className="w-full">
@@ -85,31 +77,15 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
           <Switch
             id="completed-tasks"
             className="ml-auto"
-            checked={!!incomplete}
+            checked={!!completed}
             onCheckedChange={() => {
-              if (incomplete) {
-                removeQueryString('incomplete');
-              } else {
-                createQueryString('incomplete', 'false');
-              }
+              completed
+                ? removeQueryString('completed')
+                : createQueryString('completed', 'true');
             }}
           />
         </div>
       )}
-      <div className="flex-gap mb-4 w-full">
-        <Checkbox checked className="cursor-default" />
-        <Label htmlFor="overdue-tasks">Overdue tasks</Label>
-        <Switch
-          id="overdue-tasks"
-          className="ml-auto"
-          checked={!overdue}
-          onCheckedChange={() => {
-            overdue
-              ? removeQueryString('overdue')
-              : createQueryString('overdue', 'false');
-          }}
-        />
-      </div>
       <Separator />
       <span className="pt-4 block text-sm font-bold">Label</span>
       <div className="my-4 flex-gap max-w-full flex-wrap">
@@ -122,7 +98,7 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
               labelId === label.id && 'bg-primary/25 border-primary',
             )}
             onClick={() =>
-              labelId
+              labelId === label.id
                 ? removeQueryString('labelId')
                 : createQueryString('labelId', label.id)
             }

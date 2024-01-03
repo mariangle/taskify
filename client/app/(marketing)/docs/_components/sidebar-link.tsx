@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/util/cn'
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/util/tw-merge';
 
 interface SidebarLinkProps {
   link: {
-    text: string
-    href: string
-  }
+    text: string;
+    href: string;
+  };
 }
 
 export default function SidebarLink({ link }: SidebarLinkProps) {
-  const path = usePathname()
-  const isActive = path === link.href
+  const path = usePathname();
+  const isActive = path === link.href;
 
   return (
     <Link
@@ -26,5 +26,5 @@ export default function SidebarLink({ link }: SidebarLinkProps) {
     >
       {link.text}
     </Link>
-  )
+  );
 }

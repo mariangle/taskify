@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 
 import { Armchair, CalendarCheck2, CircleSlash, Sunset } from 'lucide-react';
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form';
-import { addDays, format, formatDistance } from 'date-fns';
+import { addDays, format, formatDistance, isBefore } from 'date-fns';
 import { useRouter } from 'next/navigation';
+
 import { Icons } from '@/components/ui/icons';
-import { Calendar } from '@/components/ui/calendar';
 import { Separator } from '@/components/ui/seperator';
 import {
   Popover,
@@ -16,12 +16,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-import { cn } from '@/lib/util/cn';
+import { cn } from '@/lib/util/tw-merge';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { TaskResponse } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 import { useMounted } from '@/hooks/use-mounted';
+import { Calendar } from '@/components/ui/experimental-calendar';
 
 interface FormVariant<T extends FieldValues> {
   type: 'form';
@@ -162,14 +163,14 @@ export function DatePicker<T extends FieldValues>({
           className={cn(
             buttonVariants({ variant: 'picker', size: 'icon' }),
             'w-fit px-1',
+            isBefore(new Date(task.dueDate), new Date()) && 'text-destructive',
           )}
         >
           <Icons.Calendar className="h-3 w-3 mr-1" />
           <span className="text-xs">
-            {value &&
-              formatDistance(new Date(task.dueDate), new Date(), {
-                addSuffix: true,
-              })}
+            {formatDistance(new Date(task.dueDate), new Date(), {
+              addSuffix: true,
+            })}
           </span>
         </PopoverTrigger>
       );
@@ -211,7 +212,7 @@ export function DatePicker<T extends FieldValues>({
 
         return componentToRender;
       })()}
-      <PopoverContent className="max-w-[260px] overflow-hidden">
+      <PopoverContent className="w-[220px]">
         <div className="py-2">
           {dateOptions.map((option) => (
             <Button
@@ -247,7 +248,7 @@ export function DatePicker<T extends FieldValues>({
           selected={value}
           onSelect={onSelect}
           initialFocus
-          className="overflow-y-auto rounded-sm p-1"
+          className="p-1"
         />
       </PopoverContent>
     </Popover>
