@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unstable-nested-components */
+
 'use client';
 
 import * as React from 'react';

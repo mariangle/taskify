@@ -24,7 +24,7 @@ export default function RightSidebar() {
   const [tasks, setTasks] = React.useState<TaskResponse[]>([]);
   const [labels, setLabels] = React.useState<LabelResponse[]>([]);
   const [lists, setLists] = React.useState<ListResponse[]>([]);
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>();
+  const [, setSelectedDate] = React.useState<Date | undefined>();
   const [openModal, setOpenModal] = React.useState(false);
   const { settings } = useSettingsStore();
 
@@ -44,7 +44,6 @@ export default function RightSidebar() {
   if (!isMounted) return null;
 
   const onSelect = (date: Date | undefined) => {
-    console.log(date);
     setOpenModal(true);
     setSelectedDate(date);
   };

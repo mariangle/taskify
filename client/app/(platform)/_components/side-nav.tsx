@@ -27,6 +27,7 @@ import type { ListResponse, UserResponse } from '@/types';
 import type { SidebarItem } from '@/lib/constants';
 import { useMounted } from '@/hooks/use-mounted';
 import { widgetItems, sidebarItems } from '@/lib/constants';
+import { LoadingSidebar } from '@/components/ui/loading';
 
 export default function SideNav({
   lists,
@@ -48,6 +49,10 @@ export default function SideNav({
     if (!settings.sidebar || !settings.widgets)
       setSettings({ ...settings, sidebar: dS, widgets: dW });
   }, [settings, setSettings]);
+
+  if (!isMounted) {
+    return <LoadingSidebar />;
+  }
 
   return (
     <nav className="px-3 pb-3 min-h-full flex flex-col justify-between">

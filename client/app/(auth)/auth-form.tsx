@@ -149,6 +149,7 @@ function AuthForm({ variant }: Props) {
           className="w-full"
           loading={isLoading}
           variant="default"
+          disabled
           onClick={form.handleSubmit(onSubmit)}
         >
           {variant === 'login' ? 'Login' : 'Register'}

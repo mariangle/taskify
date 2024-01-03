@@ -14,13 +14,13 @@ const features: Feature[] = [
     title: 'Natural Language Processing',
     description:
       'Convert text-based task inputs into structured data for seamless interaction.',
-    icon: <BotIcon className="w-4 h-4 text-primary/30" />,
+    icon: <BrainIcon className="w-4 h-4 text-primary/30" />,
   },
   {
     title: 'AI Assistant',
     description:
       'Leverage AI algorithms for intelligent task prioritization based on user behavior.',
-    icon: <BrainIcon className="w-4 h-4 text-primary/30" />,
+    icon: <BotIcon className="w-4 h-4 text-primary/30" />,
   },
   {
     title: 'Speech Recognition',
@@ -29,9 +29,9 @@ const features: Feature[] = [
     icon: <MicIcon className="w-4 h-4 text-primary/30" />,
   },
   {
-    title: 'Automated Smart Scheduling',
+    title: 'Smart Suggestions',
     description:
-      'Enable the app to dynamically schedule tasks based on habits and priorities.',
+      'Twitter-like mention suggestions for efficient task creation.',
     icon: <CalendarIcon className="w-4 h-4 text-primary/30" />,
   },
 ];

@@ -60,7 +60,7 @@ namespace server
             });
             builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
             {
-                builder.WithOrigins("http://localhost:3001").AllowAnyMethod().AllowAnyHeader();
+                builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
             }));
 
             var app = builder.Build();

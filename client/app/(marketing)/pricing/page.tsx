@@ -24,7 +24,7 @@ function Feature({
 
 export default function Pricing() {
   return (
-    <div className="max-w-screen-lg mx-auto py-12 px-2">
+    <div className="max-w-screen-lg mx-auto py-12 px-6">
       <div className="min-h-[30vh] flex-center flex-col text-center">
         <h1 className="heading horizontal-gradient">
           Simple, transparent pricing

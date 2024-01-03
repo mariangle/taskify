@@ -6,7 +6,6 @@ import {
   Inbox,
   Menu,
   Tags,
-  Timer,
 } from 'lucide-react';
 
 export type Mode = {

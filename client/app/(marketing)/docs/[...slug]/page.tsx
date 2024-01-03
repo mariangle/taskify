@@ -1,6 +1,6 @@
-import Content from '../_content/test.mdx'
-import TableOfContents from '../_components/table-of-contents'
-import Breadcrumbs from '../_components/breadcrumbs'
+import Content from '../_content/test.mdx';
+import TableOfContents from '../_components/table-of-contents';
+import Breadcrumbs from '../_components/breadcrumbs';
 
 export default function Page() {
   return (
@@ -13,5 +13,5 @@ export default function Page() {
       </div>
       <TableOfContents />
     </div>
-  )
+  );
 }

@@ -44,7 +44,7 @@ export default function TableOfContents() {
   }, []);
 
   return (
-    <div className="md:top-20 md:sticky md:self-start md:p-2 md:w-72 hidden md:block md:max-h-screen overflow-y-auto">
+    <div className="md:top-20 md:sticky md:self-start md:w-72 hidden lg:block md:max-h-screen overflow-y-auto">
       <div className="text-sm font-semibold">On this page</div>
       <ul className="text-sm mt-2 space-y-2">
         {headings.map((heading) => (

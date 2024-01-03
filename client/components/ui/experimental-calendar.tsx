@@ -1,12 +1,12 @@
+/* eslint-disable react/no-unstable-nested-components */
+
 'use client';
 
 import * as React from 'react';
-import { DayContentProps, DayPicker } from 'react-day-picker';
-import { isSameDay } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
 import { Icons } from '@/components/ui/icons';
 import { cn } from '@/lib/util/tw-merge';
 import { buttonVariants } from '@/components/ui/button';
-import type { TaskResponse } from '@/types';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 

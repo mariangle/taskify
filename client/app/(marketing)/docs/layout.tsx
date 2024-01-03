@@ -8,7 +8,7 @@ interface DocsLayoutProps {
 
 export default function DocsLayout({ children }: DocsLayoutProps) {
   return (
-    <div className="max-w-screen-lg mx-auto flex flex-col md:flex-row gap-4 min-h-screen py-12">
+    <div className="max-w-screen-lg mx-auto flex flex-col md:flex-row gap-4 min-h-screen py-12 px-6">
       <Sidebar />
       {children}
     </div>

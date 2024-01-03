@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import ThemeSwitcher from './theme-switcher';
 import NavbarLink from './navbar-link';
+import { MobileNav } from './mobile-nav';
 
 import { buttonVariants } from '@/components/ui/button';
 import { authenticate } from '@/lib/_actions/authenticate';
@@ -10,7 +10,7 @@ import { config } from '@/lib/config';
 
 function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
-    <div className="flex-gap">
+    <div className="flex-gap flex-1 justify-end">
       {isAuthenticated ? (
         <div>
           <Link
@@ -52,19 +52,19 @@ export default async function Navbar() {
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 w-full transition-all border-b bg-background/50 backdrop-blur-lg">
-      <div className="px-2 py-2 max-w-screen-lg mx-auto flex justify-between items-center">
-        <Link href="/" aria-current="page" className="font-bold flex-1">
-          .taskify
-        </Link>
-        <ul className="flex-gap gap-6 flex-1 flex-center">
+      <div className="px-6 py-2 max-w-screen-lg mx-auto flex justify-between items-center">
+        <div className="flex-1 flex-gap">
+          <Link href="/" aria-current="page" className="font-bold">
+            .taskify
+          </Link>
+          <MobileNav />
+        </div>
+        <ul className="flex-gap gap-6 flex-1 flex-center hidden md:flex">
           {config.marketing.links.map((link) => (
             <NavbarLink key={link.href} link={link} />
           ))}
         </ul>
-        <div className="flex-gap flex-1 justify-end">
-          <ThemeSwitcher />
-          <AuthNavigation isAuthenticated={isAuthenticated} />
-        </div>
+        <AuthNavigation isAuthenticated={isAuthenticated} />
       </div>
     </nav>
   );

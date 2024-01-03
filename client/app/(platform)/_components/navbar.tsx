@@ -50,6 +50,7 @@ export default function Navbar({
               />
             </Button>
           </div>
+          <FilterView />
         </div>
         <div className="flex-gap">
           <Button
