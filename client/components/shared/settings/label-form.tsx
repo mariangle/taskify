@@ -97,11 +97,7 @@ export default function LabelForm({ label, close }: FormProps) {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Eg. Shopping"
-                    type="password"
-                    {...field}
-                  />
+                  <Input placeholder="Eg. Shopping" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

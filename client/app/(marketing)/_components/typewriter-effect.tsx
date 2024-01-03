@@ -3,20 +3,22 @@
 import Typewriter from 'typewriter-effect';
 
 export default function TypewriterEffect() {
-  const commands = [
-    'Add doctor appointment at 10 on Tuesday to my schedule.',
-    'Do I have any plans on Monday?',
-    'Check for upcoming events this week.',
+  const words = [
+    'efficiency',
+    'productivity',
+    'workflow',
+    'performance',
+    'proficiency',
   ];
 
   return (
     <Typewriter
       options={{
-        strings: commands,
+        strings: words,
         autoStart: true,
         loop: true,
-        delay: 40,
-        deleteSpeed: 15,
+        delay: 50,
+        deleteSpeed: 100,
       }}
     />
   );

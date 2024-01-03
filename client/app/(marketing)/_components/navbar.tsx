@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import NavbarLink from './navbar-link';
 import { MobileNav } from './mobile-nav';
+import { Icons } from '@/components/ui/icons';
 
 import { buttonVariants } from '@/components/ui/button';
 import { authenticate } from '@/lib/_actions/authenticate';
@@ -15,9 +16,13 @@ function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
         <div>
           <Link
             href="/inbox"
-            className={buttonVariants({ variant: 'outline', size: 'sm' })}
+            className={cn(
+              buttonVariants({ variant: 'default', size: 'sm' }),
+              'shadow-md shadow-primary/50 rounded-full',
+            )}
           >
-            Dashboard
+            App
+            <Icons.ChevronRight className="ml-1 w-4 h-4" />
           </Link>
         </div>
       ) : (
@@ -25,7 +30,10 @@ function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
           <div className="hidden sm:flex">
             <Link
               href="/login"
-              className={buttonVariants({ variant: 'outline', size: 'sm' })}
+              className={cn(
+                buttonVariants({ variant: 'outline', size: 'sm' }),
+                'rounded-full',
+              )}
             >
               Login
             </Link>
@@ -35,7 +43,7 @@ function AuthNavigation({ isAuthenticated }: { isAuthenticated: boolean }) {
               href="/register"
               className={cn(
                 buttonVariants({ variant: 'default', size: 'sm' }),
-                'shadow-md shadow-black/50 dark:shadow-white/50',
+                'shadow-md shadow-primary/50 rounded-full',
               )}
             >
               Try for free

@@ -1,4 +1,4 @@
-import { Inbox, CalendarClock, CalendarDays, Tag } from 'lucide-react'
+import { Inbox, CalendarClock, CalendarDays, Tag } from 'lucide-react';
 
 export const config = {
   metadata: {
@@ -6,7 +6,8 @@ export const config = {
       default: '.taskify',
       template: `%s | Taskify`,
     },
-    description: 'Collaborate, manage projects, and reach new productivity peaks',
+    description:
+      'Collaborate, manage projects, and reach new productivity peaks',
     icons: [
       {
         url: '/vercel.svg',
@@ -18,7 +19,7 @@ export const config = {
     links: [
       {
         title: 'Features',
-        href: '/features',
+        href: '/#features',
       },
       {
         title: 'Pricing',
@@ -27,6 +28,49 @@ export const config = {
       {
         title: 'Docs',
         href: '/docs/getting-started',
+      },
+    ],
+    docsLinks: [
+      {
+        heading: 'Create tasks',
+        links: [
+          { text: 'Creating Tasks', href: '#' },
+          { text: 'Markdown Editor', href: '#' },
+          { text: 'Mention to Action', href: '#' },
+          { text: 'Natural Language Processing', href: '#' },
+          { text: 'AI Integration', href: '#' },
+          { text: 'Speech Recognition', href: '#' },
+        ],
+      },
+      {
+        heading: 'Task Properties',
+        links: [
+          { text: 'Labels', href: '#' },
+          { text: 'Lists', href: '#' },
+          { text: 'Status', href: '#' },
+          { text: 'Priority', href: '#' },
+          { text: 'Subtasks', href: '#' },
+          { text: 'Reminders', href: '#' },
+          { text: 'Attachments', href: '#' },
+          { text: 'Recurring Tasks', href: '#' },
+        ],
+      },
+      {
+        heading: 'Additional Features',
+        links: [
+          { text: 'Time Tracking', href: '#' },
+          { text: 'Publishing', href: '#' },
+          { text: 'Keyboard shortcuts', href: '#' },
+          { text: 'Drag and Drop', href: '#' },
+        ],
+      },
+      {
+        heading: 'Filtering and Views',
+        links: [
+          { text: 'Filters', href: '#' },
+          { text: 'Views', href: '#' },
+          { text: 'Display Options', href: '#' },
+        ],
       },
     ],
   },
@@ -58,4 +102,4 @@ export const config = {
       },
     ],
   },
-}
+};

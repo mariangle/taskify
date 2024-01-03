@@ -3,7 +3,7 @@ import ThemeSwitcher from './theme-switcher';
 
 export default function Footer() {
   return (
-    <footer className="py-8 px-6 border-t bg-background">
+    <footer className="py-8 px-6 border-t">
       <div className="max-w-screen-lg mx-auto grid md:grid-cols-2 space-y-2">
         <div className="">
           <div className="font-semibold">.taskify</div>

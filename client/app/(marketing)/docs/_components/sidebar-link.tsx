@@ -20,7 +20,7 @@ export default function SidebarLink({ link }: SidebarLinkProps) {
     <Link
       href={link.href}
       className={cn(
-        'block text-muted-foreground hover:text-foreground border-l px-4 py-1 hover:border-l-gray-400',
+        'block text-muted-foreground hover:text-foreground border-l px-4 py-1.5 hover:border-l-gray-400',
         isActive && 'text-purple-500  border-l-purple-500',
       )}
     >
