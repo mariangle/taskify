@@ -14,16 +14,18 @@ export const POST = async (req: Request) => {
     await signIn('credentials', {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
-    return null;
+
+    return new Response('Redirect', {
+      headers: { Location: DEFAULT_LOGIN_REDIRECT },
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return { error: 'Invalid credentials!' };
+          return new NextResponse('Invalid Credentials', { status: 401 });
         default:
-          return { error: 'Something went wrong!' };
+          return new NextResponse('An unknown error occured.', { status: 500 });
       }
     }
     throw error;

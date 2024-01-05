@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { UserResponse } from '@/types';
+import { User } from '@prisma/client';
 
 const api: AxiosInstance = axios.create({
   baseURL: '/api/auth',
@@ -17,11 +17,7 @@ export const AuthService = {
       throw error;
     }
   },
-  async register(
-    email: string,
-    name: string,
-    password: string,
-  ): Promise<UserResponse> {
+  async register(email: string, name: string, password: string): Promise<User> {
     try {
       const response: AxiosResponse = await api.post('/register', {
         email,

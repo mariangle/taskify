@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { handleError } from '@/lib/util/error';
+import { AxiosError } from 'axios';
 import { AuthService } from '@/services/auth-service';
 import {
   LoginFormValues,
@@ -59,7 +59,7 @@ function AuthForm({ variant }: AuthFormProps) {
         router.push('/auth/login');
       }
     } catch (err) {
-      handleError(err);
+      if (err instanceof AxiosError) toast.error(err.response?.data);
     } finally {
       setIsLoading(false);
     }
