@@ -24,7 +24,7 @@ export default function NavbarLink({ link }: NavbarLinkProps) {
         href={link.href}
         aria-current="page"
         className={cn(
-          'text-sm text-muted-foreground hover:text-foreground',
+          'text-sm text-muted-foreground hover:text-foreground font-medium',
           isActive && 'text-foreground',
         )}
       >

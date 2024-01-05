@@ -7,9 +7,8 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import StatusCheckbox from '@/components/shared/status-checkbox';
-
-import { revalidate } from '@/lib/_actions/revalidate-path';
 
 import { Form } from '@/components/ui/form';
 import { Icons } from '@/components/ui/icons';
@@ -70,7 +69,7 @@ function SubtaskForm({
         await SubtaskService.createSubtask(task.id, data);
         toast.success('Subtask created!');
       }
-      revalidate({ path, type: 'page' });
+      revalidatePath(path, 'page');
       close && close();
       closeNewSubtask && closeNewSubtask();
     } catch (err) {

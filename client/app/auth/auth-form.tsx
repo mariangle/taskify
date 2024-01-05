@@ -1,12 +1,20 @@
 'use client';
 
-import * as z from 'zod';
 import React from 'react';
 import toast from 'react-hot-toast';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { handleError } from '@/lib/util/error';
+import { AuthService } from '@/services/auth-service';
+import {
+  LoginFormValues,
+  loginFormSchema,
+  RegisterFormValues,
+  registerFormSchema,
+} from '@/lib/validations/auth-schema';
+
 import {
   Form,
   FormControl,
@@ -17,44 +25,20 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import SocialsActions from './socials-actions';
 
-import { handleError } from '@/lib/util/error';
-
-import AuthService from '@/services/auth-service';
-
-const loginFormSchema = z.object({
-  email: z.string().min(4),
-  password: z.string().min(6).max(20),
-});
-
-const registerFormSchema = z
-  .object({
-    email: z.string().min(4),
-    name: z.string().min(2),
-    password: z.string().min(6).max(20),
-    confirmPassword: z.string().min(6).max(20),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Passwords does not match',
-  });
-
-type LoginFormValues = z.infer<typeof loginFormSchema>;
-type RegisterFormValues = z.infer<typeof registerFormSchema>;
-
-interface Props {
+interface AuthFormProps {
   variant: 'register' | 'login';
 }
 
 type AuthSchemaType = {
   login: LoginFormValues;
   register: RegisterFormValues;
-}[Props['variant']];
+}[AuthFormProps['variant']];
 
-function AuthForm({ variant }: Props) {
+function AuthForm({ variant }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
-  const authService = new AuthService();
   const authSchema = variant === 'login' ? loginFormSchema : registerFormSchema;
   const form = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema) });
 
@@ -63,20 +47,16 @@ function AuthForm({ variant }: Props) {
   ) => {
     try {
       setIsLoading(true);
+
       if (variant === 'login') {
-        const loginData = data as LoginFormValues;
-        await authService.login(loginData.email, loginData.password);
+        const { email, password } = data as LoginFormValues;
+        await AuthService.login(email, password);
         toast.success('Successfully logged in! Redirecting to dashboard...');
-        router.push('/inbox');
       } else if (variant === 'register') {
-        const registerData = data as RegisterFormValues;
-        await authService.register(
-          registerData.email,
-          registerData.name,
-          registerData.password,
-        );
+        const { email, name, password } = data as RegisterFormValues;
+        await AuthService.register(email, name, password);
         toast.success('Successfully registered. You can now log in.');
-        router.push('/login');
+        router.push('/auth/login');
       }
     } catch (err) {
       handleError(err);
@@ -87,7 +67,7 @@ function AuthForm({ variant }: Props) {
 
   return (
     <Form {...form}>
-      <form className="space-y-4 max-w-sm w-full">
+      <form className="space-y-4 max-w-sm w-full mx-auto">
         <FormField
           control={form.control}
           name="email"
@@ -154,6 +134,7 @@ function AuthForm({ variant }: Props) {
           {variant === 'login' ? 'Login' : 'Register'}
         </Button>
       </form>
+      {variant === 'login' && <SocialsActions />}
     </Form>
   );
 }

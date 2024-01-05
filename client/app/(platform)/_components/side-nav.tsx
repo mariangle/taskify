@@ -23,19 +23,13 @@ import { cn } from '@/lib/util/tw-merge';
 import { config } from '@/lib/config';
 import { useLayoutStore } from '@/store/layout-store';
 import { useSettingsStore } from '@/store/settings-store';
-import type { ListResponse, UserResponse } from '@/types';
+import type { ListResponse } from '@/types';
 import type { SidebarItem } from '@/lib/constants';
 import { useMounted } from '@/hooks/use-mounted';
 import { widgetItems, sidebarItems } from '@/lib/constants';
 import { LoadingSidebar } from '@/components/ui/loading';
 
-export default function SideNav({
-  lists,
-  user,
-}: {
-  lists: ListResponse[];
-  user: UserResponse;
-}) {
+export default function SideNav({ lists }: { lists: ListResponse[] }) {
   const path = usePathname();
   const isMounted = useMounted();
   const { showLeftSidebar, toggleTaskOverlay } = useLayoutStore();
@@ -57,7 +51,7 @@ export default function SideNav({
   return (
     <nav className="px-3 pb-3 min-h-full flex flex-col justify-between">
       <div>
-        <UserNav user={user} />
+        <UserNav />
         <div className="flex-gap">
           <Button
             variant={showLeftSidebar ? 'secondary' : 'ghost'}

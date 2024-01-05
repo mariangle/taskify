@@ -3,10 +3,10 @@
 import React from 'react';
 
 import { usePathname } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { Badge } from '@/components/ui/badge';
 import { Icons } from '@/components/ui/icons';
 
-import { revalidate } from '@/lib/_actions/revalidate-path';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 import { cn } from '@/lib/util/tw-merge';
@@ -45,7 +45,7 @@ export default function LabelBadge({
     setIsLoading(true);
     try {
       await TaskService.removeLabel({ taskId, labelId: label.id });
-      revalidate({ path, type: 'page' });
+      revalidatePath(path, 'page');
     } catch (e) {
       handleError(e);
     } finally {

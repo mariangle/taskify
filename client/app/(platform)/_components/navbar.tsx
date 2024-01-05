@@ -11,15 +11,9 @@ import FilterView from '@/components/shared/filter-view';
 
 import { useLayoutStore } from '@/store/layout-store';
 import { cn } from '@/lib/util/tw-merge';
-import type { ListResponse, UserResponse } from '@/types';
+import type { ListResponse } from '@/types';
 
-export default function Navbar({
-  lists,
-  user,
-}: {
-  lists: ListResponse[];
-  user: UserResponse;
-}) {
+export default function Navbar({ lists }: { lists: ListResponse[] }) {
   const {
     showLeftSidebar,
     showRightSidebar,
@@ -34,7 +28,7 @@ export default function Navbar({
       <div className="flex h-12 items-center justify-between px-4">
         <div className="flex-gap">
           <div className="block md:!hidden">
-            <MobileSidebar lists={lists} user={user} />
+            <MobileSidebar lists={lists} />
           </div>
           <div className="md:!block hidden">
             <Button

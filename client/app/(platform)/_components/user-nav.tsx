@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 
+import { signOut } from 'next-auth/react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,16 +15,16 @@ import {
 import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 
-import { deleteToken } from '@/lib/_actions/logout';
-import { revalidate } from '@/lib/_actions/revalidate-path';
 import { useLayoutStore } from '@/store/layout-store';
 import { cn } from '@/lib/util/tw-merge';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
-import type { UserResponse } from '@/types';
-
-export default function UserNav({ user }: { user: UserResponse }) {
+export default function UserNav() {
+  const user = useCurrentUser();
   const { showLeftSidebar, toggleSettingsOverlay } = useLayoutStore();
   const [isOpen, setIsOpen] = React.useState(false);
+
+  if (!user) return null;
 
   const dropdownItems = [
     {
@@ -40,11 +41,6 @@ export default function UserNav({ user }: { user: UserResponse }) {
       shortcut: '⌘S',
     },
   ];
-
-  const onLogout = async () => {
-    await deleteToken();
-    revalidate({ path: '/inbox' });
-  };
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -101,7 +97,11 @@ export default function UserNav({ user }: { user: UserResponse }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={onLogout}>
+          <DropdownMenuItem
+            onClick={async () => {
+              await signOut();
+            }}
+          >
             <Icons.LogOut className="mr-2 h-4 w-4" />
             <span>Sign Out</span>
           </DropdownMenuItem>
