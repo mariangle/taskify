@@ -9,7 +9,7 @@ interface PageProps {
 
 export default function Layout({ children }: PageProps) {
   return (
-    <div>
+    <div className="dark:bg-[#00021241]">
       <Navbar />
       <div className="relative">
         <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">

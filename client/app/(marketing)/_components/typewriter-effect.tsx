@@ -16,6 +16,7 @@ export default function TypewriterEffect() {
       options={{
         strings: words,
         autoStart: true,
+        cursor: '',
         loop: true,
         delay: 50,
         deleteSpeed: 100,

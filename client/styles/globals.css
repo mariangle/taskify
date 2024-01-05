@@ -23,7 +23,7 @@ body {
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
     --muted: 220 14.3% 93.9%;
-    --muted-foreground: 220 14.3% 35.9%;
+    --muted-foreground: 220 14.3% 30.9%;
     --accent: 220 14.3% 95.9%;
     --accent-foreground: 220.9 39.3% 11%;
     --destructive: 0 84.2% 40.2%;
@@ -47,7 +47,7 @@ body {
     --secondary: 234 17% 17%;
     --secondary-foreground: 0 0% 98%;
     --muted: 234 17% 24%;
-    --muted-foreground: 237 9% 65%;
+    --muted-foreground: 237 9% 72%;
     --accent: 234 17% 18%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 55.6%;
@@ -68,18 +68,18 @@ body {
   }
 
   .heading {
-    @apply text-3xl font-semibold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1];
+    @apply text-3xl font-semibold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1];
   }
   .subheading {
     @apply text-4xl font-bold tracking-tight;
   }
 
   .horizontal-gradient {
-    @apply bg-gradient-to-r dark:from-gray-50 dark:via-gray-200 dark:to-gray-300 from-gray-800 via-gray-500 to-gray-800 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r dark:from-gray-50 dark:via-gray-200 dark:to-white from-gray-900 via-gray-500 to-gray-900 bg-clip-text text-transparent;
   }
 
   .vertical-gradient {
-    @apply bg-gradient-to-t dark:from-white dark:via-gray-200 dark:to-white from-gray-800 via-gray-500 to-gray-800 bg-clip-text text-transparent;
+    @apply bg-gradient-to-t dark:from-white dark:via-gray-200 dark:to-white from-gray-900 via-gray-500 to-gray-900 bg-clip-text text-transparent;
   }
 
   .flex-between {
@@ -96,5 +96,34 @@ body {
   }
   .glassmorphism {
     @apply border shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.1)] bg-[hsl(var(--background-secondary))]/50 backdrop-blur-sm dark:shadow-[inset_10px_-50px_94px_0_rgb(0,0,0,0.4)];
+  }
+
+  .hero-border-animation {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-border-animation::before {
+    content: '';
+    background-image: conic-gradient(
+      hsl(var(--primary)) 2deg,
+      transparent 40deg
+    );
+    width: 250%;
+    height: 250%;
+    position: absolute;
+    animation: rotate 4s linear infinite;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(360deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
   }
 }

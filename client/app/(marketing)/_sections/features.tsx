@@ -60,17 +60,29 @@ const features: Feature[] = [
 ];
 
 export default function Features() {
+  const Card = 'div';
   return (
-    <>
-      <div className="grid gap-6 grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 mt-12">
+    <section className="space-y-12 max-w-screen-lg mx-auto">
+      <div className="text-center">
+        <h2 className="heading" id="features">
+          Features
+        </h2>
+        <p className="text-muted-foreground mt-2 md:text-lg max-w-2xl mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </p>
+      </div>
+      <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 mt-12">
         {features.map(({ title, description, icon: Icon }) => (
-          <div key={title} className="space-y-2">
+          <Card
+            key={title}
+            className="glassmorphism rounded-md border-[0.4px] border-[rgba(76,79,116,0.24)] p-6 duration-300  hover:scale-[101%] hover:shadow-xl"
+          >
             <span className="font-semibold text-foreground flex-gap items-start mb-1">
               <Icon className="w-4 h-4 text-foreground mt-1" />
               {title}
             </span>
             <p className="text-muted-foreground text-sm">{description}</p>
-          </div>
+          </Card>
         ))}
       </div>
       <Link
@@ -83,6 +95,6 @@ export default function Features() {
         See all features
         <ArrowRight className="ml-2 w-4 h-4" />
       </Link>
-    </>
+    </section>
   );
 }

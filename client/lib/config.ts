@@ -23,7 +23,7 @@ export const config = {
       },
       {
         title: 'Pricing',
-        href: '/pricing',
+        href: '/#pricing',
       },
       {
         title: 'Docs',
