@@ -1,47 +1,32 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { UserResponse } from '@/types'
-import { setToken as setServerToken } from '@/lib/_actions/set-token'
-import { requestOptions } from '@/lib/util'
-import { agent } from '@/lib/agent'
+/* eslint-disable no-useless-catch */
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { User } from '@prisma/client';
 
-class AuthService {
-  private api: AxiosInstance
+const api: AxiosInstance = axios.create({
+  baseURL: '/api/auth',
+});
 
-  constructor() {
-    this.api = axios.create({
-      baseURL: 'https://localhost:7232/api',
-    })
-  }
-
+export const AuthService = {
   async login(email: string, password: string): Promise<void> {
     try {
-      const response: AxiosResponse = await this.api.post('/login', { email, password })
-      await setServerToken(response.data)
+      await api.post('/login', {
+        email,
+        password,
+      });
     } catch (error) {
-      throw error
+      throw error;
     }
-  }
-
-  async register(email: string, name: string, password: string): Promise<UserResponse> {
+  },
+  async register(email: string, name: string, password: string): Promise<User> {
     try {
-      const response: AxiosResponse = await this.api.post('/register', { email, name, password })
-      return response.data
+      const response: AxiosResponse = await api.post('/register', {
+        email,
+        name,
+        password,
+      });
+      return response.data;
     } catch (error) {
-      throw error
+      throw error;
     }
-  }
-
-  async getCurrentUser(): Promise<UserResponse> {
-    try {
-      const response: AxiosResponse = await this.api.get('/current-user', {
-        ...requestOptions,
-        httpsAgent: agent,
-      })
-      return response.data
-    } catch (error) {
-      throw error
-    }
-  }
-}
-
-export default AuthService
+  },
+};

@@ -65,7 +65,7 @@ export default function Pricing() {
               per month
             </span>
           </div>
-          <Separator className="my-4" />
+          <Separator className="my-4 dark:bg-primary/40" />
           <ul className="text-sm text-muted-foreground space-y-3">
             <Feature feature="Unlimited tasks" />
             <Feature feature="Speech Recognition" />

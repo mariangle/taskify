@@ -109,8 +109,8 @@ body {
   .hero-border-animation::before {
     content: '';
     background-image: conic-gradient(
-      hsl(var(--primary)) 2deg,
-      transparent 40deg
+      hsl(var(--primary)) 10deg,
+      transparent 20deg
     );
     width: 250%;
     height: 250%;

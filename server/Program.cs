@@ -58,10 +58,15 @@ namespace server
 
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
-            builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            builder.Services.AddCors(options =>
             {
-                builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-            }));
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
 
             var app = builder.Build();
 
@@ -82,7 +87,7 @@ namespace server
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("corsapp");
+            app.UseCors("CorsPolicy");
             app.MapControllers();
 
             app.Run();

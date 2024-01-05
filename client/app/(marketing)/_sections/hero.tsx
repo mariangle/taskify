@@ -9,23 +9,20 @@ import { cn } from '@/lib/util/tw-merge';
 export default function Hero() {
   return (
     <section className="min-h-[40vh] flex flex-col justify-center text-center relative">
-      <div className="space-y-4">
-        <Badge variant="secondary" className="flex-gap py-1.5 px-3">
-          <SparklesIcon className="w-4 h-4" />
-          Under construction
-        </Badge>
-        <h1 className="heading vertical-gradient lg:text-7xl md:flex-center gap-2 md:gap-4">
-          Elevate your <TypewriterEffect />
-        </h1>
-      </div>
-      <p className="text-muted-foreground md:text-lg my-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-        obcaecati libero.
+      <Badge variant="secondary" className="w-fit mx-auto">
+        <SparklesIcon className="w-4 h-4 mr-2" />
+        Under construction
+      </Badge>
+      <h1 className="heading vertical-gradient lg:text-7xl sm:flex-center gap-2 sm:gap-4 my-4 md:my-6">
+        Elevate your <TypewriterEffect />
+      </h1>
+      <p className="text-muted-foreground md:text-lg">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
-      <div className="space-x-2">
+      <div className="space-x-2 mt-6">
         <Button className="rounded-full shadow-lg">Get Started</Button>
         <Button className="rounded-full shadow-lg" variant="outline">
-          Github
+          GitHub
         </Button>
       </div>
       <div

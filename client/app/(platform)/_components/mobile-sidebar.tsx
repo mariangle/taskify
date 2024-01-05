@@ -3,15 +3,9 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import SideNav from './side-nav';
 import { Button } from '@/components/ui/button';
 import { useMounted } from '@/hooks/use-mounted';
-import type { ListResponse, UserResponse } from '@/types';
+import type { ListResponse } from '@/types';
 
-export function MobileSidebar({
-  lists,
-  user,
-}: {
-  lists: ListResponse[];
-  user: UserResponse;
-}) {
+export function MobileSidebar({ lists }: { lists: ListResponse[] }) {
   const isMounted = useMounted();
 
   if (!isMounted) return null;
@@ -25,7 +19,7 @@ export function MobileSidebar({
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-[250px] p-0 overflow-x-hidden">
-        <SideNav lists={lists} user={user} />
+        <SideNav lists={lists} />
       </SheetContent>
     </Sheet>
   );

@@ -5,16 +5,10 @@ import * as React from 'react';
 import SideNav from './side-nav';
 
 import { cn } from '@/lib/util/tw-merge';
-import type { ListResponse, UserResponse } from '@/types';
+import type { ListResponse } from '@/types';
 import { useLayoutStore } from '@/store/layout-store';
 
-export default function LeftSidebar({
-  lists,
-  user,
-}: {
-  lists: ListResponse[];
-  user: UserResponse;
-}) {
+export default function LeftSidebar({ lists }: { lists: ListResponse[] }) {
   const { showLeftSidebar, toggleLeftSidebar } = useLayoutStore();
 
   React.useEffect(() => {
@@ -37,7 +31,7 @@ export default function LeftSidebar({
       )}
     >
       <div className={cn('h-full', showLeftSidebar ? '' : 'hidden md:block')}>
-        <SideNav lists={lists} user={user} />
+        <SideNav lists={lists} />
       </div>
     </aside>
   );
