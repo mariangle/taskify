@@ -13,13 +13,13 @@ import SubtaskList from '@/components/shared/subtask/subtask-list';
 import TaskActions from '@/components/shared/task/task-actions';
 import { DatePicker } from './date-picker';
 
-import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
+import type { Label, List, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
 
 interface TaskItemProps {
-  task?: TaskResponse;
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  task?: Task;
+  lists: List[];
+  labels: Label[];
   type?: 'list' | 'board';
   date?: string;
 }
@@ -92,7 +92,7 @@ function TaskItem({ task, lists, type = 'list', labels, date }: TaskItemProps) {
               />
             </div>
           </div>
-          {task.note && (
+          {task.description && (
             <p
               role="presentation"
               aria-hidden
@@ -100,7 +100,7 @@ function TaskItem({ task, lists, type = 'list', labels, date }: TaskItemProps) {
               className="text-muted-foreground text-xs"
               onClick={open}
             >
-              {task?.note}
+              {task?.description}
             </p>
           )}
           {/* List of properties a task has */}
@@ -129,10 +129,7 @@ function TaskItem({ task, lists, type = 'list', labels, date }: TaskItemProps) {
               >
                 <Icons.Subtask className="h-3 w-3 mr-1" />
                 <span className="text-xs">
-                  {
-                    task.subtasks.filter((subtask) => subtask.isCompleted)
-                      .length
-                  }
+                  {task.subtasks.filter((subtask) => subtask.isComplete).length}
                   /{task.subtasks.length}
                 </span>
               </Button>

@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 
 import PageWithViews from '@/components/page-with-views';
@@ -16,7 +14,7 @@ export default async function Today({ searchParams }: PageProps) {
         title: 'Today',
         list: { description: 'Your tasks for today.' },
       }}
-      options={{ dueDate: format(new Date(), 'dd-MM-yyyy') }}
+      options={{ today: true }}
     />
   );
 }

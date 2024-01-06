@@ -23,15 +23,15 @@ import { DatePicker } from './date-picker';
 import { PriorityPicker } from './priority-picker';
 import AlertModal from '@/components/modals/alert-modal';
 
-import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
+import type { Label, List, Task } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 
 interface TaskActionsProps {
-  task: TaskResponse;
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  task: Task;
+  lists: List[];
+  labels: Label[];
   setOpen?: () => void;
   openSubtasks?: () => void;
 }
@@ -80,7 +80,7 @@ export default function TaskActions({
     }
   };
 
-  const onMoveTo = async (list: ListResponse) => {
+  const onMoveTo = async (list: List) => {
     setIsLoading(true);
     try {
       await TaskService.updateTask(task.id, { ...task, listId: list.id });

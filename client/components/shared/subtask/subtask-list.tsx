@@ -1,12 +1,12 @@
 import SubtaskItem from '@/components/shared/subtask/subtask-item';
 import { Progress } from '@/components/ui/progress';
 
-import { SubtaskResponse, TaskResponse } from '@/types';
+import { Subtask, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
 
 interface SubtaskListProps {
-  task: TaskResponse;
-  subtasks?: SubtaskResponse[];
+  task: Task;
+  subtasks?: Subtask[];
   showSubtaskList: boolean;
 }
 
@@ -21,7 +21,7 @@ export default function SubtaskList({
     }
 
     const completedSubtasks = subtasks.filter(
-      (subtask) => subtask.isCompleted,
+      (subtask) => subtask.isComplete,
     ).length;
     const totalSubtasks = subtasks.length;
     const progress = (completedSubtasks / totalSubtasks) * 100;

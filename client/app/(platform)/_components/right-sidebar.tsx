@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { TaskList } from '@/components/shared/task/task-list';
 
 import { cn } from '@/lib/util/tw-merge';
-import { LabelResponse, ListResponse, type TaskResponse } from '@/types';
+import { Label, List, type Task } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { useSignal } from '@/hooks/use-signal';
 import { useSettingsStore } from '@/store/settings-store';
@@ -21,15 +21,16 @@ export default function RightSidebar() {
   const { showRightSidebar } = useLayoutStore();
   const { signal } = useSignal();
   const isMounted = useMounted();
-  const [tasks, setTasks] = React.useState<TaskResponse[]>([]);
-  const [labels, setLabels] = React.useState<LabelResponse[]>([]);
-  const [lists, setLists] = React.useState<ListResponse[]>([]);
+  const [tasks, setTasks] = React.useState<Task[]>([]);
+  const [labels, setLabels] = React.useState<Label[]>([]);
+  const [lists, setLists] = React.useState<List[]>([]);
   const [, setSelectedDate] = React.useState<Date | undefined>();
   const [openModal, setOpenModal] = React.useState(false);
   const { settings } = useSettingsStore();
 
   React.useEffect(() => {
     const subscribe = async () => {
+      // TODO: Try make to server component
       const tasks = await TaskService.getTasks();
       const labels = await LabelService.getLabels();
       const lists = await ListService.getLists();

@@ -5,7 +5,7 @@ import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 
 export default function SocialsActions() {
-  const onSocialAction = (provider: 'google' | 'github') => {
+  const loginSocial = (provider: 'google' | 'github') => {
     signIn(provider, {
       callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
@@ -18,12 +18,13 @@ export default function SocialsActions() {
         <div className="whitespace-nowrap text-sm px-2">Or continue with</div>
         <div className="w-full h-[1px] bg-border" />
       </div>
-      <div className="flex-gap mt-4">
+      <div className="flex-gap mt-4 gap-4">
         <Button
           type="button"
+          disabled
           variant="secondary"
           className="w-full"
-          onClick={() => onSocialAction('google')}
+          onClick={() => loginSocial('google')}
         >
           <Icons.Google className="w-4 h-4 mr-2" />
           Google
@@ -31,8 +32,9 @@ export default function SocialsActions() {
         <Button
           type="button"
           variant="secondary"
+          disabled
           className="w-full"
-          onClick={() => onSocialAction('github')}
+          onClick={() => loginSocial('github')}
         >
           <Icons.GitHub className="w-4 h-4 mr-2" />
           GitHub

@@ -1,31 +1,46 @@
-import { AxiosResponse } from 'axios'
-import { api } from '@/lib/api'
-import { SubtaskEntry, SubtaskResponse } from '@/types'
-import { requestOptions } from '@/lib/util'
+/* eslint-disable no-useless-catch */
+import { AxiosResponse } from 'axios';
+import { api } from '@/lib/api';
+import { Subtask, SubtaskEntry } from '@/types';
 
 export const SubtaskService = {
-  createSubtask: async (taskId: string, subtask: SubtaskEntry): Promise<void> => {
+  createSubtask: async (
+    taskId: string,
+    subtask: SubtaskEntry,
+  ): Promise<void> => {
     try {
-      const response: AxiosResponse = await api.post(`/tasks/${taskId}/subtask`, subtask, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.post(
+        `/tasks/${taskId}/subtasks`,
+        subtask,
+      );
+      return response.data;
     } catch (err) {
-      throw err
+      throw err;
     }
   },
-  updateSubtask: async (subtaskId: string, subtask: SubtaskResponse): Promise<void> => {
+  updateSubtask: async (
+    taskId: string,
+    subtaskId: string,
+    subtask: Subtask,
+  ): Promise<void> => {
     try {
-      const response: AxiosResponse = await api.put(`/subtasks/${subtaskId}`, subtask, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.patch(
+        `/tasks/${taskId}/subtasks/${subtaskId}`,
+        subtask,
+      );
+      return response.data;
     } catch (err) {
-      throw err
+      throw err;
     }
   },
-  deleteSubtask: async (subtaskId: string): Promise<void> => {
+  deleteSubtask: async (taskId: string, subtaskId: string): Promise<void> => {
     try {
-      const response: AxiosResponse = await api.delete(`/subtasks/${subtaskId}`, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.delete(
+        `/tasks/${taskId}/subtasks/${subtaskId}`,
+      );
+      return response.data;
     } catch (err) {
-      throw err
+      throw err;
     }
   },
-}
+};

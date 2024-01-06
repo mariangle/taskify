@@ -13,14 +13,14 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import AlertModal from '@/components/modals/alert-modal';
 
-import type { LabelResponse } from '@/types';
+import type { Label } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { LabelService } from '@/services/label-service';
 import { handleError } from '@/lib/util';
 import { useSignal } from '@/hooks/use-signal';
 
 interface LabelActionsProps {
-  label: LabelResponse;
+  label: Label;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

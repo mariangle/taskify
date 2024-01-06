@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import type { SubtaskResponse, TaskResponse } from '@/types';
+import type { Subtask, Task } from '@/types';
 
 import { Checkbox } from '@/components/ui/checkbox';
 import { handleError } from '@/lib/util';
@@ -11,8 +11,8 @@ import { TaskService } from '@/services/task-service';
 import { SubtaskService } from '@/services/subtask-service';
 
 interface StatusCheckboxProps {
-  task?: TaskResponse;
-  subtask?: SubtaskResponse;
+  task?: Task;
+  subtask?: Subtask;
   className?: string;
   disabled?: boolean;
 }
@@ -24,15 +24,9 @@ export default function StatusCheckbox({
   disabled,
 }: StatusCheckboxProps) {
   const [isCompleted, setIsCompleted] = React.useState(
-    task?.status === 'Completed' || subtask?.isCompleted || false,
+    task?.isComplete || subtask?.isComplete || false,
   );
   const router = useRouter();
-
-  React.useEffect(() => {
-    setIsCompleted(
-      task?.status === 'Completed' || subtask?.isCompleted || false,
-    );
-  }, [task, subtask]);
 
   if (!task && !subtask)
     return <Checkbox className={className} disabled={disabled} />;
@@ -41,8 +35,9 @@ export default function StatusCheckbox({
     try {
       const updatedStatus = !isCompleted;
 
-      if (task) {
+      if (task && !subtask) {
         // Ensure a complete task with subtasks doesn't have completed subtasks
+        /*
         const hasCompletedSubtasks =
           task.subtasks &&
           task.subtasks.length > 0 &&
@@ -62,15 +57,17 @@ export default function StatusCheckbox({
         if (!isCompleted && hasIncompleteSubtasks) {
           throw new Error('You have unfinished subtasks.');
         }
+        */
 
-        const updatedTask = {
+        await TaskService.updateTask(task.id, {
           ...task,
-          status: updatedStatus ? 'Completed' : 'Incomplete',
-        };
-        await TaskService.updateTask(task.id, updatedTask);
-      } else if (subtask) {
-        const updatedSubtask = { ...subtask, isCompleted: updatedStatus };
-        await SubtaskService.updateSubtask(subtask.id, updatedSubtask);
+          isComplete: !!updatedStatus,
+        });
+      } else if (subtask && task) {
+        await SubtaskService.updateSubtask(task.id, subtask.id, {
+          ...subtask,
+          isComplete: updatedStatus,
+        });
       }
 
       if (!isCompleted) {
@@ -85,9 +82,9 @@ export default function StatusCheckbox({
   };
 
   const priorityClassnames: { [key: string]: string } = {
-    Low: 'border-sky-500 bg-sky-500/10',
-    Medium: 'border-yellow-500 bg-yellow-500/10',
-    High: 'border-red-500 bg-red-500/10',
+    LOW: 'border-sky-500 bg-sky-500/10',
+    MEDIUM: 'border-yellow-500 bg-yellow-500/10',
+    HIGH: 'border-red-500 bg-red-500/10',
   };
 
   return (

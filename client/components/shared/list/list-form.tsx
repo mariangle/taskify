@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import * as z from 'zod';
 import toast from 'react-hot-toast';
 
 import { useForm } from 'react-hook-form';
@@ -17,18 +16,13 @@ import AlertModal from '@/components/modals/alert-modal';
 import { handleError } from '@/lib/util';
 import { ListService } from '@/services/list-service';
 import { useSignal } from '@/hooks/use-signal';
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
+import { listFormSchema, ListFormValues } from '@/lib/validations/list-schema';
 
 interface FormProps {
-  list?: ListResponse;
+  list?: List;
   onClose: () => void;
 }
-
-export const listFormSchema = z.object({
-  name: z.string().min(2).max(15),
-});
-
-export type ListFormValues = z.infer<typeof listFormSchema>;
 
 function ListForm({ list, onClose }: FormProps) {
   const defaultValues: Partial<ListFormValues> = {

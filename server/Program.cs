@@ -62,7 +62,7 @@ namespace server
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                        .WithOrigins("http://localhost:3000")
+                        .WithOrigins("https://dottaskify.vercel.app")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());

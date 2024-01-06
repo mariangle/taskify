@@ -2,18 +2,17 @@
 
 import React from 'react';
 
-import { usePathname } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Icons } from '@/components/ui/icons';
 
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 import { cn } from '@/lib/util/tw-merge';
-import type { LabelResponse } from '@/types';
+import type { Label } from '@/types';
 
 interface LabelBadgeProps {
-  label: LabelResponse;
+  label: Label;
   noBorder?: boolean;
   taskId?: string;
 }
@@ -22,13 +21,13 @@ export function LabelColor({
   color,
   className,
 }: {
-  color: string;
+  color?: string | null;
   className?: string;
 }) {
   return (
     <div
       className={cn('h-2 w-2 rounded-full border', className)}
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: color ?? '#ffffff' }}
     />
   );
 }
@@ -39,13 +38,13 @@ export default function LabelBadge({
   taskId,
 }: LabelBadgeProps) {
   const [isLoading, setIsLoading] = React.useState(false);
-  const path = usePathname();
+  const router = useRouter();
 
   const onRemove = async (taskId: string) => {
     setIsLoading(true);
     try {
       await TaskService.removeLabel({ taskId, labelId: label.id });
-      revalidatePath(path, 'page');
+      router.refresh();
     } catch (e) {
       handleError(e);
     } finally {

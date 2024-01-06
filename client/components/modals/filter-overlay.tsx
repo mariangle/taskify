@@ -12,14 +12,14 @@ import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import FilterPanel from '@/components/shared/filter-panel';
 import { LabelService } from '@/services/label-service';
 
-import type { LabelResponse } from '@/types';
+import type { Label } from '@/types';
 import { useSignal } from '@/hooks/use-signal';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useMounted } from '@/hooks/use-mounted';
 
 export default function FilterOverlay() {
   const [isOpen, setOpen] = React.useState(false);
-  const [labels, setLabels] = React.useState<LabelResponse[]>([]);
+  const [labels, setLabels] = React.useState<Label[]>([]);
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const isMounted = useMounted();
 

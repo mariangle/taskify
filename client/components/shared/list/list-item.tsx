@@ -6,11 +6,11 @@ import { Icons } from '@/components/ui/icons';
 
 import ListModal from '@/components/modals/list-modal';
 
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
 import { useFilter } from '@/hooks/use-filter';
 
-export default function ListItem({ list }: { list?: ListResponse }) {
+export default function ListItem({ list }: { list?: List }) {
   const { persistQueryString } = useFilter();
   const router = useRouter();
   const path = usePathname();

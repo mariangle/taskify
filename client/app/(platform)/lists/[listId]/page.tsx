@@ -1,7 +1,7 @@
-import { ListService } from '@/services/list-service';
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 
 import PageWithViews from '@/components/page-with-views';
+import { getList } from '@/actions/list/get-list';
 
 interface PageProps {
   params: { listId: string };
@@ -9,8 +9,7 @@ interface PageProps {
 }
 
 export default async function List({ params, searchParams }: PageProps) {
-  const list = await ListService.getList(params.listId);
-  if (!list) return null;
+  const list = await getList(params.listId);
 
   return (
     <PageWithViews

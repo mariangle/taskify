@@ -18,7 +18,7 @@ import {
 
 import { cn } from '@/lib/util/tw-merge';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { TaskResponse } from '@/types';
+import { Task } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 import { useMounted } from '@/hooks/use-mounted';
@@ -32,12 +32,12 @@ interface FormVariant<T extends FieldValues> {
 
 interface TaskVariant {
   type: 'item' | 'dropdown';
-  task: TaskResponse;
+  task: Task;
 }
 
 interface DatePickerProps<T extends FieldValues> {
   variant: FormVariant<T> | TaskVariant;
-  defaultValue?: Date | string;
+  defaultValue?: Date | string | null;
   small?: boolean;
 }
 
@@ -98,10 +98,10 @@ export function DatePicker<T extends FieldValues>({
     }
   };
 
-  const removeDate = async (task: TaskResponse) => {
+  const removeDate = async (task: Task) => {
     setIsLoading(true);
     try {
-      await TaskService.updateTask(task.id, { ...task, dueDate: undefined });
+      await TaskService.updateTask(task.id, { ...task, dueDate: null });
       toast.success('Due date removed.');
       router.refresh();
     } catch (err) {

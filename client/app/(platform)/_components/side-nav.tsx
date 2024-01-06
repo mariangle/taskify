@@ -23,13 +23,13 @@ import { cn } from '@/lib/util/tw-merge';
 import { config } from '@/lib/config';
 import { useLayoutStore } from '@/store/layout-store';
 import { useSettingsStore } from '@/store/settings-store';
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 import type { SidebarItem } from '@/lib/constants';
 import { useMounted } from '@/hooks/use-mounted';
 import { widgetItems, sidebarItems } from '@/lib/constants';
 import { LoadingSidebar } from '@/components/ui/loading';
 
-export default function SideNav({ lists }: { lists: ListResponse[] }) {
+export default function SideNav({ lists }: { lists: List[] }) {
   const path = usePathname();
   const isMounted = useMounted();
   const { showLeftSidebar, toggleTaskOverlay } = useLayoutStore();

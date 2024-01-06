@@ -1,13 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import * as z from 'zod';
 import toast from 'react-hot-toast';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { usePathname } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
 import StatusCheckbox from '@/components/shared/status-checkbox';
 
 import { Form } from '@/components/ui/form';
@@ -15,29 +13,20 @@ import { Icons } from '@/components/ui/icons';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-import type { SubtaskResponse, TaskResponse } from '@/types';
+import type { Subtask, Task } from '@/types';
 import { SubtaskService } from '@/services/subtask-service';
 import { handleError } from '@/lib/util';
+import {
+  SubtaskFormValues,
+  subtaskFormSchema,
+} from '@/lib/validations/subtask-schema';
 
 interface SubtaskFormProps {
-  subtask?: SubtaskResponse;
-  task: TaskResponse;
+  subtask?: Subtask;
+  task: Task;
   close: () => void;
   closeNewSubtask?: () => void;
 }
-
-export const subtaskFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, {
-      message: 'Name must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Name must not be longer than 30 characters.',
-    }),
-});
-
-export type SubtaskFormValues = z.infer<typeof subtaskFormSchema>;
 
 function SubtaskForm({
   subtask,
@@ -50,7 +39,7 @@ function SubtaskForm({
     name: subtask?.name,
   };
 
-  const path = usePathname();
+  const router = useRouter();
   const form = useForm<SubtaskFormValues>({
     resolver: zodResolver(subtaskFormSchema),
     defaultValues,
@@ -60,7 +49,7 @@ function SubtaskForm({
     setIsLoading(true);
     try {
       if (subtask) {
-        await SubtaskService.updateSubtask(subtask.id, {
+        await SubtaskService.updateSubtask(task.id, subtask.id, {
           ...subtask,
           name: data.name,
         });
@@ -69,7 +58,7 @@ function SubtaskForm({
         await SubtaskService.createSubtask(task.id, data);
         toast.success('Subtask created!');
       }
-      revalidatePath(path, 'page');
+      router.refresh();
       close && close();
       closeNewSubtask && closeNewSubtask();
     } catch (err) {

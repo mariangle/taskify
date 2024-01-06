@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import * as z from 'zod';
 import toast from 'react-hot-toast';
 
 import { useForm } from 'react-hook-form';
@@ -19,22 +18,19 @@ import {
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 
-import type { LabelResponse } from '@/types/label';
+import type { Label } from '@/types';
 import { handleError } from '@/lib/util';
 import { LabelService } from '@/services/label-service';
 import { useSignal } from '@/hooks/use-signal';
+import {
+  labelFormSchema,
+  LabelFormValues,
+} from '@/lib/validations/label-schema';
 
 interface FormProps {
-  label?: LabelResponse;
+  label?: Label;
   close?: () => void;
 }
-
-export const labelFormSchema = z.object({
-  name: z.string().min(2),
-  color: z.string().min(2),
-});
-
-export type LabelFormValues = z.infer<typeof labelFormSchema>;
 
 export default function LabelForm({ label, close }: FormProps) {
   const router = useRouter();

@@ -5,10 +5,10 @@ import * as React from 'react';
 import SideNav from './side-nav';
 
 import { cn } from '@/lib/util/tw-merge';
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 import { useLayoutStore } from '@/store/layout-store';
 
-export default function LeftSidebar({ lists }: { lists: ListResponse[] }) {
+export default function LeftSidebar({ lists }: { lists: List[] }) {
   const { showLeftSidebar, toggleLeftSidebar } = useLayoutStore();
 
   React.useEffect(() => {

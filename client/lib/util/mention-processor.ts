@@ -1,6 +1,6 @@
 // @[Shopping](hash:46d7f7f9-0fff-45aa-b984-08dbedb5b996)
 
-import type { LabelResponse, ListResponse } from '@/types';
+import type { Label, List } from '@/types';
 
 const listRegex = /@\[([^)]+)\]\(at:([^)]+)\)/g; // @[Work](at:b35464f9-079f-481c-6b7e-08dbf3340e69)
 const labelRegex = /@\[([^)]+)\]\(hash:([^)]+)\)/g;
@@ -9,8 +9,8 @@ interface FormatMentionInputProps {
   name: string;
   labelIds: string[];
   listId: string;
-  labels: LabelResponse[];
-  lists: ListResponse[];
+  labels: Label[];
+  lists: List[];
 }
 
 /**

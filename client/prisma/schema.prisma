@@ -13,12 +13,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  relationMode = "prisma"
-}
-
-enum UserRole {
-  ADMIN
-  USER
 }
 
 model User {
@@ -28,8 +22,11 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
-  role UserRole @default(USER)
   accounts      Account[]
+  tasks         Task[]
+  lists List[]
+  labels Label[]
+  subtasks   Subtask[]
 }
 
 model Account {
@@ -49,4 +46,63 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Task {
+  id         String   @id @default(cuid())
+  userId     String
+  listId     String?
+  createdAt  DateTime @default(now())
+  completedAt DateTime?
+  order      Int
+  name       String
+  description String?
+  dueDate    DateTime?
+  duration   Int?
+  priority   TaskPriority?
+  isComplete  Boolean @default(false)
+  labels Label[]
+  // recurring  RecurringTask?
+  subtasks   Subtask[]
+  
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  list       List? @relation(fields: [listId], references: [id])
+}
+
+model List {
+  id    String  @id @default(cuid())
+  userId String
+  name  String
+  order  Int
+  tasks Task[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Label {
+  id    String  @id @default(cuid())
+  userId String
+  name  String
+  color String?
+  tasks Task[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Subtask {
+  id           String  @id @default(cuid())
+  taskId       String
+  userId       String
+  order  Int
+  name         String
+  isComplete  Boolean @default(false)
+
+  task Task @relation(fields: [taskId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

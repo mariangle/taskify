@@ -6,19 +6,19 @@ import { Separator } from '@/components/ui/seperator';
 import { Badge } from '@/components/ui/badge';
 import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { Label as SwitchLabel } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Checkbox } from '@/components/ui/checkbox';
 
 import LabelBadge from '@/components/ui/label-badge';
 
 import { cn } from '@/lib/util/tw-merge';
-import type { LabelResponse } from '@/types';
+import type { Label } from '@/types';
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 import { useFilter } from '@/hooks/use-filter';
 
 interface FilterPanelProps {
-  labels: LabelResponse[];
+  labels: Label[];
   close: () => void;
 }
 
@@ -73,7 +73,7 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
       {view !== 'board' && (
         <div className="flex-gap mb-4 w-full">
           <Checkbox checked className="cursor-default" />
-          <Label htmlFor="completed-tasks">Completed tasks</Label>
+          <SwitchLabel htmlFor="completed-tasks">Completed tasks</SwitchLabel>
           <Switch
             id="completed-tasks"
             className="ml-auto"

@@ -11,12 +11,12 @@ import {
 import TaskItem from '@/components/shared/task/task-item';
 import FilterWeek from '@/components/shared/filter-week';
 
-import type { TaskResponse } from '@/types';
+import type { Task } from '@/types';
 import { PageHeading } from '@/components/ui/page';
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
-import { TaskService } from '@/services/task-service';
-import { LabelService } from '@/services/label-service';
-import { ListService } from '@/services/list-service';
+import { getLabels } from '@/actions/get-labels';
+import { getLists } from '@/actions/get-lists';
+import { getTasks } from '@/actions/get-tasks';
 
 interface UpcomingPageProps {
   searchParams: Partial<ExtendedSearchParamsOptions>;
@@ -25,6 +25,9 @@ interface UpcomingPageProps {
 export default async function UpcomingPage({
   searchParams,
 }: UpcomingPageProps) {
+  const labels = await getLabels();
+  const lists = await getLists();
+
   const offset = searchParams.offset ?? 0;
   const currentDayOfWeek = getDay(new Date());
   const startOfSelectedWeek = startOfWeek(new Date(), {
@@ -36,9 +39,9 @@ export default async function UpcomingPage({
   const days = await Promise.all(
     Array.from({ length: 7 }, async (_, index) => {
       const day = addDays(startDate, index);
-      const formattedDate = format(day, 'dd-MM-yyyy');
+      const formattedDate = format(day, 'yyyy-MM-dd');
 
-      const tasks = await TaskService.getTasks({
+      const tasks = await getTasks({
         ...searchParams,
         dueDate: formattedDate,
       });
@@ -47,16 +50,13 @@ export default async function UpcomingPage({
     }),
   );
 
-  const labels = await LabelService.getLabels();
-  const lists = await ListService.getLists();
-
   function ColumnHeader({
     dayData,
   }: {
     dayData: {
       day: Date;
       formattedDate: string;
-      tasks: TaskResponse[];
+      tasks: Task[];
     };
   }) {
     const getDisplayDate = (day: Date): string => {

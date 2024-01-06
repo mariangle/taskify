@@ -6,10 +6,9 @@ import RightSidebar from './_components/right-sidebar';
 import Navbar from './_components/navbar';
 import { LoadingScreen } from '@/components/ui/loading';
 
-import { ListService } from '@/services/list-service';
-
 import OverlayProvider from '@/components/providers/overlay-provider';
 import { auth } from '@/lib/auth';
+import { getLists } from '@/actions/get-lists';
 
 interface PageProps {
   children: React.ReactNode;
@@ -17,10 +16,7 @@ interface PageProps {
 
 export default async function Layout(props: PageProps) {
   const session = await auth();
-
-  const lists = await ListService.getLists();
-
-  if (!session) throw new Error('no session');
+  const lists = await getLists();
 
   return (
     <React.Suspense fallback={<LoadingScreen />}>

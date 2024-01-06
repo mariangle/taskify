@@ -4,7 +4,7 @@ import { MentionsInput as ReactMentionInput, Mention } from 'react-mentions';
 import { FieldValues, PathValue, Path, UseFormReturn } from 'react-hook-form';
 import { cn } from '@/lib/util/tw-merge';
 import { inputStyle } from '@/styles/styles';
-import type { ListResponse, LabelResponse, TaskResponse } from '@/types';
+import type { List, Label, Task } from '@/types';
 import {
   extractName,
   extractLabelIds,
@@ -15,9 +15,9 @@ import {
 interface MentionInputProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   register: Path<T>;
-  task?: TaskResponse;
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  task?: Task;
+  lists: List[];
+  labels: Label[];
   defaultValue?: string;
   small?: boolean;
 }

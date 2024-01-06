@@ -2,11 +2,11 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { TaskResponse } from '@/types';
+import { Task } from '@/types';
 import StatusCheckbox from '@/components/shared/status-checkbox';
 import LabelBadge from '@/components/ui/label-badge';
 
-export const columns: ColumnDef<TaskResponse>[] = [
+export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'name',
     cell: ({ row }) => (

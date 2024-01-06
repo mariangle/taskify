@@ -1,56 +1,64 @@
-import { AxiosResponse } from 'axios'
-import { api } from '@/lib/api'
-import { ListEntry, ListResponse } from '@/types'
-import { requestOptions } from '@/lib/util'
-import { agent } from '@/lib/agent'
+/* eslint-disable no-useless-catch */
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { List } from '@/types';
+import { requestOptions } from '@/lib/util';
+
+const api: AxiosInstance = axios.create({
+  baseURL: 'http://localhost:3000/api',
+});
 
 export const ListService = {
-  createList: async (list: ListEntry): Promise<ListResponse> => {
+  createList: async (list: any): Promise<List> => {
     try {
-      const response: AxiosResponse = await api.post('/lists', list, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.post(
+        '/lists',
+        list,
+        requestOptions,
+      );
+      return response.data;
     } catch (error) {
-      throw error
+      throw error;
     }
   },
-  getLists: async (): Promise<ListResponse[] | []> => {
+  getLists: async (): Promise<List[]> => {
     try {
-      const response: AxiosResponse = await api.get(`/lists`, {
-        httpsAgent: agent,
-      })
-      return response.data
+      const response = await api.get('/lists', requestOptions);
+      return response.data;
     } catch (error) {
-      console.log('Error fetching lists', error)
-      return []
-    }
-  },
-
-  getList: async (listId: string): Promise<ListResponse | null> => {
-    try {
-      const response: AxiosResponse = await api.get(`/lists/${listId}`, {
-        httpsAgent: agent,
-      })
-      return response.data
-    } catch (error) {
-      return null
+      throw error;
     }
   },
 
-  updateList: async (listId: string, updatedList: ListEntry): Promise<ListResponse> => {
+  getList: async (listId: string): Promise<List | null> => {
     try {
-      const response: AxiosResponse = await api.put(`/lists/${listId}`, updatedList, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.get(`/lists/${listId}`);
+      return response.data;
     } catch (error) {
-      throw error
+      throw error;
     }
   },
 
-  deleteList: async (listId: string): Promise<ListResponse> => {
+  updateList: async (listId: string, updatedList: any): Promise<List> => {
     try {
-      const response: AxiosResponse = await api.delete(`/lists/${listId}`, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.patch(
+        `/lists/${listId}`,
+        updatedList,
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  deleteList: async (listId: string): Promise<List> => {
+    try {
+      const response: AxiosResponse = await api.delete(
+        `/lists/${listId}`,
+        requestOptions,
+      );
+      return response.data;
     } catch (error: any) {
-      throw error
+      throw error;
     }
   },
-}
+};

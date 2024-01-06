@@ -1,54 +1,54 @@
-import { AxiosResponse } from 'axios'
-import { api } from '@/lib/api'
-import { LabelEntry, LabelResponse } from '@/types'
-import { requestOptions } from '@/lib/util'
-import { agent } from '@/lib/agent'
+/* eslint-disable no-useless-catch */
+import { AxiosResponse } from 'axios';
+import { api } from '@/lib/api';
+import { Label, LabelEntry } from '@/types';
 
 export const LabelService = {
-  createLabel: async (label: LabelEntry): Promise<LabelResponse> => {
+  createLabel: async (label: LabelEntry): Promise<Label> => {
     try {
-      const response: AxiosResponse = await api.post('/labels', label, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.post('/labels', label);
+      return response.data;
     } catch (error) {
-      throw error
+      throw error;
     }
   },
-  getLabels: async (): Promise<LabelResponse[] | []> => {
+  getLabels: async (): Promise<Label[] | []> => {
     try {
-      const response: AxiosResponse = await api.get(`/labels`, {
-        httpsAgent: agent,
-      })
-      return response.data
+      const response: AxiosResponse = await api.get(`/labels`);
+      return response.data;
     } catch (error) {
-      console.log('Error fetching labels', error)
-      return []
+      throw error;
     }
   },
-  getLabel: async (labelId: string): Promise<LabelResponse | null> => {
+  getLabel: async (labelId: string): Promise<Label> => {
     try {
-      const response: AxiosResponse = await api.get(`/labels/${labelId}`, {
-        httpsAgent: agent,
-      })
-      return response.data
+      const response: AxiosResponse = await api.get(`/labels/${labelId}`);
+      return response.data;
     } catch (error) {
-      return null
+      throw error;
     }
   },
-  updateLabel: async (labelId: string, updatedLabel: LabelEntry): Promise<LabelResponse> => {
+  updateLabel: async (
+    labelId: string,
+    updatedLabel: LabelEntry,
+  ): Promise<Label> => {
     try {
-      const response: AxiosResponse = await api.put(`/labels/${labelId}`, updatedLabel, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.patch(
+        `/labels/${labelId}`,
+        updatedLabel,
+      );
+      return response.data;
     } catch (error) {
-      throw error
+      throw error;
     }
   },
 
-  deleteLabel: async (labelId: string): Promise<LabelResponse> => {
+  deleteLabel: async (labelId: string): Promise<Label> => {
     try {
-      const response: AxiosResponse = await api.delete(`/labels/${labelId}`, requestOptions)
-      return response.data
+      const response: AxiosResponse = await api.delete(`/labels/${labelId}`);
+      return response.data;
     } catch (error: any) {
-      throw error
+      throw error;
     }
   },
-}
+};

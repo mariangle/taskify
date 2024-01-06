@@ -5,7 +5,7 @@ import LabelItem from '../shared/label/label-item';
 
 import { cn } from '@/lib/util/tw-merge';
 
-import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
+import type { Label, List, Task } from '@/types';
 
 export function PageList({ children }: { children: React.ReactNode }) {
   return <div className="w-full max-w-screen-md mx-auto">{children}</div>;
@@ -62,7 +62,7 @@ export function PageDescription({ children }: { children: React.ReactNode }) {
   return <p className="text-sm pt-2 text-muted-foreground">{children}</p>;
 }
 
-export function LabelList({ labels }: { labels: LabelResponse[] }) {
+export function LabelList({ labels }: { labels: Label[] }) {
   return (
     <div className="space-y-2">
       {labels.map((label) => (
@@ -80,9 +80,9 @@ export function TaskList({
   type = 'list',
   expandable = true,
 }: {
-  tasks: TaskResponse[];
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  tasks: Task[];
+  lists: List[];
+  labels: Label[];
   type?: 'board' | 'list';
   expandable?: boolean;
 }) {
