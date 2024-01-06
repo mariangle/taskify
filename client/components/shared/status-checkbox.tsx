@@ -28,10 +28,6 @@ export default function StatusCheckbox({
   );
   const router = useRouter();
 
-  React.useEffect(() => {
-    setIsCompleted(task?.isComplete || subtask?.isComplete || false);
-  }, [task, subtask]);
-
   if (!task && !subtask)
     return <Checkbox className={className} disabled={disabled} />;
 
