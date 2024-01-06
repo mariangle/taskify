@@ -129,10 +129,7 @@ function TaskItem({ task, lists, type = 'list', labels, date }: TaskItemProps) {
               >
                 <Icons.Subtask className="h-3 w-3 mr-1" />
                 <span className="text-xs">
-                  {
-                    task.subtasks.filter((subtask) => subtask.isCompleted)
-                      .length
-                  }
+                  {task.subtasks.filter((subtask) => subtask.isComplete).length}
                   /{task.subtasks.length}
                 </span>
               </Button>

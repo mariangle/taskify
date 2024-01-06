@@ -16,7 +16,7 @@ export default function AuthNavigation({
           href="/inbox"
           className={cn(
             buttonVariants({ variant: 'default', size: 'sm' }),
-            'rounded-full px-4',
+            'rounded-full px-4 h-8',
           )}
         >
           App
@@ -28,7 +28,7 @@ export default function AuthNavigation({
             href="/auth/login"
             className={cn(
               buttonVariants({ variant: 'outline', size: 'sm' }),
-              'rounded-full px-4',
+              'rounded-full px-4 h-8',
             )}
           >
             Login
@@ -37,7 +37,7 @@ export default function AuthNavigation({
             href="/auth/register"
             className={cn(
               buttonVariants({ variant: 'default', size: 'sm' }),
-              'rounded-full px-4',
+              'rounded-full px-4 h-8',
             )}
           >
             Sign Up

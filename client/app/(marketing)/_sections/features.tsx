@@ -62,7 +62,7 @@ const features: Feature[] = [
 export default function Features() {
   const Card = 'div';
   return (
-    <section className="space-y-12 max-w-screen-lg mx-auto">
+    <section className="px-6 space-y-12 max-w-screen-lg mx-auto">
       <div className="text-center">
         <h2 className="heading" id="features">
           Features

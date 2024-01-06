@@ -28,7 +28,7 @@ body {
     --accent-foreground: 220.9 39.3% 11%;
     --destructive: 0 84.2% 40.2%;
     --destructive-foreground: 210 20% 98%;
-    --border: 234 17% 93%;
+    --border: 234 17% 86%;
     --input: 220 13% 91%;
     --ring: 224 71.4% 4.1%;
     --radius: 0.75rem;
@@ -68,10 +68,10 @@ body {
   }
 
   .heading {
-    @apply text-3xl font-semibold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1];
+    @apply text-3xl font-bold dark:sm:font-medium leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1];
   }
   .subheading {
-    @apply text-4xl font-bold tracking-tight;
+    @apply text-4xl font-medium tracking-tight;
   }
 
   .horizontal-gradient {
@@ -79,7 +79,7 @@ body {
   }
 
   .vertical-gradient {
-    @apply bg-gradient-to-t dark:from-white dark:via-gray-200 dark:to-white from-gray-900 via-gray-500 to-gray-900 bg-clip-text text-transparent;
+    @apply bg-gradient-to-t dark:from-white dark:via-gray-200 dark:to-white from-gray-900 via-gray-600 to-gray-900 bg-clip-text text-transparent;
   }
 
   .flex-between {
@@ -95,7 +95,7 @@ body {
     @apply flex items-center justify-center;
   }
   .glassmorphism {
-    @apply border shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.1)] bg-[hsl(var(--background-secondary))]/50 backdrop-blur-sm dark:shadow-[inset_10px_-50px_94px_0_rgb(0,0,0,0.4)];
+    @apply shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.1)] bg-[hsl(var(--background-secondary))]/50 backdrop-blur-sm dark:shadow-[inset_10px_-50px_94px_0_rgb(0,0,0,0.4)];
   }
 
   .hero-border-animation {
@@ -124,6 +124,30 @@ body {
     }
     100% {
       transform: rotate(0deg);
+    }
+  }
+
+  .glowing-marble {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: inset 0 0 50px #fff, inset 20px 0 80px #f0f,
+      inset -20px 0 80px #0ff, inset 20px 0 300px #f0f, inset -20px 0 300px #0ff,
+      0 0 50px #fff, -10px 0 80px #f0f, 10px 0 80px #0ff;
+    animation: load 6s infinite ease-in-out;
+  }
+
+  @keyframes load {
+    0% {
+      transform: rotate(0);
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      filter: rotate(180deg);
+      filter: hue-rotate(60deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }

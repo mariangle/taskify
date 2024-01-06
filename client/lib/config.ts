@@ -3,7 +3,7 @@ import { Inbox, CalendarClock, CalendarDays, Tag } from 'lucide-react';
 export const config = {
   metadata: {
     title: {
-      default: '.taskify',
+      default: 'Taskify',
       template: `%s | Taskify`,
     },
     description:
@@ -27,7 +27,7 @@ export const config = {
       },
       {
         title: 'Docs',
-        href: '/docs/getting-started',
+        href: '/docs/features',
       },
     ],
     docsLinks: [

@@ -29,7 +29,7 @@ export default function MobileNav({
       </Button>
       <div
         className={cn(
-          'fixed left-0 top-12 w-full bg-background/80 flex justify-between',
+          'fixed left-0 top-14 w-full bg-background/80 flex justify-between',
           isOpen
             ? 'max-h-0 duration-300 transition-all border-b py-6'
             : 'max-h-0 duration-300 transition-all ',

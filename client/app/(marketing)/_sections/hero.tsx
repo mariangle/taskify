@@ -8,13 +8,13 @@ import { cn } from '@/lib/util/tw-merge';
 
 export default function Hero() {
   return (
-    <section className="min-h-[40vh] flex flex-col justify-center text-center relative">
+    <section className="px-6 min-h-[40vh] flex flex-col justify-center text-center relative">
       <Badge variant="secondary" className="w-fit mx-auto">
         <SparklesIcon className="w-4 h-4 mr-2" />
         Under construction
       </Badge>
-      <h1 className="heading vertical-gradient lg:text-7xl sm:flex-center gap-2 sm:gap-4 my-4 md:my-6">
-        Elevate your <TypewriterEffect />
+      <h1 className="heading vertical-gradient lg:text-7xl sm:flex-center gap-2 sm:gap-4 py-4 md:py-6">
+        Inrease your <TypewriterEffect />
       </h1>
       <p className="text-muted-foreground md:text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.

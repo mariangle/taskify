@@ -1,19 +1,22 @@
 import { Icons } from '@/components/ui/icons';
-import ThemeSwitcher from './theme-switcher';
 
 export default function Footer() {
   return (
-    <footer className="py-8 px-6 border-t bg-background/30 backdrop-blur-lg">
-      <div className="max-w-screen-lg mx-auto grid md:grid-cols-2 space-y-2">
-        <div className="">
-          <div className="font-semibold">.taskify</div>
-          <div className="text-xs mt-2 text-muted-foreground">
-            © 2024 .taskify. All rights reserved.
-          </div>
+    <footer className="px-6 border-t dark:bg-[#00021242] bg-opacity-50">
+      <div className="py-10 max-w-screen-lg mx-auto flex-between">
+        <div className="font-semibold text-lg">taskify</div>
+        <div>
+          <Icons.GitHub className="w-4 h-4 text-muted-foreground ml-auto" />
         </div>
-        <div className="flex-gap md:justify-end">
-          <ThemeSwitcher />
-          <Icons.GitHub className="w-4 h-4" />
+      </div>
+      <div className="py-6 border-t max-w-screen-lg mx-auto sm:flex-between md:grid-cols-2 space-y-4 md:space-y-0">
+        <div className="flex-gap gap-4 text-xs text-muted-foreground">
+          <div>Privacy Policy</div>
+          <div>·</div>
+          <div>Terms of Conditions</div>
+        </div>
+        <div className="text-xs text-muted-foreground">
+          © 2024 Taskify. All rights reserved.
         </div>
       </div>
     </footer>

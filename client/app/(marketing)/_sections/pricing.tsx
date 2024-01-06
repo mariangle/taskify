@@ -24,10 +24,10 @@ function Feature({
 
 export default function Pricing() {
   return (
-    <section className="max-w-screen-lg mx-auto">
+    <section className="px-6 max-w-screen-lg mx-auto z-10 relative mt-24">
       <div className="text-center md:text-left mb-8">
-        <h1 className="heading" id="pricing">
-          Simple, <span className="vertical-gradient">transparent</span> pricing
+        <h1 className="heading horizontal-gradient" id="pricing">
+          Simple, transparent pricing
         </h1>
         <p className="text-muted-foreground my-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -54,7 +54,7 @@ export default function Pricing() {
           </Button>
         </div>
         {/* Premium Plan */}
-        <div className="border shadow-xl rounded-lg w-full max-w-xs dark:bg-primary/10 shadow-primary/50 dark:border-primary/40 p-6">
+        <div className="border shadow-xl rounded-lg w-full max-w-xs bg-background/10 dark:bg-primary/20 shadow-primary/50 dark:border-primary/40 p-6">
           <div className="flex-between">
             <h2 className="text-lg font-semibold mb-2">Pro</h2>
             <Badge variant="outline">Recommended</Badge>

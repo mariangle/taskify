@@ -46,6 +46,7 @@ function AuthForm({ variant }: AuthFormProps) {
     data: AuthSchemaType,
   ) => {
     try {
+      throw new Error('Disabled during construction.');
       setIsLoading(true);
 
       if (variant === 'login') {
@@ -59,7 +60,11 @@ function AuthForm({ variant }: AuthFormProps) {
         router.push('/auth/login');
       }
     } catch (err) {
-      if (err instanceof AxiosError) toast.error(err.response?.data);
+      if (err instanceof AxiosError) {
+        toast.error(err.response?.data);
+      } else if (err instanceof Error) {
+        toast.error(err.message);
+      }
     } finally {
       setIsLoading(false);
     }
