@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import type { LabelResponse, ListResponse } from '@/types';
+import type { Label, List } from '@/types';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 
@@ -14,8 +14,8 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 
 export default function TaskOverlay() {
   const [isOpen, setOpen] = React.useState(false);
-  const [lists, setLists] = React.useState<ListResponse[]>([]);
-  const [labels, setLabels] = React.useState<LabelResponse[]>([]);
+  const [lists, setLists] = React.useState<List[]>([]);
+  const [labels, setLabels] = React.useState<Label[]>([]);
   const { signal } = useSignal();
   const { showTaskOverlay, toggleTaskOverlay, setTaskOverlay } =
     useLayoutStore();

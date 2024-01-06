@@ -5,7 +5,7 @@ import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 
 export default function SocialsActions() {
-  const onSocialAction = (provider: 'google' | 'github') => {
+  const loginSocial = (provider: 'google' | 'github') => {
     signIn(provider, {
       callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
@@ -23,7 +23,7 @@ export default function SocialsActions() {
           type="button"
           variant="secondary"
           className="w-full"
-          onClick={() => onSocialAction('google')}
+          onClick={() => loginSocial('google')}
         >
           <Icons.Google className="w-4 h-4 mr-2" />
           Google
@@ -32,7 +32,7 @@ export default function SocialsActions() {
           type="button"
           variant="secondary"
           className="w-full"
-          onClick={() => onSocialAction('github')}
+          onClick={() => loginSocial('github')}
         >
           <Icons.GitHub className="w-4 h-4 mr-2" />
           GitHub

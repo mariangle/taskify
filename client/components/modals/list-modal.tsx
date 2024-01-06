@@ -10,11 +10,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 import ListForm from '@/components/shared/list/list-form';
 
 interface ModalProps {
-  list?: ListResponse;
+  list?: List;
   children: React.ReactNode;
 }
 

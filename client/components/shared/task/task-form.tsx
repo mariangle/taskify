@@ -1,6 +1,5 @@
 'use client';
 
-import * as z from 'zod';
 import * as React from 'react';
 import toast from 'react-hot-toast';
 
@@ -10,42 +9,30 @@ import { useParams, usePathname, useRouter } from 'next/navigation';
 import { add } from 'date-fns';
 import { useLayoutStore } from '@/store/layout-store';
 import { handleError } from '@/lib/util';
-import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
+import type { Label, List, Task } from '@/types';
+import { TaskService } from '@/services/task-service';
+import { taskFormSchema, TaskFormValues } from '@/lib/validations/task-schema';
 
 import MentionsInput from '@/components/shared/task/mention-input';
 import { ListPicker } from '@/components/shared/task/list-picker';
 import { PriorityPicker } from '@/components/shared/task/priority-picker';
 import { DatePicker } from '@/components/shared/task/date-picker';
-
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/seperator';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 
-import { TaskService } from '@/services/task-service';
-
 interface TaskFormProps {
-  task?: TaskResponse;
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  task?: Task;
+  lists: List[];
+  labels: Label[];
   close?: () => void;
   small?: boolean;
   initialValues?: {
     dueDate?: string;
   };
 }
-
-export const taskFormSchema = z.object({
-  name: z.string().min(1),
-  note: z.string().optional(),
-  dueDate: z.union([z.date(), z.string()]).optional(),
-  priority: z.enum(['Low', 'Medium', 'High']).optional(),
-  listId: z.string().optional(),
-  labelIds: z.array(z.string()).optional(),
-});
-
-export type TaskFormValues = z.infer<typeof taskFormSchema>;
 
 export default function TaskForm({
   task,
@@ -56,6 +43,7 @@ export default function TaskForm({
   initialValues,
 }: TaskFormProps) {
   const { closeTaskOverlay } = useLayoutStore();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const params = useParams<{ listId: string }>();
   const path = usePathname();
@@ -73,7 +61,7 @@ export default function TaskForm({
 
   const defaultValues: Partial<TaskFormValues> = {
     name: task?.name || undefined,
-    note: task?.note || undefined,
+    description: task?.description || undefined,
     dueDate: (() => {
       if (task?.dueDate) {
         return task.dueDate;
@@ -102,9 +90,14 @@ export default function TaskForm({
   });
 
   const onSubmit = async (data: TaskFormValues) => {
+    setIsLoading(true);
     try {
       if (task) {
-        await TaskService.updateTask(task.id, { id: task.id, ...data });
+        await TaskService.updateTask(task.id, {
+          id: task.id,
+          ...data,
+          dueDate: data.dueDate as Date | null | undefined,
+        });
 
         const labelsToAdd = labels.filter(
           (label) =>
@@ -130,13 +123,14 @@ export default function TaskForm({
       } else {
         // Adding date to default value since it goes to previous day
         let realDate = data.dueDate ?? undefined;
+
         if (initialValues?.dueDate) {
           realDate = add(parseDateString(initialValues.dueDate), { days: 1 });
         }
 
         const createdTask = await TaskService.createTask({
           ...data,
-          dueDate: realDate,
+          dueDate: realDate as Date | null | undefined,
         });
 
         if (data.labelIds?.length) {
@@ -154,6 +148,8 @@ export default function TaskForm({
       closeTaskOverlay();
     } catch (err) {
       handleError(err);
+    } finally {
+      setIsLoading(true);
     }
   };
 
@@ -179,7 +175,7 @@ export default function TaskForm({
           />
           <Input
             transparent
-            {...form.register('note')}
+            {...form.register('description')}
             placeholder="Description"
             className="pt-0"
             autoComplete="off"
@@ -224,7 +220,7 @@ export default function TaskForm({
             >
               {small ? <Icons.Close className="w-4 h-4" /> : 'Cancel'}
             </Button>
-            <Button size="sm" disabled={!watchName}>
+            <Button size="sm" disabled={!watchName || isLoading}>
               {(small && <Icons.Send className="w-4 h-4" />) ||
                 (task ? 'Save changes' : 'Create task')}
             </Button>

@@ -13,12 +13,12 @@ import {
 import { Button } from '@/components/ui/button';
 
 import { cn } from '@/lib/util/tw-merge';
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 
 interface ListPickerProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   register: Path<T>;
-  lists: ListResponse[];
+  lists: List[];
   defaultValue?: string;
 }
 
@@ -33,7 +33,7 @@ export function ListPicker<T extends FieldValues>({
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(defaultListValue);
 
-  const onSelect = (list?: ListResponse) => {
+  const onSelect = (list?: List) => {
     if (list) {
       setValue(list.name === value ? '' : list.name);
       setOpen(false);

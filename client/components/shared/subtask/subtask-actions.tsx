@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,17 +13,19 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import AlertModal from '@/components/modals/alert-modal';
 
-import type { SubtaskResponse } from '@/types';
+import type { Subtask, Task } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { SubtaskService } from '@/services/subtask-service';
 import { handleError } from '@/lib/util';
 
 interface SubtaskActionsProps {
-  subtask: SubtaskResponse;
+  task: Task;
+  subtask: Subtask;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SubtaskActions({
+  task,
   subtask,
   setOpen,
 }: SubtaskActionsProps) {
@@ -34,11 +37,11 @@ export default function SubtaskActions({
 
   const onEdit = () => setOpen(true);
 
-  const onDelete = async (labelId: string) => {
+  const onDelete = async (subtaskId: string) => {
     setIsLoading(true);
     try {
-      await SubtaskService.deleteSubtask(labelId);
-
+      await SubtaskService.deleteSubtask(task.id, subtaskId);
+      toast.success('Deleted!');
       router.refresh();
     } catch (err) {
       handleError(err);

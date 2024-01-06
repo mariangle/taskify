@@ -13,7 +13,7 @@ export const {
   signOut,
 } = NextAuth({
   pages: {
-    signIn: '/login', // TODO: auth prefix,
+    signIn: '/auth/login',
     error: '/auth/error',
   },
   events: {

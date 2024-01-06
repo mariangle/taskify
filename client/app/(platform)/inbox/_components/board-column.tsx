@@ -1,11 +1,11 @@
-import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
+import type { Label, List, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
 import TaskItem from '@/components/shared/task/task-item';
 
 interface ColumnProps {
-  tasks: TaskResponse[];
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  tasks: Task[];
+  lists: List[];
+  labels: Label[];
   status: 'Incomplete' | 'Pending' | 'Completed';
   color: string;
 }

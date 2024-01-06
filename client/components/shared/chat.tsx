@@ -35,19 +35,6 @@ export default function Chat() {
   ]);
   const [input, setInput] = React.useState('');
   const inputLength = input.trim().length;
-
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'c' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        toggleChatOverlay();
-      }
-    };
-
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, [toggleChatOverlay]);
-
   return (
     <div
       className={cn(

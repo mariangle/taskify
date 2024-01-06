@@ -1,6 +1,7 @@
+/* eslint-disable no-useless-catch */
 import { AxiosResponse } from 'axios';
 import { api } from '@/lib/api';
-import { TaskEntry, TaskResponse } from '@/types';
+import { Task, TaskEntry } from '@/types';
 import { requestOptions } from '@/lib/util';
 import { agent } from '@/lib/agent';
 import { SearchParamsOptions, queryParamsMapping } from '@/lib/util/filter';
@@ -13,7 +14,7 @@ interface TaskLabelRelation {
 export const TaskService = {
   createTask: async (task: TaskEntry) => {
     try {
-      const response: AxiosResponse<TaskResponse> = await api.post(
+      const response: AxiosResponse<Task> = await api.post(
         '/tasks',
         task,
         requestOptions,
@@ -26,11 +27,12 @@ export const TaskService = {
   // Define default value for the entire argument using Partial
   getTasks: async (
     params: Partial<SearchParamsOptions> = {},
-  ): Promise<TaskResponse[]> => {
+  ): Promise<Task[]> => {
     try {
       const queryParams: { [key: string]: string | boolean | number } = {};
 
       // Loop through each [param, queryParam] pair in the queryParamsMapping object
+      // eslint-disable-next-line no-restricted-syntax
       for (const [param, queryParam] of Object.entries(queryParamsMapping)) {
         // Extract the value of the current parameter from the params object
         const paramValue = params[param as keyof SearchParamsOptions];
@@ -52,39 +54,30 @@ export const TaskService = {
       throw err;
     }
   },
-  getTask: async (taskId: string): Promise<TaskResponse> => {
+  getTask: async (taskId: string): Promise<Task> => {
     try {
-      const response: AxiosResponse = await api.get(`/tasks/${taskId}`, {
-        httpsAgent: agent,
-      });
+      const response: AxiosResponse = await api.get(`/tasks/${taskId}`);
       return response.data;
     } catch (err) {
       throw err;
     }
   },
-  updateTask: async (
-    taskId: string,
-    updatedTask: TaskEntry,
-  ): Promise<TaskResponse> => {
+  updateTask: async (taskId: string, updatedTask: TaskEntry): Promise<Task> => {
     try {
-      const response: AxiosResponse = await api.put(
+      const response: AxiosResponse = await api.patch(
         `/tasks/${taskId}`,
         updatedTask,
-        requestOptions,
       );
       return response.data;
     } catch (err) {
       throw err;
     }
   },
-  deleteTask: async (taskId: string): Promise<TaskResponse> => {
+  deleteTask: async (taskId: string): Promise<Task> => {
     try {
-      const response: AxiosResponse = await api.delete(
-        `/tasks/${taskId}`,
-        requestOptions,
-      );
+      const response: AxiosResponse = await api.delete(`/tasks/${taskId}`);
       return response.data;
-    } catch (err: any) {
+    } catch (err) {
       throw err;
     }
   },

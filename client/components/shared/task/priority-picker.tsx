@@ -12,17 +12,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { TaskResponse } from '@/types';
+import { Task, TaskPriority } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 import { cn } from '@/lib/util/tw-merge';
 
-type Priority = { value: string; color: string };
+type Priority = { value: TaskPriority; color: string };
 
 const priorities: Priority[] = [
-  { value: 'High', color: '#EF4444' },
-  { value: 'Medium', color: '#EAB308' },
-  { value: 'Low', color: '#0EA5E9' },
+  { value: 'HIGH', color: '#EF4444' },
+  { value: 'MEDIUM', color: '#EAB308' },
+  { value: 'LOW', color: '#0EA5E9' },
 ];
 
 export function PriorityItem({
@@ -31,7 +31,7 @@ export function PriorityItem({
 }: {
   priority: Priority;
   // eslint-disable-next-line no-unused-vars
-  onSelect: (priority: string) => void;
+  onSelect: (priority: TaskPriority) => void;
 }) {
   return (
     <Button
@@ -53,18 +53,19 @@ interface FormVariant<T extends FieldValues> {
 
 interface TaskVariant {
   type: 'dropdown';
-  task: TaskResponse;
+  task: Task;
 }
 
 interface PriorityPickerProps<T extends FieldValues> {
   variant: FormVariant<T> | TaskVariant;
-  defaultValue?: string;
+  defaultValue?: TaskPriority | null;
   small?: boolean;
 }
 
 export function PriorityPicker<T extends FieldValues>({
   variant,
   defaultValue,
+  // eslint-disable-next-line no-unused-vars
   small = false,
 }: PriorityPickerProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -72,7 +73,7 @@ export function PriorityPicker<T extends FieldValues>({
   const [, setIsLoading] = React.useState(false);
   const router = useRouter();
 
-  const onSelect = async (priority: string) => {
+  const onSelect = async (priority: TaskPriority) => {
     setOpen(false);
     setValue(priority);
 
@@ -96,10 +97,10 @@ export function PriorityPicker<T extends FieldValues>({
     }
   };
 
-  const removePriority = async (task: TaskResponse) => {
+  const removePriority = async (task: Task) => {
     setIsLoading(true);
     try {
-      await TaskService.updateTask(task.id, { ...task, priority: undefined });
+      await TaskService.updateTask(task.id, { ...task, priority: null });
       toast.success('Priority removed.');
       router.refresh();
     } catch (err) {
@@ -158,12 +159,11 @@ export function PriorityPicker<T extends FieldValues>({
       >
         <Icons.Flag className="w-4 h-4" style={{ color: priority?.color }} />
         {value && (
-          <span>
+          <span className="flex-gap">
             {value}
             <Icons.Close className="w-4 h-4" onClick={onRemove} />
           </span>
         )}
-        {!small && <span>Priority</span>}
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-1">
         {priorities.map((priority) => (

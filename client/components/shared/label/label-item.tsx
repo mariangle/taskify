@@ -10,10 +10,10 @@ import LabelForm from '@/components/shared/settings/label-form';
 import LabelBadge from '@/components/ui/label-badge';
 import LabelActions from '@/components/shared/label/label-actions';
 
-import type { LabelResponse } from '@/types';
+import type { Label } from '@/types';
 
 interface LabelItemProps {
-  label?: LabelResponse;
+  label?: Label;
 }
 
 export default function LabelItem({ label }: LabelItemProps) {

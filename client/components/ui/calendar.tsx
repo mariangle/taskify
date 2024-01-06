@@ -8,12 +8,12 @@ import { isSameDay } from 'date-fns';
 import { Icons } from '@/components/ui/icons';
 import { cn } from '@/lib/util/tw-merge';
 import { buttonVariants } from '@/components/ui/button';
-import type { TaskResponse } from '@/types';
+import type { Task } from '@/types';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 interface CustomProps {
-  tasks?: TaskResponse[] | [];
+  tasks?: Task[] | [];
 }
 
 function Calendar({

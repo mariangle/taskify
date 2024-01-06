@@ -3,9 +3,9 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import SideNav from './side-nav';
 import { Button } from '@/components/ui/button';
 import { useMounted } from '@/hooks/use-mounted';
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 
-export function MobileSidebar({ lists }: { lists: ListResponse[] }) {
+export function MobileSidebar({ lists }: { lists: List[] }) {
   const isMounted = useMounted();
 
   if (!isMounted) return null;

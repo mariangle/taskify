@@ -1,15 +1,11 @@
 /* eslint-disable no-useless-catch */
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { User } from '@prisma/client';
-
-const api: AxiosInstance = axios.create({
-  baseURL: '/api/auth',
-});
+import { User } from '@/types';
+import { api } from '@/lib/api';
 
 export const AuthService = {
   async login(email: string, password: string): Promise<void> {
     try {
-      await api.post('/login', {
+      await api.post('/auth/login', {
         email,
         password,
       });
@@ -19,7 +15,7 @@ export const AuthService = {
   },
   async register(email: string, name: string, password: string): Promise<User> {
     try {
-      const response: AxiosResponse = await api.post('/register', {
+      const response = await api.post('/auth/register', {
         email,
         name,
         password,

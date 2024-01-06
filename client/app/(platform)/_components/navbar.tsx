@@ -11,9 +11,9 @@ import FilterView from '@/components/shared/filter-view';
 
 import { useLayoutStore } from '@/store/layout-store';
 import { cn } from '@/lib/util/tw-merge';
-import type { ListResponse } from '@/types';
+import type { List } from '@/types';
 
-export default function Navbar({ lists }: { lists: ListResponse[] }) {
+export default function Navbar({ lists }: { lists: List[] }) {
   const {
     showLeftSidebar,
     showRightSidebar,

@@ -7,12 +7,12 @@ import SubtaskActions from '@/components/shared/subtask/subtask-actions';
 import StatusCheckbox from '@/components/shared/status-checkbox';
 import SubtaskForm from '@/components/shared/subtask/subtask-form';
 
-import type { SubtaskResponse, TaskResponse } from '@/types';
+import type { Subtask, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
 
 interface SubtaskItemProps {
-  subtask?: SubtaskResponse;
-  task: TaskResponse;
+  subtask?: Subtask;
+  task: Task;
 }
 
 export default function SubtaskItem({ subtask, task }: SubtaskItemProps) {
@@ -53,7 +53,7 @@ export default function SubtaskItem({ subtask, task }: SubtaskItemProps) {
         </span>
       </div>
       <div className="group-hover/subtask:opacity-100 opacity-0">
-        <SubtaskActions subtask={subtask} setOpen={open} />
+        <SubtaskActions task={task} subtask={subtask} setOpen={open} />
       </div>
     </SubtaskContainer>
   );

@@ -2,7 +2,7 @@ import TaskItem from '@/components/shared/task/task-item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 
-import type { LabelResponse, ListResponse, TaskResponse } from '@/types';
+import type { Label, List, Task } from '@/types';
 
 export function TaskList({
   tasks,
@@ -11,9 +11,9 @@ export function TaskList({
   type = 'list',
   expandable = true,
 }: {
-  tasks: TaskResponse[];
-  lists: ListResponse[];
-  labels: LabelResponse[];
+  tasks: Task[];
+  lists: List[];
+  labels: Label[];
   type?: 'board' | 'list';
   expandable?: boolean;
 }) {

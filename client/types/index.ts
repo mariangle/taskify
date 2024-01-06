@@ -1,7 +1,11 @@
-export type { TaskEntry, TaskResponse } from '@/types/task'
-export type { SubtaskEntry, SubtaskResponse } from '@/types/subtask'
-export type { UserEntry, UserResponse } from '@/types/user'
-export type { LabelEntry, LabelResponse } from '@/types/label'
-export type { ListEntry, ListResponse } from '@/types/list'
-export type { TaskPriority, TaskStatus } from '@/types/enums'
-export type { RecurringTask } from '@/types/recurring-task'
+import type { Task as PrismaTask, Label, Subtask } from '@prisma/client';
+
+export type Task = PrismaTask & {
+  labels?: Label[];
+  subtasks?: Subtask[];
+};
+
+export type TaskEntry = Partial<PrismaTask> & { name: string };
+export type SubtaskEntry = Partial<Subtask> & { name: string };
+export type LabelEntry = Partial<Label> & { name: string };
+export type { User, List, Label, Subtask, TaskPriority } from '@prisma/client';
