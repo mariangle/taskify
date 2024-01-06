@@ -47,6 +47,7 @@ function AuthForm({ variant }: AuthFormProps) {
   ) => {
     try {
       throw new Error('Disabled during construction.');
+      // eslint-disable-next-line no-unreachable
       setIsLoading(true);
 
       if (variant === 'login') {
