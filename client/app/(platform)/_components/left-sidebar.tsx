@@ -1,14 +1,12 @@
 'use client';
 
 import * as React from 'react';
-
 import SideNav from './side-nav';
 
 import { cn } from '@/lib/util/tw-merge';
-import type { List } from '@/types';
 import { useLayoutStore } from '@/store/layout-store';
 
-export default function LeftSidebar({ lists }: { lists: List[] }) {
+export default function LeftSidebar() {
   const { showLeftSidebar, toggleLeftSidebar } = useLayoutStore();
 
   React.useEffect(() => {
@@ -27,11 +25,11 @@ export default function LeftSidebar({ lists }: { lists: List[] }) {
     <aside
       className={cn(
         `relative h-screen border-r hidden duration-300 md:block flex-shrink-0 bg-background-secondary`,
-        showLeftSidebar ? 'w-56' : 'w-0 md:w-16',
+        showLeftSidebar ? 'w-56' : 'w-0 md:w-[4.5rem]',
       )}
     >
       <div className={cn('h-full', showLeftSidebar ? '' : 'hidden md:block')}>
-        <SideNav lists={lists} />
+        <SideNav />
       </div>
     </aside>
   );

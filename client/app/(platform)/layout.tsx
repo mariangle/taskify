@@ -5,32 +5,34 @@ import LeftSidebar from './_components/left-sidebar';
 import RightSidebar from './_components/right-sidebar';
 import Navbar from './_components/navbar';
 import { LoadingScreen } from '@/components/ui/loading';
+import ResizableLayout from '@/components/resizable-layout';
 
 import OverlayProvider from '@/components/providers/overlay-provider';
-import { auth } from '@/lib/auth';
-import { getLists } from '@/actions/get-lists';
 
 interface PageProps {
   children: React.ReactNode;
 }
 
 export default async function Layout(props: PageProps) {
-  const session = await auth();
-  const lists = await getLists();
-
   return (
     <React.Suspense fallback={<LoadingScreen />}>
-      <SessionProvider session={session}>
+      <SessionProvider session={null}>
         <OverlayProvider />
         <div className="flex h-screen overflow-y-hidden overflow-x-hidden">
-          <LeftSidebar lists={lists} />
+          <LeftSidebar />
           <div className="flex flex-col flex-1 overflow-y-hidden bg-background">
-            <Navbar lists={lists} />
-            <div className="overflow-y-auto overflow-x-auto h-full py-8 px-4 md:p-16 ">
-              {props.children}
-            </div>
+            <ResizableLayout
+              left={
+                <>
+                  <Navbar />
+                  <div className="overflow-y-auto overflow-x-auto h-full py-8 px-4 md:p-16 ">
+                    {props.children}
+                  </div>
+                </>
+              }
+              right={<RightSidebar />}
+            />
           </div>
-          <RightSidebar />
         </div>
       </SessionProvider>
     </React.Suspense>

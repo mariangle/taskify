@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { usePathname } from 'next/navigation';
+import useSWR from 'swr';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import { ToggleTheme } from './toggle-theme';
@@ -18,7 +19,6 @@ import RetainQueryLink from '@/components/retain-query-link';
 import UserNav from './user-nav';
 import SearchMenu from './search-menu';
 import ListItem from '@/components/shared/list/list-item';
-
 import { cn } from '@/lib/util/tw-merge';
 import { config } from '@/lib/config';
 import { useLayoutStore } from '@/store/layout-store';
@@ -29,11 +29,12 @@ import { useMounted } from '@/hooks/use-mounted';
 import { widgetItems, sidebarItems } from '@/lib/constants';
 import { LoadingSidebar } from '@/components/ui/loading';
 
-export default function SideNav({ lists }: { lists: List[] }) {
+export default function SideNav() {
   const path = usePathname();
   const isMounted = useMounted();
   const { showLeftSidebar, toggleTaskOverlay } = useLayoutStore();
   const { settings, setSettings } = useSettingsStore();
+  const { data: lists, error, mutate } = useSWR<List[]>('/api/lists');
 
   React.useEffect(() => {
     // Initializing zustand store with default state if they don't exist.
@@ -44,14 +45,32 @@ export default function SideNav({ lists }: { lists: List[] }) {
       setSettings({ ...settings, sidebar: dS, widgets: dW });
   }, [settings, setSettings]);
 
-  if (!isMounted) {
+  if (!isMounted || !lists) {
     return <LoadingSidebar />;
   }
 
+  if (error) return <div>Failed to load</div>;
+
   return (
-    <nav className="px-3 pb-3 min-h-full flex flex-col justify-between">
+    <nav className="px-4 pb-4 min-h-full flex flex-col justify-between">
       <div>
         <UserNav />
+        <button
+          type="button"
+          onClick={() => {
+            mutate([
+              ...lists,
+              {
+                id: 'wad',
+                userId: 'string',
+                name: 'string',
+                order: 132132,
+              },
+            ]);
+          }}
+        >
+          test
+        </button>
         <div className="flex-gap">
           <Button
             variant={showLeftSidebar ? 'secondary' : 'ghost'}
@@ -110,7 +129,7 @@ export default function SideNav({ lists }: { lists: List[] }) {
                 <AccordionTrigger className="hover:bg-muted rounded-full py-0 p-0.5" />
               </div>
               <AccordionContent>
-                {lists.map((list) => (
+                {lists?.map((list) => (
                   <ListItem list={list} key={list.id} />
                 ))}
               </AccordionContent>

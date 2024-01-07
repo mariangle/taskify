@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import toast from 'react-hot-toast';
+import { mutate } from 'swr';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -55,6 +56,7 @@ function ListForm({ list, onClose }: FormProps) {
       }
       triggerSignal();
       router.refresh();
+      mutate('/api/lists');
       onClose();
     } catch (error) {
       handleError(error);
@@ -64,14 +66,18 @@ function ListForm({ list, onClose }: FormProps) {
   };
 
   const onDelete = async (listId: string) => {
+    setIsLoading(true);
     try {
       await ListService.deleteList(listId);
       router.refresh();
       toast.success('List deleted!');
       triggerSignal();
+      mutate('/api/lists');
       onClose();
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

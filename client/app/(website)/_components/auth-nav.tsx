@@ -28,7 +28,7 @@ export default function AuthNavigation({
             href="/auth/login"
             className={cn(
               buttonVariants({ variant: 'outline', size: 'sm' }),
-              'rounded-full px-4 h-8',
+              'rounded-full px-4 h-8 hidden sm:flex',
             )}
           >
             Login

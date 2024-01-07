@@ -107,7 +107,7 @@ export function LoadingSidebar() {
   return (
     <div className="px-3 pb-3 min-h-full flex flex-col justify-between">
       <div>
-        <div className="flex-gap h-12">
+        <div className="flex-gap h-14">
           <Skeleton className="w-8 h-8 rounded-full bg-muted" />
           <Skeleton className="h-4 w-[100px] bg-muted" />
         </div>

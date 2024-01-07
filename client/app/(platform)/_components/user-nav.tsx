@@ -44,8 +44,8 @@ export default function UserNav() {
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
-        <div className="h-12 flex-gap w-full justify-start">
+      <div className="h-14 flex-gap w-full justify-start">
+        <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             className={cn(
@@ -63,8 +63,8 @@ export default function UserNav() {
               <Icons.ChevronDown className="w-3 h-3 transition duration-200" />
             </div>
           </Button>
-        </div>
-      </DropdownMenuTrigger>
+        </DropdownMenuTrigger>
+      </div>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />

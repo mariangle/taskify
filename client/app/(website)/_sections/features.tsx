@@ -13,6 +13,7 @@ import {
 import Link from 'next/link';
 import { cn } from '@/lib/util/tw-merge';
 import { buttonVariants } from '@/components/ui/button';
+import { FadeOnView } from '../_components/fade-on-view';
 
 interface Feature {
   title: string;
@@ -62,14 +63,13 @@ const features: Feature[] = [
 export default function Features() {
   const Card = 'div';
   return (
-    <section className="px-6 space-y-12 max-w-screen-lg mx-auto">
+    <section className="px-6 space-y-12 max-w-screen-lg mx-auto mt-12">
       <div className="text-center">
-        <h2 className="heading" id="features">
-          Features
-        </h2>
-        <p className="text-muted-foreground mt-2 md:text-lg max-w-2xl mx-auto">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
+        <FadeOnView>
+          <h2 className="heading" id="features">
+            Unmatched features
+          </h2>
+        </FadeOnView>
       </div>
       <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 mt-12">
         {features.map(({ title, description, icon: Icon }) => (

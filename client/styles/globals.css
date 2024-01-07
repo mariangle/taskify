@@ -30,7 +30,7 @@ body {
     --destructive-foreground: 210 20% 98%;
     --border: 234 17% 86%;
     --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
+    --ring: 224 71.4% 92.1%;
     --radius: 0.75rem;
   }
 
@@ -63,15 +63,19 @@ body {
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
 
   .heading {
-    @apply text-3xl font-bold dark:sm:font-medium leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1];
+    @apply text-3xl  font-semibold leading-tight tracking-tighter sm:text-5xl lg:leading-[1.1];
   }
   .subheading {
-    @apply text-4xl font-medium tracking-tight;
+    @apply text-4xl font-semibold tracking-tight;
   }
 
   .horizontal-gradient {
@@ -109,21 +113,21 @@ body {
   .hero-border-animation::before {
     content: '';
     background-image: conic-gradient(
-      hsl(var(--primary)) 10deg,
-      transparent 20deg
+      transparent 340deg,
+      hsl(var(--primary)) 360deg
     );
     width: 250%;
     height: 250%;
     position: absolute;
-    animation: rotate 4s linear infinite;
+    animation: rotate 4.5s linear infinite;
   }
 
   @keyframes rotate {
     0% {
-      transform: rotate(360deg);
+      transform: rotate(0deg);
     }
     100% {
-      transform: rotate(0deg);
+      transform: rotate(360deg);
     }
   }
 

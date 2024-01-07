@@ -11,24 +11,21 @@ import FilterView from '@/components/shared/filter-view';
 
 import { useLayoutStore } from '@/store/layout-store';
 import { cn } from '@/lib/util/tw-merge';
-import type { List } from '@/types';
 
-export default function Navbar({ lists }: { lists: List[] }) {
+export default function Navbar() {
   const {
     showLeftSidebar,
-    showRightSidebar,
     showChatOverlay,
     toggleLeftSidebar,
-    toggleRightSidebar,
     toggleChatOverlay,
   } = useLayoutStore();
 
   return (
     <header className="sticky top-0 border-b bg-background">
-      <div className="flex h-12 items-center justify-between px-4">
-        <div className="flex-gap">
+      <div className="flex h-14 items-center justify-between px-4">
+        <div className="flex-gap h-full">
           <div className="block md:!hidden">
-            <MobileSidebar lists={lists} />
+            <MobileSidebar />
           </div>
           <div className="md:!block hidden">
             <Button
@@ -59,20 +56,6 @@ export default function Navbar({ lists }: { lists: List[] }) {
             <Icons.AI className="w-4 h-4" />
           </Button>
           <FilterOverlay />
-          <div className="lg:!block hidden">
-            <Button
-              variant="outline"
-              onClick={toggleRightSidebar}
-              className="w-10 p-2"
-            >
-              <Icons.ChevronLeft
-                className={cn(
-                  'w-3 h-3 transition duration-300',
-                  showRightSidebar && 'rotate-180 transform',
-                )}
-              />
-            </Button>
-          </div>
         </div>
       </div>
     </header>
