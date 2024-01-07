@@ -46,7 +46,7 @@ function AuthForm({ variant }: AuthFormProps) {
     data: AuthSchemaType,
   ) => {
     try {
-      throw new Error('Disabled during construction.');
+      // throw new Error('Disabled during construction.');
       // eslint-disable-next-line no-unreachable
       setIsLoading(true);
 

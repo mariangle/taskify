@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 
 export default function CallToAction() {
   return (
-    <div className="glassmorphism z-10 relative py-20 border-t mt-24 px-6">
+    <div className="glassmorphism z-10 py-12 border-t mt-24 px-6r">
       <div className="max-w-screen-lg mx-auto">
         <div className="sm:grid sm:grid-cols-3">
           <div className="sm:col-span-2 space-y-4 text-center sm:text-left">

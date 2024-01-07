@@ -84,13 +84,19 @@ export default function MentionInput<T extends FieldValues>({
       <Mention
         markup="@[__display__](at:__id__)"
         trigger="@"
-        data={formattedLists || []}
+        data={formattedLists}
         className="bg-emerald-200 dark:bg-emerald-700"
       />
       <Mention
         markup="@[__display__](hash:__id__)"
         trigger="#"
-        data={formattedLabels || []}
+        data={formattedLabels}
+        className="bg-sky-200 dark:bg-sky-700"
+      />
+      <Mention
+        markup="@[__display__](cmd:__id__)"
+        trigger="/"
+        data={formattedLists}
         className="bg-sky-200 dark:bg-sky-700"
       />
     </ReactMentionInput>

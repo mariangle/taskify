@@ -26,7 +26,7 @@ export default function FilterView() {
       <Button
         variant="ghost"
         className={cn(
-          'rounded-none text-xs py-6 border-y border-transparent px-2 text-muted-foreground',
+          'h-full rounded-none text-xs py-6 border-b border-transparent   px-2 text-muted-foreground',
           view === value &&
             'border-primary text-foreground bg-gradient-to-t from-primary/20 hover:bg-primary/25',
         )}
@@ -40,7 +40,7 @@ export default function FilterView() {
 
   if (hasViewOptions) {
     return (
-      <div className="hidden md:flex-center">
+      <div className="hidden md:flex-center h-full">
         <Separator orientation="vertical" className="h-8 mx-2" />
         <FilterButton
           value="list"

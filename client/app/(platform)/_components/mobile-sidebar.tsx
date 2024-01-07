@@ -3,9 +3,8 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import SideNav from './side-nav';
 import { Button } from '@/components/ui/button';
 import { useMounted } from '@/hooks/use-mounted';
-import type { List } from '@/types';
 
-export function MobileSidebar({ lists }: { lists: List[] }) {
+export function MobileSidebar() {
   const isMounted = useMounted();
 
   if (!isMounted) return null;
@@ -19,7 +18,7 @@ export function MobileSidebar({ lists }: { lists: List[] }) {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-[250px] p-0 overflow-x-hidden">
-        <SideNav lists={lists} />
+        <SideNav />
       </SheetContent>
     </Sheet>
   );

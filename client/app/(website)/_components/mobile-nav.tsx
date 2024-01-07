@@ -24,7 +24,11 @@ export default function MobileNav({
 
   return (
     <>
-      <Button onClick={() => setIsOpen(!isOpen)} variant="ghost">
+      <Button
+        onClick={() => setIsOpen(!isOpen)}
+        variant="ghost"
+        className="w-6 h-6 p-1 hover:bg-transparent"
+      >
         <Icons.Menu className="w-4 h-4" />
       </Button>
       <div
