@@ -15,6 +15,7 @@ import { DatePicker } from './date-picker';
 
 import type { Label, List, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
+import { useTaskStore } from '@/store/modal-store';
 
 interface TaskItemProps {
   task?: Task;
@@ -27,11 +28,16 @@ interface TaskItemProps {
 function TaskItem({ task, lists, type = 'list', labels, date }: TaskItemProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [openSubtasks, setOpenSubtasks] = React.useState(false);
+  const { setTask } = useTaskStore();
 
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
   const TaskContainer = type === 'list' ? ListContainer : BoardContainer;
+
+  const onSelectTask = (task: Task) => {
+    setTask(task);
+  };
 
   if (isOpen) {
     return (
@@ -77,7 +83,7 @@ function TaskItem({ task, lists, type = 'list', labels, date }: TaskItemProps) {
               role="button"
               tabIndex={-1}
               className="font-semibold text-sm"
-              onClick={open}
+              onClick={() => onSelectTask(task)}
             >
               {task.name}
             </span>

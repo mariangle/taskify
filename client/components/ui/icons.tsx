@@ -28,15 +28,21 @@ import {
   SunMediumIcon,
   TagsIcon,
   TrashIcon,
+  MicIcon,
   UserIcon,
   XIcon,
   SplineIcon,
+  SparklesIcon,
+  MicOffIcon,
   CommandIcon,
+  ArrowUpIcon,
 } from 'lucide-react';
 
 export const Icons = {
   Add: PlusIcon,
   AI: BotIcon,
+  ArrowUp: ArrowUpIcon,
+  Sparkles: SparklesIcon,
   Board: KanbanSquareIcon,
   Calendar: CalendarIcon,
   ChevronDown: ChevronDownIcon,
@@ -81,13 +87,14 @@ export const Icons = {
       />
     </svg>
   ),
-  KanbanSquare: KanbanSquareIcon,
   LifeBuoy: LifeBuoyIcon,
   LineChart: LineChartIcon,
   Loader: Loader2,
   Logo: CommandIcon,
   LogOut: LogOutIcon,
   Menu: MenuIcon,
+  Mic: MicIcon,
+  MicOff: MicOffIcon,
   More: MoreHorizontalIcon,
   Moon: MoonIcon,
   Pencil: PencilIcon,

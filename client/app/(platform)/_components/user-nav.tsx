@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { signOut } from 'next-auth/react';
 import {
@@ -23,8 +24,6 @@ export default function UserNav() {
   const user = useCurrentUser();
   const { showLeftSidebar, toggleSettingsOverlay } = useLayoutStore();
   const [isOpen, setIsOpen] = React.useState(false);
-
-  if (!user) return null;
 
   const dropdownItems = [
     {
@@ -54,19 +53,29 @@ export default function UserNav() {
             )}
           >
             <div className="ring-2 ring-primary rounded-full p-[1px]">
-              <div className="rounded-full bg-muted border">
-                <Icons.User className="w-5 h-5 p-1" />
-              </div>
+              {user?.image ? (
+                <Image
+                  src={user.image}
+                  alt="profile image"
+                  width={20}
+                  height={20}
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="rounded-full bg-muted border">
+                  <Icons.User className="w-5 h-5 p-1" />
+                </div>
+              )}
             </div>
             <div className={cn('flex-gap', !showLeftSidebar && 'md:hidden')}>
-              <span className="ml-3">{user.name}</span>
+              <span className="ml-3">{user?.name}</span>
               <Icons.ChevronDown className="w-3 h-3 transition duration-200" />
             </div>
           </Button>
         </DropdownMenuTrigger>
       </div>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+      <DropdownMenuContent className="w-48">
+        <DropdownMenuLabel className="text-xs">{user?.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {dropdownItems.map((item) => (

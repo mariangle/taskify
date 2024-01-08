@@ -1,100 +1,119 @@
 import * as React from 'react';
 
-import {
-  MicIcon,
-  BotIcon,
-  BrainIcon,
-  LucideIcon,
-  ArrowRight,
-  Italic,
-  Plus,
-  AtSign,
-} from 'lucide-react';
-import Link from 'next/link';
+import Image from 'next/image';
+import { AlarmClockIcon, ZapIcon } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import KeyboardShortCuts from '@/public/keyboard-shortcuts.gif';
 import { cn } from '@/lib/util/tw-merge';
-import { buttonVariants } from '@/components/ui/button';
 import { FadeOnView } from '../_components/fade-on-view';
+import TaskFormPreview from '../_components/task-form-preview';
+import PromptFormPreview from '../_components/prompt-form-preview';
 
-interface Feature {
-  title: string;
-  description: string;
-  icon: LucideIcon;
+function FeatureCard({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const Card = 'div';
+
+  return (
+    <Card
+      className={cn(
+        'glassmorphism rounded-md border-[0.4px] border-[rgba(76,79,116,0.24)] p-6 duration-300 w-full',
+        className,
+      )}
+    >
+      {children}
+    </Card>
+  );
 }
 
-const features: Feature[] = [
-  {
-    title: 'Natural Language Processing.',
-    description:
-      'Convert text-based task inputs into structured data for seamless interaction.',
-    icon: BrainIcon,
-  },
-  {
-    title: 'AI Powered.',
-    description:
-      'AI algorithms providing intelligent suggestions and improving the overall user experience based on individual preferences.',
-    icon: BotIcon,
-  },
-  {
-    title: 'Speech Recognition.',
-    description:
-      'Add tasks hands-free by speaking, powered by advanced speech recognition technology.',
-    icon: MicIcon,
-  },
-  {
-    title: 'Smart Assignments via mentions.',
-    description:
-      'Experience Twitter-like mention suggestions for efficient task creation and assignment.',
-    icon: AtSign,
-  },
-  {
-    title: 'Markdown Editor.',
-    description:
-      'Utilize a Markdown editor for streamlined task creation, allowing for efficient formatting and content organization.',
-    icon: Italic,
-  },
-  {
-    title: 'Plus...',
-    description:
-      'Essential features like drag and drop, lists, filters, views, recurring tasks, and more, ensuring a comprehensive task management experience.',
-    icon: Plus,
-  },
-];
-
 export default function Features() {
-  const Card = 'div';
   return (
-    <section className="px-6 space-y-12 max-w-screen-lg mx-auto mt-12">
-      <div className="text-center">
+    <section className="px-6 max-w-screen-lg mx-auto mt-12">
+      <div className="text-center mb-12">
         <FadeOnView>
           <h2 className="heading" id="features">
             Unmatched features
           </h2>
         </FadeOnView>
       </div>
-      <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 mt-12">
-        {features.map(({ title, description, icon: Icon }) => (
-          <Card
-            key={title}
-            className="glassmorphism rounded-md border-[0.4px] border-[rgba(76,79,116,0.24)] p-6 duration-300  hover:scale-[101%] hover:shadow-xl"
-          >
-            <span className="font-semibold text-foreground flex-gap items-start mb-1">
-              <Icon className="w-4 h-4 text-foreground mt-1" />
-              {title}
-            </span>
-            <p className="text-muted-foreground text-sm">{description}</p>
-          </Card>
-        ))}
+      <div className="space-y-6">
+        <div className="md:grid md:grid-cols-5 gap-6 space-y-6 md:space-y-0">
+          <FeatureCard className="col-span-3">
+            <div className="border rounded-lg">
+              <PromptFormPreview />
+            </div>
+            <div className="text-center md:max-w-xs mx-auto mt-4">
+              <h4 className="font-semibold text-foreground">
+                AI Powered tasks
+              </h4>
+              <p className="text-muted-foreground text-sm mt-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Excepturi, nesciunt!
+              </p>
+            </div>
+          </FeatureCard>
+          <div className="col-span-2 space-y-6 flex flex-col">
+            <FeatureCard>
+              <div className="flex items-center gap-4">
+                <span className="relative flex h-6 w-6">
+                  <ZapIcon className="animate-ping duration-1000 absolute inline-flex h-full w-full rounded-full bg-primary/50 opacity-75" />
+                  <ZapIcon className="relative inline-flex rounded-full h-6 w-6 text-foreground" />
+                </span>
+                <h4 className="font-semibold text-foreground text-lg mt-2">
+                  Natural Language Processing
+                </h4>
+              </div>
+              <p className="text-muted-foreground text-sm mt-2">
+                Harness AI and NLP for seamless task creation with natural,
+                intuitive language.
+              </p>
+            </FeatureCard>
+            <FeatureCard className="">
+              <AlarmClockIcon className="relative inline-flex rounded-full h-6 w-6 text-foreground" />
+              <h4 className="font-semibold text-foreground text-lg mt-2">
+                Task Completion Tracking
+              </h4>
+              <p className="text-muted-foreground text-sm mt-2">
+                Monitor your progress and track completed tasks to stay on top
+                of your goals.
+              </p>
+              <div className="flex items-center space-x-2 mt-4">
+                <Switch id="auto-progress-updates" defaultChecked />
+                <Label htmlFor="auto-progress-updates">
+                  Automatic Progress Updates
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2 mt-4">
+                <Switch id="goal-achievement-notifications" defaultChecked />
+                <Label htmlFor="goal-achievement-notifications">
+                  Goal Achievement Notifications
+                </Label>
+              </div>
+            </FeatureCard>
+          </div>
+        </div>
+        <div className="md:grid md:grid-cols-3 gap-6 space-y-6 md:space-y-0">
+          <FeatureCard className="col-span-1 flex-center flex-col p-0 overflow-hidden hidden lg:block">
+            <Image src={KeyboardShortCuts} alt="Keyboard shortcuts" />
+          </FeatureCard>
+          <FeatureCard className="col-span-2 w-full">
+            <div className="text-center mb-4 md:max-w-xs mx-auto">
+              <h4 className="font-semibold text-foreground">
+                Mention-driven assignments
+              </h4>
+              <p className="text-muted-foreground text-sm mt-2">
+                Experience Twitter-like mention suggestions for efficiency.
+              </p>
+            </div>
+            <TaskFormPreview />
+          </FeatureCard>
+        </div>
       </div>
-      <Link
-        href="/docs/features"
-        className={cn(
-          buttonVariants({ variant: 'link' }),
-          'p-0 w-full text-center',
-        )}
-      >
-        See all features
-        <ArrowRight className="ml-2 w-4 h-4" />
-      </Link>
     </section>
   );
 }

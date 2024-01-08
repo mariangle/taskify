@@ -80,7 +80,7 @@ export function LoadingBoardPage({ columns = 3 }: { columns?: number }) {
   );
 }
 
-export function LoadingScreen() {
+export default function LoadingScreen() {
   const loadingMessages = [
     'Getting Your Tasks Ready...',
     "Organizing Your To-Do's...",
@@ -103,6 +103,20 @@ export function LoadingScreen() {
   );
 }
 
+export function LoadingLists() {
+  return (
+    <div className="space-y-4">
+      <div className="flex-gap px-2">
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-4 w-[60px]" />
+      </div>
+      <div className="flex-gap px-2">
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-4 w-[60px]" />
+      </div>
+    </div>
+  );
+}
 export function LoadingSidebar() {
   return (
     <div className="px-3 pb-3 min-h-full flex flex-col justify-between">
@@ -140,16 +154,7 @@ export function LoadingSidebar() {
               <Skeleton className="h-3 w-3" />
             </div>
           </div>
-          <div className="space-y-4">
-            <div className="flex-gap px-2">
-              <Skeleton className="h-5 w-5" />
-              <Skeleton className="h-4 w-[60px]" />
-            </div>
-            <div className="flex-gap px-2">
-              <Skeleton className="h-5 w-5" />
-              <Skeleton className="h-4 w-[60px]" />
-            </div>
-          </div>
+          <LoadingLists />
         </div>
       </div>
       <Skeleton className="h-10 w-full bg-muted" />

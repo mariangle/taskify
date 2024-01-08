@@ -7,13 +7,15 @@ import { cn } from '@/lib/util/tw-merge';
 interface SubtaskListProps {
   task: Task;
   subtasks?: Subtask[];
-  showSubtaskList: boolean;
+  showSubtaskList?: boolean;
+  alwaysOpen?: boolean;
 }
 
 export default function SubtaskList({
   subtasks,
   task,
   showSubtaskList,
+  alwaysOpen,
 }: SubtaskListProps) {
   const calculateProgress = (): number => {
     if (!subtasks || subtasks.length === 0) {
@@ -41,6 +43,7 @@ export default function SubtaskList({
           <SubtaskItem key={subtask.id} task={task} subtask={subtask} />
         ))}
       {showSubtaskList && <SubtaskItem task={task} />}
+      {alwaysOpen && <SubtaskItem task={task} />}
     </div>
   );
 }

@@ -13,12 +13,7 @@ import { useLayoutStore } from '@/store/layout-store';
 import { cn } from '@/lib/util/tw-merge';
 
 export default function Navbar() {
-  const {
-    showLeftSidebar,
-    showChatOverlay,
-    toggleLeftSidebar,
-    toggleChatOverlay,
-  } = useLayoutStore();
+  const { showLeftSidebar, toggleLeftSidebar } = useLayoutStore();
 
   return (
     <header className="sticky top-0 border-b bg-background">
@@ -31,7 +26,7 @@ export default function Navbar() {
             <Button
               variant="outline"
               onClick={toggleLeftSidebar}
-              className="w-10 p-2"
+              className="w-10 h-10 p-2"
             >
               <Icons.ChevronRight
                 className={cn(
@@ -41,20 +36,9 @@ export default function Navbar() {
               />
             </Button>
           </div>
-          <FilterView />
         </div>
         <div className="flex-gap">
-          <Button
-            variant="outline"
-            onClick={toggleChatOverlay}
-            className={cn(
-              'w-10 p-2',
-              showChatOverlay &&
-                'bg-primary/10 border-primary/30 transition duration-300',
-            )}
-          >
-            <Icons.AI className="w-4 h-4" />
-          </Button>
+          <FilterView />
           <FilterOverlay />
         </div>
       </div>

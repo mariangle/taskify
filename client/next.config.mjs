@@ -1,4 +1,4 @@
-import nextMDX from '@next/mdx'
+import nextMDX from '@next/mdx';
 
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
@@ -6,7 +6,7 @@ const withMDX = nextMDX({
     remarkPlugins: [],
     rehypePlugins: [],
   },
-})
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,8 +15,12 @@ const nextConfig = {
     mdxRs: true,
   },
   images: {
-    domains: ['github.com', 'lh3.googleusercontent.com'],
+    domains: [
+      'github.com',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com',
+    ],
   },
-}
+};
 
-export default withMDX(nextConfig)
+export default withMDX(nextConfig);

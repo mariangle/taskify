@@ -68,7 +68,6 @@ export default function TaskActions({
     setIsLoading(true);
     try {
       await TaskService.deleteTask(taskId);
-      // ! Might have to trigger signal here right sidebar
       router.refresh();
       toast.success('Task deleted.');
     } catch (err) {

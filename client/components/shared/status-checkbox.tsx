@@ -11,7 +11,7 @@ import { TaskService } from '@/services/task-service';
 import { SubtaskService } from '@/services/subtask-service';
 
 interface StatusCheckboxProps {
-  task?: Task;
+  task?: Task | null;
   subtask?: Subtask;
   className?: string;
   disabled?: boolean;
