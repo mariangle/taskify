@@ -3,13 +3,7 @@
 import Typewriter from 'typewriter-effect';
 
 export default function TypewriterEffect() {
-  const words = [
-    'efficiency',
-    'productivity',
-    'workflow',
-    'performance',
-    'proficiency',
-  ];
+  const words = ['Natural Language Processing'];
 
   return (
     <Typewriter
@@ -19,7 +13,7 @@ export default function TypewriterEffect() {
         cursor: '',
         loop: true,
         delay: 50,
-        deleteSpeed: 100,
+        deleteSpeed: 20,
       }}
     />
   );

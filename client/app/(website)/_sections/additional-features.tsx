@@ -13,6 +13,7 @@ import {
 import Link from 'next/link';
 import { cn } from '@/lib/util/tw-merge';
 import { buttonVariants } from '@/components/ui/button';
+import { FadeOnView } from '../_components/fade-on-view';
 
 interface Feature {
   title: string;
@@ -60,27 +61,33 @@ export default function AdditionalFeatures() {
     <div className="max-w-screen-lg space-y-12 mx-auto px-6 flex flex-col justify-center text-center relative">
       <div className="grid gap-8 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 mt-12">
         {features.map(({ title, description, icon: Icon }) => (
-          <div key={title} className="text-left">
-            <div className="flex-gap">
-              <span className="font-semibold text-foreground flex-center">
-                <Icon className="w-4 h-3 text-primary/50" />
-              </span>
-              <h4 className="font-semibold text-sm"> {title}</h4>
+          <FadeOnView key={title}>
+            <div className="text-left">
+              <div className="flex-gap">
+                <span className="font-semibold text-foreground flex-center">
+                  <Icon className="w-4 h-3 text-primary/50" />
+                </span>
+                <h4 className="font-semibold text-sm"> {title}</h4>
+              </div>
+              <p className="text-sm mt-1 text-muted-foreground">
+                {description}
+              </p>
             </div>
-            <p className="text-sm mt-1 text-muted-foreground">{description}</p>
-          </div>
+          </FadeOnView>
         ))}
       </div>
-      <Link
-        href="/docs/features"
-        className={cn(
-          buttonVariants({ variant: 'link' }),
-          'p-0 w-full text-center',
-        )}
-      >
-        See all features
-        <ArrowRight className="ml-2 w-4 h-4" />
-      </Link>
+      <FadeOnView>
+        <Link
+          href="/docs/features"
+          className={cn(
+            buttonVariants({ variant: 'link' }),
+            'p-0 w-full text-center',
+          )}
+        >
+          See all features
+          <ArrowRight className="ml-2 w-4 h-4" />
+        </Link>
+      </FadeOnView>
     </div>
   );
 }

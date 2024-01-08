@@ -32,14 +32,14 @@ export default function PromptForm({ preview }: { preview?: boolean }) {
     try {
       setIsLoading(true);
       if (preview) {
-        setPrompt('Go to the store');
+        setPrompt('Go to the grocery store');
         await new Promise<void>((resolve) => {
           setTimeout(() => {
             setSuggestion({
               name: 'Grocery Shopping Excursion',
               description: 'Acquire Essential Items for Home and Daily Needs',
               dueDate: null,
-              priority: 'LOW',
+              priority: 'MEDIUM',
             });
             resolve();
           }, 1000);

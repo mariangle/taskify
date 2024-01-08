@@ -13,7 +13,7 @@ export default async function Home() {
       <AdditionalFeaturesSection />
       <div className="max-w-screen-2xl my-24 mx-auto h-px bg-transparent bg-gradient-to-r from-transparent via-border to-transparent opacity-75" />
       <div className="relative overflow-hidden">
-        <div className="w-[800px] h-[800px] mx-auto absolute bottom-0 left-1/2 transform translate-y-1/2 -translate-x-1/2">
+        <div className="hidden sm:block w-[800px] h-[800px] mx-auto absolute bottom-0 left-1/2 transform translate-y-1/2 -translate-x-1/2">
           <div className="glowing-marble w-[800px] h-[800px] translate-y-1/2 absolute" />
         </div>
         <PricingSection />
