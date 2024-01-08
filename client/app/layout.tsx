@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider
-          defaultTheme="midnight"
+          defaultTheme="dark"
           attribute="class"
           enableSystem
           disableTransitionOnChange

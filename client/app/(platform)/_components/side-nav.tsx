@@ -78,7 +78,7 @@ export default function SideNav() {
           </Button>
           <SearchMenu />
         </div>
-        <div className="space-y-1 mt-2">
+        <div className="space-y-1 mt-2 overflow-y-auto max-h-screen">
           {config.platform.links.map(
             (item) =>
               settings.sidebar.includes(item.id as SidebarItem) && (

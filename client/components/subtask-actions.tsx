@@ -16,7 +16,7 @@ import AlertModal from '@/components/modals/alert-modal';
 import type { Subtask, Task } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { SubtaskService } from '@/services/subtask-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 
 interface SubtaskActionsProps {
   task: Task;

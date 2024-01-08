@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { useSearchParams } from 'next/navigation';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import {
   LoginFormValues,
@@ -25,6 +26,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AuthError } from './auth-error';
 import SocialsActions from './socials-actions';
 import { registerUser } from './register-user';
 
@@ -39,6 +41,17 @@ type AuthSchemaType = {
 
 function AuthForm({ variant }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get('error');
+  let errorMessage = '';
+
+  if (urlError === 'OAuthAccountNotLinked') {
+    errorMessage = 'Email already in use with a different provider!';
+  } else if (urlError === 'CredentialsSignin') {
+    errorMessage = 'Wrong credentials.';
+  } else if (urlError === 'OAuthCallbackError') {
+    errorMessage = 'An unexpected error occurred.';
+  }
   const authSchema = variant === 'login' ? loginFormSchema : registerFormSchema;
   const form = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema) });
 
@@ -55,7 +68,6 @@ function AuthForm({ variant }: AuthFormProps) {
           password,
           callbackUrl: DEFAULT_LOGIN_REDIRECT,
         });
-        toast.success('Successfully logged in! Redirecting to dashboard...');
       } else if (variant === 'register') {
         const { email, name, password } = data as RegisterFormValues;
         await registerUser({ email, name, password });
@@ -135,10 +147,12 @@ function AuthForm({ variant }: AuthFormProps) {
             )}
           />
         )}
+        <AuthError message={errorMessage} />
         <Button
           type="submit"
           className="w-full"
           loading={isLoading}
+          disabled={isLoading || variant === 'register'}
           variant="default"
           onClick={form.handleSubmit(onSubmit)}
         >

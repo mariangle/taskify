@@ -10,7 +10,7 @@ export default function AuthNavigation({
   isAuthenticated: boolean;
 }) {
   return (
-    <div className="flex-gap justify-end">
+    <div className="flex-gap">
       {isAuthenticated ? (
         <Link
           href="/inbox"
@@ -28,7 +28,7 @@ export default function AuthNavigation({
             href="/auth/login"
             className={cn(
               buttonVariants({ variant: 'outline', size: 'sm' }),
-              'rounded-full px-4 h-8 hidden sm:flex',
+              'rounded-full px-4 h-8',
             )}
           >
             Login

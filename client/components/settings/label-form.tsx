@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 
 import type { Label } from '@/types';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import { LabelService } from '@/services/label-service';
 import {
   labelFormSchema,

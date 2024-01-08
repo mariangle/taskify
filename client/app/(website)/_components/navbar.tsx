@@ -24,7 +24,7 @@ export default async function Navbar() {
             ))}
           </ul>
         </div>
-        <div className="flex-1 flex-gap justify-end">
+        <div className="flex-1 flex-gap-sm justify-end">
           <ThemeSwitcher />
           <div className="sm:hidden">
             <MobileNav isAuthenticated={!!session} />

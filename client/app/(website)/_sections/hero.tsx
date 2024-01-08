@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/util/tw-merge';
 import { FadeOnView } from '../_components/fade-on-view';
+import Blur1 from '@/public/static/bg-blur-1.webp';
 
 export default function Hero() {
   return (
@@ -56,7 +57,12 @@ export default function Hero() {
               alt="App image"
               width={1920}
               height={1080}
-              className="rounded-[12px] overflow-hidden z-10 border"
+              className="rounded-[12px] overflow-hidden z-10 border relative"
+            />
+            <Image
+              src={Blur1}
+              alt="background blur"
+              className="opacity-30 absolute"
             />
           </div>
         </div>

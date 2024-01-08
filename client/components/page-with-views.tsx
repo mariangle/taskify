@@ -24,7 +24,6 @@ interface PageWithViewsProps {
   content: {
     title: string;
     list?: ViewContent;
-    table?: ViewContent;
   };
   options?: Partial<ExtendedSearchParamsOptions>;
 }

@@ -17,7 +17,7 @@ import AlertModal from '@/components/modals/alert-modal';
 import type { Label } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { LabelService } from '@/services/label-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import { LABELS_KEY } from '@/lib/api';
 
 interface LabelActionsProps {

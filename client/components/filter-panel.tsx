@@ -40,7 +40,7 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
         variant="ghost"
         onClick={() => createQueryString('view', name!)}
         className={cn(
-          'rounded-sm bg-transparent p-0 h-16 cursor-pointer flex-center flex-col text-center',
+          'rounded-sm bg-transparent p-0 h-16 cursor-pointer flex-center w-full flex-col text-center',
           view === name && 'bg-popover',
         )}
       >
@@ -53,16 +53,11 @@ export default function FilterPanel({ labels, close }: FilterPanelProps) {
   return (
     <div className="w-full">
       <span className="block text-sm font-bold">View</span>
-      <div className="my-4 bg-input rounded-md gap-1 p-1 grid grid-cols-3">
+      <div className="my-4 bg-input rounded-md gap-1 p-1 grid grid-cols-2">
         <FilterView
           name="list"
           label="List"
           icon={<Icons.Menu className="w-4 h-4 mb-1" />}
-        />
-        <FilterView
-          name="table"
-          label="Table"
-          icon={<Icons.Table className="w-4 h-4 mb-1" />}
         />
         <FilterView
           name="board"

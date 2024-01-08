@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 
 import type { Subtask, Task } from '@/types';
 import { SubtaskService } from '@/services/subtask-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import {
   SubtaskFormValues,
   subtaskFormSchema,
