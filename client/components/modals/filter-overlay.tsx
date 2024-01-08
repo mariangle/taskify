@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 
-import FilterPanel from '@/components/shared/filter-panel';
+import FilterPanel from '@/components/filter-panel';
 
 import type { Label } from '@/types';
 import { useMediaQuery } from '@/hooks/use-media-query';

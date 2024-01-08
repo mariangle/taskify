@@ -6,11 +6,11 @@ import { BoardContainer, ListContainer } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 
-import StatusCheckbox from '@/components/shared/status-checkbox';
+import StatusCheckbox from '@/components/status-checkbox';
 import LabelBadge from '@/components/ui/label-badge';
-import TaskForm from '@/components/shared/task/task-form';
-import SubtaskList from '@/components/shared/subtask/subtask-list';
-import TaskActions from '@/components/shared/task/task-actions';
+import TaskForm from '@/components/task-form';
+import SubtaskList from '@/components/subtask-list';
+import TaskActions from '@/components/task-actions';
 import { DatePicker } from './date-picker';
 
 import type { Label, List, Task } from '@/types';

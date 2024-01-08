@@ -45,7 +45,7 @@ export default function Features() {
       <div className="space-y-6">
         <div className="md:grid md:grid-cols-5 gap-6 space-y-6 md:space-y-0">
           <FadeOnView className="col-span-3">
-            <FeatureCard>
+            <FeatureCard className="h-full">
               <div className="border rounded-lg">
                 <PromptFormPreview />
               </div>
@@ -63,15 +63,13 @@ export default function Features() {
           <div className="col-span-2 space-y-6 flex flex-col">
             <FadeOnView className="h-full">
               <FeatureCard className="h-full">
-                <div className="flex items-center gap-4">
-                  <span className="relative flex h-6 w-6">
-                    <ZapIcon className="animate-ping duration-1000 absolute inline-flex h-full w-full rounded-full bg-primary/50 opacity-75" />
-                    <ZapIcon className="relative inline-flex rounded-full h-6 w-6 text-foreground" />
-                  </span>
-                  <h4 className="font-semibold text-foreground text-lg mt-2">
-                    <TypewriterEffect />
-                  </h4>
-                </div>
+                <span className="relative flex h-6 w-6">
+                  <ZapIcon className="animate-ping duration-1000 absolute inline-flex h-full w-full rounded-full bg-primary/50 opacity-75" />
+                  <ZapIcon className="relative inline-flex rounded-full h-6 w-6 text-foreground" />
+                </span>
+                <h4 className="font-semibold text-foreground text-lg mt-2">
+                  <TypewriterEffect />
+                </h4>
                 <p className="text-muted-foreground text-sm mt-2">
                   Harness AI and NLP for seamless task creation with natural,
                   intuitive language.

@@ -13,8 +13,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AccountForm } from '@/components/shared/settings/account-form';
-import { PreferencesForm } from '@/components/shared/settings/preferences-form';
+import { AccountForm } from '@/components/settings/account-form';
+import { PreferencesForm } from '@/components/settings/preferences-form';
 import { LayoutForm } from './layout-form';
 
 interface Tab {

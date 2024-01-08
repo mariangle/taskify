@@ -3,9 +3,9 @@ import * as React from 'react';
 import { SubtaskContainer } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 
-import SubtaskActions from '@/components/shared/subtask/subtask-actions';
-import StatusCheckbox from '@/components/shared/status-checkbox';
-import SubtaskForm from '@/components/shared/subtask/subtask-form';
+import SubtaskActions from '@/components/subtask-actions';
+import StatusCheckbox from '@/components/status-checkbox';
+import SubtaskForm from '@/components/subtask-form';
 
 import type { Subtask, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';

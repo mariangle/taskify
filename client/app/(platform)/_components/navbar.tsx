@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { MobileSidebar } from './mobile-sidebar';
 
 import FilterOverlay from '@/components/modals/filter-overlay';
-import FilterView from '@/components/shared/filter-view';
+import FilterView from '@/components/filter-view';
 
 import { useLayoutStore } from '@/store/layout-store';
 import { cn } from '@/lib/util/tw-merge';

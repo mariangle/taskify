@@ -3,11 +3,11 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 
+import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
-import { AuthService } from '@/services/auth-service';
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import {
   LoginFormValues,
   loginFormSchema,
@@ -26,6 +26,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import SocialsActions from './socials-actions';
+import { registerUser } from './register-user';
 
 interface AuthFormProps {
   variant: 'register' | 'login';
@@ -38,7 +39,6 @@ type AuthSchemaType = {
 
 function AuthForm({ variant }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const router = useRouter();
   const authSchema = variant === 'login' ? loginFormSchema : registerFormSchema;
   const form = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema) });
 
@@ -46,25 +46,28 @@ function AuthForm({ variant }: AuthFormProps) {
     data: AuthSchemaType,
   ) => {
     try {
-      // throw new Error('Disabled during construction.');
-      // eslint-disable-next-line no-unreachable
       setIsLoading(true);
 
       if (variant === 'login') {
         const { email, password } = data as LoginFormValues;
-        await AuthService.login(email, password);
+        await signIn('credentials', {
+          email,
+          password,
+          callbackUrl: DEFAULT_LOGIN_REDIRECT,
+        });
         toast.success('Successfully logged in! Redirecting to dashboard...');
       } else if (variant === 'register') {
         const { email, name, password } = data as RegisterFormValues;
-        await AuthService.register(email, name, password);
+        await registerUser({ email, name, password });
         toast.success('Successfully registered. You can now log in.');
-        router.push('/auth/login');
       }
     } catch (err) {
       if (err instanceof AxiosError) {
         toast.error(err.response?.data);
       } else if (err instanceof Error) {
         toast.error(err.message);
+      } else {
+        toast.error('Oops. Something went wrong.');
       }
       // eslint-disable-next-line no-console
       console.log(err);

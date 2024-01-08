@@ -1,2 +1,1 @@
-export { requestOptions } from './request-options'
-export { handleError } from './error'
+export { handleError } from './error';

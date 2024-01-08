@@ -8,8 +8,8 @@ import {
   isToday,
   isTomorrow,
 } from 'date-fns';
-import TaskItem from '@/components/shared/task/task-item';
-import FilterWeek from '@/components/shared/filter-week';
+import TaskItem from '@/components/task-item';
+import FilterWeek from '@/components/filter-week';
 
 import type { Task } from '@/types';
 import { PageHeading } from '@/components/ui/page';

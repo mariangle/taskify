@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import { ListContainer, BoardContainer } from '@/components/ui/container';
 
-import LabelForm from '@/components/shared/settings/label-form';
+import LabelForm from '@/components/settings/label-form';
 import LabelBadge from '@/components/ui/label-badge';
-import LabelActions from '@/components/shared/label/label-actions';
+import LabelActions from '@/components/label-actions';
 
 import type { Label } from '@/types';
 

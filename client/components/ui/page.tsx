@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import TaskItem from '../shared/task/task-item';
-import LabelItem from '../shared/label/label-item';
+import TaskItem from '../task-item';
+import LabelItem from '../label-item';
 
 import { cn } from '@/lib/util/tw-merge';
 

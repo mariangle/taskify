@@ -13,10 +13,10 @@ import type { Label, List, Task } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { taskFormSchema, TaskFormValues } from '@/lib/validations/task-schema';
 
-import MentionsInput from '@/components/shared/task/mention-input';
-import { ListPicker } from '@/components/shared/task/list-picker';
-import { PriorityPicker } from '@/components/shared/task/priority-picker';
-import { DatePicker } from '@/components/shared/task/date-picker';
+import MentionsInput from '@/components/mention-input';
+import { ListPicker } from '@/components/list-picker';
+import { PriorityPicker } from '@/components/priority-picker';
+import { DatePicker } from '@/components/date-picker';
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/seperator';
 import { Input } from '@/components/ui/input';

@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
-import { TaskList } from './shared/task/task-list';
+import { TaskList } from './task-list';
 import { Separator } from '@/components/ui/seperator';
 import {
   PageList,

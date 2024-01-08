@@ -1,7 +1,7 @@
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 
 import PageWithViews from '@/components/page-with-views';
-import { getList } from '@/actions/list/get-list';
+import { db } from '@/lib/db';
 
 interface PageProps {
   params: { listId: string };
@@ -9,7 +9,13 @@ interface PageProps {
 }
 
 export default async function List({ params, searchParams }: PageProps) {
-  const list = await getList(params.listId);
+  const list = await db.list.findUnique({
+    where: { id: params.listId },
+  });
+
+  if (!list) {
+    return null;
+  }
 
   return (
     <PageWithViews

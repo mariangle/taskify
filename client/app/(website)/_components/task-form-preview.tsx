@@ -1,4 +1,4 @@
-import TaskForm from '@/components/shared/task/task-form';
+import TaskForm from '@/components/task-form';
 
 const lists = [
   {

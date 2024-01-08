@@ -1,4 +1,4 @@
-import TaskItem from '@/components/shared/task/task-item';
+import TaskItem from '@/components/task-item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 

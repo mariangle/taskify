@@ -25,15 +25,11 @@ const handleAxiosError = (error: AxiosError) => {
   }
 };
 
-const handleClientError = (error: Error) => {
-  toast.error(error.message);
-};
-
 export const handleError = (error: unknown) => {
   if (error instanceof AxiosError) {
     handleAxiosError(error);
   } else if (error instanceof Error) {
-    handleClientError(error);
+    toast.error(error.message);
   } else {
     console.log('Unhandled error:', error);
     toast.error('An unexpected error occurred.');

@@ -24,7 +24,7 @@ import {
 import RetainQueryLink from '@/components/retain-query-link';
 import UserNav from './user-nav';
 import SearchMenu from './prompt-menu';
-import ListItem from '@/components/shared/list/list-item';
+import ListItem from '@/components/list-item';
 import { cn } from '@/lib/util/tw-merge';
 import { config } from '@/lib/config';
 import { useLayoutStore } from '@/store/layout-store';

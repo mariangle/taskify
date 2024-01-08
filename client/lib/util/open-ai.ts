@@ -1,6 +1,6 @@
 'use server';
 
-import { Task } from '@prisma/client';
+import { Task } from '@/types';
 
 const OpenAI = require('openai');
 
@@ -16,8 +16,8 @@ export async function sendPrompt(userInput: string) {
   {
 "name": string,
 "description": string,
-"dueDate": isostring, (optional)
-"priority": "LOW" | "MEDIUM" | "HIGH" (optional)
+"dueDate": isostring, (nullable)
+"priority": "LOW" | "MEDIUM" | "HIGH" (nullable)
 }
 `;
 

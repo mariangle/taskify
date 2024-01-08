@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import StatusCheckbox from '@/components/shared/status-checkbox';
+import StatusCheckbox from '@/components/status-checkbox';
 
 import { Form } from '@/components/ui/form';
 import { Icons } from '@/components/ui/icons';

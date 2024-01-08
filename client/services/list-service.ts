@@ -1,20 +1,12 @@
 /* eslint-disable no-useless-catch */
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { List } from '@/types';
-import { requestOptions } from '@/lib/util';
-
-const api: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api',
-});
+import { api } from '@/lib/api';
 
 export const ListService = {
   createList: async (list: any): Promise<List> => {
     try {
-      const response: AxiosResponse = await api.post(
-        '/lists',
-        list,
-        requestOptions,
-      );
+      const response: AxiosResponse = await api.post('/lists', list);
       return response.data;
     } catch (error) {
       throw error;
@@ -22,7 +14,7 @@ export const ListService = {
   },
   getLists: async (): Promise<List[]> => {
     try {
-      const response = await api.get('/lists', requestOptions);
+      const response = await api.get('/lists');
       return response.data;
     } catch (error) {
       throw error;
@@ -52,10 +44,7 @@ export const ListService = {
 
   deleteList: async (listId: string): Promise<List> => {
     try {
-      const response: AxiosResponse = await api.delete(
-        `/lists/${listId}`,
-        requestOptions,
-      );
+      const response: AxiosResponse = await api.delete(`/lists/${listId}`);
       return response.data;
     } catch (error: any) {
       throw error;
