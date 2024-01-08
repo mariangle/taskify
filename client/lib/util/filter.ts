@@ -32,7 +32,7 @@ export const queryParamsMapping: Record<
 };
 
 export interface ExtendedSearchParamsOptions extends SearchParamsOptions {
-  view?: 'board' | 'table' | 'list';
+  view?: 'board' | 'list';
   status: 'incomplete' | 'pending' | 'completed';
 }
 

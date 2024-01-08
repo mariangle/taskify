@@ -1,7 +1,8 @@
 import * as React from 'react';
-
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { mutate } from 'swr';
+import { useRouter } from 'next/navigation';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,22 +14,18 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
 import AlertModal from '@/components/modals/alert-modal';
 
-import type { Subtask, Task } from '@/types';
+import type { Label } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
-import { SubtaskService } from '@/services/subtask-service';
-import { handleError } from '@/lib/util';
+import { LabelService } from '@/services/label-service';
+import { handleError } from '@/lib/util/error';
+import { LABELS_KEY } from '@/lib/api';
 
-interface SubtaskActionsProps {
-  task: Task;
-  subtask: Subtask;
+interface LabelActionsProps {
+  label: Label;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SubtaskActions({
-  task,
-  subtask,
-  setOpen,
-}: SubtaskActionsProps) {
+export default function LabelActions({ label, setOpen }: LabelActionsProps) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -37,12 +34,14 @@ export default function SubtaskActions({
 
   const onEdit = () => setOpen(true);
 
-  const onDelete = async (subtaskId: string) => {
+  const onDelete = async (labelId: string) => {
     setIsLoading(true);
     try {
-      await SubtaskService.deleteSubtask(task.id, subtaskId);
-      toast.success('Deleted!');
+      await LabelService.deleteLabel(labelId);
+
+      mutate(LABELS_KEY);
       router.refresh();
+      toast.success('Label removed.');
     } catch (err) {
       handleError(err);
     } finally {
@@ -57,14 +56,14 @@ export default function SubtaskActions({
       <AlertModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        onConfirm={async () => onDelete(subtask.id)}
+        onConfirm={async () => onDelete(label.id)}
         loading={isLoading}
-        description="Deleting the Subtask will result in the removal of all labels associated with a task."
+        description="Deleting the label will result in the removal of all labels associated with a task."
       />
       <DropdownMenu modal>
         <DropdownMenuTrigger asChild>
-          <Button size="icon" variant="ghost" className="w-5 h-5 rounded-full">
-            <Icons.More className="w-5 h-5 p-1" />
+          <Button size="icon" variant="ghost" className="rounded-full">
+            <Icons.More className="w-3 h-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent onSelect={(e) => e.preventDefault()}>
@@ -74,7 +73,7 @@ export default function SubtaskActions({
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={async () => onDelete(subtask.id)}
+            onClick={async () => onDelete(label.id)}
             className="text-destructive"
             onSelect={(e) => e.preventDefault()}
           >

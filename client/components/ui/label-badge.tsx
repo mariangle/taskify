@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Icons } from '@/components/ui/icons';
 
 import { TaskService } from '@/services/task-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import { cn } from '@/lib/util/tw-merge';
 import type { Label } from '@/types';
 

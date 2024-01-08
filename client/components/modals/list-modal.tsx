@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 
 import type { List } from '@/types';
-import ListForm from '@/components/shared/list/list-form';
+import ListForm from '@/components/list-form';
 
 interface ModalProps {
   list?: List;

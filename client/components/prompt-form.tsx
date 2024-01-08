@@ -15,6 +15,7 @@ import { PromptTask, sendPrompt } from '@/lib/util/open-ai';
 import TaskSuggestion, { taskSuggestions } from '@/components/task-suggestion';
 import { Icons } from '@/components/ui/icons';
 import { TaskService } from '@/services/task-service';
+import { Badge } from './ui/badge';
 
 export default function PromptForm({ preview }: { preview?: boolean }) {
   const {
@@ -80,7 +81,11 @@ export default function PromptForm({ preview }: { preview?: boolean }) {
   }, [transcript]);
 
   const onConfirm = () => {
-    if (!suggestion || !preview) return;
+    if (!suggestion || preview) {
+      onClear();
+      toast.success('Task created!');
+      return;
+    }
     setIsLoading(true);
     try {
       TaskService.createTask(suggestion);
@@ -98,7 +103,8 @@ export default function PromptForm({ preview }: { preview?: boolean }) {
     <div>
       <div className="text-lg font-semibold p-4 flex-gap">
         <Icons.Sparkles className="w-4 h-4 text-primary" />
-        Generate task
+        Generate AI task
+        {preview && <Badge variant="secondary">Preview</Badge>}
       </div>
       <Separator />
       <div className="p-2">

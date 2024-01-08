@@ -8,15 +8,15 @@ import { useForm } from 'react-hook-form';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { add } from 'date-fns';
 import { useLayoutStore } from '@/store/layout-store';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import type { Label, List, Task } from '@/types';
 import { TaskService } from '@/services/task-service';
 import { taskFormSchema, TaskFormValues } from '@/lib/validations/task-schema';
 
-import MentionsInput from '@/components/shared/task/mention-input';
-import { ListPicker } from '@/components/shared/task/list-picker';
-import { PriorityPicker } from '@/components/shared/task/priority-picker';
-import { DatePicker } from '@/components/shared/task/date-picker';
+import MentionsInput from '@/components/mention-input';
+import { ListPicker } from '@/components/list-picker';
+import { PriorityPicker } from '@/components/priority-picker';
+import { DatePicker } from '@/components/date-picker';
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/seperator';
 import { Input } from '@/components/ui/input';
@@ -83,7 +83,10 @@ export default function TaskForm({
 
   // eslint-disable-next-line consistent-return
   const onSubmit = async (data: TaskFormValues) => {
-    if (preview) return toast.success('Task created!');
+    if (preview) {
+      toast.success('Task created!');
+      return;
+    }
     setIsLoading(true);
     try {
       if (task) {

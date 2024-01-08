@@ -26,7 +26,7 @@ import AlertModal from '@/components/modals/alert-modal';
 import type { Label, List, Task } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { TaskService } from '@/services/task-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 
 interface TaskActionsProps {
   task: Task;

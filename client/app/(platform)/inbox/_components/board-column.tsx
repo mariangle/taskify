@@ -1,6 +1,6 @@
 import type { Label, List, Task } from '@/types';
 import { cn } from '@/lib/util/tw-merge';
-import TaskItem from '@/components/shared/task/task-item';
+import TaskItem from '@/components/task-item';
 
 interface ColumnProps {
   tasks: Task[];

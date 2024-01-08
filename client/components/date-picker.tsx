@@ -20,7 +20,7 @@ import { cn } from '@/lib/util/tw-merge';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Task } from '@/types';
 import { TaskService } from '@/services/task-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import { useMounted } from '@/hooks/use-mounted';
 import { Calendar } from '@/components/ui/experimental-calendar';
 

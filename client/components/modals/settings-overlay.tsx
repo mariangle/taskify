@@ -1,23 +1,24 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 
-import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { Drawer, DrawerContent } from '@/components/ui/drawer'
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
 
-import { useLayoutStore } from '@/store/layout-store'
-import { useMediaQuery } from '@/hooks/use-media-query'
+import { useLayoutStore } from '@/store/layout-store';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
-import SettingsPanel from '@/components/shared/settings/settings-panel'
+import SettingsPanel from '@/components/settings/settings-panel';
 
 export default function SettingsOverlay() {
-  const [isOpen, setOpen] = React.useState(false)
-  const { showSettingsOverlay, toggleSettingsOverlay, setSettingsOverlay } = useLayoutStore()
-  const isDesktop = useMediaQuery('(min-width: 768px)')
+  const [isOpen, setOpen] = React.useState(false);
+  const { showSettingsOverlay, toggleSettingsOverlay, setSettingsOverlay } =
+    useLayoutStore();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   React.useEffect(() => {
-    showSettingsOverlay ? setOpen(true) : setOpen(false)
-  }, [showSettingsOverlay])
+    showSettingsOverlay ? setOpen(true) : setOpen(false);
+  }, [showSettingsOverlay]);
 
   if (isDesktop) {
     return (
@@ -26,16 +27,16 @@ export default function SettingsOverlay() {
           <SettingsPanel />
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 
   // A workaround to manage drawer state since it has different behavior than the Dialog
   const onOpenChange = () => {
-    setOpen(!isOpen)
+    setOpen(!isOpen);
     if (!isOpen) {
-      setSettingsOverlay(false)
+      setSettingsOverlay(false);
     }
-  }
+  };
 
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
@@ -45,5 +46,5 @@ export default function SettingsOverlay() {
         </div>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }

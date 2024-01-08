@@ -3,11 +3,12 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 
+import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
-import { AuthService } from '@/services/auth-service';
+import { useSearchParams } from 'next/navigation';
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import {
   LoginFormValues,
   loginFormSchema,
@@ -25,7 +26,9 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AuthError } from './auth-error';
 import SocialsActions from './socials-actions';
+import { registerUser } from './register-user';
 
 interface AuthFormProps {
   variant: 'register' | 'login';
@@ -38,7 +41,17 @@ type AuthSchemaType = {
 
 function AuthForm({ variant }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get('error');
+  let errorMessage = '';
+
+  if (urlError === 'OAuthAccountNotLinked') {
+    errorMessage = 'Email already in use with a different provider!';
+  } else if (urlError === 'CredentialsSignin') {
+    errorMessage = 'Wrong credentials.';
+  } else if (urlError === 'OAuthCallbackError') {
+    errorMessage = 'An unexpected error occurred.';
+  }
   const authSchema = variant === 'login' ? loginFormSchema : registerFormSchema;
   const form = useForm<AuthSchemaType>({ resolver: zodResolver(authSchema) });
 
@@ -46,25 +59,27 @@ function AuthForm({ variant }: AuthFormProps) {
     data: AuthSchemaType,
   ) => {
     try {
-      // throw new Error('Disabled during construction.');
-      // eslint-disable-next-line no-unreachable
       setIsLoading(true);
 
       if (variant === 'login') {
         const { email, password } = data as LoginFormValues;
-        await AuthService.login(email, password);
-        toast.success('Successfully logged in! Redirecting to dashboard...');
+        await signIn('credentials', {
+          email,
+          password,
+          callbackUrl: DEFAULT_LOGIN_REDIRECT,
+        });
       } else if (variant === 'register') {
         const { email, name, password } = data as RegisterFormValues;
-        await AuthService.register(email, name, password);
+        await registerUser({ email, name, password });
         toast.success('Successfully registered. You can now log in.');
-        router.push('/auth/login');
       }
     } catch (err) {
       if (err instanceof AxiosError) {
         toast.error(err.response?.data);
       } else if (err instanceof Error) {
         toast.error(err.message);
+      } else {
+        toast.error('Oops. Something went wrong.');
       }
       // eslint-disable-next-line no-console
       console.log(err);
@@ -132,10 +147,12 @@ function AuthForm({ variant }: AuthFormProps) {
             )}
           />
         )}
+        <AuthError message={errorMessage} />
         <Button
           type="submit"
           className="w-full"
           loading={isLoading}
+          disabled={isLoading || variant === 'register'}
           variant="default"
           onClick={form.handleSubmit(onSubmit)}
         >

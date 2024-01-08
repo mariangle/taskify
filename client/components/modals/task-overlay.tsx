@@ -5,7 +5,7 @@ import type { Label, List } from '@/types';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 
-import TaskForm from '@/components/shared/task/task-form';
+import TaskForm from '@/components/task-form';
 
 import { useLayoutStore } from '@/store/layout-store';
 import { useMediaQuery } from '@/hooks/use-media-query';

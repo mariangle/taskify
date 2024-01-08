@@ -4,7 +4,7 @@ import { Icons } from '@/components/ui/icons';
 import { Badge } from '@/components/ui/badge';
 import { PromptTask } from '@/lib/util/open-ai';
 
-import { priorities } from '@/components/shared/task/priority-picker';
+import { priorities } from '@/components/priority-picker';
 import { Button } from './ui/button';
 
 export default function TaskSuggestion({

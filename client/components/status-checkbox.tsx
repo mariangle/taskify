@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import type { Subtask, Task } from '@/types';
 
 import { Checkbox } from '@/components/ui/checkbox';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 
 import { TaskService } from '@/services/task-service';
 import { SubtaskService } from '@/services/subtask-service';

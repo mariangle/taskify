@@ -1,9 +1,12 @@
 import * as React from 'react';
 
+// eslint-disable-next-line no-unused-vars
 type ClickOutsideCallback = (event: MouseEvent) => void;
 
-export function useClickOutside(ref: React.RefObject<HTMLElement>, callback: ClickOutsideCallback) {
-
+export function useClickOutside(
+  ref: React.RefObject<HTMLElement>,
+  callback: ClickOutsideCallback,
+) {
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {

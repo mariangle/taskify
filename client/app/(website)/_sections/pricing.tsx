@@ -1,8 +1,10 @@
+import Image from 'next/image';
 import { Separator } from '@/components/ui/seperator';
 import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FadeOnView } from '../_components/fade-on-view';
+import Blur1 from '@/public/static/bg-blur-2.webp';
 
 function Feature({ feature }: { feature: string }) {
   return (
@@ -18,7 +20,7 @@ export default function Pricing() {
     <section className="px-6 max-w-screen-lg mx-auto z-10 relative mt-24">
       <div className="text-center md:text-left mb-8">
         <FadeOnView>
-          <h1 className="heading horizontal-gradient" id="pricing">
+          <h1 className="heading horizontal-gradient relative" id="pricing">
             Simple, transparent pricing
           </h1>
         </FadeOnView>
@@ -29,6 +31,11 @@ export default function Pricing() {
         </FadeOnView>
       </div>
       <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
+        <Image
+          src={Blur1}
+          alt="background blur"
+          className="opacity-20 absolute -translate-y-1/3 sm:hidden"
+        />
         {/* Free Plan */}
         <FadeOnView
           delay={0.2}

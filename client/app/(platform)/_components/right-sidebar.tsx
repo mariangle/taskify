@@ -7,8 +7,8 @@ import { cn } from '@/lib/util/tw-merge';
 import { useTaskStore } from '@/store/modal-store';
 import LabelBadge from '@/components/ui/label-badge';
 import { Separator } from '@/components/ui/seperator';
-import SubtaskList from '@/components/shared/subtask/subtask-list';
-import StatusCheckbox from '@/components/shared/status-checkbox';
+import SubtaskList from '@/components/subtask-list';
+import StatusCheckbox from '@/components/status-checkbox';
 
 export default function RightSidebar() {
   const { task } = useTaskStore();

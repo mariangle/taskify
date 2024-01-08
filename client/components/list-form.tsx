@@ -14,7 +14,7 @@ import { Icons } from '@/components/ui/icons';
 
 import AlertModal from '@/components/modals/alert-modal';
 
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import { ListService } from '@/services/list-service';
 import type { List } from '@/types';
 import { listFormSchema, ListFormValues } from '@/lib/validations/list-schema';

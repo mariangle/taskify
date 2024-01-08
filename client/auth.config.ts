@@ -3,7 +3,7 @@ import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import bcrypt from 'bcryptjs';
 import type { NextAuthConfig } from 'next-auth';
-import { getUserByEmail } from './lib/user';
+import { getUserByEmail } from './actions/get-user';
 
 export default {
   providers: [

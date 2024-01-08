@@ -17,7 +17,10 @@ export function MobileSidebar() {
           <span className="sr-only">Open menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[250px] p-0 overflow-x-hidden">
+      <SheetContent
+        side="left"
+        className="w-[250px] p-0 overflow-x-hidden bg-background "
+      >
         <SideNav />
       </SheetContent>
     </Sheet>

@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/popover';
 import { Task, TaskPriority } from '@/types';
 import { TaskService } from '@/services/task-service';
-import { handleError } from '@/lib/util';
+import { handleError } from '@/lib/util/error';
 import { cn } from '@/lib/util/tw-merge';
 
 type Priority = { value: TaskPriority; color: string; label: string };

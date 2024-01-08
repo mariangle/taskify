@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getUserByEmail } from '@/lib/user';
+import { getUserByEmail } from '@/actions/get-user';
 
 export const POST = async (req: Request) => {
   const { name, email, password } = await req.json();

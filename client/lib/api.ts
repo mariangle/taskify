@@ -12,5 +12,8 @@ export const LISTS_KEY = '/api/lists';
 export const LABELS_KEY = '/api/labels';
 
 export const api: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? process.env.PUBLIC_URL
+      : process.env.DEV_URL,
 });

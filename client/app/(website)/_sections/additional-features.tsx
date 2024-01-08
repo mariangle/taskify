@@ -1,19 +1,21 @@
 import * as React from 'react';
+import Image from 'next/image';
 
 import {
   MicIcon,
   LucideIcon,
   ArrowRight,
-  Plus,
   Grab,
   CircleDashed,
   Layers,
   Repeat,
+  Keyboard,
 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/util/tw-merge';
 import { buttonVariants } from '@/components/ui/button';
 import { FadeOnView } from '../_components/fade-on-view';
+import Blur2 from '@/public/static/bg-blur-2.webp';
 
 interface Feature {
   title: string;
@@ -49,16 +51,20 @@ const features: Feature[] = [
     icon: Layers,
   },
   {
-    title: 'Plus...',
-    description:
-      'Explore essential features for an enhanced task management experience.',
-    icon: Plus,
+    title: 'Keyboard Shortcuts',
+    description: 'Boost your productivity with essential keyboard shortcuts.',
+    icon: Keyboard,
   },
 ];
 
 export default function AdditionalFeatures() {
   return (
     <div className="max-w-screen-lg space-y-12 mx-auto px-6 flex flex-col justify-center text-center relative">
+      <Image
+        src={Blur2}
+        alt="background blur"
+        className="opacity-20 absolute"
+      />
       <div className="grid gap-8 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 mt-12">
         {features.map(({ title, description, icon: Icon }) => (
           <FadeOnView key={title}>

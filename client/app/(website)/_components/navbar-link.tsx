@@ -10,16 +10,18 @@ interface NavbarLinkProps {
     title: string;
     href: string;
   };
+  onClose?: () => void;
 }
 
-export default function NavbarLink({ link }: NavbarLinkProps) {
+export default function NavbarLink({ link, onClose }: NavbarLinkProps) {
   const path = usePathname();
   const isActive =
     path === link.href ||
     (link.href === '/docs/getting-started' && path.includes('docs'));
 
   return (
-    <li key={link.href}>
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+    <li role="button" key={link.href} className="list-none" onClick={onClose}>
       <Link
         href={link.href}
         aria-current="page"

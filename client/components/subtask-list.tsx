@@ -1,4 +1,4 @@
-import SubtaskItem from '@/components/shared/subtask/subtask-item';
+import SubtaskItem from '@/components/subtask-item';
 import { Progress } from '@/components/ui/progress';
 
 import { Subtask, Task } from '@/types';

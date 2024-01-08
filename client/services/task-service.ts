@@ -2,8 +2,6 @@
 import { AxiosResponse } from 'axios';
 import { api } from '@/lib/api';
 import { Task, TaskEntry } from '@/types';
-import { requestOptions } from '@/lib/util';
-import { agent } from '@/lib/agent';
 import { SearchParamsOptions, queryParamsMapping } from '@/lib/util/filter';
 
 interface TaskLabelRelation {
@@ -14,11 +12,7 @@ interface TaskLabelRelation {
 export const TaskService = {
   createTask: async (task: TaskEntry) => {
     try {
-      const response: AxiosResponse<Task> = await api.post(
-        '/tasks',
-        task,
-        requestOptions,
-      );
+      const response: AxiosResponse<Task> = await api.post('/tasks', task);
       return response.data;
     } catch (err) {
       throw err;
@@ -45,7 +39,6 @@ export const TaskService = {
       }
 
       const response: AxiosResponse = await api.get('/tasks', {
-        httpsAgent: agent,
         params: queryParams,
       });
 
@@ -86,7 +79,6 @@ export const TaskService = {
       const response: AxiosResponse = await api.post(
         `/tasks/${taskId}/labels/${labelId}`,
         null,
-        requestOptions,
       );
       return response.data;
     } catch (err) {
@@ -100,7 +92,6 @@ export const TaskService = {
     try {
       const response: AxiosResponse = await api.delete(
         `/tasks/${taskId}/labels/${labelId}`,
-        requestOptions,
       );
       return response.data;
     } catch (err) {
