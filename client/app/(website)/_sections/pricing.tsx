@@ -44,8 +44,8 @@ export default function Pricing() {
           <Separator className="my-4" />
           <ul className="text-sm text-muted-foreground space-y-3">
             <Feature feature="Unlimited tasks" />
-            <Feature feature="Speech Recognition" />
-            <Feature feature="Smart Quick Add" />
+            <Feature feature="Mention-driven assignments" />
+            <Feature feature="Labels and lists" />
           </ul>
           <Button className="w-full mt-4" variant="outline">
             Get Started
@@ -65,11 +65,11 @@ export default function Pricing() {
           </div>
           <Separator className="my-4 dark:bg-primary/40" />
           <ul className="text-sm text-muted-foreground space-y-3">
-            <Feature feature="Unlimited tasks" />
+            <Feature feature="All free features" />
             <Feature feature="Speech Recognition" />
-            <Feature feature="AI Assistant" />
-            <Feature feature="Smart Quick Add" />
+            <Feature feature="AI Generated tasks" />
             <Feature feature="Filtering" />
+            <Feature feature="Recurring tasks" />
             <Feature feature="Analytics" />
           </ul>
           <Button className="w-full mt-4">Get Started</Button>

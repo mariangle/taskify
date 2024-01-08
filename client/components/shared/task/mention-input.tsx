@@ -20,6 +20,7 @@ interface MentionInputProps<T extends FieldValues> {
   labels: Label[];
   defaultValue?: string;
   small?: boolean;
+  preview?: boolean;
 }
 
 export default function MentionInput<T extends FieldValues>({
@@ -29,6 +30,7 @@ export default function MentionInput<T extends FieldValues>({
   lists,
   labels,
   defaultValue,
+  preview,
   small = false,
   ...props
 }: MentionInputProps<T>) {
@@ -76,7 +78,7 @@ export default function MentionInput<T extends FieldValues>({
       onChange={(e) => onChange(e)}
       style={{ ...inputStyle }}
       className={cn('w-full font-semibold', small ? 'text-sm' : 'text-lg')}
-      placeholder="Task Name"
+      placeholder={preview ? 'Experiment with @ or # mentions...' : 'Task Name'}
       spellCheck={false}
       autoComplete="off"
       {...props}

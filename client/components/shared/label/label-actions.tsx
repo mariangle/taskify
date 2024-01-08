@@ -1,7 +1,8 @@
 import * as React from 'react';
 import toast from 'react-hot-toast';
-
+import { mutate } from 'swr';
 import { useRouter } from 'next/navigation';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +18,7 @@ import type { Label } from '@/types';
 import { useMounted } from '@/hooks/use-mounted';
 import { LabelService } from '@/services/label-service';
 import { handleError } from '@/lib/util';
-import { useSignal } from '@/hooks/use-signal';
+import { LABELS_KEY } from '@/lib/api';
 
 interface LabelActionsProps {
   label: Label;
@@ -30,7 +31,6 @@ export default function LabelActions({ label, setOpen }: LabelActionsProps) {
 
   const isMounted = useMounted();
   const router = useRouter();
-  const { triggerSignal } = useSignal();
 
   const onEdit = () => setOpen(true);
 
@@ -39,7 +39,7 @@ export default function LabelActions({ label, setOpen }: LabelActionsProps) {
     try {
       await LabelService.deleteLabel(labelId);
 
-      triggerSignal();
+      mutate(LABELS_KEY);
       router.refresh();
       toast.success('Label removed.');
     } catch (err) {

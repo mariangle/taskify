@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import toast from 'react-hot-toast';
+import { mutate } from 'swr';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,11 +22,11 @@ import { Icons } from '@/components/ui/icons';
 import type { Label } from '@/types';
 import { handleError } from '@/lib/util';
 import { LabelService } from '@/services/label-service';
-import { useSignal } from '@/hooks/use-signal';
 import {
   labelFormSchema,
   LabelFormValues,
 } from '@/lib/validations/label-schema';
+import { LABELS_KEY } from '@/lib/api';
 
 interface FormProps {
   label?: Label;
@@ -35,7 +36,6 @@ interface FormProps {
 export default function LabelForm({ label, close }: FormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const { triggerSignal } = useSignal();
 
   const form = useForm<LabelFormValues>({
     resolver: zodResolver(labelFormSchema),
@@ -56,8 +56,8 @@ export default function LabelForm({ label, close }: FormProps) {
         await LabelService.createLabel(data);
         toast.success('Label created!');
       }
-      triggerSignal();
       router.refresh();
+      mutate(LABELS_KEY);
       close && close();
     } catch (error) {
       handleError(error);

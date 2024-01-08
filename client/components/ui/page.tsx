@@ -19,10 +19,6 @@ export function PageBoard({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function PageTable({ children }: { children: React.ReactNode }) {
-  return <div className="w-full max-w-screen-lg mx-auto">{children}</div>;
-}
-
 export function PageHeading({
   children,
   items,

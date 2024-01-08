@@ -1,19 +1,19 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-import type { SidebarItem, WidgetItem } from '@/lib/constants'
+import type { SidebarItem, WidgetItem } from '@/lib/constants';
 
-type Mode = 'light' | 'dark'
+type Mode = 'light' | 'dark';
 
 interface Settings {
-  theme: Mode
-  sidebar: SidebarItem[]
-  widgets: WidgetItem[]
+  theme: Mode;
+  sidebar: SidebarItem[];
+  widgets: WidgetItem[];
 }
 
 interface SettingsStore {
-  settings: Settings
-  setSettings: (settings: Settings) => void
+  settings: Settings;
+  setSettings: (settings: Settings) => void;
 }
 
 export const useSettingsStore = create(
@@ -21,7 +21,7 @@ export const useSettingsStore = create(
     (set, get) => ({
       settings: { theme: 'dark' as Mode, sidebar: [], widgets: [] },
       setSettings: (settings: Settings) => {
-        set({ settings: settings })
+        set({ settings });
       },
     }),
     {
@@ -29,4 +29,4 @@ export const useSettingsStore = create(
       storage: createJSONStorage(() => localStorage),
     },
   ),
-)
+);

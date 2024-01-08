@@ -29,6 +29,7 @@ interface TaskFormProps {
   labels: Label[];
   close?: () => void;
   small?: boolean;
+  preview?: boolean;
   initialValues?: {
     dueDate?: string;
   };
@@ -41,6 +42,7 @@ export default function TaskForm({
   small = false,
   close,
   initialValues,
+  preview = false,
 }: TaskFormProps) {
   const { closeTaskOverlay } = useLayoutStore();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -48,16 +50,6 @@ export default function TaskForm({
   const params = useParams<{ listId: string }>();
   const path = usePathname();
   const router = useRouter();
-
-  function parseDateString(dateString: string) {
-    const parts = dateString.split('-');
-    // Note: Months are zero-based in JavaScript Date objects, so we subtract 1
-    const year = parseInt(parts[2], 10);
-    const month = parseInt(parts[1], 10) - 1;
-    const day = parseInt(parts[0], 10);
-
-    return new Date(year, month, day);
-  }
 
   const defaultValues: Partial<TaskFormValues> = {
     name: task?.name || undefined,
@@ -70,7 +62,7 @@ export default function TaskForm({
         return new Date();
       }
       if (initialValues?.dueDate) {
-        return parseDateString(initialValues.dueDate);
+        return new Date(initialValues.dueDate);
       }
       return undefined;
     })(),
@@ -89,7 +81,9 @@ export default function TaskForm({
     defaultValues,
   });
 
+  // eslint-disable-next-line consistent-return
   const onSubmit = async (data: TaskFormValues) => {
+    if (preview) return toast.success('Task created!');
     setIsLoading(true);
     try {
       if (task) {
@@ -125,7 +119,7 @@ export default function TaskForm({
         let realDate = data.dueDate ?? undefined;
 
         if (initialValues?.dueDate) {
-          realDate = add(parseDateString(initialValues.dueDate), { days: 1 });
+          realDate = add(new Date(initialValues.dueDate), { days: 1 });
         }
 
         const createdTask = await TaskService.createTask({
@@ -171,6 +165,7 @@ export default function TaskForm({
             lists={lists}
             labels={labels}
             register="name"
+            preview={preview}
             small={small}
           />
           <Input

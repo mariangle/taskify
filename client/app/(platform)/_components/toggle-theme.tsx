@@ -26,7 +26,7 @@ export function ToggleTheme() {
 
   const renderTabs = () => (
     <Tabs defaultValue={resolvedTheme} className="w-full">
-      <TabsList className="w-full">
+      <TabsList className="w-full p-1">
         <TabsTrigger
           value="light"
           onClick={() => setTheme('light')}

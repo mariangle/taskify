@@ -21,7 +21,6 @@ export default function SocialsActions() {
       <div className="flex-gap mt-4 gap-4">
         <Button
           type="button"
-          disabled
           variant="secondary"
           className="w-full"
           onClick={() => loginSocial('google')}
@@ -32,7 +31,6 @@ export default function SocialsActions() {
         <Button
           type="button"
           variant="secondary"
-          disabled
           className="w-full"
           onClick={() => loginSocial('github')}
         >

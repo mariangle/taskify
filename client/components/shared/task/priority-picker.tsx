@@ -17,12 +17,12 @@ import { TaskService } from '@/services/task-service';
 import { handleError } from '@/lib/util';
 import { cn } from '@/lib/util/tw-merge';
 
-type Priority = { value: TaskPriority; color: string };
+type Priority = { value: TaskPriority; color: string; label: string };
 
-const priorities: Priority[] = [
-  { value: 'HIGH', color: '#EF4444' },
-  { value: 'MEDIUM', color: '#EAB308' },
-  { value: 'LOW', color: '#0EA5E9' },
+export const priorities: Priority[] = [
+  { value: 'HIGH', color: '#EF4444', label: 'High' },
+  { value: 'MEDIUM', color: '#EAB308', label: 'Medium' },
+  { value: 'LOW', color: '#0EA5E9', label: 'Low' },
 ];
 
 export function PriorityItem({
@@ -40,7 +40,7 @@ export function PriorityItem({
       className="w-full justify-start px-2 h-8"
     >
       <Icons.Flag className="w-4 h-4 mr-2" style={{ color: priority.color }} />
-      {priority.value}
+      {priority.label}
     </Button>
   );
 }

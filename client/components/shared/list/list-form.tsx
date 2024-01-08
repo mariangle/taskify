@@ -16,9 +16,9 @@ import AlertModal from '@/components/modals/alert-modal';
 
 import { handleError } from '@/lib/util';
 import { ListService } from '@/services/list-service';
-import { useSignal } from '@/hooks/use-signal';
 import type { List } from '@/types';
 import { listFormSchema, ListFormValues } from '@/lib/validations/list-schema';
+import { LISTS_KEY } from '@/lib/api';
 
 interface FormProps {
   list?: List;
@@ -38,7 +38,6 @@ function ListForm({ list, onClose }: FormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
-  const { triggerSignal } = useSignal();
 
   const closeDialog = () => setIsOpen(false);
   const openDialog = () => setIsOpen(true);
@@ -54,9 +53,8 @@ function ListForm({ list, onClose }: FormProps) {
         await ListService.createList(data);
         toast.success('List created!');
       }
-      triggerSignal();
       router.refresh();
-      mutate('/api/lists');
+      mutate(LISTS_KEY);
       onClose();
     } catch (error) {
       handleError(error);
@@ -71,8 +69,7 @@ function ListForm({ list, onClose }: FormProps) {
       await ListService.deleteList(listId);
       router.refresh();
       toast.success('List deleted!');
-      triggerSignal();
-      mutate('/api/lists');
+      mutate(LISTS_KEY);
       onClose();
     } catch (error) {
       handleError(error);

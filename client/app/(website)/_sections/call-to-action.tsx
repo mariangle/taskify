@@ -6,7 +6,7 @@ export default function CallToAction() {
       <div className="max-w-screen-lg mx-auto">
         <div className="sm:grid sm:grid-cols-3">
           <div className="sm:col-span-2 space-y-4 text-center sm:text-left">
-            <h3 className="subheading">Convinced yet?</h3>
+            <h3 className="subheading text-2xl">Convinced yet?</h3>
             <p className="text-muted-foreground text-lg">
               Lorem ipsum dolor sit amet consectetur.
             </p>

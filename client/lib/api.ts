@@ -1,13 +1,16 @@
 import axios, { AxiosInstance } from 'axios';
-import useSWR from 'swr';
 
-export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data from ${url}`);
+    }
+    return res.json();
+  });
 
-export { useSWR };
+export const LISTS_KEY = '/api/lists';
+export const LABELS_KEY = '/api/labels';
 
 export const api: AxiosInstance = axios.create({
   baseURL: 'http://localhost:3000/api',
 });
-
-// Example usage in a component
-// const { data, error } = useApiSWR('/lists');

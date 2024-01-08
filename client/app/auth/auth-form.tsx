@@ -66,6 +66,8 @@ function AuthForm({ variant }: AuthFormProps) {
       } else if (err instanceof Error) {
         toast.error(err.message);
       }
+      // eslint-disable-next-line no-console
+      console.log(err);
     } finally {
       setIsLoading(false);
     }

@@ -17,9 +17,11 @@ export default function ResizableLayout({
 }) {
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={90}>{left}</ResizablePanel>
+      <ResizablePanel defaultSize={90} minSize={70}>
+        {left}
+      </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={5} minSize={0} maxSize={50}>
+      <ResizablePanel defaultSize={10} minSize={0} maxSize={30}>
         {right}
       </ResizablePanel>
     </ResizablePanelGroup>

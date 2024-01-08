@@ -2,65 +2,35 @@
 
 import * as React from 'react';
 
-import { Separator } from '@/components/ui/seperator';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Icons } from '@/components/ui/icons';
-import { Button } from '@/components/ui/button';
 import { useFilter } from '@/hooks/use-filter';
-import { cn } from '@/lib/util/tw-merge';
 
 export default function FilterView() {
   const { view, pathname, createQueryString } = useFilter();
 
   const hasViewOptions = /inbox|lists|today/.test(pathname);
 
-  const FilterButton = React.memo(
-    ({
-      children,
-      icon,
-      value,
-    }: {
-      children: React.ReactNode;
-      icon: React.ReactNode;
-      value: string;
-    }) => (
-      <Button
-        variant="ghost"
-        className={cn(
-          'h-full rounded-none text-xs py-6 border-b border-transparent   px-2 text-muted-foreground',
-          view === value &&
-            'border-primary text-foreground bg-gradient-to-t from-primary/20 hover:bg-primary/25',
-        )}
-        onClick={() => createQueryString('view', value)}
-      >
-        {icon}
-        {children}
-      </Button>
-    ),
-  );
-
   if (hasViewOptions) {
     return (
-      <div className="hidden md:flex-center h-full">
-        <Separator orientation="vertical" className="h-8 mx-2" />
-        <FilterButton
-          value="list"
-          icon={<Icons.Menu className="w-4 h-4 mr-2" />}
-        >
-          List
-        </FilterButton>
-        <FilterButton
-          value="table"
-          icon={<Icons.Table className="w-4 h-4 mr-2" />}
-        >
-          Table
-        </FilterButton>
-        <FilterButton
-          value="board"
-          icon={<Icons.Board className="w-4 h-4 mr-2" />}
-        >
-          Board
-        </FilterButton>
-      </div>
+      <Tabs defaultValue={view} className="flex-center">
+        <TabsList className="grid grid-cols-2">
+          <TabsTrigger
+            value="list"
+            className="h-8"
+            onClick={() => createQueryString('view', 'list')}
+          >
+            <Icons.Menu className="w-4 h-4" />
+          </TabsTrigger>
+          <TabsTrigger
+            value="board"
+            className="h-8"
+            onClick={() => createQueryString('view', 'board')}
+          >
+            <Icons.Board className="w-4 h-4" />
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
     );
   }
 

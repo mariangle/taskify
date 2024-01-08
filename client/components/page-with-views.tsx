@@ -4,13 +4,10 @@ import * as React from 'react';
 
 import { ExtendedSearchParamsOptions } from '@/lib/util/filter';
 import { TaskList } from './shared/task/task-list';
-import { columns } from './columns';
-import { DataTable } from './data-table';
 import { Separator } from '@/components/ui/seperator';
 import {
   PageList,
   PageBoard,
-  PageTable,
   PageHeading,
   PageDescription,
 } from '@/components/ui/page';
@@ -98,32 +95,6 @@ export default async function PageWithViews({
             />
           </div>
         </PageBoard>
-      );
-    case 'table':
-      return (
-        <PageTable>
-          <PageHeading>{content.title}</PageHeading>
-          <div className="space-y-1">
-            <DataTable
-              title="New"
-              color="bg-yellow-500"
-              columns={columns}
-              data={tasks}
-            />
-            <DataTable
-              title="In Progress"
-              color="bg-sky-500"
-              columns={columns}
-              data={tasks}
-            />
-            <DataTable
-              title="Done"
-              color="bg-emerald-500"
-              columns={columns}
-              data={tasks}
-            />
-          </div>
-        </PageTable>
       );
     default:
       return (
